@@ -1,8 +1,13 @@
 .header {
     display: flex;
-    background-color: 'yellow'
+    background-color: yellow;
 }
 
-.header a {
+.header__menu {
+    display: flex;
+    gap: 5px;
+}
+
+.header__menu-link {
     padding: 5px;
 }

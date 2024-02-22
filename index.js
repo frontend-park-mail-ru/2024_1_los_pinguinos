@@ -10,29 +10,3 @@ const routes = [
     new Route('/register', new Register()),
 ];
 new Router(routes);
-
-// const routes = {
-//     '/': Home,
-//     '/login': Login,
-//     '/register': Register
-//   };
-
-//   function router() {
-//     const path = window.location.pathname;
-
-//     const component = routes[path];
-
-//     if (component) {
-//       document.getElementById('app').innerHTML = component.render();
-//     } else {
-//       // Если компонент не найден, отображаем сообщение об ошибке или перенаправляем на домашнюю страницу
-//       document.getElementById('app').innerHTML = '404 - Страница не найдена';
-//     }
-//   }
-
-//   function initRouter() {
-//     window.addEventListener('load', router);
-//     window.addEventListener('hashchange', router);
-//   }
-
-//   initRouter();
