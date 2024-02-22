@@ -1,0 +1,24 @@
+{
+  "name": "sport_bro",
+  "version": "1.0.0",
+  "description": "maybe?",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node /server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos#readme",
+  "dependencies": {
+    "eslint": "^8.56.0",
+    "express": "^4.18.2"
+  }
+}

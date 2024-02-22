@@ -1,0 +1,13 @@
+.header {
+    display: flex;
+    background-color: yellow;
+}
+
+.header__menu {
+    display: flex;
+    gap: 5px;
+}
+
+.header__menu-link {
+    padding: 5px;
+}
