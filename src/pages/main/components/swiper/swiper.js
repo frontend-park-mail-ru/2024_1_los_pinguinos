@@ -18,7 +18,10 @@ let cardCount = 0;
 
 // functions
 function appendNewCard() {
+  console.log('appendNewCard');
+  console.log(cardCount);
   const card = new Card({
+    id: cardCount,
     imageUrl: urls[cardCount % 5],
     onDismiss: appendNewCard,
     onLike: () => {

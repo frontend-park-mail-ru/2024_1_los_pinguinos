@@ -1,3 +1,11 @@
-<div class="card" style="--i:0">    
+{{!-- <div class="card" style="--i:0">    
     <img class="card__image" src="https://source.unsplash.com/random/1000x1000?sky" alt="image" />
+</div> --}}
+<div class="card" style="--i:{{index}}">
+    <img class="card__image" src="{{image}}" alt="image" >
+    </img>
+    <div class="card__content">
+        <p class="card__name">{{name}}, {{age}}</p>
+        <p class="card__description">{{description}}</p>
+    </div>
 </div>
