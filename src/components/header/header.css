@@ -1,6 +1,6 @@
 .header {
     display: flex;
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 .header__menu {
@@ -10,4 +10,8 @@
 
 .header__menu-link {
     padding: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 34px;
 }

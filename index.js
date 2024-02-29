@@ -9,5 +9,6 @@ const routes = [
     new Route('/', new Home()),
     new Route('/login', new Login()),
     new Route('/register', new Register()),
+    new Route('*', new Home())
 ];
 new Router(routes);

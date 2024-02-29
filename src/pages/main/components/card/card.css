@@ -1,75 +1,122 @@
 .card {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    border-radius: 20px;
-    overflow: hidden;
-    transform: 
-      translateZ(calc(-30px * var(--i)))
-      translateY(calc(-20px * var(--i)))
-      rotate(calc(-4deg * var(--i)));
-    filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5));
-    cursor: pointer;
-    user-select: none;
-    transition: transform 0.5s;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 13px;
+  overflow: hidden;
+  transform: translateZ(calc(-30px * var(--i)));
+    /* translateY(calc(-20px * var(--i)));  */
+    /* rotate(calc(-4deg * var(--i))); */
+  filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5));
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.5s;
+  background: white;
+}
+
+.card__image {
+  width: 364px;
+  height: 571px;
+  border-radius: 13px;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.card__content {
+  /* position: absolute;
+  bottom: 0;
+  left: 0; */
+  /* width: 100%;
+  height: 15%; */
+  width: 237px;
+  height: 86px;
+  padding: 20px, 0px, 20px, 20px;
+  gap: 7px;
+
+  /* padding: 20px; */
+  /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)); */
+  color: black;
+  font-size: 2.5vh;
+  font-weight: 700;
+  /* text-align: center; */
+  /* transform: translateY(100%); */
+  transition: transform 0.5s;
+  padding: 0 6px;
+}
+
+.card__name {
+  /* padding: 10px 0; */
+  /* font-size: 3vh;
+  font-weight: 600; */
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  transition: transform 0.5s;
+}
+
+.card__description {
+  /* padding: 3px;
+  font-size: 2vh;
+  font-weight: 400;
+  color: #8d8d8d;
+  transition: transform 0.5s; */
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: left;
+  transition: transform 0.5s;
+}
+
+#like,
+#dislike {
+  font-size: 6vh;
+  border-radius: 50%;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+  animation-name: animation1;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  /* don't run animation at the beginning */
+  animation-play-state: paused;
+}
+
+#like.trigger,
+#dislike.trigger {
+  animation-name: animation2;
+}
+
+#like {
+  color: red;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#dislike {
+  color: #ccc;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes animation1 {
+  0%,
+  100% {
+    opacity: 0.2;
   }
-  
-  .card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 50%;
+
+  50% {
+    opacity: 1;
   }
-  
-  #like,
-  #dislike {
-    font-size: 6vh;
-    border-radius: 50%;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
-    animation-name: animation1;
-    animation-duration: 1s;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: both;
-    /* don't run animation at the beginning */
-    animation-play-state: paused;
+}
+
+@keyframes animation2 {
+  0%,
+  100% {
+    opacity: 0.2;
   }
-  
-  #like.trigger,
-  #dislike.trigger {
-    animation-name: animation2;
+
+  50% {
+    opacity: 1;
   }
-  
-  #like {
-    color: red;
-    background-color: rgba(255, 255, 255, 0.5);
-  }
-  
-  #dislike {
-    color: #ccc;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  @keyframes animation1 {
-    0%,
-    100% {
-      opacity: 0.2;
-    }
-  
-    50% {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes animation2 {
-    0%,
-    100% {
-      opacity: 0.2;
-    }
-  
-    50% {
-      opacity: 1;
-    }
-  }
-  
+}
