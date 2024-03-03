@@ -1,0 +1,10 @@
+<div class="form__field">
+    {{#if label}}
+        <label class="form__label" for={{id}}>{{label}}</label>
+    {{/if}}
+    {{#if password}}
+        {{> pages/components/form/formIconButton}}
+    {{/if}}
+    <input class="form__input {{#if password}}form__input--icon{{/if}}" id={{id}} type={{type}} pattern={{pattern}} autocomplete={{completion}} placeholder='{{placeholder}}'>
+    <div class="field__error"></div>
+</div>

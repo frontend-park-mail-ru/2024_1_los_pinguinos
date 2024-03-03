@@ -1,3 +1,4 @@
+@import url(./src/pages/components/form/form.css);
 @import url("/src/pages/main/main.css");
 @import url("/src/components/navbar/navbar.css");
 @import url("/src/components/header/header.css");
@@ -19,6 +20,8 @@ body {
 }
 
 body {
+  background: url(background.png) no-repeat center center fixed; 
+  background-size: cover;
   /* background: linear-gradient(0deg, rgb(255, 96, 54), rgb(253, 38, 122))
     no-repeat; */
   background: linear-gradient(
