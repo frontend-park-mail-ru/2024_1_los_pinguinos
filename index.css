@@ -1,4 +1,10 @@
 @import url(./src/pages/components/form/form.css);
+@import url("/src/pages/main/main.css");
+@import url("/src/components/navbar/navbar.css");
+@import url("/src/components/header/header.css");
+@import url("/src/pages/main/components/card/card.css");
+@import url("/src/pages/landing/landing.css");
+
 * {
   margin: 0;
   padding: 0;
@@ -10,99 +16,64 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
   background: url(background.png) no-repeat center center fixed; 
   background-size: cover;
+  /* background: linear-gradient(0deg, rgb(255, 96, 54), rgb(253, 38, 122))
+    no-repeat; */
+  background: linear-gradient(
+      to bottom,
+      rgb(76 3 250)-54%,
+      black 69%,
+      #43f843 140%
+    )
+    no-repeat;
+}
+
+.header__menu {
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+#root {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.main {
+  display: flex;
+  margin: 86px 67px;
+  gap: 12px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .content {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  width: 908px;
+  /* padding: 25px 20px; */
+  background: #ffffffa8;
+  border-radius: 13px;
+  height: 100%;
 }
 
 #swiper {
-  height: 70vh;
-  aspect-ratio: 2 / 3;
+  width: 364px;
+  height: 657px;
+  border-radius: 13px;
   perspective: 1000px;
   perspective-origin: center 50%;
   transform-style: preserve-3d;
   /* position: relative; */
-}
-
-.card {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  border-radius: 20px;
-  overflow: hidden;
-  transform: 
-    translateZ(calc(-30px * var(--i)))
-    translateY(calc(-20px * var(--i)))
-    rotate(calc(-4deg * var(--i)));
-  filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5));
-  cursor: pointer;
-  user-select: none;
-  transition: transform 0.5s;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 50%;
-}
-
-#like,
-#dislike {
-  font-size: 6vh;
-  border-radius: 50%;
-  padding: 20px;
-  position: relative;
-  z-index: 1;
-  animation-name: animation1;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: both;
-  /* don't run animation at the beginning */
-  animation-play-state: paused;
-}
-
-#like.trigger,
-#dislike.trigger {
-  animation-name: animation2;
-}
-
-#like {
-  color: red;
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-#dislike {
-  color: #ccc;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-@keyframes animation1 {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes animation2 {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-
-  50% {
-    opacity: 1;
-  }
+  /* margin-top: 13vh; */
 }

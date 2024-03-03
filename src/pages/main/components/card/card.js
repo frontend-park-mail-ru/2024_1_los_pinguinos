@@ -1,6 +1,12 @@
+import cardTemplate from './card.hbs';
+
 class Card {
-  constructor({ imageUrl, onDismiss, onLike, onDislike }) {
+  constructor({ id, imageUrl, name, age, description, onDismiss, onLike, onDislike }) {
+    this.id = id;
     this.imageUrl = imageUrl;
+    this.name = name;
+    this.age = age;
+    this.description = description;
     this.onDismiss = onDismiss;
     this.onLike = onLike;
     this.onDislike = onDislike;
@@ -22,11 +28,8 @@ class Card {
 
   #init = () => {
     const card = document.createElement('div');
-    card.classList.add('card');
-    const img = document.createElement('img');
-    img.src = this.imageUrl;
-    card.append(img);
-    this.element = card;
+    card.innerHTML = cardTemplate({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description});
+    this.element = card.firstElementChild; // Получаем первый элемент-потомок, который содержит сгенерированный HTML
     if (this.#isTouchDevice()) {
       this.#listenToTouchEvents();
     } else {
@@ -130,6 +133,11 @@ class Card {
       this.onDislike();
     }
   };
+
+  #showMore = () => {
+    this.element.classList.toggle('show-description');
+  };
+
 }
 
 export default Card;

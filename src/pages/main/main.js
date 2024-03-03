@@ -1,44 +1,37 @@
-// class Home {
-//     async render() {
-//         return '<h2>Добро пожаловать на главную страницу!</h2>';
-//     }
-// }
-
-// export default Home;
-
 import main from './main.hbs';
 import Card from './components/card/card.js';
+import { persons } from './persons.js';
+import { getPeople } from '../../api/content.js';
 
-  // constants
-  const urls = [
-    'https://source.unsplash.com/random/1000x1000/?sky',
-    'https://source.unsplash.com/random/1000x1000/?landscape',
-    'https://source.unsplash.com/random/1000x1000/?ocean',
-    'https://source.unsplash.com/random/1000x1000/?moutain',
-    'https://source.unsplash.com/random/1000x1000/?forest',
-  ];
+class Home {
+  cardCount = 0;
 
-  // variables
-  let cardCount = 0;
-  function appendNewCard() {
+  cardsPerLoad = 6;
+
+  // people = getPeople();
+
+  appendNewCard() {
     const swiper = document.querySelector('#swiper');
-    const like = document.querySelector('#like');
-    const dislike = document.querySelector('#dislike');
+    if(swiper === null) {
+      return;
+    }
+    console.log(persons, this.cardCount, this.cardsPerLoad);
     const card = new Card({
-      imageUrl: urls[cardCount % 5],
-      onDismiss: appendNewCard,
+      id: this.cardCount,
+      imageUrl: persons[this.cardCount % this.cardsPerLoad].imageUrl ? persons[this.cardCount % this.cardsPerLoad].imageUrl : '',
+      name: persons[this.cardCount % this.cardsPerLoad].name,
+      age: persons[this.cardCount % this.cardsPerLoad].age,
+      description: persons[this.cardCount % this.cardsPerLoad].description,
+      onDismiss: this.appendNewCard.bind(this),
       onLike: () => {
-        like.style.animationPlayState = 'running';
-        like.classList.toggle('trigger');
+
       },
       onDislike: () => {
-        dislike.style.animationPlayState = 'running';
-        dislike.classList.toggle('trigger');
+
       },
     });
-    // swiper.append(card.element);
     swiper.appendChild(card.element);
-    cardCount++;
+    this.cardCount++;
 
     const cards = swiper.querySelectorAll('.card:not(.dismissing)');
     cards.forEach((card, index) => {
@@ -46,18 +39,16 @@ import Card from './components/card/card.js';
     });
   }
 
-class Home {
-
   async render() {
     return main();
   }
 
   async controller() {
-    // first 5 cards
-    for (let i = 0; i < 5; i++) {
-      appendNewCard();
+    for (let i = 0; i < this.cardsPerLoad; i++) {
+      this.appendNewCard();
     }
   }
+
 }
 
 export default Home;

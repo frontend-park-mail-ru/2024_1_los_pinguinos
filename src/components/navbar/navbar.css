@@ -1,0 +1,106 @@
+.navbar {
+  background: #ffffffa8;
+  border-radius: 13px;
+  height: 100%;
+}
+
+.navbar__header {
+  background: #0b0c0c;
+  border-radius: 13px 13px 0px 0px;
+  padding: 20px 22px;
+  gap: 15px;
+}
+
+.navbar__header__person {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.navbar__header__person__name {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #ffffff;
+}
+
+.navbar__header__person__image {
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+}
+
+.navbar__menu {
+  padding: 20px 22px;
+  gap: 15px;
+}
+
+.navbar__menu__search {
+  width: 340px;
+  height: 34px;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background: #dcdcdc;
+  display: flex;
+  align-items: center;
+}
+
+.navbar__menu__search__input {
+  background: #dcdcdc;
+  border: none;
+  border-radius: 10px;
+  padding: 2px 0 0 5px;
+  width: 100%;
+  height: 100%;
+  text-align: justify;
+}
+
+.navbar__menu__items {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.navbar__item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 10px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  cursor: pointer;
+  background: white;
+  transition: background 0.5s;
+  border-radius: 10px;
+}
+
+.navbar__item__icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 100px;
+}
+
+.navbar__item__info {
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.navbar__item__info__name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.navbar__item__info__message {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 14px;
+  color: #5d5d5d;
+}
