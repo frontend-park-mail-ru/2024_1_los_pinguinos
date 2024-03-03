@@ -2,7 +2,7 @@
 @import url("/src/components/navbar/navbar.css");
 @import url("/src/components/header/header.css");
 @import url("/src/pages/main/components/card/card.css");
-
+@import url("/src/pages/landing/landing.css");
 
 * {
   margin: 0;

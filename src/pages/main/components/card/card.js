@@ -1,4 +1,4 @@
-import cardH from './card.hbs';
+import cardTemplate from './card.hbs';
 
 class Card {
   constructor({ id, imageUrl, name, age, description, onDismiss, onLike, onDislike }) {
@@ -27,21 +27,8 @@ class Card {
   };
 
   #init = () => {
-    // const card = document.createElement('div');
-    // card.classList.add('card');
-    // const img = document.createElement('img');
-    // img.src = this.imageUrl;
-    // card.append(img);
-    // this.element = card;
-    // if (this.#isTouchDevice()) {
-    //   this.#listenToTouchEvents();
-    // } else {
-    //   this.#listenToMouseEvents();
-    // }
-    // const card = document.createElement('div');
-    // card.innerHTML = cardH({index: this.id, image: this.imageUrl});
     const card = document.createElement('div');
-    card.innerHTML = cardH({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description});
+    card.innerHTML = cardTemplate({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description});
     this.element = card.firstElementChild; // Получаем первый элемент-потомок, который содержит сгенерированный HTML
     if (this.#isTouchDevice()) {
       this.#listenToTouchEvents();
@@ -49,25 +36,6 @@ class Card {
       this.#listenToMouseEvents();
     }
   };
-
-  // init() {
-  //   // const card = document.createElement('div');
-  //   // card.classList.add('card');
-  //   // const img = document.createElement('img');
-  //   // img.src = this.imageUrl;
-  //   // card.append(img);
-  //   // this.element = card;
-  //   const card = document.createElement('div');
-  //   // console.log(this.id);
-  //   card.innerHTML = cardH({index: this.id, image: this.imageUrl});
-  //   this.element = card;
-  //   // console.log(card);
-  //   if (this.isTouchDevice()) {
-  //     this.listenToTouchEvents();
-  //   } else {
-  //     this.listenToMouseEvents();
-  //   }
-  // }
 
   #listenToTouchEvents = () => {
     this.element.addEventListener('touchstart', (e) => {
@@ -165,6 +133,11 @@ class Card {
       this.onDislike();
     }
   };
+
+  #showMore = () => {
+    this.element.classList.toggle('show-description');
+  };
+
 }
 
 export default Card;
