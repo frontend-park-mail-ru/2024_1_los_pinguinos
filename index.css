@@ -1,3 +1,4 @@
+@import url(./src/pages/components/form/form.css);
 * {
   margin: 0;
   padding: 0;
@@ -12,8 +13,8 @@ body {
 }
 
 body {
-  background: linear-gradient(0deg, rgb(255, 96, 54), rgb(253, 38, 122))
-    no-repeat;
+  background: url(background.png) no-repeat center center fixed; 
+  background-size: cover;
 }
 
 .content {
