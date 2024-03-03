@@ -1,0 +1,23 @@
+  <div class="navbar">
+    <div class="navbar__header">
+        <div class="navbar__header__person">
+            <p class="navbar__header__person__name">John Doe</p>
+            <img src="https://source.unsplash.com/random/150x150/?man" alt="Profile Picture" class="navbar__header__person__image">
+        </div>
+    </div>
+    <div class="navbar__menu">
+        <div class="navbar__menu__search">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.69765 15.3945C9.40555 15.3941 11.0642 14.8224 12.4096 13.7704L16.6394 18L18 16.6395L13.7701 12.4099C14.8228 11.0645 15.3949 9.40549 15.3953 7.69724C15.3953 3.45318 11.9419 0 7.69765 0C3.45336 0 0 3.45318 0 7.69724C0 11.9413 3.45336 15.3945 7.69765 15.3945ZM7.69765 1.92431C10.8816 1.92431 13.4709 4.51347 13.4709 7.69724C13.4709 10.881 10.8816 13.4702 7.69765 13.4702C4.51371 13.4702 1.92441 10.881 1.92441 7.69724C1.92441 4.51347 4.51371 1.92431 7.69765 1.92431Z" fill="#777777"/>
+            </svg>
+            <input type="text" class="navbar__menu__search__input">
+            </input>
+        </div>
+        <div class="navbar__menu__items">
+            {{> components/navbar/navbar-item}}
+            {{> components/navbar/navbar-item}}
+            {{> components/navbar/navbar-item}}
+            {{> components/navbar/navbar-item}}
+        </div>
+    </div>
+  </div>
