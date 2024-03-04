@@ -1,5 +1,5 @@
 import registerTemplate from './register.hbs';
-import FormHandler from '../components/form/formHandler.js';
+import FormHandler from '../../components/form/formHandler.js';
 
 const formHandler = new FormHandler()
 

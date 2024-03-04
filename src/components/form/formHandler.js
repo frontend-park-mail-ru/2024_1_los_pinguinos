@@ -16,6 +16,10 @@ class FormHandler {
                     currentFormStep.style.display = 'none';
                     nextFormStep.style.display = 'block';
                 }
+                if (this.currentStep === 0) {
+                    localStorage.setItem('token', true);
+                    window.location.href = '/main';
+                }
             });
         }
 

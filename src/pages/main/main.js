@@ -15,7 +15,6 @@ class Home {
     if(swiper === null) {
       return;
     }
-    console.log(persons, this.cardCount, this.cardsPerLoad);
     const card = new Card({
       id: this.cardCount,
       imageUrl: persons[this.cardCount % this.cardsPerLoad].imageUrl ? persons[this.cardCount % this.cardsPerLoad].imageUrl : '',

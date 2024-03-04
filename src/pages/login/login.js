@@ -1,5 +1,5 @@
 import loginTemplate from './login.hbs';
-import FormHandler from '../components/form/formHandler.js';
+import FormHandler from '../../components/form/formHandler.js';
 
 const formHandler = new FormHandler()
 
@@ -29,21 +29,8 @@ class Login {
                             type: 'email',
                             id: 'emailField',
                             completion: 'email'
+                            
                         }, 
-                        ]
-                    },
-                    {
-                        stepId: 1,
-                        formTitle: 'Вход',
-                        formNavButton: {
-                            buttonText: '<',
-                            buttonId: 'navButton1'
-                        },
-                        formButton: {
-                            buttonText: 'Войти',
-                            buttonId: 'continueButton1'
-                        },
-                        fields: [
                         {
                             placeholder: 'Ваш пароль', 
                             type: 'password',
@@ -52,7 +39,7 @@ class Login {
                             password: 1
                         }, 
                         ]
-                    }
+                    },
                 ]
             }
         }
