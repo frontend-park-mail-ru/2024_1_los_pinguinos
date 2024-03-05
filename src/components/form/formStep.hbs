@@ -1,6 +1,6 @@
-<div class="form__block" id={{stepId}}>
+<div class="form__block {{#if fixedSize}}form__block--{{fixedSize}}{{/if}}" id={{stepId}}>
         <div class="form__header">
-            {{> pages/components/form/formNavButton formNavButton}}
+            {{> components/form/formNavButton formNavButton}}
             {{#if currentStep}}
                 <p class="form__step-count">{{currentStep}}</p>
             {{/if}}
@@ -17,7 +17,7 @@
             {{#if fields}}
                 <div class="form__field-container">
                     {{#each fields}}
-                        {{> pages/components/form/formField this}}
+                        {{> components/form/formField this}}
                     {{/each}}
                 </div>
             {{/if}}
@@ -27,7 +27,7 @@
             {{#if fieldsExtra}}
                 <div class="form__field-container">
                     {{#each fieldsExtra}}
-                        {{> pages/components/form/formField this}}
+                        {{> components/form/formField this}}
                     {{/each}}
                 </div>
             {{/if}}
@@ -37,14 +37,14 @@
                     {{/if}}
                     <div class="form__checkbox-list {{#if list}}form__checkbox-list--cut{{/if}}">
                         {{#each choices}}
-                            {{> pages/components/form/formCheckBox this}}
+                            {{> components/form/formCheckBox this}}
                         {{/each}}
                     </div>
                 </div>
         </div>
         {{/if}}
-        <div class="form__button-container">
-            {{> pages/components/form/formButton formButton}}
+        <div class="form__button-container {{#if fixedSize}}form__button-container--fixed-{{fixedSize}}{{/if}}">
+            {{> components/form/formButton formButton}}
         </div>
         {{#if footerInfo}}
             <div class="form__footer">

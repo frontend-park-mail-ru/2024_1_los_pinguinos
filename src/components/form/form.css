@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+@import url(/src/fonts/MailSans/stylesheet.css);
 
 * {
-    font-family: 'Roboto Flex';
+    font-family: 'Mail Sans Roman';
 }
 
 :root {
@@ -15,6 +15,9 @@
     --form__button-hover: #2DB200;
 
     --focused: #363636;
+
+    --pswd--hidden: url(eyeInv.png);
+    --pswd--visible: url(eyeVis.png);
     
 }
 
@@ -46,6 +49,10 @@
     padding-right: 90px;
     padding-top: 30px;
     padding-bottom: 40px;
+}
+
+.form__block--medium {
+    height: 460px;
 }
 
 .form__header {
@@ -91,7 +98,6 @@
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 13px;
 }
 
 .form__field-container {
@@ -106,6 +112,16 @@
     margin-right: auto;
     width: 100%;
     position: relative;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.field__error {
+    position: absolute;
+    color: red;
+    width: 100%;
+    text-align: center;
+    bottom: -22px;
 }
 
 .form__input {
@@ -131,6 +147,7 @@
     display: flex;
     flex-flow: column;
     width: 100%;
+    height: 100%;
 }
 
 .form__checkbox-container--side {
@@ -140,6 +157,8 @@
 .form__checkbox-list {
     display: flex;
     flex-wrap: wrap;
+    /* justify-content: flex-start;
+    align-items: start; */
     width: 100%;
     height: 100%;
 }
@@ -152,7 +171,9 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 20px;
+    height: 47px;
+    position: relative;
 }
 
 .form__input:focus {
@@ -171,6 +192,7 @@
     border: none;
     display: block;
     place-self: center;
+    cursor: pointer;
 }
 
 .form__button--continue {
@@ -191,13 +213,16 @@
 
 .form__button--checkbox {
     background-color: var(--form__text-primary);
-    width: auto;
-    height: auto;
     border-radius: 10px;
     margin-right: 14px;
     margin-bottom: 13px;
     padding: 8px 13px;
     text-align: center;
+    transition: background-color 0.25s ease-in-out;
+}
+
+.form__button--checkbox-selected {
+    background-color: var(--form__button-primary);
 }
 
 .form__button--round {
@@ -213,18 +238,30 @@
     position: absolute;
     width: 24px;
     height: 24px;
-    background: url(eyeInv.png);
+    background: var(--pswd--hidden);
     bottom: 11.5px;
     right: 30px;
     opacity: 0.5;
 }
 
+.form__button-container--fixed-medium {
+    position: absolute;
+    bottom: 40px;
+    padding-left: 90px;
+    padding-right: 90px;
+    margin-left: -90px;
+}
+
 .form__footer {
-    margin-top: 5px;
+    margin-top: 10px;
     display: flex;
     width: 100%;
     justify-content: center;
     color: var(--form__text-secondary);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
 }
 
 @media only screen and (max-width: 896px) {
@@ -235,11 +272,11 @@
     }
 
     .form__input-container {
-        width: 300px;
+        width: 325px;
     }
 
     .form__button--continue{
-        width: 300px;
+        width: 325px;
     }
     .form__block {
         padding-left: 20px;
@@ -247,5 +284,14 @@
     }
     .form__title {
         margin-top: 30px;
+    }
+    .form__button-container--fixed-medium {
+        margin-left: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        top: 430px;
+    }
+    .form__block--medium {
+        height: 100dvh;
     }
 }

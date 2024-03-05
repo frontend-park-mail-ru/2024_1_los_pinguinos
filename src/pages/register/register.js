@@ -1,5 +1,5 @@
 import registerTemplate from './register.hbs';
-import FormHandler from '../components/form/formHandler.js';
+import FormHandler from '../../components/form/formHandler.js';
 
 const formHandler = new FormHandler()
 
@@ -8,6 +8,7 @@ class Register {
         const totalSteps = 3;
         const formContext = {
             form : {
+                id: 'registration',
                 steps: 
                 [
                     {
@@ -27,14 +28,14 @@ class Register {
                         {
                             placeholder: `Ваш email`, 
                             type: 'email',
-                            pattern: ``,
-                            id: 'emailField',
+                            id: 'Email',
                             completion: 'email'
                         }, 
                         ]
                     },
                     {
                         stepId: 1,
+                        fixedSize: "medium",
                         formTitle: 'Давайте знакомиться',
                         formInfo: 'Заполните оставшиеся данные, чтобы другие люди могли узнать вас лучше',
                         formNavButton: {
@@ -50,8 +51,7 @@ class Register {
                             {
                                 label: 'Ваше имя', 
                                 type: 'text',
-                                pattern: ``,
-                                id: 'nameField',
+                                id: 'Name',
                                 completion: 'name'
                             },
                         ],
@@ -59,11 +59,11 @@ class Register {
                         [
                             {
                                 label: 'Дата рождения', 
-                                type: 'text',
-                                pattern: ``,
-                                id: 'birthDateField',
-                                completion: 'date',
-                                placeholder: '02.02.2022',
+                                type: 'date',
+                                id: 'Birthday',
+                                placeholder: '2022-02-22',
+                                min: '1940-01-01',
+                                max: '2999-01-01'
                             },
                         ],
                         choiceLabel: 'Ваш пол',
@@ -71,12 +71,12 @@ class Register {
                         choices: 
                         [
                             {
-                                id: 'sexMale',
+                                id: 'GenderM',
                                 text: 'М',
                                 round: 1
                             },
                             {
-                                id: 'sexFemale',
+                                id: 'GenderF',
                                 text: 'Ж',
                                 round: 1,
                             }
@@ -84,6 +84,7 @@ class Register {
                     },
                     {
                         stepId: 2,
+                        fixedSize: "medium",
                         formTitle: 'Чем будем заниматься?',
                         formInfo: 'Выберите какими типами активностей вы увлекаетесь',
                         formNavButton: {
@@ -143,7 +144,7 @@ class Register {
                         },
                         formButton: {
                             buttonText: 'Завершить',
-                            buttonId: 'continueButton3'
+                            buttonId: 'submit'
                         },
                         currentStep: `3/${totalSteps}`,
                         fields: 
@@ -151,8 +152,10 @@ class Register {
                             {
                                 label: "Ваш пароль",
                                 type: "password",
-                                id: "passwordField",
+                                id: "Password",
                                 completion: 'new-password',
+                                minlength: 8,
+                                maxlength: 32,
                                 password: 1
                             }
                         ]
@@ -165,6 +168,8 @@ class Register {
     
     async controller(){
         formHandler.setupDisplay();
+        formHandler.setupErrorHandling();
+        formHandler.setupCheckboxes();
     }
 
 }

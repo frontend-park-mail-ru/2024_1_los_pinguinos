@@ -1,5 +1,5 @@
 import loginTemplate from './login.hbs';
-import FormHandler from '../components/form/formHandler.js';
+import FormHandler from '../../components/form/formHandler.js';
 
 const formHandler = new FormHandler()
 
@@ -7,6 +7,7 @@ class Login {
     async render() {
         const formContext = {
             form : {
+                id: 'login',
                 steps: 
                 [
                     {
@@ -21,38 +22,26 @@ class Login {
                         },
                         formButton: {
                             buttonText: 'Продолжить',
-                            buttonId: 'continueButton0'
+                            buttonId: 'submit'
                         },
                         fields: [
                         {
                             placeholder: 'Ваш email', 
                             type: 'email',
-                            id: 'emailField',
+                            id: 'Email',
                             completion: 'email'
-                        }, 
-                        ]
-                    },
-                    {
-                        stepId: 1,
-                        formTitle: 'Вход',
-                        formNavButton: {
-                            buttonText: '<',
-                            buttonId: 'navButton1'
                         },
-                        formButton: {
-                            buttonText: 'Войти',
-                            buttonId: 'continueButton1'
-                        },
-                        fields: [
                         {
                             placeholder: 'Ваш пароль', 
                             type: 'password',
-                            id: 'passwordField',
+                            id: 'Password',
                             completion: 'current-password',
+                            minlength: 8,
+                            maxlength: 32,
                             password: 1
                         }, 
                         ]
-                    }
+                    },
                 ]
             }
         }
@@ -61,6 +50,7 @@ class Login {
 
     async controller() {
         formHandler.setupDisplay();
+        formHandler.setupErrorHandling();
     }
 }
 
