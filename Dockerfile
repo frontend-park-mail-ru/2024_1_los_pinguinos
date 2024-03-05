@@ -1,19 +1,9 @@
-# устанавливаем официальный образ Node.js
-FROM node:20-alpine
-
-# указываем рабочую (корневую) директорию
+FROM node:20
 WORKDIR /app
-
-# копируем основные файлы приложения в рабочую директорию
-COPY package.json package-lock.json ./
-
-# устанавливаем указанные зависимости NPM на этапе установки образа
+COPY package.json /app/package.json
 RUN npm install
+COPY . /app
 
-# после установки копируем все файлы проекта в корневую директорию
-COPY . ./
-
-# запускаем основной скрипт в момент запуска контейнера
-CMD npm start
+CMD ["npm", "run", "start"]
 
 EXPOSE 3000
