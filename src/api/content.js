@@ -1,15 +1,7 @@
-export const getPeople = async () => {
-    try {
-        const response = await fetch('https://swapi.co/api/people', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            credentials: 'include',
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        return error;
-    }
+const cardsURL = 'http://185.241.192.216:8080'
+
+export const getCards = async (lastCardId = 0) => {
+    const response = await fetch(`${cardsURL}?from=${lastCardId}`);
+    const cards = await response.json();
+    return cards;
 }

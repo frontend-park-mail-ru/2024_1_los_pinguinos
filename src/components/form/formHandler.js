@@ -72,6 +72,7 @@ class FormHandler {
                     currentFormStep.style.display = 'none';
                     prevFormStep.style.display = 'block';
                 }
+                
             });
         }
 
@@ -169,6 +170,8 @@ class FormHandler {
                         else if (form.id == 'login') {
                             authHandler.Login(formData);
                         }
+                        localStorage.setItem("token", true);
+                        window.location.href = '/main';
                     }
                 }
             });

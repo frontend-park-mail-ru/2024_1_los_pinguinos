@@ -7,10 +7,10 @@ import Landing from './src/pages/landing/landing.js';
 import './index.css';
 
 const routes = [
-    new Route('/', new Home()),
+    new Route('/', new Landing()),
     new Route('/login', new Login()),
     new Route('/register', new Register()),
-    new Route('/main', new Home()),
+    new Route('/main', new Home(), true),
     new Route('*', new Landing()),
 ];
 new Router(routes);

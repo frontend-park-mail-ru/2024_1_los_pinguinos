@@ -1,5 +1,5 @@
-const registrationURL = 'http://192.168.50.168:8080/registration'
-const authenticationURL = 'http://192.168.50.168:8080/login'
+const registrationURL = 'http://185.241.192.216:8080/registration'
+const authenticationURL = 'http://185.241.192.216:8080/login'
 
 class AuthHandler {
 
