@@ -1,25 +1,31 @@
 import main from './main.hbs';
 import Card from './components/card/card.js';
 import { persons } from './persons.js';
-import { getPeople } from '../../api/content.js';
+import { getCards } from '../../api/content.js';
 
 class Home {
   cardCount = 0;
-
   cardsPerLoad = 5;
 
-  appendNewCard() {
+  async appendNewCard() {
     const swiper = document.querySelector('#swiper');
     if(swiper === null) {
       return;
     }
-    console.log(persons, this.cardCount, this.cardsPerLoad);
+
+    if(this.cardCount >= persons.length) {
+        const newCards = await getCards(this.cardCount);
+        persons.push(...newCards);
+    }
+
+    const cardData = persons[this.cardCount % this.cardsPerLoad];
+
     const card = new Card({
       id: this.cardCount,
-      imageUrl: persons[this.cardCount % this.cardsPerLoad].imageUrl ? persons[this.cardCount % this.cardsPerLoad].imageUrl : '',
-      name: persons[this.cardCount % this.cardsPerLoad].name,
-      age: persons[this.cardCount % this.cardsPerLoad].age,
-      description: persons[this.cardCount % this.cardsPerLoad].description,
+      imageUrl: cardData.imageUrl ? cardData.imageUrl : '',
+      name: cardData.name,
+      age: cardData.age,
+      description: cardData.description,
       onDismiss: this.appendNewCard.bind(this),
       onLike: () => {
 
