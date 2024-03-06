@@ -12,7 +12,9 @@ class FormHandler {
     }
 
     getInterests() {
-        const items = authHandler.sendRequest('http://127.0.0.1:8080/register').then(result => {return result[0]});
+        let items;
+        authHandler.sendRequest('http://185.241.192.216:8080/registration').then(result => {items = result; console.log(items);});
+        
         return items;
     }
 
@@ -218,7 +220,7 @@ class FormHandler {
                                     formErrorMessage.remove();
                                 }
 
-                                if (!res[1]) {
+                                if (res === undefined) {
                                     if (formError.style.display === ''){
                                         formError.style.display = 'block';
                                     }
@@ -240,7 +242,7 @@ class FormHandler {
                                     formErrorMessage.remove();
                                 }
 
-                                if (!res[1]) {
+                                if (res === undefined) {
                                     if (formError.style.display === ''){
                                         formError.style.display = 'block';
                                     }
