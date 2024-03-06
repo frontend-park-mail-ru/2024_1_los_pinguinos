@@ -170,6 +170,7 @@ class Register {
         formHandler.setupDisplay();
         formHandler.setupErrorHandling();
         formHandler.setupCheckboxes();
+        formHandler.setupEnterEvents();
     }
 
 }

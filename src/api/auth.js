@@ -1,41 +1,56 @@
-const registrationURL = 'http://185.241.192.216:8080/registration'
-const authenticationURL = 'http://185.241.192.216:8080/login'
+const localhost = 'http://127.0.0.1:8080';
+const vm = 'http://185.241.192.216:8081';
+const baseURL = localhost;
+const registrationURL = baseURL + '/registration';
+const authenticationURL = baseURL + '/login';
+const logoutURL = baseURL + '/logout';
 
 class AuthHandler {
 
-    async postData(url, data, method='GET') {
+    async sendRequest(url = baseURL, data = {}, method='GET') {
         try {
-            const response = await fetch(url, {
-                method: method,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
+            let response;
+            if (method == 'GET') {
+                response = await fetch(url, {
+                    method: method,
+                    credentials: 'include',
+                });
+            } else if (method == 'POST') {
+                response = await fetch(url, {
+                    method: method,
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+            }
             if (!response.ok) {
                 throw new Error('Network response was greater than 200');
             }
             const jsonData = await response.json();
 
-            return jsonData;
+            return [jsonData, response.ok];
         } catch (error) {
             console.error('There was a problem with your fetch operation:', error);
+            return [null, false];
         }
     }
 
     async Register(formData) {
-        const result = await this.postData(registrationURL, formData, 'POST');
-        return result;
+        return await this.sendRequest(registrationURL, formData, 'POST');
     }
 
     async Login(formData) {
-        const result = await this.postData(authenticationURL, formData, 'POST');
-        return result;
+        return await this.sendRequest(authenticationURL, formData, 'POST');
     }
 
     async Logout() {
-        return;
+        return await this.sendRequest(logoutURL, '', 'GET');
+    }
+
+    async isAuthenticated() {
+        return await this.sendRequest();
     }
 }
 

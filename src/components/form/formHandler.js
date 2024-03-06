@@ -33,6 +33,19 @@ class FormHandler {
         return result;
     }
 
+    setupEnterEvents() {
+        const inputs = document.querySelectorAll('.form__input');
+        for (const input of inputs) {
+            const continueButton = this.nthAncestor(input, 4).querySelector('.form__button--continue');
+            input.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter'){
+                    event.preventDefault();
+                    continueButton.click();
+                }
+            });
+        }
+    }
+
     setupCheckboxes() {
         const checkboxes = document.querySelectorAll('.form__button--checkbox');
         const roundCheckboxes = document.querySelectorAll('.form__button--round');
@@ -64,6 +77,9 @@ class FormHandler {
     setupDisplay() {
         const navigationButtons = document.getElementsByClassName('form__button--nav');
         for (const button of navigationButtons) {
+            if (this.nthAncestor(button, 2).id == '0') {
+                button.style.display = 'none';
+            };
             button.addEventListener('click', () => {
                 const currentFormStep = document.getElementById(this.currentStep);
                 const prevFormStep = document.getElementById(this.currentStep - 1);
@@ -72,7 +88,6 @@ class FormHandler {
                     currentFormStep.style.display = 'none';
                     prevFormStep.style.display = 'block';
                 }
-                
             });
         }
 
@@ -99,17 +114,34 @@ class FormHandler {
             'text': 'Некорректное имя',
             'date': 'Некорректная дата',
             'multipleChoiceError': 'Нужно что-то выбрать',
-            'backendError': 'Что-то пошло не так'
-        }
+        };
+        const helpMessages = {
+            'password': 'Пароль должен быть длиной от 8 до 32 символов. Без emoji...',
+            'email': 'Формат email - example@mailservice.domain',
+            'text': 'Имя не должно содержать специальных символов',
+            'date': 'Дата в формате гггг-мм-дд',
+            'login': 'Неверный логин или пароль',
+            'registration': 'Что-то пошло не так',
+        };
         const formBlocks = document.querySelectorAll('.form__block');
         const form = document.querySelector('.form')
         const formField = form.querySelectorAll('.form__input');
+        const formError = document.querySelector('.form__error');
         for (const block of formBlocks) {
             const inputs = block.querySelectorAll('.form__input');
             const button = block.querySelector('.form__button--continue');
             let blockErr;
             button.addEventListener('click', () => {
                 blockErr = false;
+
+                const formErrorMessages = formError.querySelectorAll('p');
+                for (const formErrorMessage of formErrorMessages) {
+                    if (formError.style.display === 'block') {
+                        formError.style.display = '';
+                    }
+                    formErrorMessage.remove();
+                }
+
                 for (const input of inputs) {
                     const errorField = this.nthAncestor(input, 1).querySelector('.field__error');
                     if (input.id === 'Password') {
@@ -118,14 +150,22 @@ class FormHandler {
                         input.type = 'password';
                     }
                     const inputError = !this.validateInput(input.type, input.value);
+
                     let errorParagraph = errorField.querySelector('p') ?? null;
                     if (errorParagraph) {
-                        errorField.removeChild(errorParagraph);
+                        errorParagraph.remove();
                     }
                     if (inputError) {
+                        if (formError.style.display === ''){
+                            formError.style.display = 'block';
+                        }
                         errorParagraph = document.createElement('p');
                         errorParagraph.innerHTML = errorMessages[input.type];
                         errorField.appendChild(errorParagraph);
+
+                        const helpParagraph = document.createElement('p');
+                        helpParagraph.innerHTML = helpMessages[input.type];
+                        formError.appendChild(helpParagraph);
                         blockErr = true;
                     }
                 }
@@ -133,7 +173,7 @@ class FormHandler {
                 const errorField = this.nthAncestor(button, 1).querySelector('.field__error');
                 let errorParagraph = errorField.querySelector('p') ?? null;
                 if (errorParagraph) {
-                    errorField.removeChild(errorParagraph);
+                    errorParagraph.remove();
                 }
                 if (this.gender === null && (this.currentStep === this.genderStep) || 
                     (this.multipleChoice.length < 1 && this.currentStep == this.mcStep)) {
@@ -163,15 +203,50 @@ class FormHandler {
                         if (this.multipleChoice.length > 0) {
                             formData['Choices'] = this.multipleChoice;
                         }
-                        console.log(formData);
                         if (form.id == 'registration') {
-                            authHandler.Register(formData);
+                            authHandler.Register(formData).then((res) => {
+                                const formErrorMessages = formError.querySelectorAll('p');
+                                for (const formErrorMessage of formErrorMessages) {
+                                    if (formError.style.display === 'block') {
+                                        formError.style.display = '';
+                                    }
+                                    formErrorMessage.remove();
+                                }
+
+                                if (!res[1]) {
+                                    if (formError.style.display === ''){
+                                        formError.style.display = 'block';
+                                    }
+                                    const helpParagraph = document.createElement('p');
+                                    helpParagraph.innerHTML = helpMessages['registration'];
+                                    formError.appendChild(helpParagraph);
+                                } else {
+                                    window.location.href = '/main';
+                                }
+                            });
                         }
                         else if (form.id == 'login') {
-                            authHandler.Login(formData);
+                            authHandler.Login(formData).then((res) => {
+                                const formErrorMessages = formError.querySelectorAll('p');
+                                for (const formErrorMessage of formErrorMessages) {
+                                    if (formError.style.display === 'block') {
+                                        formError.style.display = '';
+                                    }
+                                    formErrorMessage.remove();
+                                }
+
+                                if (!res[1]) {
+                                    if (formError.style.display === ''){
+                                        formError.style.display = 'block';
+                                    }
+                                    const helpParagraph = document.createElement('p');
+                                    helpParagraph.innerHTML = helpMessages['login'];
+                                    formError.appendChild(helpParagraph);
+                                } else {
+                                    window.location.href = '/main';
+                                }
+                            });
                         }
-                        localStorage.setItem("token", true);
-                        window.location.href = '/main';
                     }
                 }
             });

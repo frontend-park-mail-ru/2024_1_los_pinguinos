@@ -51,6 +51,7 @@ class Login {
     async controller() {
         formHandler.setupDisplay();
         formHandler.setupErrorHandling();
+        formHandler.setupEnterEvents();
     }
 }
 

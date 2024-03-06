@@ -1,3 +1,7 @@
+import AuthHandler from "../../api/auth";
+
+const authHandler = new AuthHandler();
+
 export class Router {
   constructor(routes) {
     this.routes = routes;
@@ -24,27 +28,24 @@ export class Router {
     const route =
       this.routes.find((r) => r.path === location.pathname) ||
       this.routes.find((r) => r.path === '*');
+      console.log("ROUTE");
 
-    if (route.protect) {
+    if (route.protected) {
       console.log("i am in protected route");
-      const isAuth = await this.checkAuth();
-      if (!isAuth) {
-        console.log("i am in protected route");
-        this.navigateTo('/login');
-        console.log("i am in protected route");
-        return;
-      }
+      authHandler.isAuthenticated().then(result => {
+        if (!result[1]) { // либо я дурак либо бек не отвечает, почему??? T_T
+          console.log(result);
+          console.log("i am in protected route");
+          this.navigateTo('/login');
+          return;
+        }
+      });
     }
 
     document.getElementById('root').innerHTML = await route.component.render();
     if (route.component.controller) {
       await route.component.controller();
     }
-  }
-
-  async checkAuth() {
-    const token = localStorage.getItem('token');
-    return !!token;
   }
 }
 
