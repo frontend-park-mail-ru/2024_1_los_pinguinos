@@ -11,6 +11,11 @@ class FormHandler {
         this.multipleChoice = new Array();
     }
 
+    getInterests() {
+        const items = authHandler.sendRequest('http://127.0.0.1:8080/register').then(result => {return result[0]});
+        return items;
+    }
+
     validateInput(type, input) {
         const expressions = {
             password: /^.{8,32}$/,
@@ -92,7 +97,7 @@ class FormHandler {
         }
 
         const passwordDisplayBtn = document.querySelector('.form__button--icon');
-        const passwordField = document.querySelector('#Password');
+        const passwordField = document.querySelector('#password');
         passwordDisplayBtn.addEventListener('click', () => {
             if (passwordField.type === 'password') {
                 passwordField.type = 'text';
@@ -144,7 +149,7 @@ class FormHandler {
 
                 for (const input of inputs) {
                     const errorField = this.nthAncestor(input, 1).querySelector('.field__error');
-                    if (input.id === 'Password') {
+                    if (input.id === 'password') {
                         const passwordDisplayBtn = document.querySelector('.form__button--icon');
                         passwordDisplayBtn.style.background = 'var(--pswd--hidden)';
                         input.type = 'password';
@@ -198,10 +203,10 @@ class FormHandler {
                             formData[input.id] = input.value;
                         }
                         if (this.gender) {
-                            formData['Gender'] = this.gender;
+                            formData['gender'] = this.gender;
                         }
                         if (this.multipleChoice.length > 0) {
-                            formData['Choices'] = this.multipleChoice;
+                            formData['choices'] = this.multipleChoice;
                         }
                         if (form.id == 'registration') {
                             authHandler.Register(formData).then((res) => {

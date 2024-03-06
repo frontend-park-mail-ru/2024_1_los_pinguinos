@@ -5,6 +5,7 @@ const formHandler = new FormHandler()
 
 class Register {
     async render() {
+        const interests = formHandler.getInterests();
         const totalSteps = 3;
         const formContext = {
             form : {
@@ -28,7 +29,7 @@ class Register {
                         {
                             placeholder: `Ваш email`, 
                             type: 'email',
-                            id: 'Email',
+                            id: 'email',
                             completion: 'email'
                         }, 
                         ]
@@ -51,7 +52,7 @@ class Register {
                             {
                                 label: 'Ваше имя', 
                                 type: 'text',
-                                id: 'Name',
+                                id: 'name',
                                 completion: 'name'
                             },
                         ],
@@ -60,7 +61,7 @@ class Register {
                             {
                                 label: 'Дата рождения', 
                                 type: 'date',
-                                id: 'Birthday',
+                                id: 'birthday',
                                 placeholder: '2022-02-22',
                                 min: '1940-01-01',
                                 max: '2999-01-01'
@@ -152,7 +153,7 @@ class Register {
                             {
                                 label: "Ваш пароль",
                                 type: "password",
-                                id: "Password",
+                                id: "password",
                                 completion: 'new-password',
                                 minlength: 8,
                                 maxlength: 32,
