@@ -1,4 +1,4 @@
-const cardsURL = 'http://185.241.192.216:8080/';
+const cardsURL = 'http://185.241.192.216:8080/cards';
 
 // export const getCards = async (lastCardId = 0) => {
 //     const response = await fetch(`${cardsURL}/?last=${lastCardId}`);
