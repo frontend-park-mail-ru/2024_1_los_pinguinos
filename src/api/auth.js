@@ -14,6 +14,9 @@ class AuthHandler {
                 response = await fetch(url, {
                     method: method,
                     credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                 });
             } else if (method == 'POST') {
                 response = await fetch(url, {
@@ -50,7 +53,8 @@ class AuthHandler {
     }
 
     async isAuthenticated() {
-        return await this.sendRequest();
+        const result = await this.sendRequest();
+        return result[1];
     }
 }
 

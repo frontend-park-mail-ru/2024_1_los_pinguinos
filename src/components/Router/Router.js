@@ -33,7 +33,8 @@ export class Router {
     if (route.protected) {
       console.log("i am in protected route");
       authHandler.isAuthenticated().then(result => {
-        if (!result[1]) { // либо я дурак либо бек не отвечает, почему??? T_T
+        console.log(result);
+        if (!result) { // либо я дурак либо бек не отвечает, почему??? T_T
           console.log(result);
           console.log("i am in protected route");
           this.navigateTo('/login');
