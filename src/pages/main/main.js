@@ -6,7 +6,7 @@ import { getCards } from '../../api/content.js';
 class Home {
   cardCount = 0;
   cardsPerLoad = 5;
-
+  // const persons = [];
   async appendNewCard() {
     const swiper = document.querySelector('#swiper');
     if(swiper === null) {

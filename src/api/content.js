@@ -9,12 +9,12 @@ const cardsURL = 'http://185.241.192.216:8080';
 
 export const getCards = async (last = 0) => {
   try {
-    const response = await fetch(cardsURL + `?last=${last}`, {
+    const response = await fetch(cardsURL, {
       method: 'GET',
       credentials: 'include',
-      body: JSON.stringify({
-        last: last,
-      }),
+    //   body: JSON.stringify({
+    //     last: last,
+    //   }),
       headers: {
         'Content-Type': 'application/json',
       },
