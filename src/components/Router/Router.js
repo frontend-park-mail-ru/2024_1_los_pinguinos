@@ -34,10 +34,22 @@ export class Router {
       console.log("i am in protected route");
       authHandler.isAuthenticated().then(result => {
         console.log(result);
-        if (!result) { // либо я дурак либо бек не отвечает, почему??? T_T
+        if (!result) {
           console.log(result);
           console.log("i am in protected route");
           this.navigateTo('/login');
+          return;
+        }
+      });
+    }
+
+    if (route.redirectOnAuth !== null) {
+      authHandler.isAuthenticated().then(result => {
+        console.log(result);
+        if (result) {
+          console.log(result);
+          console.log("i am on redirection route");
+          this.navigateTo(route.redirectOnAuth);
           return;
         }
       });
@@ -52,9 +64,10 @@ export class Router {
 
 // Route.js
 export class Route {
-  constructor(path, component, protect = false) {
+  constructor(path, component, protect = false, redirectURL = null) {
     this.path = path;
     this.component = component;
     this.protected = protect;
+    this.redirectOnAuth = redirectURL;
   }
 }

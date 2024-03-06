@@ -8,8 +8,8 @@ import './index.css';
 
 const routes = [
     new Route('/', new Landing()),
-    new Route('/login', new Login()),
-    new Route('/register', new Register()),
+    new Route('/login', new Login(), false, '/main'),
+    new Route('/register', new Register(), false, '/main'),
     new Route('/main', new Home(), true),
     new Route('*', new Landing()),
 ];

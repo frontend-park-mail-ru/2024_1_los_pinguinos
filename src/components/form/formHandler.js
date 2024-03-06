@@ -221,7 +221,7 @@ class FormHandler {
                                     helpParagraph.innerHTML = helpMessages['registration'];
                                     formError.appendChild(helpParagraph);
                                 } else {
-                                    window.location.href = '/main';
+                                    window.location.replace("http://185.241.192.216:8081/main")
                                 }
                             });
                         }
@@ -243,7 +243,7 @@ class FormHandler {
                                     helpParagraph.innerHTML = helpMessages['login'];
                                     formError.appendChild(helpParagraph);
                                 } else {
-                                    window.location.href = '/main';
+                                    window.location.replace("http://185.241.192.216:8081/main")
                                 }
                             });
                         }

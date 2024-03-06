@@ -1,6 +1,6 @@
 const localhost = 'http://127.0.0.1:8080';
-const vm = 'http://185.241.192.216:8081';
-const baseURL = localhost;
+const vm = 'http://185.241.192.216:8080';
+const baseURL = vm;
 const registrationURL = baseURL + '/registration';
 const authenticationURL = baseURL + '/login';
 const logoutURL = baseURL + '/logout';
@@ -28,14 +28,16 @@ class AuthHandler {
                     body: JSON.stringify(data)
                 });
             }
-            if (!response.ok) {
+            if (response.status > 200) {
+                console.log(response.status);
                 throw new Error('Network response was greater than 200');
             }
             const jsonData = await response.json();
-
-            return [jsonData, response.ok];
+            console.log(response.status);
+            return [jsonData, response.status == 200];
         } catch (error) {
             console.error('There was a problem with your fetch operation:', error);
+            console.log(response.status);
             return [null, false];
         }
     }
