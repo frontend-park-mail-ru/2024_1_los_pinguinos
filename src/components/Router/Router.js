@@ -30,9 +30,11 @@ export class Router {
       this.routes.find((r) => r.path === '*');
       console.log("ROUTE");
 
+    document.getElementById('root').innerHTML = await route.component.render();
+
     if (route.protected) {
       console.log("i am in protected route");
-      authHandler.isAuthenticated().then(result => {
+      await authHandler.isAuthenticated().then(result => {
         console.log(result);
         if (result === undefined) {
           console.log("i am in protected route");
@@ -43,7 +45,7 @@ export class Router {
     }
 
     if (route.redirectOnAuth !== null) {
-      authHandler.isAuthenticated().then(result => {
+      await authHandler.isAuthenticated().then(result => {
         if (result !== undefined) {
           console.log(result);
           console.log("i am on redirection route");
@@ -53,7 +55,6 @@ export class Router {
       });
     }
 
-    document.getElementById('root').innerHTML = await route.component.render();
     if (route.component.controller) {
       await route.component.controller();
     }
