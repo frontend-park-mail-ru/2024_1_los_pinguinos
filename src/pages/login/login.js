@@ -28,13 +28,13 @@ class Login {
                         {
                             placeholder: 'Ваш email', 
                             type: 'email',
-                            id: 'Email',
+                            id: 'email',
                             completion: 'email'
                         },
                         {
                             placeholder: 'Ваш пароль', 
                             type: 'password',
-                            id: 'Password',
+                            id: 'password',
                             completion: 'current-password',
                             minlength: 8,
                             maxlength: 32,
