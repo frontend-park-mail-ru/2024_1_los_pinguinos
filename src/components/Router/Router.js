@@ -34,8 +34,7 @@ export class Router {
       console.log("i am in protected route");
       authHandler.isAuthenticated().then(result => {
         console.log(result);
-        if (!result) {
-          console.log(result);
+        if (result === undefined) {
           console.log("i am in protected route");
           this.navigateTo('/login');
           return;
@@ -45,8 +44,7 @@ export class Router {
 
     if (route.redirectOnAuth !== null) {
       authHandler.isAuthenticated().then(result => {
-        console.log(result);
-        if (result) {
+        if (result !== undefined) {
           console.log(result);
           console.log("i am on redirection route");
           this.navigateTo(route.redirectOnAuth);

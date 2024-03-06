@@ -28,17 +28,15 @@ class AuthHandler {
                     body: JSON.stringify(data)
                 });
             }
-            if (response.status > 200) {
-                console.log(response.status);
-                throw new Error('Network response was greater than 200');
+            if (!response.ok) {
+                console.log('err: ', response.status);
+                throw new Error('Network response was not sucessfull');
             }
             const jsonData = await response.json();
-            console.log(response.status);
-            return [jsonData, response.status == 200];
+            return jsonData;
         } catch (error) {
             console.error('There was a problem with your fetch operation:', error);
-            console.log(response.status);
-            return [null, false];
+            return undefined;
         }
     }
 
@@ -55,8 +53,7 @@ class AuthHandler {
     }
 
     async isAuthenticated() {
-        const result = await this.sendRequest();
-        return result[1];
+        return await this.sendRequest();
     }
 }
 
