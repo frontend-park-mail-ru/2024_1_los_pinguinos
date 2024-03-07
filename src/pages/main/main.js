@@ -9,12 +9,15 @@ class Home {
   // const persons = [];
   async appendNewCard() {
     const swiper = document.querySelector('#swiper');
-    if(swiper === null) {
+    if (swiper === null) {
       return;
     }
 
-    if(this.cardCount >= persons.length) {
-        const newCards = await getCards(this.cardCount);
+    if (this.cardCount >= persons.length) {
+      console.log("im tryung to get new cards");
+      const newCards = await getCards();
+        console.log("new cards");
+        console.log(newCards);
         persons.push(...newCards);
     }
 
@@ -48,7 +51,7 @@ class Home {
   }
 
   async controller() {
-    for (let i = 0; i < this.cardsPerLoad; i++) {
+    for (let i = 0; i < persons.length; i++) {
       this.appendNewCard();
     }
   }

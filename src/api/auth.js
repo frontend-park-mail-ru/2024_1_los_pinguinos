@@ -4,6 +4,7 @@ const baseURL = vm;
 const registrationURL = baseURL + '/registration';
 const authenticationURL = baseURL + '/login';
 const logoutURL = baseURL + '/logout';
+const isAuthURL = baseURL + '/isAuth';
 
 class AuthHandler {
 
@@ -53,7 +54,7 @@ class AuthHandler {
     }
 
     async isAuthenticated() {
-        return await this.sendRequest();
+        return await this.sendRequest(isAuthURL);
     }
 }
 
