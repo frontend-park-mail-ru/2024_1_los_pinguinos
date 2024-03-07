@@ -5,10 +5,25 @@
 @import url("/src/pages/main/components/card/card.css");
 @import url("/src/pages/landing/landing.css");
 
+::-webkit-scrollbar {
+  /* chrome based */
+  width: 0px;
+  /* ширина scrollbar'a */
+  background: transparent;
+  /* опционально */
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  -ms-overflow-style: none;
+  /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 html,
@@ -20,7 +35,7 @@ body {
 }
 
 body {
-  background: url(background.webp) no-repeat center center fixed; 
+  background: url(background.webp) no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -31,7 +46,7 @@ body {
 }
 
 #root {
-  justify-content: center;
+  /* justify-content: center; */
   display: flex;
   flex-direction: column;
   width: 100%;

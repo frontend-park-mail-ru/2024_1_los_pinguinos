@@ -1,5 +1,8 @@
 .header {
     display: flex;
+    padding: 20px;
+    align-items: end;
+    justify-content: end;
 }
 
 .header__menu {
@@ -15,9 +18,9 @@
     font-size: 34px;
 }
 
-.header__button {
-    width: 175px;
-    height: 65px;
+#header-button {
+    width: 283px;
+    height: 84px;
     border-radius: 83px;
     gap: 10px;
     background: #7DE85A;
@@ -27,4 +30,52 @@
     letter-spacing: 0em;
     text-align: center;
     cursor: pointer;
+}
+
+@media screen and (max-width: 1440px) {
+
+    #header-button {
+        width: 240px;
+        height: 67px;
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+
+    #header-button {
+        width: 200px;
+        height: 55px;
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    #header-button {
+        width: 160px;
+        height: 50px;
+        font-size: 18px;
+    }
+
+}
+
+@media screen and (max-width: 425px) {
+
+    #header-button {
+        width: 100px;
+        height: 40px;
+        font-size: 10px;
+    }
+
+}
+
+@media screen and (max-width: 320px) {
+
+    #header-button {
+        width: 100px;
+        height: 40px;
+        font-size: 10px;
+    }
+
 }

@@ -1,4 +1,11 @@
-const button = document.getElementById("header__button");
-button.addEventListener('click', () => {
-    
-})
+// const button = document.getElementById('header-button');
+// button.addEventListener('click', () => {
+//     window.location.href = '/login';
+// });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('header-button');
+    button.addEventListener('click', () => {
+        window.location.href = '/login';
+    });
+});
