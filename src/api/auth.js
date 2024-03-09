@@ -1,4 +1,4 @@
-import router from "../../index.js";
+import router from '../../index.js';
 
 class AuthHandler {
 
@@ -20,7 +20,7 @@ class AuthHandler {
                     method: method,
                     credentials: 'include',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
                 });
             } else if (method == 'POST') {
@@ -28,9 +28,9 @@ class AuthHandler {
                     method: method,
                     credentials: 'include',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data),
                 });
             }
             if (!response.ok) {
@@ -40,11 +40,14 @@ class AuthHandler {
                 }
                 throw new Error('Network response was not sucessfull');
             }
-            localStorage.setItem('sid', true);
+            if (!(url === this.registrationURL && method === 'GET')){
+                localStorage.setItem('sid', true);
+            }
             if (url === this.logoutURL) {
                 localStorage.removeItem('sid');
             }
             const jsonData = await response.json();
+
             return jsonData;
         } catch (error) {
             return undefined;
@@ -61,6 +64,7 @@ class AuthHandler {
 
     async Logout() {
         router.navigateTo('/');
+
         return await this.sendRequest(this.logoutURL);
     }
 }
