@@ -11,7 +11,7 @@ class Login {
                 steps: 
                 [
                     {
-                        stepId: 0,
+                        stepId: 'step0',
                         formTitle: 'Вход',
                         footerInfo: 'Нет аккаунта?',
                         footerLink: '/register',

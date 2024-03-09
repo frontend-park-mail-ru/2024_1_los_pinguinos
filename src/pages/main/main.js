@@ -14,10 +14,7 @@ class Home {
     }
 
     if (this.cardCount >= persons.length) {
-      console.log("im tryung to get new cards");
       const newCards = await getCards();
-        console.log("new cards");
-        console.log(newCards);
         persons.push(...newCards);
     }
 

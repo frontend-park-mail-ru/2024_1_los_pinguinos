@@ -1,6 +1,4 @@
-import AuthHandler from "../../api/auth";
-
-const authHandler = new AuthHandler();
+import authHandler from "../../api/auth";
 
 export class Router {
   constructor(routes) {
@@ -28,35 +26,23 @@ export class Router {
     const route =
       this.routes.find((r) => r.path === location.pathname) ||
       this.routes.find((r) => r.path === '*');
-      console.log("ROUTE");
 
-    document.getElementById('root').innerHTML = await route.component.render();
-
-    if (route.protected) {
-      console.log("i am in protected route");
-      await authHandler.isAuthenticated().then(result => {
-        console.log(result);
-        if (result === undefined) {
-          console.log("i am in protected route");
-          this.navigateTo('/login');
-          return;
-        }
-      });
-    }
-
-    if (route.redirectOnAuth !== null) {
-      await authHandler.isAuthenticated().then(result => {
-        if (result !== undefined) {
-          console.log(result);
-          console.log("i am on redirection route");
-          this.navigateTo(route.redirectOnAuth);
-          return;
-        }
-      });
-    }
-
+    const rootHTML = document.getElementById('root');
+    rootHTML.innerHTML = await route.component.render();
     if (route.component.controller) {
       await route.component.controller();
+    }
+
+    const authStatus = localStorage.getItem('sid') === 'true';
+    if (route.protected) {
+      if (!authStatus) {
+        this.navigateTo('/login');
+      }
+    }
+    if (route.redirectOnAuth !== null) {
+      if (authStatus) {
+        this.navigateTo(route.redirectOnAuth);
+      }
     }
   }
 }

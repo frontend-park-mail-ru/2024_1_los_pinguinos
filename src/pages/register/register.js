@@ -1,11 +1,18 @@
 import registerTemplate from './register.hbs';
 import FormHandler from '../../components/form/formHandler.js';
 
-const formHandler = new FormHandler()
+const formHandler = new FormHandler();
+
 
 class Register {
     async render() {
-        const interests = formHandler.getInterests();
+        const data = await formHandler.getInterests();
+        let interests;
+        if (data) {
+            interests = JSON.parse(data);
+        } else {
+            interests = [];
+        }
         const totalSteps = 3;
         const formContext = {
             form : {
@@ -13,7 +20,7 @@ class Register {
                 steps: 
                 [
                     {
-                        stepId: 0,
+                        stepId: 'step0',
                         formTitle: 'Регистрация',
                         footerInfo: 'Уже есть аккаунт?',
                         footerLink: '/login',
@@ -35,7 +42,7 @@ class Register {
                         ]
                     },
                     {
-                        stepId: 1,
+                        stepId: 'step1',
                         fixedSize: "medium",
                         formTitle: 'Давайте знакомиться',
                         formInfo: 'Заполните оставшиеся данные, чтобы другие люди могли узнать вас лучше',
@@ -72,19 +79,19 @@ class Register {
                         choices: 
                         [
                             {
-                                id: 'GenderM',
-                                text: 'М',
+                                ID: 'GenderM',
+                                Name: 'М',
                                 round: 1
                             },
                             {
-                                id: 'GenderF',
-                                text: 'Ж',
+                                ID: 'GenderF',
+                                Name: 'Ж',
                                 round: 1,
                             }
                         ]
                     },
                     {
-                        stepId: 2,
+                        stepId: 'step2',
                         fixedSize: "medium",
                         formTitle: 'Чем будем заниматься?',
                         formInfo: 'Выберите какими типами активностей вы увлекаетесь',
@@ -98,46 +105,10 @@ class Register {
                         currentStep: `2/${totalSteps}`,
                         list: 1,
                         choices: 
-                        [
-                            {
-                                id: 'activity1',
-                                text: 'спортзал'
-                            },
-                            {
-                                id: 'activity2',
-                                text: 'бег'
-                            },
-                            {
-                                id: 'activity3',
-                                text: 'плавание'
-                            },
-                            {
-                                id: 'activity4',
-                                text: 'йога'
-                            },
-                            {
-                                id: 'activity5',
-                                text: 'велоспорт'
-                            },
-                            {
-                                id: 'activity6',
-                                text: 'каноэ'
-                            },{
-                                id: 'activity7',
-                                text: 'калистеника'
-                            },
-                            {
-                                id: 'activity8',
-                                text: 'фитнес'
-                            }, 
-                            {
-                                id: 'activity9',
-                                text: 'бокс'
-                            }
-                        ]
+                        interests
                     },
                     {
-                        stepId: 3,
+                        stepId: 'step3',
                         formTitle: 'Почти закончили',
                         formInfo: 'Остался последний шаг, введите пароль',
                         formNavButton: {

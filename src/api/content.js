@@ -1,6 +1,6 @@
-const cardsURL = 'http://185.241.192.216:8080/cards';
+const cardsURL = 'http://192.168.50.168:8080/cards';
 
-import AuthHandler from "./auth";
+import authHandler from "./auth";
 // export const getCards = async (lastCardId = 0) => {
 //     const response = await fetch(`${cardsURL}/?last=${lastCardId}`);
 //     const cards = await response.json();
@@ -39,7 +39,7 @@ import AuthHandler from "./auth";
 //     }
 // };
 
-const cardHandler = new AuthHandler();
+const cardHandler = authHandler;
 
 export const getCards = cardHandler.sendRequest(cardsURL).then((response) => {
     console.log(response);

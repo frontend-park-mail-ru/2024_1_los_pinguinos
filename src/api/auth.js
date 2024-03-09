@@ -1,14 +1,18 @@
-const localhost = 'http://127.0.0.1:8080';
-const vm = 'http://185.241.192.216:8080';
-const baseURL = vm;
-const registrationURL = baseURL + '/registration';
-const authenticationURL = baseURL + '/login';
-const logoutURL = baseURL + '/logout';
-const isAuthURL = baseURL + '/isAuth';
+import router from "../../index.js";
 
 class AuthHandler {
 
-    async sendRequest(url = baseURL, data = {}, method='GET') {
+    constructor() {
+        this.localhost = 'http://192.168.50.168:8080';
+        this.vm = 'http://185.241.192.216:8080';
+        this.baseURL = this.localhost;
+        this.registrationURL = this.baseURL + '/registration';
+        this.authenticationURL =this.baseURL + '/login';
+        this.logoutURL = this.baseURL + '/logout';
+        this.isAuthURL = this.baseURL + '/isAuth';
+    }
+
+    async sendRequest(url = this.baseURL, data = {}, method='GET') {
         try {
             let response;
             if (method == 'GET') {
@@ -30,32 +34,36 @@ class AuthHandler {
                 });
             }
             if (!response.ok) {
-                console.log('err: ', response.status);
+                localStorage.setItem('sid', false);
+                if (url !== this.authenticationURL && url !== this.registrationURL) {
+                    router.navigateTo('/login');
+                }
                 throw new Error('Network response was not sucessfull');
+            }
+            localStorage.setItem('sid', true);
+            if (url === this.logoutURL) {
+                localStorage.removeItem('sid');
             }
             const jsonData = await response.json();
             return jsonData;
         } catch (error) {
-            console.error('There was a problem with your fetch operation:', error);
             return undefined;
         }
     }
 
     async Register(formData) {
-        return await this.sendRequest(registrationURL, formData, 'POST');
+        return await this.sendRequest(this.registrationURL, formData, 'POST');
     }
 
     async Login(formData) {
-        return await this.sendRequest(authenticationURL, formData, 'POST');
+        return await this.sendRequest(this.authenticationURL, formData, 'POST');
     }
 
     async Logout() {
-        return await this.sendRequest(logoutURL, '', 'GET');
-    }
-
-    async isAuthenticated() {
-        return await this.sendRequest(isAuthURL);
+        router.navigateTo('/');
+        return await this.sendRequest(this.logoutURL);
     }
 }
 
-export default AuthHandler;
+const authHandler = new AuthHandler();
+export default authHandler;

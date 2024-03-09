@@ -13,4 +13,5 @@ const routes = [
     new Route('/main', new Home(), true),
     new Route('*', new Landing()),
 ];
-new Router(routes);
+const router = new Router(routes);
+export default router;

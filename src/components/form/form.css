@@ -10,15 +10,27 @@
     --form__text--primary: #FFFFFF;
     --form__text--secondary: #BBBBBB;
     --form__text--input: #000000;
-    --form__text--error: red;
+    --form__text--error: #EA5B5B;
 
     --form__button--primary: #7DE85A;
-    --form__button--hover: #2DB200;
+    --form__button--hover: #1ED760;
+    --form__button--active: #169C46;
+    --form__button--focus: black;
+
+    --form__input--active: ;
+    --form__input--focus: ;
+    --form__input--bgr: rgb(217, 217, 217);
+    --form__input--hover: white;
 
     --focused: #363636;
 
     --pswd--hidden: url(eyeInv.png);
     --pswd--visible: url(eyeVis.png);
+
+    --form__item--opacity: opacity 0.2s ease-in-out;
+    --form__item--background-image: background-image 0.2s ease-in-out;
+    --form__item--background-color: background-color 0.2s ease-in-out;
+    --form__item--outline: #169C46;
     
 }
 
@@ -37,27 +49,26 @@
     
     background: var(--form--background);
     color: var(--form__text--primary);
-
-    display: grid;
     position: relative;
 }
 
 .form__error {
     background: var(--form--background);
     color: var(--form__text--error);
-    display: none;
     text-align: center;
     width: 100%;
     height: auto;
     border-radius: 10px;
     position: absolute;
     bottom: -100px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 10px;
+    transition: var(--form__item--opacity);
+    font-size: 0.9rem;
 }
 
 .form__block {
     position: relative;
+    display: grid;
     width: 100%;
     height: 100%;
     display: none;
@@ -65,6 +76,7 @@
     padding-right: 90px;
     padding-top: 30px;
     padding-bottom: 40px;
+    transition: var(--form__item--opacity);
 }
 
 .form__block--medium {
@@ -107,6 +119,12 @@
     color: var(--form__text--secondary);
 }
 
+.form__link:focus {
+    outline-width: thin;
+    outline-color: grey;
+    outline-style: solid;
+}
+
 .form__input-container {
     display: flex;
     flex-flow: row;
@@ -134,18 +152,21 @@
 
 .field__error {
     position: absolute;
-    color: red;
+    color: var(--form__text--error);
     width: 100%;
     text-align: center;
     bottom: -22px;
+    transition: var(--form__item--opacity);
 }
 
 .form__input {
+    background-color: var(--form__input--bgr);
     width: 100%;
     height: 47px;
     border-radius: 83px;
     border: none;
     padding-left: 30px;
+    transition: var(--form__item--background-color);
 }
 
 .form__input--icon {
@@ -193,8 +214,14 @@
 }
 
 .form__input:focus {
-    outline: none;
-    box-shadow: inset 0 0 0 2px var(--focused);
+    outline-style: solid;
+    outline-width: medium;
+    outline-color: var(--form__button--primary);
+    background-color: var(--form__input--hover);
+}
+
+.form__input:hover {
+    background-color: var(--form__input--hover);
 }
 
 .form__step-count {
@@ -204,12 +231,20 @@
 }
 
 .form__button {
+    color: var(--form__text--input);
     background: none;
     border: none;
     display: block;
     place-self: center;
     cursor: pointer;
 }
+
+.form__button:focus {
+    outline-style: solid;
+    outline-width: medium;
+    outline-color: var(--form__item--outline);
+}
+
 
 .form__button--continue {
     color: var(--form__text--input);
@@ -219,12 +254,30 @@
     border-radius: 83px;
     font-size: large;
     font-weight: 700;
+    transition: var(--form__item--background-color);
 }
+
+.form__button--continue:hover {
+   background-color: var(--form__button--hover);
+}
+
+.form__button--continue:active {
+    background-color: var(--form__button--active);
+ }
 
 .form__button--nav {
     background: url(./arrow.png) no-repeat center center;
     width: 20px;
     height: 18px;
+    transition: var(--form__item--opacity);
+}
+
+.form__button--nav:hover {
+    opacity: 0.5;
+}
+
+.form__button--nav:focus {
+    outline: none;
 }
 
 .form__button--checkbox {
@@ -234,7 +287,15 @@
     margin-bottom: 13px;
     padding: 8px 13px;
     text-align: center;
-    transition: background-color 0.25s ease-in-out;
+    transition: var(--form__item--background-color);
+}
+
+.form__button--checkbox:hover {
+    background-color: var(--form__button--hover);
+}
+
+.form__button--checkbox:focus {
+    outline: none;
 }
 
 .form__button--checkbox-selected {
@@ -258,6 +319,11 @@
     bottom: 11.5px;
     right: 30px;
     opacity: 0.5;
+    transition: var(--form__item--background-image);
+}
+
+.form__button--icon:focus {
+    outline: none;
 }
 
 .form__button-container--fixed-medium {
@@ -276,24 +342,28 @@
     color: var(--form__text--secondary);
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
+input[type="date"] {
+  padding-right: 20px;
 }
 
 @media only screen and (max-width: 896px) {
     .form {
         width: 100dvw;
-        height: 100dvh;
+        height: 100%;
         border-radius: 0;
-    }
-
-    .form__input-container {
-        width: 325px;
+        overflow: auto;
     }
 
     .form__button--continue{
-        width: 325px;
+        min-width: 325px;
+        max-width: 325px;
     }
+
+    .form__input-container {
+        min-width: 325px;
+        max-width: 325px;
+    }
+
     .form__block {
         padding-left: 20px;
         padding-right: 20px;
@@ -315,4 +385,38 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         top: 550px;
         bottom: 100px;
     }
+}
+
+@media only screen and (max-width: 345px) {
+    .form__button--continue{
+        min-width: 220px;
+        max-width: 220px;
+    }
+    .form__error {
+        position: sticky;
+        margin-top: -50px;
+    }
+
+    .form__input-container {
+        min-width: 220px;
+        max-width: 220px;
+        flex-flow: column;
+        justify-content: flex-start;
+    }
+
+    .form__checkbox-container--side {
+        padding-left: 0;
+    }
+
+    .form__button-container--fixed-medium {
+        margin-left: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        top: 550px;
+    }
+}
+
+
+.form__block--hidden {
+    opacity: 0;
 }
