@@ -3,7 +3,6 @@ import FormHandler from '../../components/form/formHandler.js';
 
 const formHandler = new FormHandler();
 
-
 class Register {
     async render() {
         const data = await formHandler.getInterests();
