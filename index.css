@@ -1,4 +1,5 @@
 @import url(./src/components/form/form.css);
+@import url(./src/pages/404/404.css);
 @import url("/src/pages/main/main.css");
 @import url("/src/components/navbar/navbar.css");
 @import url("/src/components/header/header.css");

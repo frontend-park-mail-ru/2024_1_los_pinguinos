@@ -1,15 +1,25 @@
 import router from '../../index.js';
 
+const localhost = 'http://192.168.50.168:8080';
+const vm = 'http://185.241.192.216:8080';
+const baseURL = localhost;
+const registrationURL = baseURL + '/registration';
+const authenticationURL = baseURL + '/login';
+const logoutURL = baseURL + '/logout';
+const isAuthURL = baseURL + '/isAuth';
+const cardsURL = baseURL + '/cards';
+
 class AuthHandler {
 
     constructor() {
-        this.localhost = 'http://192.168.50.168:8080';
-        this.vm = 'http://185.241.192.216:8080';
-        this.baseURL = this.localhost;
-        this.registrationURL = this.baseURL + '/registration';
-        this.authenticationURL =this.baseURL + '/login';
-        this.logoutURL = this.baseURL + '/logout';
-        this.isAuthURL = this.baseURL + '/isAuth';
+        this.localhost = localhost;
+        this.vm = vm;
+        this.baseURL = baseURL;
+        this.registrationURL = registrationURL;
+        this.authenticationURL = authenticationURL;
+        this.logoutURL = logoutURL;
+        this.isAuthURL = isAuthURL;
+        this.cardsURL = cardsURL;
     }
 
     async sendRequest(url = this.baseURL, data = {}, method='GET') {
@@ -35,7 +45,7 @@ class AuthHandler {
             }
             if (!response.ok) {
                 localStorage.setItem('sid', false);
-                if (url !== this.authenticationURL && url !== this.registrationURL) {
+                if (url !== this.authenticationURL && url !== this.registrationURL && url != this.logoutURL) {
                     router.navigateTo('/login');
                 }
                 throw new Error('Network response was not sucessfull');

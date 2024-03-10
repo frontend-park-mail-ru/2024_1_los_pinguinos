@@ -24,8 +24,8 @@
 
     --focused: #363636;
 
-    --pswd--hidden: url(eyeInv.png);
-    --pswd--visible: url(eyeVis.png);
+    --pswd--hidden: url(eyeInv.webp);
+    --pswd--visible: url(eyeVis.webp);
 
     --form__item--opacity: opacity 0.2s ease-in-out;
     --form__item--background-image: background-image 0.2s ease-in-out;
@@ -347,7 +347,7 @@ input[type="date"] {
 @media only screen and (max-width: 896px) {
     .form {
         width: 100dvw;
-        height: 100%;
+        height: 100dvh;
         border-radius: 0;
         overflow: auto;
     }

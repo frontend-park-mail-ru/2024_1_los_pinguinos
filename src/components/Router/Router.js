@@ -1,4 +1,4 @@
-import authHandler from "../../api/auth";
+import authHandler from '../../api/auth';
 
 export class Router {
   constructor(routes) {
@@ -31,6 +31,12 @@ export class Router {
     rootHTML.innerHTML = await route.component.render();
     if (route.component.controller) {
       await route.component.controller();
+    }
+    const logoutButton = document.getElementById('header__button');
+    if (logoutButton) {
+      logoutButton.addEventListener('click', () => {
+        authHandler.Logout();
+      });
     }
 
     const authStatus = localStorage.getItem('sid') === 'true';
