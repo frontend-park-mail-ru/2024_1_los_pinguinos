@@ -1,17 +1,25 @@
 import registerTemplate from './register.hbs';
-import FormHandler from '../components/form/formHandler.js';
+import FormHandler from '../../components/form/formHandler.js';
 
-const formHandler = new FormHandler()
+const formHandler = new FormHandler();
 
 class Register {
     async render() {
+        const data = await formHandler.getInterests();
+        let interests;
+        if (data) {
+            interests = JSON.parse(data);
+        } else {
+            interests = [];
+        }
         const totalSteps = 3;
         const formContext = {
             form : {
+                id: 'registration',
                 steps: 
                 [
                     {
-                        stepId: 0,
+                        stepId: 'step0',
                         formTitle: 'Регистрация',
                         footerInfo: 'Уже есть аккаунт?',
                         footerLink: '/login',
@@ -27,14 +35,14 @@ class Register {
                         {
                             placeholder: `Ваш email`, 
                             type: 'email',
-                            pattern: ``,
-                            id: 'emailField',
+                            id: 'email',
                             completion: 'email'
                         }, 
                         ]
                     },
                     {
-                        stepId: 1,
+                        stepId: 'step1',
+                        fixedSize: "medium",
                         formTitle: 'Давайте знакомиться',
                         formInfo: 'Заполните оставшиеся данные, чтобы другие люди могли узнать вас лучше',
                         formNavButton: {
@@ -50,8 +58,7 @@ class Register {
                             {
                                 label: 'Ваше имя', 
                                 type: 'text',
-                                pattern: ``,
-                                id: 'nameField',
+                                id: 'name',
                                 completion: 'name'
                             },
                         ],
@@ -59,11 +66,11 @@ class Register {
                         [
                             {
                                 label: 'Дата рождения', 
-                                type: 'text',
-                                pattern: ``,
-                                id: 'birthDateField',
-                                completion: 'date',
-                                placeholder: '02.02.2022',
+                                type: 'date',
+                                id: 'birthday',
+                                placeholder: '2022-02-22',
+                                min: '1940-01-01',
+                                max: '2999-01-01'
                             },
                         ],
                         choiceLabel: 'Ваш пол',
@@ -71,19 +78,20 @@ class Register {
                         choices: 
                         [
                             {
-                                id: 'sexMale',
-                                text: 'М',
+                                ID: 'GenderM',
+                                Name: 'М',
                                 round: 1
                             },
                             {
-                                id: 'sexFemale',
-                                text: 'Ж',
+                                ID: 'GenderF',
+                                Name: 'Ж',
                                 round: 1,
                             }
                         ]
                     },
                     {
-                        stepId: 2,
+                        stepId: 'step2',
+                        fixedSize: "medium",
                         formTitle: 'Чем будем заниматься?',
                         formInfo: 'Выберите какими типами активностей вы увлекаетесь',
                         formNavButton: {
@@ -96,46 +104,10 @@ class Register {
                         currentStep: `2/${totalSteps}`,
                         list: 1,
                         choices: 
-                        [
-                            {
-                                id: 'activity1',
-                                text: 'спортзал'
-                            },
-                            {
-                                id: 'activity2',
-                                text: 'бег'
-                            },
-                            {
-                                id: 'activity3',
-                                text: 'плавание'
-                            },
-                            {
-                                id: 'activity4',
-                                text: 'йога'
-                            },
-                            {
-                                id: 'activity5',
-                                text: 'велоспорт'
-                            },
-                            {
-                                id: 'activity6',
-                                text: 'каноэ'
-                            },{
-                                id: 'activity7',
-                                text: 'калистеника'
-                            },
-                            {
-                                id: 'activity8',
-                                text: 'фитнес'
-                            }, 
-                            {
-                                id: 'activity9',
-                                text: 'бокс'
-                            }
-                        ]
+                        interests
                     },
                     {
-                        stepId: 3,
+                        stepId: 'step3',
                         formTitle: 'Почти закончили',
                         formInfo: 'Остался последний шаг, введите пароль',
                         formNavButton: {
@@ -143,7 +115,7 @@ class Register {
                         },
                         formButton: {
                             buttonText: 'Завершить',
-                            buttonId: 'continueButton3'
+                            buttonId: 'submit'
                         },
                         currentStep: `3/${totalSteps}`,
                         fields: 
@@ -151,8 +123,10 @@ class Register {
                             {
                                 label: "Ваш пароль",
                                 type: "password",
-                                id: "passwordField",
+                                id: "password",
                                 completion: 'new-password',
+                                minlength: 8,
+                                maxlength: 32,
                                 password: 1
                             }
                         ]
@@ -165,6 +139,9 @@ class Register {
     
     async controller(){
         formHandler.setupDisplay();
+        formHandler.setupErrorHandling();
+        formHandler.setupCheckboxes();
+        formHandler.setupEnterEvents();
     }
 
 }

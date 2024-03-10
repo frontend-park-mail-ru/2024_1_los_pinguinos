@@ -1,0 +1,65 @@
+@font-face {
+    font-family: 'Mail Sans Roman Med';
+    src: url('MailSansRoman-Medium.eot');
+    src: local('Mail Sans Roman Medium'), local('MailSansRoman-Medium'),
+        url('MailSansRoman-Medium.eot?#iefix') format('embedded-opentype'),
+        url('MailSansRoman-Medium.woff2') format('woff2'),
+        url('MailSansRoman-Medium.woff') format('woff'),
+        url('MailSansRoman-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mail Sans Roman DemBd';
+    src: url('MailSansRoman-DemiBold.eot');
+    src: local('Mail Sans Roman DemiBold'), local('MailSansRoman-DemiBold'),
+        url('MailSansRoman-DemiBold.eot?#iefix') format('embedded-opentype'),
+        url('MailSansRoman-DemiBold.woff2') format('woff2'),
+        url('MailSansRoman-DemiBold.woff') format('woff'),
+        url('MailSansRoman-DemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mail Sans Roman';
+    src: url('MailSansRoman-Bold.eot');
+    src: local('Mail Sans Roman Bold'), local('MailSansRoman-Bold'),
+        url('MailSansRoman-Bold.eot?#iefix') format('embedded-opentype'),
+        url('MailSansRoman-Bold.woff2') format('woff2'),
+        url('MailSansRoman-Bold.woff') format('woff'),
+        url('MailSansRoman-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mail Sans Roman';
+    src: url('MailSansRoman-Light.eot');
+    src: local('Mail Sans Roman Light'), local('MailSansRoman-Light'),
+        url('MailSansRoman-Light.eot?#iefix') format('embedded-opentype'),
+        url('MailSansRoman-Light.woff2') format('woff2'),
+        url('MailSansRoman-Light.woff') format('woff'),
+        url('MailSansRoman-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mail Sans Roman';
+    src: url('MailSansRoman-Regular.eot');
+    src: local('Mail Sans Roman Regular'), local('MailSansRoman-Regular'),
+        url('MailSansRoman-Regular.eot?#iefix') format('embedded-opentype'),
+        url('MailSansRoman-Regular.woff2') format('woff2'),
+        url('MailSansRoman-Regular.woff') format('woff'),
+        url('MailSansRoman-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

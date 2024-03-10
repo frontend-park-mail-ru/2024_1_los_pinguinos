@@ -1,0 +1,13 @@
+<div class="form__field">
+    {{#if label}}
+        <label class="form__label" for={{id}}>{{label}}</label>
+    {{/if}}
+    {{#if password}}
+        {{> components/form/formIconButton}}
+    {{/if}}
+    <input class="form__input {{#if password}}form__input--icon{{/if}}" 
+        id={{id}} type={{type}} minlength={{minlength}} 
+        maxlength={{maxlength}} autocomplete={{completion}} 
+        placeholder='{{placeholder}}' min={{min}} max={{max}}>
+    <div class="field__error form__block--hidden"></div>
+</div>

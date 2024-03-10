@@ -1,0 +1,420 @@
+@import url(/src/fonts/MailSans/stylesheet.css);
+
+* {
+    font-family: 'Mail Sans Roman';
+}
+
+:root {
+    --form--background: rgba(0, 0, 0, 0.5);
+
+    --form__text--primary: #FFFFFF;
+    --form__text--secondary: #BBBBBB;
+    --form__text--input: #000000;
+    --form__text--error: #EA5B5B;
+
+    --form__button--primary: #7DE85A;
+    --form__button--hover: #1ED760;
+    --form__button--active: #169C46;
+    --form__button--focus: black;
+
+    --form__input--active: ;
+    --form__input--focus: ;
+    --form__input--bgr: rgb(217, 217, 217);
+    --form__input--hover: white;
+
+    --focused: #363636;
+
+    --pswd--hidden: url(eyeInv.webp);
+    --pswd--visible: url(eyeVis.webp);
+
+    --form__item--opacity: opacity 0.2s ease-in-out;
+    --form__item--background-image: background-image 0.2s ease-in-out;
+    --form__item--background-color: background-color 0.2s ease-in-out;
+    --form__item--outline: #169C46;
+    
+}
+
+.wrapper {
+    height: 100dvh;
+    width: 100dvw;
+    display: grid;
+    place-items: center;
+}
+
+.form {
+    width: 526px;
+    height: auto;
+
+    border-radius: 10px;
+    
+    background: var(--form--background);
+    color: var(--form__text--primary);
+    position: relative;
+}
+
+.form__error {
+    background: var(--form--background);
+    color: var(--form__text--error);
+    text-align: center;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -100px;
+    padding: 10px 10px;
+    transition: var(--form__item--opacity);
+    font-size: 0.9rem;
+}
+
+.form__block {
+    position: relative;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    transition: var(--form__item--opacity);
+}
+
+.form__block--medium {
+    height: 460px;
+}
+
+.form__header {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    padding-left: 30px;
+    padding-right: 30px;
+    overflow: hidden;
+    height: 18px;
+}
+
+.form__title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form__info {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 30px;
+    color: var(--form__text--secondary);
+}
+
+.form__link {
+    color: var(--form__text--secondary);
+}
+
+.form__link:focus {
+    outline-width: thin;
+    outline-color: grey;
+    outline-style: solid;
+}
+
+.form__input-container {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form__field-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.form__field {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.field__error {
+    position: absolute;
+    color: var(--form__text--error);
+    width: 100%;
+    text-align: center;
+    bottom: -22px;
+    transition: var(--form__item--opacity);
+}
+
+.form__input {
+    background-color: var(--form__input--bgr);
+    width: 100%;
+    height: 47px;
+    border-radius: 83px;
+    border: none;
+    padding-left: 30px;
+    transition: var(--form__item--background-color);
+}
+
+.form__input--icon {
+    padding-right: 60px;
+}
+
+.form__label {
+    display: inline-block;
+    margin-left: 13px;
+    margin-bottom: 13px;
+    font-weight: 800;
+}
+
+.form__checkbox-container {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+}
+
+.form__checkbox-container--side {
+    padding-left: 40px;
+}
+
+.form__checkbox-list {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+}
+
+.form__checkbox-list--cut {
+    margin-bottom: -10px;
+}
+
+.form__button-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+    height: 47px;
+    position: relative;
+}
+
+.form__input:focus {
+    outline-style: solid;
+    outline-width: medium;
+    outline-color: var(--form__button--primary);
+    background-color: var(--form__input--hover);
+}
+
+.form__input:hover {
+    background-color: var(--form__input--hover);
+}
+
+.form__step-count {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--form__text--secondary);
+}
+
+.form__button {
+    color: var(--form__text--input);
+    background: none;
+    border: none;
+    display: block;
+    place-self: center;
+    cursor: pointer;
+}
+
+.form__button:focus {
+    outline-style: solid;
+    outline-width: medium;
+    outline-color: var(--form__item--outline);
+}
+
+
+.form__button--continue {
+    color: var(--form__text--input);
+    background-color: var(--form__button--primary);
+    width: 100%;
+    height: 47px;
+    border-radius: 83px;
+    font-size: large;
+    font-weight: 700;
+    transition: var(--form__item--background-color);
+}
+
+.form__button--continue:hover {
+   background-color: var(--form__button--hover);
+}
+
+.form__button--continue:active {
+    background-color: var(--form__button--active);
+ }
+
+.form__button--nav {
+    background: url(./arrow.png) no-repeat center center;
+    width: 20px;
+    height: 18px;
+    transition: var(--form__item--opacity);
+}
+
+.form__button--nav:hover {
+    opacity: 0.5;
+}
+
+.form__button--nav:focus {
+    outline: none;
+}
+
+.form__button--checkbox {
+    background-color: var(--form__text--primary);
+    border-radius: 10px;
+    margin-right: 14px;
+    margin-bottom: 13px;
+    padding: 8px 13px;
+    text-align: center;
+    transition: var(--form__item--background-color);
+}
+
+.form__button--checkbox:hover {
+    background-color: var(--form__button--hover);
+}
+
+.form__button--checkbox:focus {
+    outline: none;
+}
+
+.form__button--checkbox-selected {
+    background-color: var(--form__button--primary);
+}
+
+.form__button--round {
+    border-radius: 50%;
+    height: 47px;
+    width: 47px;
+    padding: 0;
+    margin: 0;
+    margin-left: 13px;
+}
+
+.form__button--icon {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: var(--pswd--hidden);
+    bottom: 11.5px;
+    right: 30px;
+    opacity: 0.5;
+    transition: var(--form__item--background-image);
+}
+
+.form__button--icon:focus {
+    outline: none;
+}
+
+.form__button-container--fixed-medium {
+    position: absolute;
+    bottom: 40px;
+    padding-left: 90px;
+    padding-right: 90px;
+    margin-left: -90px;
+}
+
+.form__footer {
+    margin-top: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    color: var(--form__text--secondary);
+}
+
+input[type="date"] {
+  padding-right: 20px;
+}
+
+@media only screen and (max-width: 896px) {
+    .form {
+        width: 100dvw;
+        height: 100dvh;
+        border-radius: 0;
+        overflow: auto;
+    }
+
+    .form__button--continue{
+        min-width: 325px;
+        max-width: 325px;
+    }
+
+    .form__input-container {
+        min-width: 325px;
+        max-width: 325px;
+    }
+
+    .form__block {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .form__title {
+        margin-top: 30px;
+    }
+    .form__button-container--fixed-medium {
+        margin-left: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        top: 430px;
+    }
+    .form__block--medium {
+        height: 100dvh;
+    }
+    .form__error {
+        background: none;
+        top: 550px;
+        bottom: 100px;
+    }
+}
+
+@media only screen and (max-width: 345px) {
+    .form__button--continue{
+        min-width: 220px;
+        max-width: 220px;
+    }
+    .form__error {
+        position: sticky;
+        margin-top: -50px;
+    }
+
+    .form__input-container {
+        min-width: 220px;
+        max-width: 220px;
+        flex-flow: column;
+        justify-content: flex-start;
+    }
+
+    .form__checkbox-container--side {
+        padding-left: 0;
+    }
+
+    .form__button-container--fixed-medium {
+        margin-left: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        top: 550px;
+    }
+}
+
+
+.form__block--hidden {
+    opacity: 0;
+}
