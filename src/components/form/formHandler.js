@@ -265,7 +265,7 @@ class FormHandler {
                     const nextBlockFirstInput = nextBlock.querySelectorAll('.form__input')[0];
                     if (nextBlockFirstInput) {
                         setTimeout(() => {
-                            if (this.currentStep == (`step${nextBlock.id}`))
+                            if (`step${this.currentStep}` === nextBlock.id)
                             {
                                 nextBlockFirstInput.focus();
                             }
