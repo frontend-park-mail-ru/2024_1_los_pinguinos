@@ -1,4 +1,4 @@
-import authHandler from '../../api/auth';
+import apiHandler from '../../api/apiHandler';
 
 export class Router {
   constructor(routes) {
@@ -35,7 +35,7 @@ export class Router {
     const logoutButton = document.getElementById('header__button');
     if (logoutButton) {
       logoutButton.addEventListener('click', () => {
-        authHandler.Logout();
+        apiHandler.Logout();
       });
     }
 
@@ -53,7 +53,6 @@ export class Router {
   }
 }
 
-// Route.js
 export class Route {
   constructor(path, component, protect = false, redirectURL = null) {
     this.path = path;

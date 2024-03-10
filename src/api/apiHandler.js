@@ -8,9 +8,16 @@ const authenticationURL = baseURL + '/login';
 const logoutURL = baseURL + '/logout';
 const isAuthURL = baseURL + '/isAuth';
 const cardsURL = baseURL + '/cards';
-
-class AuthHandler {
-
+/**
+ * APIHandler class
+ * @author roflanpotsan
+ * @class
+ */
+class APIHandler {
+    /**
+     * Creates instance of class APIHandler.
+     * @author roflanpotsan
+     */
     constructor() {
         this.localhost = localhost;
         this.vm = vm;
@@ -21,7 +28,15 @@ class AuthHandler {
         this.isAuthURL = isAuthURL;
         this.cardsURL = cardsURL;
     }
-
+    /**
+     * Sends request to specified url with specified data via specified method.
+     * @author roflanpotsan
+     * @function
+     * @param {string} url - request url
+     * @param {Object} data - request data
+     * @param {string} method - request method
+     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     */
     async sendRequest(url = this.baseURL, data = {}, method='GET') {
         try {
             let response;
@@ -63,21 +78,47 @@ class AuthHandler {
             return undefined;
         }
     }
-
+    /**
+     * Sends request for registration
+     * @author roflanpotsan
+     * @function
+     * @param {Object} formData - registration form data
+     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     */
     async Register(formData) {
         return await this.sendRequest(this.registrationURL, formData, 'POST');
     }
-
+    /**
+     * Sends request for login
+     * @author roflanpotsan
+     * @function
+     * @param {Object} formData - login form data
+     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     */
     async Login(formData) {
         return await this.sendRequest(this.authenticationURL, formData, 'POST');
     }
-
+    /**
+     * Sends request for logout
+     * @author roflanpotsan
+     * @function
+     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     */
     async Logout() {
         router.navigateTo('/');
 
         return await this.sendRequest(this.logoutURL);
     }
+    /**
+     * Sends request for registration interest choices
+     * @author roflanpotsan
+     * @function
+     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     */
+    async GetInterests() {
+        return await this.sendRequest(this.registrationURL);
+    }
 }
 
-const authHandler = new AuthHandler();
-export default authHandler;
+const apiHandler = new APIHandler();
+export default apiHandler;
