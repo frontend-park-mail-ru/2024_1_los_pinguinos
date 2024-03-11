@@ -1,6 +1,6 @@
 import router from '../../index.js';
 
-const localhost = 'http://192.168.50.168:8080';
+const localhost = 'http://localhost:8080';
 const vm = 'http://185.241.192.216:8080';
 const baseURL = localhost;
 const registrationURL = baseURL + '/registration';
@@ -105,6 +105,7 @@ class APIHandler {
      * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
      */
     async Logout() {
+        console.log("get out")
         router.navigateTo('/');
 
         return await this.sendRequest(this.logoutURL);

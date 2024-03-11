@@ -3,14 +3,42 @@ import Card from './components/card/card.js';
 import { persons } from './persons.js';
 import apiHandler from '../../api/apiHandler.js';
 
+/**
+* Возвращает возраст по дате рождения
+* @param {string} dateString - дата рождения в формате 'YYYY-MM-DD'
+* @returns {number} - возраст
+*/
+const getAge = (dateString) => {
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const month = today.getMonth() - birthDate.getMonth();
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+};
+
+/**
+* Класс представляющий главную страницу
+*/
 class Home {
   cardCount = 0;
   cardsPerLoad = 5;
-  // const persons = [];
+  /**
+  * Возвращает массив карточек с сервера
+  * @returns {Promise<Array>} - массив карточек
+  */
   async getCards() {
     return await apiHandler.sendRequest(apiHandler.cardsURL);
   }
-  async appendNewCard() {
+
+  /**
+  * Отображает новую карточку на странице
+  * @param {Object} cardData - данные карточки
+  */
+  async appendNewCard(cardData) {
     const swiper = document.querySelector('#swiper');
     if (swiper === null) {
       return;
@@ -21,13 +49,11 @@ class Home {
         persons.push(...newCards);
     }
 
-    const cardData = persons[this.cardCount % this.cardsPerLoad];
-
     const card = new Card({
       id: this.cardCount,
-      imageUrl: cardData.imageUrl ? cardData.imageUrl : '',
+      imageUrl: cardData.gender === 'М' ? 'https://source.unsplash.com/random/1000x1000/?man' : 'https://source.unsplash.com/random/1000x1000/?woman',
       name: cardData.name,
-      age: cardData.age,
+      age: getAge(cardData.birthday),
       description: cardData.description,
       onDismiss: this.appendNewCard.bind(this),
       onLike: () => {
@@ -46,14 +72,52 @@ class Home {
     });
   }
 
+  /**
+  * Обрабатывает свайп карточки вправо с помощью кнопки (лайк)
+  */
+  async acceptCard() {
+    const swiper = document.querySelector('#swiper');
+    const card = swiper.querySelector('.card');
+    setTimeout(() => {
+      card.remove();
+    }, 300);
+  }
+  /**
+  * Обрабатывает свайп карточки влево с помощью кнопки (дизлайк)
+  */
+  async rejectCard() {
+    const swiper = document.querySelector('#swiper');
+    const card = swiper.querySelector('.card');
+    setTimeout(() => {
+      card.remove();
+    }, 300);
+  }
+  /**
+  * Рендерит (отображает) главную страницу
+  */
   async render() {
     return main();
   }
-
+  /**
+  * Функуция-контролер для обработки событий на главной странице.
+  */
   async controller() {
-    for (let i = 0; i < persons.length; i++) {
-      this.appendNewCard();
+    let cards = await this.getCards();
+    cards = JSON.parse(cards);
+
+    for(let i = 0; i < this.cardsPerLoad; i++) {
+      this.appendNewCard(cards[i]);
     }
+
+    const acceptButton = document.querySelector('#accept');
+    const rejectButton = document.querySelector('#reject');
+    acceptButton.addEventListener('click', () => {
+      this.acceptCard();
+    });
+    rejectButton.addEventListener('click', () => {
+      this.rejectCard();
+    });
+
   }
 
 }
