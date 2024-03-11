@@ -1,14 +1,14 @@
 import main from './main.hbs';
 import Card from './components/card/card.js';
 import { persons } from './persons.js';
-import authHandler from '../../api/auth.js';
+import apiHandler from '../../api/apiHandler.js';
 
 class Home {
   cardCount = 0;
   cardsPerLoad = 5;
   // const persons = [];
   async getCards() {
-    return await authHandler.sendRequest(authHandler.cardsURL);
+    return await apiHandler.sendRequest(apiHandler.cardsURL);
   }
   async appendNewCard() {
     const swiper = document.querySelector('#swiper');

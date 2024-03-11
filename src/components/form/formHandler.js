@@ -1,7 +1,15 @@
-import authHandler from "../../api/auth";
-import router from "../../../index.js";
-
+import apiHandler from '../../api/apiHandler.js';
+import router from '../../../index.js';
+/**
+ * Form handler class. It handles forms o_o
+ * @author roflanpotsan
+ * @class
+ */
 class FormHandler {
+    /**
+     * Creates instance of class formHandler.
+     * @author roflanpotsan
+     */
     constructor() {
         this.currentStep = 0;
         this.genderStep = 1;
@@ -25,16 +33,19 @@ class FormHandler {
             'genderChoice': '• Выберите пол',
         };
     }
-
-    async getInterests() {
-        return await authHandler.sendRequest(authHandler.registrationURL);
-    }
-
+    /**
+     * Validates input according to predefined regex parameters.
+     * @author roflanpotsan
+     * @function
+     * @param {string} type - input type
+     * @param {HTMLElement} input - the input itself
+     * @returns {boolean} - regex validation result
+     */
     validateInput(type, input) {
         const expressions = {
             password: /^.{8,32}$/,
             email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            date: /^(?:(?:19[6-9]\d|200[0-8])-(?:(?:0[13578]|1[02])-31|(?:0[1,3-9]|1[0-2])-(?:29|30)|02-29(?=\-((?:19[6-9]\d|200[0-8])00|((?:19[6-9]\d|200[0-8])(?:04|08|[2468][048]|[13579][26]))))|(?:0[1-9]|1[0-2])-0[1-9]|(?:0[13-9]|1[0-2])-1\d|(?:0[1-9]|1[0-2])-2[0-8]))$/,
+            date: /^(?:(?:19[6-9]\d|200[0-8])-(?:(?:0[13578]|1[02])-31|(?:0[1,3-9]|1[0-2])-(?:29|30)|02-29(?=-((?:19[6-9]\d|200[0-8])00|((?:19[6-9]\d|200[0-8])(?:04|08|[2468][048]|[13579][26]))))|(?:0[1-9]|1[0-2])-0[1-9]|(?:0[13-9]|1[0-2])-1\d|(?:0[1-9]|1[0-2])-2[0-8]))$/,
             text: /^(?=.{2,32}$)[\p{L}]+$/u,
             emoji: /[\uD800-\uDFFF]/,
         };
@@ -43,7 +54,11 @@ class FormHandler {
 
         return regexExpression.test(input) && !regexEmoji.test(input);
     }
-
+    /**
+     * Makes next step of multistep form visible.
+     * @author roflanpotsan
+     * @function
+     */
     formForward() {
         const currentFormStep = document.getElementById(`step${this.currentStep}`);
         const nextFormStep = document.getElementById(`step${(this.currentStep + 1)}`);
@@ -59,7 +74,11 @@ class FormHandler {
             }, 225);
         }
     }
-
+    /**
+     * Makes previous step of multistep form visible.
+     * @author roflanpotsan
+     * @function
+     */
     formBackward() {
         const currentFormStep = document.getElementById(`step${this.currentStep}`);
         const prevFormStep = document.getElementById(`step${(this.currentStep - 1)}`);
@@ -83,7 +102,16 @@ class FormHandler {
             }, 225);
         }
     }
-
+    /**
+     * Adds error message to specified container.
+     * @author roflanpotsan
+     * @function
+     * @param {HTMLElement} container - specified container
+     * @param {string} errId - id of element to be created
+     * @param {string} errType - type of invalid input
+     * @param {Object.<string, string>} errMsgs - map of error messages (newly created element's content)
+     * @returns {boolean} - returns true if error was added, false otherwise
+     */
     addErrorMsg(container, errId, errType, errMsgs) {
         const oldErrPs = container.querySelectorAll('p');
         for (const errP of oldErrPs) {
@@ -101,16 +129,25 @@ class FormHandler {
 
         return true;
     }
-
+    /**
+     * Removes error message from specified container.
+     * @author roflanpotsan
+     * @function
+     * @param {HTMLElement} container - specified container
+     * @param {string} errId - id of element to be removed
+     * @param {number} animationTime - time in ms before removing the element
+     * @returns {boolean} - returns true if error was removed, false otherwise
+     */
     removeErrorMsg(container, errId, animationTime) {
         const oldErrPs = container.querySelectorAll('p');
         for (const errP of oldErrPs) {
             if (errP.id === errId) {
                 errP.classList.toggle('form__block--hidden');
-                if (!container.classList.contains('form__block--hidden') && oldErrPs.length === 1) {
-                    container.classList.toggle('form__block--hidden');
-                }
                 setTimeout(() => {
+                    const newErrPs = container.querySelectorAll('p');
+                    if (!container.classList.contains('form__block--hidden') && newErrPs.length === 1) {
+                        container.classList.toggle('form__block--hidden');
+                    }
                     errP.remove();
                 }, animationTime);
 
@@ -120,7 +157,13 @@ class FormHandler {
 
         return false;
     }
-
+    /**
+     * Validates input and adds/removes an error message depending on result.
+     * @author roflanpotsan
+     * @function
+     * @param {HTMLElement} formInput - the input itself
+     * @returns {boolean} - returns true if errors were encountered, false otherwise
+     */
     inputErrorHandler(formInput) {
         const passwordDisplayBtn = document.querySelector('.form__button--icon');
         const passwordField = document.querySelector('#password');
@@ -140,10 +183,16 @@ class FormHandler {
         }
         this.removeErrorMsg(errF, errId, 200);
         this.removeErrorMsg(formErrF, msgId, 200);
-        
+
         return false;
     }
-
+    /**
+     * Validates form step and returns validation result.
+     * @author roflanpotsan
+     * @function
+     * @param {HTMLElement} formStep - the form step itself
+     * @returns {boolean} - returns form step validation result, true if ok
+     */
     formStepErrorHandler(formStep) {
         const formStepInputs = formStep.querySelectorAll('.form__input');
         let formOk = true;
@@ -151,13 +200,19 @@ class FormHandler {
             const res = !this.inputErrorHandler(input);
             formOk = formOk && res;
         }
+
         return formOk;
     }
-
+    /**
+     * Submits a form.
+     * @author roflanpotsan
+     * @function
+     * @param {HTMLElement} form - the form itself
+     */
     formSubmit(form) {
         const formInputs = form.querySelectorAll('.form__input');
         const formErrF = form.querySelector('.form__error');
-        let formData = {};
+        const formData = {};
         for (const input of formInputs) {
             formData[input.id] = input.value;
         }
@@ -169,7 +224,7 @@ class FormHandler {
         }
         if (form.id == 'registration') {
             this.removeErrorMsg(formErrF, 'registrationMsg', 200);
-            authHandler.Register(formData).then((res) => {
+            apiHandler.Register(formData).then((res) => {
                 if (res === undefined) {
                     this.addErrorMsg(formErrF, 'registrationMsg', 'registration', this.helpMessages);
                 } else {
@@ -179,7 +234,7 @@ class FormHandler {
         }
         else if (form.id == 'login') {
             this.removeErrorMsg(formErrF, 'loginMsg', 200);
-            authHandler.Login(formData).then((res) => {
+            apiHandler.Login(formData).then((res) => {
                 if (res === undefined) {
                     this.addErrorMsg(formErrF, 'loginMsg', 'login', this.helpMessages);
                 } else {
@@ -188,11 +243,17 @@ class FormHandler {
             });
         }
     }
-
+    /**
+     * Handles 'Enter' key press on form input.
+     * @author roflanpotsan
+     * @function
+     * @param {HTMLElement} formInput - the input itself
+     * @param {KeyboardEvent} event - key press event
+     */
     inputEnterHandler (formInput, event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            const nextFormInputAncestor = (formInput.closest('.form__field').nextElementSibling || 
+            const nextFormInputAncestor = (formInput.closest('.form__field').nextElementSibling ||
             formInput.closest('.form__input-container').nextElementSibling);
             const nextFormInput = nextFormInputAncestor.querySelector('.form__input');
             if (!nextFormInput) {
@@ -204,7 +265,7 @@ class FormHandler {
                     const nextBlockFirstInput = nextBlock.querySelectorAll('.form__input')[0];
                     if (nextBlockFirstInput) {
                         setTimeout(() => {
-                            if (this.currentStep == (`step${nextBlock.id}`))
+                            if (`step${this.currentStep}` === nextBlock.id)
                             {
                                 nextBlockFirstInput.focus();
                             }
@@ -218,7 +279,11 @@ class FormHandler {
             }
         }
     }
-
+    /**
+     * Adds 'Enter' key press event listeners on form inputs.
+     * @author roflanpotsan
+     * @function
+     */
     setupEnterEvents() {
         const inputs = document.querySelectorAll('.form__input');
         for (const input of inputs) {
@@ -227,7 +292,11 @@ class FormHandler {
             });
         }
     }
-
+    /**
+     * Sets up form's checkboxes, makes them clickable and tracks their state
+     * @author roflanpotsan
+     * @function
+     */
     setupCheckboxes() {
         const checkboxes = document.querySelectorAll('.form__button--checkbox');
         const roundCheckboxes = document.querySelectorAll('.form__button--round');
@@ -257,17 +326,23 @@ class FormHandler {
             });
         }
     }
-
+    /**
+     * Sets up event listeners to enable form interactions.
+     * @author roflanpotsan
+     * @function
+     */
     setupDisplay() {
         const navigationButtons = document.getElementsByClassName('form__button--nav');
         const formErrF = document.querySelector('.form__error');
         for (const button of navigationButtons) {
             const blockElement = button.closest('.form__block');
             if (blockElement.id === 'step0') {
-                button.style.display = 'none';
+                button.addEventListener('click', () => {
+                    history.back();
+                });
             } else {
                 blockElement.classList.toggle('form__block--hidden');
-            };
+            }
             button.addEventListener('click', () => {
                 if (!formErrF.classList.contains('form__block--hidden')) {
                     formErrF.classList.toggle('form__block--hidden');
@@ -289,12 +364,9 @@ class FormHandler {
             }
         });
         document.getElementById(`step${this.currentStep}`).style.display = 'block';
-    }
 
-    setupErrorHandling() {
         const form = document.querySelector('.form');
         const formBlocks = form.querySelectorAll('.form__block');
-        const formErrF = document.querySelector('.form__error');
         for (const block of formBlocks) {
             const button = block.querySelector('.form__button--continue');
             button.addEventListener('click', () => {
