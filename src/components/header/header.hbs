@@ -1,5 +1,5 @@
   <div class="header">
     <div class="header__logo">
     </div>
-      <button id="header__button">Выйти</button>
-  </div>  
+      <button type="button" id="header__button{{#if authState}}--logout{{/if}}">{{#if authState}}Выйти{{/if}}{{#if notAuthState}}Войти{{/if}}</button>
+  </div>
