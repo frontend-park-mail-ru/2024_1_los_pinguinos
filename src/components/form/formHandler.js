@@ -337,7 +337,9 @@ class FormHandler {
         for (const button of navigationButtons) {
             const blockElement = button.closest('.form__block');
             if (blockElement.id === 'step0') {
-                button.style.display = 'none';
+                button.addEventListener('click', () => {
+                    history.back();
+                });
             } else {
                 blockElement.classList.toggle('form__block--hidden');
             }
