@@ -3,6 +3,17 @@ import Card from './components/card/card.js';
 import { persons } from './persons.js';
 import authHandler from '../../api/auth.js';
 
+const getAge = (dateString) => {
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const month = today.getMonth() - birthDate.getMonth();
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+};
+
 class Home {
   cardCount = 0;
   cardsPerLoad = 5;
@@ -10,7 +21,7 @@ class Home {
   async getCards() {
     return await authHandler.sendRequest(authHandler.cardsURL);
   }
-  async appendNewCard() {
+  async appendNewCard(cardData) {
     const swiper = document.querySelector('#swiper');
     if (swiper === null) {
       return;
@@ -21,13 +32,11 @@ class Home {
         persons.push(...newCards);
     }
 
-    const cardData = persons[this.cardCount % this.cardsPerLoad];
-
     const card = new Card({
       id: this.cardCount,
-      imageUrl: cardData.imageUrl ? cardData.imageUrl : '',
+      imageUrl: cardData.gender === 'М' ? 'https://source.unsplash.com/random/1000x1000/?man' : 'https://source.unsplash.com/random/1000x1000/?woman',
       name: cardData.name,
-      age: cardData.age,
+      age: getAge(cardData.birthday),
       description: cardData.description,
       onDismiss: this.appendNewCard.bind(this),
       onLike: () => {
@@ -46,14 +55,43 @@ class Home {
     });
   }
 
+  async acceptCard() {
+    const swiper = document.querySelector('#swiper');
+    const card = swiper.querySelector('.card');
+    setTimeout(() => {
+      card.remove();
+    }, 300);
+  }
+
+  async rejectCard() {
+    const swiper = document.querySelector('#swiper');
+    const card = swiper.querySelector('.card');
+    setTimeout(() => {
+      card.remove();
+    }, 300);
+  }
+
   async render() {
     return main();
   }
 
   async controller() {
-    for (let i = 0; i < persons.length; i++) {
-      this.appendNewCard();
+    let cards = await this.getCards();
+    cards = JSON.parse(cards);
+
+    for(let i = 0; i < this.cardsPerLoad; i++) {
+      this.appendNewCard(cards[i]);
     }
+
+    const acceptButton = document.querySelector('#accept');
+    const rejectButton = document.querySelector('#reject');
+    acceptButton.addEventListener('click', () => {
+      this.acceptCard();
+    });
+    rejectButton.addEventListener('click', () => {
+      this.rejectCard();
+    });
+
   }
 
 }
