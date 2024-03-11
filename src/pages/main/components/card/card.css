@@ -4,12 +4,42 @@
   position: absolute;
   border-radius: 13px;
   overflow: hidden;
-  /* transform: translateZ(calc(-30px * var(--i))); */
+  transform: translateZ(calc(-1px * var(--i)));
   /* filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5)); */
   cursor: pointer;
   user-select: none;
   transition: transform 0.5s;
   background: white;
+  perspective: 1000px;
+}
+
+.card__front, .card__back {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+  backface-visibility: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.card__front {
+  background-color: white;
+}
+
+.card__back {
+  background-color: darkgray;
+  transform: rotateY(180deg);
+}
+
+.card:hover .card__front {
+  transform: rotateY(180deg);
+}
+
+.card:hover .card__back {
+  transform: rotateY(360deg);
 }
 
 .card__image {
@@ -48,6 +78,27 @@
   transition: transform 0.5s;
   overflow: hidden; /* Обрезать текст, который выходит за пределы */
   text-overflow: ellipsis; /* Добавить многоточие (...) для обрезанного текста */
+}
+
+.card__interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 6px;
+  transition: transform 0.5s;
+}
+
+.card__interest {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 5px 10px;
+  border-radius: 13px;
+  background-color: #f2f2f2;
+  color: #000;
+  transition: transform 0.5s;
 }
 
 #like,

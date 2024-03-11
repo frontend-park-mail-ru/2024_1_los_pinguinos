@@ -134,10 +134,6 @@ class Card {
     }
   };
 
-  #showMore = () => {
-    this.element.classList.toggle('show-description');
-  };
-
 }
 
 export default Card;
