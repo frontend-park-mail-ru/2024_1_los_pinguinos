@@ -1,6 +1,19 @@
 import cardTemplate from './card.hbs';
-
+/**
+ * Класс предоставляющий карточку
+ */
 class Card {
+  /**
+   * Создает новый экземпляр карточки
+   * @param {id} id - идентификатор карточки
+   * @param {string} imageUrl - URL изображения
+   * @param {string} name - имя человека на карточке
+   * @param {number} age - возраст человека на карточке
+   * @param {string} description - описание человека на карточке
+   * @param {function} onDismiss - обработчик события "исчезновения карточки"
+   * @param {function} onLike - обработчик события "лайк"
+   * @param {function} onDislike - обработчик события "дизлайк"
+   */
   constructor({ id, imageUrl, name, age, description, onDismiss, onLike, onDislike }) {
     this.id = id;
     this.imageUrl = imageUrl;
@@ -13,11 +26,13 @@ class Card {
     this.#init();
   }
 
-  // private properties
   #startPoint;
   #offsetX;
   #offsetY;
-
+  /**
+   * Проверят, является ли устройство сенсорным
+   * @returns {boolean} - true, если устройство сенсорное, иначе - false
+   */
   #isTouchDevice = () => {
     return (
       'ontouchstart' in window ||
@@ -25,7 +40,9 @@ class Card {
       navigator.msMaxTouchPoints > 0
     );
   };
-
+  /**
+   * Инициализирует данные карточки и добавляет обработчики событий в зависимости от типа устройства
+   */
   #init = () => {
     const card = document.createElement('div');
     card.innerHTML = cardTemplate({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description});
@@ -36,7 +53,9 @@ class Card {
       this.#listenToMouseEvents();
     }
   };
-
+  /**
+   * Добавляет обработчики событий для сенсорных устройств
+   */
   #listenToTouchEvents = () => {
     this.element.addEventListener('touchstart', (e) => {
       const touch = e.changedTouches[0];
@@ -50,7 +69,9 @@ class Card {
     document.addEventListener('touchend', this.#handleTouchEnd);
     document.addEventListener('cancel', this.#handleTouchEnd);
   };
-
+  /**
+   * Добавляет обработчики событий для устройств с мышью
+   */
   #listenToMouseEvents = () => {
     this.element.addEventListener('mousedown', (e) => {
       const { clientX, clientY } = e;
@@ -66,7 +87,11 @@ class Card {
       e.preventDefault();
     });
   };
-
+  /**
+   * Обрабатывает событие движения
+   * @param {number} x - координата куросора по оси х
+   * @param {тгьиук} y - координата куросора по оси у
+   */
   #handleMove = (x, y) => {
     this.#offsetX = x - this.#startPoint.x;
     this.#offsetY = y - this.#startPoint.y;
@@ -74,27 +99,35 @@ class Card {
     this.element.style.transform = `translate(${this.#offsetX}px, ${
       this.#offsetY
     }px) rotate(${rotate}deg)`;
-    // dismiss card
+    // исчезновение карточки при достижени определенного смещения
     if (Math.abs(this.#offsetX) > this.element.clientWidth * 0.7) {
       this.#dismiss(this.#offsetX > 0 ? 1 : -1);
     }
   };
 
-  // mouse event handlers
+  /**
+   * Обрабатывает событие движения мыши
+   * @param {Event} e - событие движения мыши
+   */
   #handleMouseMove = (e) => {
     e.preventDefault();
     if (!this.#startPoint) return;
     const { clientX, clientY } = e;
     this.#handleMove(clientX, clientY);
   };
-
+  /**
+   * Обрабатывает событие отпускания кнопки мыши
+   */
   #handleMoveUp = () => {
     this.#startPoint = null;
     document.removeEventListener('mousemove', this.#handleMouseMove);
     this.element.style.transform = '';
   };
 
-  // touch event handlers
+  /**
+   * Обрабатывает событие движения пальцем по сенсорнному устройства
+   * @param {Event} e - событие движения пальцем
+   */
   #handleTouchMove = (e) => {
     if (!this.#startPoint) return;
     const touch = e.changedTouches[0];
@@ -102,13 +135,18 @@ class Card {
     const { clientX, clientY } = touch;
     this.#handleMove(clientX, clientY);
   };
-
+  /**
+   * Обрабатывает событие отпускания пальца от сенсорного устройства
+   */
   #handleTouchEnd = () => {
     this.#startPoint = null;
     document.removeEventListener('touchmove', this.#handleTouchMove);
     this.element.style.transform = '';
   };
-
+  /**
+   * Исчезновение карточки с учетом напрвления
+   * @param {number} direction - направление исчезновения
+   */
   #dismiss = (direction) => {
     this.#startPoint = null;
     document.removeEventListener('mouseup', this.#handleMoveUp);

@@ -89,5 +89,5 @@ export const persons = [
         age: 32,
         description: 'Я люблю бегать марафоны и заниматься велоспортом, постоянно совершенствую свои результаты.',
         imageUrl: 'https://source.unsplash.com/random/1000x1000/?ocean',
-    }
+    },
 ];
