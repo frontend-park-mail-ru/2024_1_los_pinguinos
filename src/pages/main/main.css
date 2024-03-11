@@ -13,7 +13,6 @@
     align-items: center;
     flex-direction: column;
     width: 908px;
-    /* padding: 25px 20px; */
     background: #ffffffa8;
     border-radius: 13px;
     height: 100%;
@@ -23,11 +22,8 @@
     width: 364px;
     height: 657px;
     border-radius: 13px;
-    /* perspective: 1000px; */
     perspective-origin: center 50%;
     transform-style: preserve-3d;
-    /* position: relative; */
-    /* margin-top: 13vh; */
   }
 
 .controllers {

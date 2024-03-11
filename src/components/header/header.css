@@ -1,5 +1,6 @@
 .header {
     display: flex;
+    justify-content: end;
 }
 
 .header__menu {
@@ -15,7 +16,7 @@
     font-size: 34px;
 }
 
-.header__button {
+#header__button {
     width: 175px;
     height: 65px;
     border-radius: 83px;

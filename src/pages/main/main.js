@@ -3,6 +3,11 @@ import Card from './components/card/card.js';
 import { persons } from './persons.js';
 import authHandler from '../../api/auth.js';
 
+/**
+* Возвращает возраст по дате рождения
+* @param {string} dateString - дата рождения в формате 'YYYY-MM-DD'
+* @returns {number} - возраст
+*/
 const getAge = (dateString) => {
   const today = new Date();
   const birthDate = new Date(dateString);
@@ -11,16 +16,28 @@ const getAge = (dateString) => {
   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
     age--;
   }
+
   return age;
 };
 
+/**
+* Класс представляющий главную страницу
+*/
 class Home {
   cardCount = 0;
   cardsPerLoad = 5;
-  // const persons = [];
+  /**
+  * Возвращает массив карточек с сервера
+  * @returns {Promise<Array>} - массив карточек
+  */
   async getCards() {
     return await authHandler.sendRequest(authHandler.cardsURL);
   }
+
+  /**
+  * Отображает новую карточку на странице
+  * @param {Object} cardData - данные карточки
+  */
   async appendNewCard(cardData) {
     const swiper = document.querySelector('#swiper');
     if (swiper === null) {
@@ -55,6 +72,9 @@ class Home {
     });
   }
 
+  /**
+  * Обрабатывает свайп карточки вправо с помощью кнопки (лайк)
+  */
   async acceptCard() {
     const swiper = document.querySelector('#swiper');
     const card = swiper.querySelector('.card');
@@ -62,7 +82,9 @@ class Home {
       card.remove();
     }, 300);
   }
-
+  /**
+  * Обрабатывает свайп карточки влево с помощью кнопки (дизлайк)
+  */
   async rejectCard() {
     const swiper = document.querySelector('#swiper');
     const card = swiper.querySelector('.card');
@@ -70,11 +92,15 @@ class Home {
       card.remove();
     }, 300);
   }
-
+  /**
+  * Рендерит (отображает) главную страницу
+  */
   async render() {
     return main();
   }
-
+  /**
+  * Функуция-контролер для обработки событий на главной странице.
+  */
   async controller() {
     let cards = await this.getCards();
     cards = JSON.parse(cards);
