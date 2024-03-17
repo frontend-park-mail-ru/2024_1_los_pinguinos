@@ -62,6 +62,13 @@ export class Router {
       });
     }
 
+    const registerbuttons = document.getElementsByClassName('landing-button');
+    for (const button of registerbuttons) {
+      button.addEventListener('click', () => {
+        this.navigateTo('/register');
+      });
+    }
+
     const authStatus = localStorage.getItem('sid') === 'true';
     if (route.protected) {
       if (!authStatus) {

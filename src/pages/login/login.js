@@ -40,6 +40,7 @@ class Login {
                             type: 'email',
                             id: 'email',
                             completion: 'email',
+                            maxlength: 320,
                         },
                         {
                             placeholder: 'Ваш пароль',

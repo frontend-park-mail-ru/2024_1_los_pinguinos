@@ -48,6 +48,7 @@ class Register {
                             type: 'email',
                             id: 'email',
                             completion: 'email',
+                            maxlength: 320,
                         },
                         ],
                     },
@@ -71,6 +72,8 @@ class Register {
                                 type: 'text',
                                 id: 'name',
                                 completion: 'name',
+                                maxlength: 32,
+                                minlength: 2,
                             },
                         ],
                         fieldsExtra:

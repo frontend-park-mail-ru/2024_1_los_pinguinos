@@ -24,7 +24,7 @@ class FormHandler {
         };
         this.helpMessages = {
             'password': '• Пароль должен быть длиной от 8 до 32 символов. Без emoji. Разрешены стандартные спецсимволы',
-            'email': '• Формат email - example@mailservice.domain',
+            'email': '• Формат email - example@mailservice.domain, длина до 320 символов',
             'text': '• Имя не должно содержать специальных символов (и пробелов), длина 2-32 символа',
             'date': '• Дата в формате вашей системы, c 1970 по 2008',
             'login': '• Неверный логин или пароль',
@@ -44,15 +44,15 @@ class FormHandler {
     validateInput(type, input) {
         const expressions = {
             password: /^.{8,32}$/,
-            email: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            email: /^(?=.{1,320}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
             date: /^(?:(?:19[6-9]\d|200[0-8])-(?:(?:0[13578]|1[02])-31|(?:0[1,3-9]|1[0-2])-(?:29|30)|02-29(?=-((?:19[6-9]\d|200[0-8])00|((?:19[6-9]\d|200[0-8])(?:04|08|[2468][048]|[13579][26]))))|(?:0[1-9]|1[0-2])-0[1-9]|(?:0[13-9]|1[0-2])-1\d|(?:0[1-9]|1[0-2])-2[0-8]))$/,
             text: /^(?=.{2,32}$)[\p{L}]+$/u,
-            emoji: /[\uD800-\uDFFF]/,
+            emoji: /^[\x20-\x7E]+$/,
         };
         const regexExpression = expressions[type];
         const regexEmoji = expressions['emoji'];
 
-        return regexExpression.test(input) && !regexEmoji.test(input);
+        return regexExpression.test(input) && regexEmoji.test(input);
     }
     /**
      * Makes next step of multistep form visible.

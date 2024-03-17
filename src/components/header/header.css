@@ -20,7 +20,19 @@
     width: 175px;
     height: 65px;
     border-radius: 83px;
-    gap: 10px;
+    background: #7DE85A;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 29px;
+    letter-spacing: 0em;
+    text-align: center;
+    cursor: pointer;
+}
+
+#header__button--logout {
+    width: 175px;
+    height: 65px;
+    border-radius: 83px;
     background: #7DE85A;
     font-size: 28px;
     font-weight: 800;

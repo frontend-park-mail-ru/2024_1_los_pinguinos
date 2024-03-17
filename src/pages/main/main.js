@@ -4,6 +4,28 @@ import { persons } from './persons.js';
 import apiHandler from '../../api/apiHandler.js';
 
 /**
+* Возвращает элемент из куки по его ключу
+* @param {string} cname - ключ
+* @returns {string} - значение по ключу
+*/
+function getCookie(cname) {
+  const name = cname + '=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+
+return '';
+}
+
+/**
 * Возвращает возраст по дате рождения
 * @param {string} dateString - дата рождения в формате 'YYYY-MM-DD'
 * @returns {number} - возраст
@@ -44,14 +66,14 @@ class Home {
       return;
     }
 
-    if (this.cardCount >= persons.length) {
-      const newCards = await this.getCards();
-        persons.push(...newCards);
-    }
+    // if (this.cardCount >= persons.length) {
+    //   const newCards = await this.getCards();
+    //     persons.push(...newCards);
+    // }
 
     const card = new Card({
       id: this.cardCount,
-      imageUrl: cardData.gender === 'М' ? 'https://source.unsplash.com/random/1000x1000/?man' : 'https://source.unsplash.com/random/1000x1000/?woman',
+      imageUrl: 'https://source.unsplash.com/random/1000x1000/?man',
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
@@ -102,11 +124,17 @@ class Home {
   * Функуция-контролер для обработки событий на главной странице.
   */
   async controller() {
+
+    const name = getCookie('name');
+    const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+    navbarName.innerHTML = name;
+
     let cards = await this.getCards();
     cards = JSON.parse(cards);
 
-    for(let i = 0; i < this.cardsPerLoad; i++) {
+    for(let i = 0; i < persons.length - 1; i++) {
       this.appendNewCard(cards[i]);
+
     }
 
     const acceptButton = document.querySelector('#accept');
