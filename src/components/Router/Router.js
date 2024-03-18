@@ -22,11 +22,18 @@ export class Router {
     document.body.addEventListener('click', (e) => {
       if (e.target.matches('[data-link]')) {
         e.preventDefault();
-        this.navigateTo(e.target.href);
+        this.navigateTo(e.target.getAttribute('data-url') || e.target.href);
       }
       if (e.target.matches('[data-link-persistent]')) {
         e.preventDefault();
-        this.redirectTo(e.target.href);
+        this.redirectTo(e.target.getAttribute('data-url') || e.target.href);
+      }
+      if (e.target.matches('[data-action]')) {
+        e.preventDefault();
+        const action = e.target.getAttribute('data-action');
+        if (action === 'logout'){
+          apiHandler.Logout();
+        }
       }
     });
   }
@@ -53,7 +60,7 @@ export class Router {
    * @function
    */
   async loadRoute() {
-    if (apiHandler.authStatus === undefined) {
+    if (apiHandler.authStatus === null) {
       await apiHandler.CheckAuth();
     }
     const route =
@@ -80,27 +87,6 @@ export class Router {
     rootHTML.innerHTML = await route.component.render();
     if (route.component.controller) {
       await route.component.controller();
-    }
-
-    const logoutButton = document.getElementById('header__button--logout');
-    if (logoutButton) {
-      logoutButton.addEventListener('click', () => {
-        apiHandler.Logout();
-      });
-    }
-
-    const loginButton = document.getElementById('header__button');
-    if (loginButton) {
-      loginButton.addEventListener('click', () => {
-        this.navigateTo('/login');
-      });
-    }
-
-    const registerbuttons = document.getElementsByClassName('landing-button');
-    for (const button of registerbuttons) {
-      button.addEventListener('click', () => {
-        this.navigateTo('/register');
-      });
     }
   }
 }

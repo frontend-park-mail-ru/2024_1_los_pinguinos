@@ -2,7 +2,7 @@ import router from '../../index.js';
 
 const localhost = 'http://127.0.0.1:8080';
 const vm = 'http://185.241.192.216:8080';
-const baseURL = localhost;
+const baseURL = vm;
 const registrationURL = baseURL + '/registration';
 const authenticationURL = baseURL + '/login';
 const logoutURL = baseURL + '/logout';
@@ -25,7 +25,7 @@ class APIHandler {
         this.logoutURL = logoutURL;
         this.isAuthURL = isAuthURL;
         this.cardsURL = cardsURL;
-        this.authStatus = undefined;
+        this.authStatus = null;
     }
     /**
      * Sends request to specified url with specified data via specified method.

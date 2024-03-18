@@ -25,8 +25,8 @@ class FormHandler {
             'email': '• Формат email - example@mailservice.domain, длина до 320 символов',
             'text': '• Имя не должно содержать специальных символов (и пробелов), длина 2-32 символа',
             'date': '• Дата в формате вашей системы, c 1970 по 2008',
-            'login': '• Неверный логин или пароль',
-            'registration': '• Такой email уже зарегистрирован',
+            'login401': '• Неверный логин или пароль',
+            'registration401': '• Такой email уже зарегистрирован',
             'multipleChoice': '• Выберите хотя бы один интерес',
             'genderChoice': '• Выберите пол',
         };
@@ -221,7 +221,7 @@ class FormHandler {
         if (form.id == 'registration') {
             apiHandler.Register(formData).then((res) => {
                 if (res !== 200) {
-                    this.addErrorMsg(formErrF, 'registrationMsg', 'registration', this.helpMessages);
+                    this.addErrorMsg(formErrF, 'registrationMsg', `registration${res}`, this.helpMessages);
                 } else {
                     router.redirectTo('/main');
                 }
@@ -230,7 +230,7 @@ class FormHandler {
         else if (form.id == 'login') {
             apiHandler.Login(formData).then((res) => {
                 if (res !== 200) {
-                    this.addErrorMsg(formErrF, 'loginMsg', 'login', this.helpMessages);
+                    this.addErrorMsg(formErrF, 'loginMsg', `login${res}`, this.helpMessages);
                 } else {
                     router.redirectTo('/main');
                 }
