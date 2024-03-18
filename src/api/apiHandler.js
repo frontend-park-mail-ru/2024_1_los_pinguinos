@@ -69,7 +69,7 @@ class APIHandler {
      * Sends request for registration
      * @function
      * @param {Object} formData - registration form data
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
      */
     async Register(formData) {
         const response = await this.sendRequest(this.registrationURL, formData, 'POST');
@@ -80,7 +80,7 @@ class APIHandler {
      * Sends request for login
      * @function
      * @param {Object} formData - login form data
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
      */
     async Login(formData) {
         const response = await this.sendRequest(this.authenticationURL, formData, 'POST');
@@ -90,20 +90,25 @@ class APIHandler {
     /**
      * Sends request for logout
      * @function
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
      */
     async Logout() {
         router.navigateTo('/');
 
         return await this.sendRequest(this.logoutURL);
     }
+    /**
+     * Sends request tp check if user is authorized
+     * @function
+     * @returns {Promise<Object>} - returns request result
+     */
     async CheckAuth() {
         return await this.sendRequest(this.isAuthURL);
     }
     /**
      * Sends request for registration interest choices
      * @function
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
      */
     async GetInterests() {
         const response = await this.sendRequest(this.registrationURL);

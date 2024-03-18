@@ -31,7 +31,7 @@ export class Router {
     });
   }
   /**
-   * Redirect to specified page without reload
+   * Navigates to specified page without reload, creates new history entry
    * @function
    * @param {string} url - navigation url
    */
@@ -39,8 +39,12 @@ export class Router {
     history.pushState(null, null, url);
     this.loadRoute();
   }
+  /**
+   * Redirect to specified page without reload, does not create new history entry
+   * @function
+   * @param {string} url - redirection url
+   */
   redirectTo(url) {
-    // console.log("REDIRECT ATTEMPT TO URL ", url)
     history.replaceState(null, null, url);
     this.loadRoute();
   }
@@ -57,9 +61,7 @@ export class Router {
       this.routes.find((r) => r.path === '*');
 
     if (route.protected) {
-      // console.log('PROTECTED ROUTE');
       if (!apiHandler.authStatus) {
-        // console.log("AUTH STATUS ", apiHandler.authStatus);
         this.redirectTo('/login');
 
         return;
