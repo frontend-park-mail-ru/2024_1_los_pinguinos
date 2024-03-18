@@ -414,6 +414,9 @@ input[type="date"] {
     }
 }
 
+.form__paragraph--error {
+    transition: var(--form__item--opacity);
+}
 
 .form__block--hidden {
     opacity: 0;
