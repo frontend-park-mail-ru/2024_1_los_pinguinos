@@ -22,12 +22,23 @@ export class Router {
     document.body.addEventListener('click', (e) => {
       if (e.target.matches('[data-link]')) {
         e.preventDefault();
-        this.navigateTo(e.target.href);
+        this.navigateTo(e.target.getAttribute('data-url') || e.target.href);
+      }
+      if (e.target.matches('[data-link-persistent]')) {
+        e.preventDefault();
+        this.redirectTo(e.target.getAttribute('data-url') || e.target.href);
+      }
+      if (e.target.matches('[data-action]')) {
+        e.preventDefault();
+        const action = e.target.getAttribute('data-action');
+        if (action === 'logout'){
+          apiHandler.Logout();
+        }
       }
     });
   }
   /**
-   * Redirect to specified page without reload
+   * Navigates to specified page without reload, creates new history entry
    * @function
    * @param {string} url - navigation url
    */
@@ -36,49 +47,45 @@ export class Router {
     this.loadRoute();
   }
   /**
+   * Redirect to specified page without reload, does not create new history entry
+   * @function
+   * @param {string} url - redirection url
+   */
+  redirectTo(url) {
+    history.replaceState(null, null, url);
+    this.loadRoute();
+  }
+  /**
    * Loads route components and adds them into root inner html, redirects to specified route depending on auth status
    * @function
    */
   async loadRoute() {
+    if (apiHandler.authStatus === null) {
+      await apiHandler.CheckAuth();
+    }
     const route =
       this.routes.find((r) => r.path === location.pathname) ||
       this.routes.find((r) => r.path === '*');
+
+    if (route.protected) {
+      if (!apiHandler.authStatus) {
+        this.redirectTo('/login');
+        return;
+      }
+    }
+
+    if (route.redirectOnAuth) {
+      if (apiHandler.authStatus) {
+        this.redirectTo(route.redirectOnAuth);
+
+        return;
+      }
+    }
 
     const rootHTML = document.getElementById('root');
     rootHTML.innerHTML = await route.component.render();
     if (route.component.controller) {
       await route.component.controller();
-    }
-    const logoutButton = document.getElementById('header__button--logout');
-    if (logoutButton) {
-      logoutButton.addEventListener('click', () => {
-        apiHandler.Logout();
-      });
-    }
-    const loginButton = document.getElementById('header__button');
-    if (loginButton) {
-      loginButton.addEventListener('click', () => {
-        this.navigateTo('/login');
-      });
-    }
-
-    const registerbuttons = document.getElementsByClassName('landing-button');
-    for (const button of registerbuttons) {
-      button.addEventListener('click', () => {
-        this.navigateTo('/register');
-      });
-    }
-
-    const authStatus = localStorage.getItem('sid') === 'true';
-    if (route.protected) {
-      if (!authStatus) {
-        this.navigateTo('/login');
-      }
-    }
-    if (route.redirectOnAuth !== null) {
-      if (authStatus) {
-        this.navigateTo(route.redirectOnAuth);
-      }
     }
   }
 }

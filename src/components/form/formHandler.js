@@ -2,13 +2,11 @@ import apiHandler from '../../api/apiHandler.js';
 import router from '../../../index.js';
 /**
  * Form handler class. It handles forms o_o
- * @author roflanpotsan
  * @class
  */
 class FormHandler {
     /**
      * Creates instance of class formHandler.
-     * @author roflanpotsan
      */
     constructor() {
         this.currentStep = 0;
@@ -27,15 +25,14 @@ class FormHandler {
             'email': '• Формат email - example@mailservice.domain, длина до 320 символов',
             'text': '• Имя не должно содержать специальных символов (и пробелов), длина 2-32 символа',
             'date': '• Дата в формате вашей системы, c 1970 по 2008',
-            'login': '• Неверный логин или пароль',
-            'registration': '• Что-то пошло не так',
+            'login401': '• Неверный логин или пароль',
+            'registration401': '• Такой email уже зарегистрирован',
             'multipleChoice': '• Выберите хотя бы один интерес',
             'genderChoice': '• Выберите пол',
         };
     }
     /**
      * Validates input according to predefined regex parameters.
-     * @author roflanpotsan
      * @function
      * @param {string} type - input type
      * @param {HTMLElement} input - the input itself
@@ -51,12 +48,14 @@ class FormHandler {
         };
         const regexExpression = expressions[type];
         const regexEmoji = expressions['emoji'];
+        if (type === 'text'){
+            return regexExpression.test(input);
+        }
 
         return regexExpression.test(input) && regexEmoji.test(input);
     }
     /**
      * Makes next step of multistep form visible.
-     * @author roflanpotsan
      * @function
      */
     formForward() {
@@ -76,7 +75,6 @@ class FormHandler {
     }
     /**
      * Makes previous step of multistep form visible.
-     * @author roflanpotsan
      * @function
      */
     formBackward() {
@@ -104,7 +102,6 @@ class FormHandler {
     }
     /**
      * Adds error message to specified container.
-     * @author roflanpotsan
      * @function
      * @param {HTMLElement} container - specified container
      * @param {string} errId - id of element to be created
@@ -120,6 +117,7 @@ class FormHandler {
             }
         }
         const newErrP = document.createElement('p');
+        newErrP.classList.add('form__paragraph--error');
         newErrP.innerHTML = errMsgs[errType];
         newErrP.id = errId;
         container.appendChild(newErrP);
@@ -131,7 +129,6 @@ class FormHandler {
     }
     /**
      * Removes error message from specified container.
-     * @author roflanpotsan
      * @function
      * @param {HTMLElement} container - specified container
      * @param {string} errId - id of element to be removed
@@ -159,7 +156,6 @@ class FormHandler {
     }
     /**
      * Validates input and adds/removes an error message depending on result.
-     * @author roflanpotsan
      * @function
      * @param {HTMLElement} formInput - the input itself
      * @returns {boolean} - returns true if errors were encountered, false otherwise
@@ -188,7 +184,6 @@ class FormHandler {
     }
     /**
      * Validates form step and returns validation result.
-     * @author roflanpotsan
      * @function
      * @param {HTMLElement} formStep - the form step itself
      * @returns {boolean} - returns form step validation result, true if ok
@@ -205,7 +200,6 @@ class FormHandler {
     }
     /**
      * Submits a form.
-     * @author roflanpotsan
      * @function
      * @param {HTMLElement} form - the form itself
      */
@@ -213,6 +207,8 @@ class FormHandler {
         const formInputs = form.querySelectorAll('.form__input');
         const formErrF = form.querySelector('.form__error');
         const formData = {};
+        this.removeErrorMsg(formErrF, 'loginMsg', 200);
+        this.removeErrorMsg(formErrF, 'registrationMsg', 200);
         for (const input of formInputs) {
             formData[input.id] = input.value;
         }
@@ -223,29 +219,26 @@ class FormHandler {
             formData['choices'] = this.multipleChoice;
         }
         if (form.id == 'registration') {
-            this.removeErrorMsg(formErrF, 'registrationMsg', 200);
             apiHandler.Register(formData).then((res) => {
-                if (res === undefined) {
-                    this.addErrorMsg(formErrF, 'registrationMsg', 'registration', this.helpMessages);
+                if (res !== 200) {
+                    this.addErrorMsg(formErrF, 'registrationMsg', `registration${res}`, this.helpMessages);
                 } else {
-                    router.navigateTo('/main');
+                    router.redirectTo('/main');
                 }
             });
         }
         else if (form.id == 'login') {
-            this.removeErrorMsg(formErrF, 'loginMsg', 200);
             apiHandler.Login(formData).then((res) => {
-                if (res === undefined) {
-                    this.addErrorMsg(formErrF, 'loginMsg', 'login', this.helpMessages);
+                if (res !== 200) {
+                    this.addErrorMsg(formErrF, 'loginMsg', `login${res}`, this.helpMessages);
                 } else {
-                    router.navigateTo('/main');
+                    router.redirectTo('/main');
                 }
             });
         }
     }
     /**
      * Handles 'Enter' key press on form input.
-     * @author roflanpotsan
      * @function
      * @param {HTMLElement} formInput - the input itself
      * @param {KeyboardEvent} event - key press event
@@ -281,7 +274,6 @@ class FormHandler {
     }
     /**
      * Adds 'Enter' key press event listeners on form inputs.
-     * @author roflanpotsan
      * @function
      */
     setupEnterEvents() {
@@ -294,7 +286,6 @@ class FormHandler {
     }
     /**
      * Sets up form's checkboxes, makes them clickable and tracks their state
-     * @author roflanpotsan
      * @function
      */
     setupCheckboxes() {
@@ -328,7 +319,6 @@ class FormHandler {
     }
     /**
      * Sets up event listeners to enable form interactions.
-     * @author roflanpotsan
      * @function
      */
     setupDisplay() {

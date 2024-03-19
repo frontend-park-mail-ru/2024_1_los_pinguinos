@@ -1,6 +1,6 @@
 import router from '../../index.js';
 
-const localhost = 'http://localhost:8080';
+const localhost = 'http://127.0.0.1:8080';
 const vm = 'http://185.241.192.216:8080';
 const baseURL = vm;
 const registrationURL = baseURL + '/registration';
@@ -10,13 +10,11 @@ const isAuthURL = baseURL + '/isAuth';
 const cardsURL = baseURL + '/cards';
 /**
  * APIHandler class
- * @author roflanpotsan
  * @class
  */
 class APIHandler {
     /**
      * Creates instance of class APIHandler.
-     * @author roflanpotsan
      */
     constructor() {
         this.localhost = localhost;
@@ -27,82 +25,72 @@ class APIHandler {
         this.logoutURL = logoutURL;
         this.isAuthURL = isAuthURL;
         this.cardsURL = cardsURL;
+        this.authStatus = null;
     }
     /**
      * Sends request to specified url with specified data via specified method.
-     * @author roflanpotsan
      * @function
      * @param {string} url - request url
      * @param {Object} data - request data
      * @param {string} method - request method
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request response
      */
     async sendRequest(url = this.baseURL, data = {}, method='GET') {
-        try {
-            let response;
-            if (method == 'GET') {
-                response = await fetch(url, {
-                    method: method,
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-            } else if (method == 'POST') {
-                response = await fetch(url, {
-                    method: method,
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
-            }
-            if (!response.ok) {
-                localStorage.setItem('sid', false);
-                if (url !== this.authenticationURL && url !== this.registrationURL && url != this.logoutURL) {
-                    router.navigateTo('/login');
-                }
-                throw new Error('Network response was not sucessfull');
-            }
-            if (!(url === this.registrationURL && method === 'GET')){
-                localStorage.setItem('sid', true);
-            }
-            if (url === this.logoutURL) {
-                localStorage.removeItem('sid');
-            }
-            const jsonData = await response.json();
-
-            return jsonData;
-        } catch (error) {
-            return undefined;
+        let response;
+        if (method == 'GET') {
+            response = await fetch(url, {
+                method: method,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+        } else if (method == 'POST') {
+            response = await fetch(url, {
+                method: method,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
         }
+        if (!response.ok || url === this.logoutURL) {
+            this.authStatus = false;
+        } else if (response.ok) {
+            if (!(url === this.registrationURL && method === 'GET')){
+                this.authStatus = true;
+            }
+        }
+
+        return response;
     }
     /**
      * Sends request for registration
-     * @author roflanpotsan
      * @function
      * @param {Object} formData - registration form data
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
      */
     async Register(formData) {
-        return await this.sendRequest(this.registrationURL, formData, 'POST');
+        const response = await this.sendRequest(this.registrationURL, formData, 'POST');
+
+        return response.status;
     }
     /**
      * Sends request for login
-     * @author roflanpotsan
      * @function
      * @param {Object} formData - login form data
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
      */
     async Login(formData) {
-        return await this.sendRequest(this.authenticationURL, formData, 'POST');
+        const response = await this.sendRequest(this.authenticationURL, formData, 'POST');
+
+        return response.status;
     }
     /**
      * Sends request for logout
-     * @author roflanpotsan
      * @function
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
      */
     async Logout() {
         router.navigateTo('/');
@@ -110,13 +98,22 @@ class APIHandler {
         return await this.sendRequest(this.logoutURL);
     }
     /**
-     * Sends request for registration interest choices
-     * @author roflanpotsan
+     * Sends request tp check if user is authorized
      * @function
-     * @returns {Promise<Object | undefined>} - returns request result, undefined if unsuccessful
+     * @returns {Promise<Object>} - returns request result
+     */
+    async CheckAuth() {
+        return await this.sendRequest(this.isAuthURL);
+    }
+    /**
+     * Sends request for registration interest choices
+     * @function
+     * @returns {Promise<Object>} - returns request result
      */
     async GetInterests() {
-        return await this.sendRequest(this.registrationURL);
+        const response = await this.sendRequest(this.registrationURL);
+
+        return await response.json();
     }
 }
 
