@@ -9,9 +9,9 @@ import apiHandler from '../../api/apiHandler.js';
 * @returns {string} - значение по ключу
 */
 function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
+  const name = cname + '=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
   for(let i = 0; i <ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) == ' ') {
@@ -21,7 +21,8 @@ function getCookie(cname) {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+
+return '';
 }
 
 /**
@@ -125,9 +126,9 @@ class Home {
   async controller() {
 
     const name = getCookie('name');
-    const navbar_name = document.getElementsByClassName('navbar__header__person__name')[0];
-    navbar_name.innerHTML = name; 
-    
+    const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+    navbarName.innerHTML = name;
+
     let cards = await this.getCards();
     cards = JSON.parse(cards);
 
