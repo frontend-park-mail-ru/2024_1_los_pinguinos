@@ -1,6 +1,6 @@
 import router from '../../index.js';
 
-const localhost = 'http://127.0.0.1:8080';
+const localhost = 'http://localhost:8080';
 const vm = 'http://185.241.192.216:8080';
 const baseURL = localhost;
 const registrationURL = baseURL + '/registration';
