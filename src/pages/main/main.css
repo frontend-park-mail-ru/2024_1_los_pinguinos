@@ -1,6 +1,6 @@
 .main {
     display: flex;
-    margin: 86px 67px;
+    margin: 10px 67px;
     gap: 12px;
     height: 100%;
     justify-content: center;
@@ -24,6 +24,7 @@
     border-radius: 13px;
     perspective-origin: center 50%;
     transform-style: preserve-3d;
+    padding: 20px;
   }
 
 .controllers {
