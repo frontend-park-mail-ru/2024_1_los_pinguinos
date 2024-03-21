@@ -31,8 +31,7 @@
     "handlebars-loader": "^1.7.3",
     "mini-css-extract-plugin": "^2.8.0",
     "postcss-import": "^15.1.0",
-    "postcss-preset-env": "^9.4.0",
-    "transliteration": "^2.3.5"
+    "postcss-preset-env": "^9.4.0"
   },
   "devDependencies": {
     "babel-loader": "^9.1.3",
