@@ -115,6 +115,15 @@ class APIHandler {
 
         return await response.json();
     }
+    /**
+     * Возвращает массив карточек с сервера
+     * @returns {Promise<Array>} - массив карточек
+     */
+    async getCards() {
+        const response = await this.sendRequest(this.cardsURL);
+
+        return await response.json();
+    }
 }
 
 const apiHandler = new APIHandler();

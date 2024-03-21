@@ -47,13 +47,6 @@ const getAge = (dateString) => {
 class Home {
   cardCount = 0;
   cardsPerLoad = 5;
-  /**
-  * Возвращает массив карточек с сервера
-  * @returns {Promise<Array>} - массив карточек
-  */
-  async getCards() {
-    return await apiHandler.sendRequest(apiHandler.cardsURL);
-  }
 
   /**
   * Отображает новую карточку на странице
@@ -72,7 +65,6 @@ class Home {
       age: getAge(cardData.birthday),
       description: cardData.description,
       onDismiss: () => {
-        // this.appendNewCard.bind(this);
       },
       onLike: () => {
 
@@ -125,13 +117,12 @@ class Home {
     const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
     navbarName.innerHTML = name;
 
-    let cards = await this.getCards();
+    let cards = await apiHandler.getCards();
     cards = JSON.parse(cards);
 
-    for(let i = 0; i < cards.length; i++) {
-      this.appendNewCard(cards[i]);
-
-    }
+    cards.forEach(card => {
+      this.appendNewCard(card);
+    });
 
     const acceptButton = document.querySelector('#accept');
     const rejectButton = document.querySelector('#reject');
