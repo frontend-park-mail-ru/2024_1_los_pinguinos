@@ -1,6 +1,5 @@
 import main from './main.hbs';
 import Card from './components/card/card.js';
-import { persons } from './persons.js';
 import apiHandler from '../../api/apiHandler.js';
 
 /**
@@ -48,13 +47,6 @@ const getAge = (dateString) => {
 class Home {
   cardCount = 0;
   cardsPerLoad = 5;
-  /**
-  * Возвращает массив карточек с сервера
-  * @returns {Promise<Array>} - массив карточек
-  */
-  async getCards() {
-    return await apiHandler.sendRequest(apiHandler.cardsURL);
-  }
 
   /**
   * Отображает новую карточку на странице
@@ -66,18 +58,14 @@ class Home {
       return;
     }
 
-    // if (this.cardCount >= persons.length) {
-    //   const newCards = await this.getCards();
-    //     persons.push(...newCards);
-    // }
-
     const card = new Card({
       id: this.cardCount,
       imageUrl: 'https://source.unsplash.com/random/1000x1000/?man',
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
-      onDismiss: this.appendNewCard.bind(this),
+      onDismiss: () => {
+      },
       onLike: () => {
 
       },
@@ -129,13 +117,12 @@ class Home {
     const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
     navbarName.innerHTML = name;
 
-    let cards = await this.getCards();
+    let cards = await apiHandler.getCards();
     cards = JSON.parse(cards);
 
-    for(let i = 0; i < persons.length - 1; i++) {
-      this.appendNewCard(cards[i]);
-
-    }
+    cards.forEach(card => {
+      this.appendNewCard(card);
+    });
 
     const acceptButton = document.querySelector('#accept');
     const rejectButton = document.querySelector('#reject');
