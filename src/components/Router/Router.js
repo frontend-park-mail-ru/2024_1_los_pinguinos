@@ -70,6 +70,7 @@ export class Router {
     if (route.protected) {
       if (!apiHandler.authStatus) {
         this.redirectTo('/login');
+
         return;
       }
     }
