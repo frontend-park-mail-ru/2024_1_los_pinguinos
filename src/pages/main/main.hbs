@@ -1,11 +1,14 @@
 {{> components/header/header authState=1}}
 <div class="main">
-    {{> components/navbar/navbar}}
   <div class="content">
     <div id="swiper"></div>
     <div class="controllers">
-      <button id="reject">Не нравится</button>
-      <button id="accept">Нравится</button>
+      {{!-- <button id="reject">Не нравится</button>
+      <button id="accept">Нравится</button> --}}
+      {{!-- <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 64C150 64 64 150 64 256s86 192 192 192 192-86 192-192S362 64 256 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M296 352l-96-96 96-96"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M352 176L217.6 336 160 272"/></svg> --}}
+      <ion-icon id="reject" name="chevron-back-circle"></ion-icon>
+      <ion-icon id="accept" name="checkmark-circle"></ion-icon>
       </div>
     </div>
   </div>
