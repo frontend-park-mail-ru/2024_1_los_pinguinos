@@ -1,6 +1,6 @@
 
 
-.card7 {
+.match {
   $card7-color: darken($color: #fcd0ce,$amount: 5);
   width: 300px;
   height: 300px;
@@ -62,12 +62,13 @@
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
 
-    .content {
+    .bottom__content {
       position: absolute;
       bottom: 0;
       left: 1.5rem;
       right: 1.5rem;
       height: 170px;
+      width: auto;
 
       .name {
         display: block;
@@ -87,7 +88,6 @@
       bottom: 1rem;
       left: 1.5rem;
       right: 1.5rem;
-      background: black;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -106,7 +106,7 @@
         }
       }
 
-      .button {
+      .match__button {
         background: white;
         color: $card7-color;
         border: none;
