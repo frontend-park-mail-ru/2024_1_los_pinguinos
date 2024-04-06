@@ -6,25 +6,25 @@ const persons = [
     image: 'https://source.unsplash.com/random/1000x1000/?woman',
     name: 'Alice',
     age: 24,
-    description: 'dfsdfsdg fgdfgdgf fgdgdg',
+    description: 'Я тебя на бицепс жму, сладкий',
   },
   {
     image: 'https://source.unsplash.com/random/1000x1000/?woman',
-    name: 'Alice',
+    name: 'Gwen',
     age: 24,
-    description: 'dfsdfsdg fgdfgdgf fgdgdg',
+    description: 'Ломаю арубузы бедрами',
   },
   {
     image: 'https://source.unsplash.com/random/1000x1000/?woman',
-    name: 'Alice',
+    name: 'Emma',
     age: 24,
-    description: 'dfsdfsdg fgdfgdgf fgdgdg',
+    description: 'Мои глаза выше',
   },
   {
     image: 'https://source.unsplash.com/random/1000x1000/?woman',
-    name: 'Alice',
+    name: 'Bella',
     age: 24,
-    description: 'dfsdfsdg fgdfgdgf fgdgdg',
+    description: 'Не лююлю разминать шею',
   },
 ];
 
