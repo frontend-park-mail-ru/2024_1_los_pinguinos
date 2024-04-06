@@ -134,7 +134,7 @@
   padding: 20px;
   position: relative;
   z-index: 1; */
-  animation-name: before_anim;
+  animation-name: before_like;
   animation-duration: 1s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: both;
@@ -143,7 +143,7 @@
 
 #accept.trigger,
 #reject.trigger {
-  animation-name: after_anim;
+  animation-name: after_like;
 }
 
 #like {
@@ -156,7 +156,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-@keyframes before_anim {
+@keyframes before_like {
   0%,
   100% {
     opacity: 1;
@@ -167,7 +167,7 @@
   }
 }
 
-@keyframes after_anim {
+@keyframes after_like {
   0%,
   100% {
     opacity: 1;
