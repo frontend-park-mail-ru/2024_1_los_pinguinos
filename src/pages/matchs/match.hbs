@@ -1,0 +1,9 @@
+{{> components/header/header authState=1}}
+<div class="matches">
+    <h1 class="matches__header">Ваши мэтчи</h1>
+    <div id="matches__content">
+        {{#each matches}}
+            {{> pages/matchs/components/card}}
+        {{/each}}
+    </div>
+</div>

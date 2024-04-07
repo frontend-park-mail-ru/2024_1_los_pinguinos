@@ -10,7 +10,15 @@ module.exports = {
     module: {
         rules: [
             {test: /\.svg$/, use: 'svg-inline-loader'},
-            {test: /\.css$/, use: [ 'style-loader', 'css-loader' ] },
+            {test: /\.css$/, use: [ 'style-loader', 'css-loader',
+            {
+                loader: 'sass-loader',
+                options: {
+                  // Prefer `dart-sass`
+                  implementation: require('sass'),
+                },
+              },
+        ] },
             {test: /\.js$/, exclude: /node_modules/, use: ['babel-loader']},
             {test: /\.hbs$/,
             loader: 'handlebars-loader',

@@ -13,18 +13,19 @@
     align-items: center;
     flex-direction: column;
     width: 908px;
-    background: #ffffffa8;
+    background: inherit;
     border-radius: 13px;
     height: 100%;
+    background-color: rgba(255, 255, 255, 0.23);
   }
   
   #swiper {
-    width: 364px;
-    height: 657px;
+    width: 788px;
+    height: 582px;
     border-radius: 13px;
     perspective-origin: center 50%;
     transform-style: preserve-3d;
-    padding: 20px;
+    /* padding: 20px; */
   }
 
 .controllers {
@@ -37,18 +38,12 @@
 }
 
 #reject {
-    background: #ff4d4d;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 13px;
+    color: #D9D9D9;
     cursor: pointer;
 }
 
 #accept {
-    background: #4dff4d;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 13px;
+    color: #7DE85A;
     cursor: pointer;
 }
   

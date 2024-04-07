@@ -6,7 +6,7 @@
     }
 
     ;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .first-slide {
@@ -19,10 +19,11 @@
 
 .first-slde__content {
     display: flex;
-    background: url(../../assets/group.webp) no-repeat center center;
+    background: url(../../assets/group1.webp) no-repeat center center;
     width: 100%;
     height: 100%;
     background-size: contain;
+    --webkit-mask-image: -webkit-radial-gradient(center, ellipse cover, rgba(0, 0, 0, 1) -2%, rgba(0, 0, 0, 1) 69%, rgba(0, 0, 0, 0) 77%);
 }
 
 .top-button {
