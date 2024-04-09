@@ -1,13 +1,17 @@
 import router from '../../index.js';
 
-const localhost = 'http://127.0.0.1:8080';
+const localhost = 'http://172.20.10.6:8080';
 const vm = 'http://185.241.192.216:8080';
-const baseURL = localhost;
-const registrationURL = baseURL + '/registration';
-const authenticationURL = baseURL + '/login';
-const logoutURL = baseURL + '/logout';
-const isAuthURL = baseURL + '/isAuth';
-const cardsURL = baseURL + '/cards';
+const apiV1 = '/api/v1';
+const apiURL = apiV1;
+const baseURL = vm;
+const registrationURL = baseURL + apiURL + '/registration';
+const authenticationURL = baseURL + apiURL + '/login';
+const logoutURL = baseURL + apiURL + '/logout';
+const isAuthURL = baseURL + apiURL + '/isAuth';
+const cardsURL = baseURL + apiURL + '/cards';
+const profileURL = baseURL + apiURL +'/profile';
+const imageURL = baseURL + apiURL + '/addImage';
 /**
  * APIHandler class
  * @class
@@ -25,7 +29,9 @@ class APIHandler {
         this.logoutURL = logoutURL;
         this.isAuthURL = isAuthURL;
         this.cardsURL = cardsURL;
+        this.profileURL = profileURL;
         this.authStatus = null;
+        this.imageURL = imageURL;
     }
     /**
      * Sends request to specified url with specified data via specified method.
@@ -35,27 +41,18 @@ class APIHandler {
      * @param {string} method - request method
      * @returns {Promise<Object>} - returns request response
      */
-    async sendRequest(url = this.baseURL, data = {}, method='GET') {
-        let response;
-        if (method == 'GET') {
-            response = await fetch(url, {
-                method: method,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-        } else if (method == 'POST') {
-            response = await fetch(url, {
-                method: method,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+    async sendRequest(url = this.baseURL, data = null, method='GET', file=false) {
+        const request = {
+            method: method,
+            credentials: 'include',
+        };
+        if (method === 'POST') {
+            if (!file)
+            request['body'] = JSON.stringify(data);
+            else request['body'] = data;
         }
-        if (!response.ok || url === this.logoutURL) {
+        const response = await fetch(url, request);
+        if ((response.status === 401 || response.status === 403 || url === this.logoutURL)) {
             this.authStatus = false;
         } else if (response.ok) {
             if (!(url === this.registrationURL && method === 'GET')){
@@ -119,10 +116,37 @@ class APIHandler {
      * Возвращает массив карточек с сервера
      * @returns {Promise<Array>} - массив карточек
      */
-    async getCards() {
+    async GetCards() {
         const response = await this.sendRequest(this.cardsURL);
 
         return await response.json();
+    }
+    async GetProfile(userId=null) {
+        let url = this.profileURL;
+        if (userId) {
+            url += `?id=${userId}`;
+        }
+        const response = await this.sendRequest(url);
+
+        return await response.json();
+    }
+    async UpdateProfile(formData) {
+        const response = await this.sendRequest(this.profileURL, formData, 'POST');
+
+        return await response.status;
+    }
+    async DeleteProfile() {
+        const response = await this.sendRequest(this.profileURL, null, 'DELETE');
+        if (response.ok) {
+            this.authStatus = false;
+        }
+
+        return await response.status;
+    }
+    async UploadImage(formData) {
+        const response = await this.sendRequest(this.imageURL, formData, 'POST', true);
+
+        return await response;
     }
 }
 

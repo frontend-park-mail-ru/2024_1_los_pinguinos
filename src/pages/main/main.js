@@ -117,7 +117,7 @@ class Home {
     const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
     navbarName.innerHTML = name;
 
-    let cards = await apiHandler.getCards();
+    let cards = await apiHandler.GetCards();
     cards = JSON.parse(cards);
 
     cards.forEach(card => {

@@ -27,13 +27,21 @@ class Login {
                         footerLink: '/register',
                         footerLinkText: 'Регистрация',
                         formNavButton: {
-                            buttonText: '<',
-                            buttonId: 'navButton0',
+                            classes: [
+                                'form__button--nav',
+                            ],
+                            id: 'navButton0',
                         },
-                        formButton: {
-                            buttonText: 'Продолжить',
-                            buttonId: 'submit',
-                        },
+                        stepButtons: [
+                            {
+                                classes: [
+                                    'form__button--continue',
+                                ],
+                                buttonText: 'Продолжить',
+                                id: 'submit',
+                                submitAction: 'login',
+                            },
+                        ],
                         fields: [
                         {
                             placeholder: 'Ваш email',
@@ -43,13 +51,21 @@ class Login {
                             maxlength: 320,
                         },
                         {
+                            classes: [
+                                'form__input--icon',
+                            ],
                             placeholder: 'Ваш пароль',
                             type: 'password',
                             id: 'password',
                             completion: 'current-password',
                             minlength: 8,
                             maxlength: 32,
-                            password: 1,
+                            iconButton: {
+                                classes: [
+                                    'form__button--icon',
+                                ],
+                                id: 'pswdToggle',
+                            },
                         },
                         ],
                     },
@@ -66,8 +82,7 @@ class Login {
      * @function
      */
     async controller() {
-        formHandler.setupDisplay();
-        formHandler.setupEnterEvents();
+        formHandler.setupDisplay(document.querySelector('.form'));
     }
 }
 

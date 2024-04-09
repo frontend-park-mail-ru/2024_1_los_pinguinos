@@ -1,0 +1,224 @@
+:root {
+    --action-bgr--success: rgba(30, 255, 0, 0.3);
+    --action-bgr--failure: rgba(255, 0, 0, 0.3);
+}
+.profile__wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 70dvw;
+    height: 80dvh;
+    background-color: rgba(255,255,255,0.23);
+    border-radius: 40px;
+    overflow: auto;
+}
+
+.profile__content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 60%;
+    height: auto;
+    overflow: auto;
+    padding: 30px 60px;
+}
+
+.profile__content-block {
+    background-color: rgba(255,255,255,0.23);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    padding: 20px 30px;
+    transition: all 0.2s ease-in-out;
+}
+
+.profile__block-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.profile__label--row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.profile__label--text {
+    color: white;
+    font-size: 1.5rem;
+    word-wrap: break-word;
+}
+
+.profile__content-block--text {
+    color: white;
+    word-wrap: break-word;
+}
+
+.profile__item-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile__picture-block {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto;
+    gap: 12px;
+}
+
+.grid__item--first {
+    grid-column: 1 / span 2; /* Span 2 columns */
+    grid-row: 1 / span 2; /* Span 2 rows */
+}
+
+.grid__item--other {
+    align-self: stretch;
+}
+
+.profile__picture-container {
+    aspect-ratio: 1;
+    position: relative;
+}
+
+.profile__picture {
+    width: 100%;
+    display: block;
+    border-radius: 10%;
+    aspect-ratio: 1;
+}
+
+.profile__navbar-wrapper {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 90px;
+}
+
+.profile__navbar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255,255,255,0.23);
+    width: 80%;
+    gap: 10px;
+    height: auto;
+    border-radius: 20px;
+    padding: 20px 30px;
+}
+
+.profile__icon {
+    width: 20px;
+    aspect-ratio: 1;
+}
+
+.profile__icon--navbar {
+    width: 15px;
+    display: none;
+}
+
+.profile__text {
+    font-weight: 200;
+    color: white;
+    white-space-collapse: preserve-breaks;
+}
+
+.profile__text--title {
+    font-weight: 500;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.profile__settings--row {
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile__settings--column {
+    display: flex;
+    flex-direction: column;
+}
+
+::-webkit-scrollbar {
+    width:8px
+}
+
+/* background of the scrollbar except button or resizer */
+::-webkit-scrollbar-track {
+    background-color: none;
+}
+::-webkit-scrollbar-track:hover {
+    background-color:none;
+}
+
+/* scrollbar itself */
+::-webkit-scrollbar-thumb {
+    background-color:#353535;
+    border-radius:16px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color:#2e2e2e;
+}
+
+/* set button(top and bottom of the scrollbar) */
+::-webkit-scrollbar-button {display:none}
+
+/* .profile__dialog */
+
+.profile__dialog {
+    margin: auto;
+    border: none;
+    background: none;
+    transition: all 0.2s ease-in-out;
+    /* height: auto; */
+}
+
+.profile__dialog::backdrop {
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+}
+
+
+@media only screen and (max-width: 896px) {
+    .profile__wrapper {
+        width: 100dvw;
+        height: 100dvh;
+        border-radius: 0;
+        flex-direction: column;
+    }
+    .profile__content-block {
+        min-width: 250px;
+    }
+    .profile__content-wrapper {
+        width: 100%;
+        padding: 15px;
+        padding-bottom: 30px;
+    }
+    .profile__navbar-wrapper {
+        width: 100dvw;
+        padding-top: 60px;
+    }
+    .profile__navbar-content {
+        position: absolute;
+        border-radius: 0;
+        background-color: #1a1a1a;
+        bottom: 0;
+        flex-direction: row;
+        width: 100%;
+    }
+    .profile__settings--row {
+        gap: 10px;
+    }
+    .profile__icon--navbar {
+        display: block;
+    }
+}
