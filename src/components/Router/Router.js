@@ -38,6 +38,9 @@ export class Router {
           apiHandler.DeleteProfile();
           this.redirectTo('/');
         }
+        if (action === 'back') {
+          history.back();
+        }
       }
     });
   }

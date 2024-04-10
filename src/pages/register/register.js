@@ -1,6 +1,6 @@
 import registerTemplate from './register.hbs';
 import FormHandler from '../../components/form/formHandler.js';
-import appStorageHandler from '../../components/basic/AppStorageHandler.js';
+import storage from '../../models/storage/storage.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
 
 const formHandler = new FormHandler();
@@ -128,7 +128,7 @@ class Register {
                         checkBoxListClasses:[
                             'form__checkbox-list--cut',
                         ],
-                        choices: appStorageHandler.appInterests,
+                        choices: storage.appInterests,
                     },
                     {
                         stepId: 'step3',

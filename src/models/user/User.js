@@ -22,6 +22,9 @@ class User {
     Description() {
         return this.userData['description'];
     }
+    UpdatePicture(id, value) {
+        this.userData['photos'][id] = value;
+    }
     DisplayPictures() {
         let photoURLS = this.userData['photos'];
         const acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
