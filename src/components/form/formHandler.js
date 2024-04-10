@@ -417,7 +417,7 @@ class FormHandler {
             const pictureBlock = container.closest('.profile__picture-block');
             pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
         }
-        const containerId = pictureContainers.indexOf(container) + 1;
+        const containerId = pictureContainers.indexOf(container);
         if (acceptedFileTypes.includes(file.type)) {
             const formData = new FormData();
             formData.append('image', file);
@@ -441,7 +441,7 @@ class FormHandler {
                 const photo = document.createElement('img');
                 photo.classList.add('profile__picture');
                 photo.src = photoURL;
-                storage.user.UpdatePicture(containerId - 1, photoURL);
+                storage.user.UpdatePicture(containerId, photoURL);
 
                 photo.onload= () => {
                     container.appendChild(photo);
@@ -484,7 +484,7 @@ class FormHandler {
             const pictureBlock = fileContainer.closest('.profile__picture-block');
             pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
         }
-        const containerId = pictureContainers.indexOf(fileContainer) + 1;
+        const containerId = pictureContainers.indexOf(fileContainer);
         const response = await apiHandler.DeleteImage({'cell': `${containerId}`});
 
         if (response === 200) {
@@ -494,7 +494,7 @@ class FormHandler {
             actionButton.classList.toggle('form__button--remove');
             actionButton.removeEventListener('click', FormHandler.handleFileDelete);
             actionButton.addEventListener('click', FormHandler.handleFileInput);
-            storage.user.UpdatePicture(containerId - 1, null);
+            storage.user.UpdatePicture(containerId, null);
 
             const pictureBlock = fileContainer.closest('.profile__picture-block');
             const createBtns = pictureBlock.querySelectorAll('.form__button--create');
