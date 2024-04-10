@@ -1,5 +1,6 @@
 import loginTemplate from './login.hbs';
 import FormHandler from '../../components/form/formHandler.js';
+import componentHandler from '../../components/basic/ComponentHandler.js';
 
 const formHandler = new FormHandler();
 /**
@@ -10,11 +11,11 @@ const formHandler = new FormHandler();
 class Login {
     /**
      * Returns login page template
-     * @author roflanpotsan
      * @function
      * @returns {Promise<string>}  - template html string
      */
     async render() {
+        const textContinue = 'Продолжить';
         const formContext = {
             form : {
                 id: 'login',
@@ -26,14 +27,10 @@ class Login {
                         footerInfo: 'Нет аккаунта?',
                         footerLink: '/register',
                         footerLinkText: 'Регистрация',
-                        formNavButton: {
-                            buttonText: '<',
-                            buttonId: 'navButton0',
-                        },
-                        formButton: {
-                            buttonText: 'Продолжить',
-                            buttonId: 'submit',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
+                        stepButtons: [
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue, submitAction: 'login'}),
+                        ],
                         fields: [
                         {
                             placeholder: 'Ваш email',
@@ -43,13 +40,21 @@ class Login {
                             maxlength: 320,
                         },
                         {
+                            classes: [
+                                'form__input--icon',
+                            ],
                             placeholder: 'Ваш пароль',
                             type: 'password',
                             id: 'password',
                             completion: 'current-password',
                             minlength: 8,
                             maxlength: 32,
-                            password: 1,
+                            iconButton: {
+                                classes: [
+                                    'form__button--icon',
+                                ],
+                                id: 'pswdToggle',
+                            },
                         },
                         ],
                     },
@@ -66,8 +71,7 @@ class Login {
      * @function
      */
     async controller() {
-        formHandler.setupDisplay();
-        formHandler.setupEnterEvents();
+        formHandler.setupDisplay(document.querySelector('.form'));
     }
 }
 

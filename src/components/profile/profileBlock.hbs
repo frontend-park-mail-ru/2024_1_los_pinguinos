@@ -1,0 +1,36 @@
+{{#if labelText}}
+    <div class="profile__content-block" id={{blockId}}>
+        <div class="profile__label--row">
+            <p class="profile__label--text">{{labelText}}</p>
+            {{#if labelButton}}
+                {{> components/form/formButton labelButton}}
+                {{> components/form/dialog settingDialog}}
+            {{/if}}
+        </div>
+        {{#if interests}}
+            <div class="profile__item-container">
+            {{#each interests}}
+                {{> components/form/formButton this}}
+            {{/each}}
+            </div>
+        {{/if}}
+        {{#if bioText}}
+            <p class="profile__text">{{bioText}}</p>
+        {{/if}}
+        {{#if securityOptions}}
+            {{#each securityOptions}}
+                {{> components/profile/securityBlock this}}
+            {{/each}}
+        {{/if}}
+    </div>
+    {{#if securityOptions}} 
+        {{> components/form/formButton actionButton}}
+    {{/if}}
+{{/if}}
+{{#if profilePictures}}
+    <div class="profile__picture-block">
+        {{#each profilePictures}}
+            {{> components/profile/profilePictureContainer this}}
+        {{/each}}
+    </div>
+{{/if}}

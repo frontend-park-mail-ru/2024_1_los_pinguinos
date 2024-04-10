@@ -2,12 +2,17 @@ import router from '../../index.js';
 
 const localhost = 'http://localhost:8080';
 const vm = 'http://185.241.192.216:8080';
-const baseURL = localhost;
-const registrationURL = baseURL + '/registration';
-const authenticationURL = baseURL + '/login';
-const logoutURL = baseURL + '/logout';
-const isAuthURL = baseURL + '/isAuth';
-const cardsURL = baseURL + '/cards';
+const apiV1 = '/api/v1';
+const apiURL = apiV1;
+const baseURL = vm;
+const registrationURL = baseURL + apiURL + '/registration';
+const authenticationURL = baseURL + apiURL + '/login';
+const logoutURL = baseURL + apiURL + '/logout';
+const isAuthURL = baseURL + apiURL + '/isAuth';
+const cardsURL = baseURL + apiURL + '/cards';
+const profileURL = baseURL + apiURL +'/profile';
+const imageURL = baseURL + apiURL + '/addImage';
+const removeImageURL = baseURL + apiURL + '/deleteImage';
 /**
  * APIHandler class
  * @class
@@ -25,7 +30,11 @@ class APIHandler {
         this.logoutURL = logoutURL;
         this.isAuthURL = isAuthURL;
         this.cardsURL = cardsURL;
+        this.profileURL = profileURL;
+        this.imageURL = imageURL;
+        this.removeImageURL = removeImageURL;
         this.authStatus = null;
+        this.CSRFToken = null;
     }
     /**
      * Sends request to specified url with specified data via specified method.
@@ -35,31 +44,34 @@ class APIHandler {
      * @param {string} method - request method
      * @returns {Promise<Object>} - returns request response
      */
-    async sendRequest(url = this.baseURL, data = {}, method='GET') {
-        let response;
-        if (method == 'GET') {
-            response = await fetch(url, {
-                method: method,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-        } else if (method == 'POST') {
-            response = await fetch(url, {
-                method: method,
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+    async sendRequest(url = this.baseURL, data = null, method='GET', file=false) {
+        const request = {
+            method: method,
+            credentials: 'include',
+        };
+        if (this.CSRFToken) {
+            request['headers']['csrft'] = this.CSRFToken;
         }
-        if (!response.ok || url === this.logoutURL) {
-            this.authStatus = false;
+        if (method === 'POST') {
+            if (!file)
+            request['body'] = JSON.stringify(data);
+            else request['body'] = data;
+        }
+        const response = await fetch(url, request);
+        const CSRFToken = response.headers['csrft'];
+        if (CSRFToken) {
+            this.CSRFToken = CSRFToken;
+        }
+        if (!response.ok) {
+            if (response.status === 401) {
+                this.authStatus = false;
+            }
         } else if (response.ok) {
             if (!(url === this.registrationURL && method === 'GET')){
                 this.authStatus = true;
+            }
+            if (url === this.logoutURL) {
+                this.authStatus = false;
             }
         }
 
@@ -119,10 +131,42 @@ class APIHandler {
      * Возвращает массив карточек с сервера
      * @returns {Promise<Array>} - массив карточек
      */
-    async getCards() {
+    async GetCards() {
         const response = await this.sendRequest(this.cardsURL);
 
         return await response.json();
+    }
+    async GetProfile(userId=null) {
+        let url = this.profileURL;
+        if (userId) {
+            url += `?id=${userId}`;
+        }
+        const response = await this.sendRequest(url);
+
+        return await response.json();
+    }
+    async UpdateProfile(formData) {
+        const response = await this.sendRequest(this.profileURL, formData, 'POST');
+
+        return await response.status;
+    }
+    async DeleteProfile() {
+        const response = await this.sendRequest(this.profileURL, null, 'DELETE');
+        if (response.ok) {
+            this.authStatus = false;
+        }
+
+        return await response.status;
+    }
+    async UploadImage(formData) {
+        const response = await this.sendRequest(this.imageURL, formData, 'POST', true);
+
+        return await response;
+    }
+    async DeleteImage(formData) {
+        const response = await this.sendRequest(this.removeImageURL, formData, 'POST');
+
+        return await response.status;
     }
 }
 

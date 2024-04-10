@@ -1,6 +1,10 @@
-<form class="form" id={{id}}>
+<form class="form {{#each classes}}{{this}} {{/each}}" id={{id}}>
     {{#each steps}}
         {{> components/form/formStep }}
     {{/each}}
-    <div class="form__error form__block--hidden"></div>
+    {{#if noErrors}}
+
+    {{else}}
+        <div class="form__error any--hidden {{#each formErrorClasses}}{{this}} {{/each}}"></div>
+    {{/if}}
 </form>

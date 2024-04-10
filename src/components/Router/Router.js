@@ -34,6 +34,10 @@ export class Router {
         if (action === 'logout'){
           apiHandler.Logout();
         }
+        if (action === 'deleteProfile') {
+          apiHandler.DeleteProfile();
+          this.redirectTo('/');
+        }
       }
     });
   }
@@ -70,6 +74,7 @@ export class Router {
     if (route.protected) {
       if (!apiHandler.authStatus) {
         this.redirectTo('/login');
+
         return;
       }
     }
@@ -81,7 +86,18 @@ export class Router {
         return;
       }
     }
-
+    const body = document.body;
+    let url = route.path.slice(1,route.path.length);
+    if (route.path === '/') {
+      url = 'landing';
+    }
+    if (!url) {
+      url = '404';
+    }
+    if (url == 'landing') {
+      body.style.backgroundSize = 'cover';
+    }
+    body.style.backgroundImage = `var(--background--${url})`;
     const rootHTML = document.getElementById('root');
     rootHTML.innerHTML = await route.component.render();
     if (route.component.controller) {

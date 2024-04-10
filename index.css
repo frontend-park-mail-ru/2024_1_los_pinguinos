@@ -1,5 +1,6 @@
 @import url(./src/components/form/form.css);
 @import url(./src/pages/404/404.css);
+@import url(./src/components/profile/profile.css);
 @import url("/src/pages/main/main.css");
 @import url("/src/components/navbar/navbar.css");
 @import url("/src/components/header/header.css");
@@ -7,6 +8,15 @@
 @import url("/src/pages/landing/landing.css");
 @import url("/src/pages/matchs/components/card.scss");
 @import url("src/pages/matchs/matches.scss");
+
+:root {
+  --background--landing: url(./background-landing.webp);
+  --background--main: url(./background-main.webp);
+  --background--login: url(./background-auth.webp);
+  --background--register: url(./background-auth.webp);
+  --background--profile: url(./background-main.webp);
+  --background--404: url(./background-404.webp);
+}
 
 * {
   margin: 0;
@@ -23,15 +33,15 @@ html {
 
 html,
 body {
-  width: 100vw;
-  height: 100vh;
+  width: 100dvw;
+  height: 100dvh;
   overflow: hidden;
   font-family: "Poppins", sans-serif;
 }
 
 body {
-  background: url(background.webp) no-repeat center center fixed; 
-  background-size: cover;
+  background-image: var(--background--landing);
+  background-size: 100% 100%;
 }
 
 .header__menu {

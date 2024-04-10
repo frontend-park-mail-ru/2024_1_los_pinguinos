@@ -1,13 +1,19 @@
 <div class="form__field">
     {{#if label}}
-        <label class="form__label" for={{id}}>{{label}}</label>
+        <label class="form__label {{#each labelClasses}}{{this}} {{/each}}" for={{id}}>{{label}}</label>
     {{/if}}
-    {{#if password}}
-        {{> components/form/formIconButton}}
+    {{#if textArea}}
+        <textarea class="form__textarea {{#each classes}}{{this}} {{/each}}" 
+                maxlength="{{maxlength}}" placeholder="{{placeholder}}"
+                id="{{id}}"></textarea>
+    {{else}}
+        <input class="form__input {{#each classes}}{{this}} {{/each}}" 
+            id="{{id}}" type="{{type}}" minlength="{{minlength}}" 
+            maxlength="{{maxlength}}" autocomplete="{{completion}}" 
+            placeholder="{{placeholder}}" min="{{min}}" max="{{max}}">
     {{/if}}
-    <input class="form__input {{#if password}}form__input--icon{{/if}}" 
-        id={{id}} type={{type}} minlength={{minlength}} 
-        maxlength={{maxlength}} autocomplete={{completion}} 
-        placeholder='{{placeholder}}' min={{min}} max={{max}}>
-    <div class="field__error form__block--hidden"></div>
+    {{#if iconButton}}
+        {{> components/form/formButton iconButton}}
+    {{/if}}
+    <div class="field__error any--hidden"></div>
 </div>

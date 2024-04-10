@@ -1,11 +1,11 @@
 import registerTemplate from './register.hbs';
 import FormHandler from '../../components/form/formHandler.js';
-import apiHandler from '../../api/apiHandler.js';
+import appStorageHandler from '../../components/basic/AppStorageHandler.js';
+import componentHandler from '../../components/basic/ComponentHandler.js';
 
 const formHandler = new FormHandler();
 /**
  * Registration page class
- * @author roflanpotsan
  * @class
  */
 class Register {
@@ -16,13 +16,8 @@ class Register {
      * @returns {Promise<string>}  - template html string
      */
     async render() {
-        const data = await apiHandler.GetInterests();
-        let interests;
-        if (data) {
-            interests = JSON.parse(data);
-        } else {
-            interests = [];
-        }
+        const textSubmit = 'Завершить';
+        const textContinue = 'Продолжить';
         const totalSteps = 3;
         const formContext = {
             form : {
@@ -35,13 +30,10 @@ class Register {
                         footerInfo: 'Уже есть аккаунт?',
                         footerLink: '/login',
                         footerLinkText: 'Войти',
-                        formNavButton: {
-                            buttonId: 'navButton0',
-                        },
-                        formButton: {
-                            buttonText: 'Продолжить',
-                            buttonId: 'continueButton0',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
+                        stepButtons: [
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue}),
+                        ],
                         fields: [
                         {
                             placeholder: 'Ваш email',
@@ -54,16 +46,18 @@ class Register {
                     },
                     {
                         stepId: 'step1',
-                        fixedSize: 'medium',
+                        formStepClasses: [
+                            'form__block--medium',
+                        ],
+                        buttonContainerClasses: [
+                            'form__button-container--fixed-medium',
+                        ],
                         formTitle: 'Давайте знакомиться',
                         formInfo: 'Заполните оставшиеся данные, чтобы другие люди могли узнать вас лучше',
-                        formNavButton: {
-                            buttonId: 'navButton1',
-                        },
-                        formButton: {
-                            buttonText: 'Продолжить',
-                            buttonId: 'continueButton1',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
+                        stepButtons: [
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue}),
+                        ],
                         currentStep: `1/${totalSteps}`,
                         fields:
                         [
@@ -82,66 +76,87 @@ class Register {
                                 label: 'Дата рождения',
                                 type: 'date',
                                 id: 'birthday',
-                                placeholder: '2022-02-22',
-                                min: '1940-01-01',
-                                max: '2999-01-01',
+                                min: '1970-01-01',
+                                max: '2009-01-01',
                             },
                         ],
                         choiceLabel: 'Ваш пол',
-                        side: 1,
+                        extraFieldContainerClasses:[
+                            'form__field-container--side',
+                        ],
+                        checkBoxContainerClasses:[
+                            'form__checkbox-container--side',
+                        ],
+                        checkBoxListClasses:[
+                            'form__checkbox-list--side',
+                        ],
                         choices:
                         [
                             {
-                                ID: 'GenderM',
-                                Name: 'М',
-                                round: 1,
+                                classes:[
+                                    'form__button--checkbox',
+                                    'form__button--round',
+                                ],
+                                id: 'GenderM',
+                                buttonText: 'М',
                             },
                             {
-                                ID: 'GenderF',
-                                Name: 'Ж',
-                                round: 1,
+                                classes:[
+                                    'form__button--checkbox',
+                                    'form__button--round',
+                                ],
+                                id: 'GenderF',
+                                buttonText: 'Ж',
                             },
                         ],
                     },
                     {
                         stepId: 'step2',
-                        fixedSize: 'medium',
+                        formStepClasses:[
+                            'form__block--medium',
+                        ],
+                        buttonContainerClasses:[
+                            'form__button-container--fixed-medium',
+                        ],
                         formTitle: 'Чем будем заниматься?',
                         formInfo: 'Выберите какими типами активностей вы увлекаетесь',
-                        formNavButton: {
-                            buttonId: 'navButton2',
-                        },
-                        formButton: {
-                            buttonText: 'Продолжить',
-                            buttonId: 'continueButton2',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
+                        stepButtons: [
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue}),
+                        ],
                         currentStep: `2/${totalSteps}`,
-                        list: 1,
-                        choices:
-                        interests,
+                        checkBoxListClasses:[
+                            'form__checkbox-list--cut',
+                        ],
+                        choices: appStorageHandler.appInterests,
                     },
                     {
                         stepId: 'step3',
                         formTitle: 'Почти закончили',
                         formInfo: 'Остался последний шаг, введите пароль',
-                        formNavButton: {
-                            buttonId: 'navButton3',
-                        },
-                        formButton: {
-                            buttonText: 'Завершить',
-                            buttonId: 'submit',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
+                        stepButtons: [
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textSubmit, submitAction: 'register'}),
+                        ],
                         currentStep: `3/${totalSteps}`,
                         fields:
                         [
                             {
+                                classes:[
+                                    'form__input--icon',
+                                ],
                                 label: 'Ваш пароль',
                                 type: 'password',
                                 id: 'password',
                                 completion: 'new-password',
                                 minlength: 8,
                                 maxlength: 32,
-                                password: 1,
+                                iconButton: {
+                                    classes:[
+                                        'form__button--icon',
+                                    ],
+                                    id: 'pswdToggle',
+                                },
                             },
                         ],
                     },
@@ -157,9 +172,7 @@ class Register {
      * @function
      */
     async controller(){
-        formHandler.setupDisplay();
-        formHandler.setupCheckboxes();
-        formHandler.setupEnterEvents();
+        formHandler.setupDisplay(document.querySelector('.form'));
     }
 }
 

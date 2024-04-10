@@ -1,21 +1,23 @@
-<div class="form__block {{#if fixedSize}}form__block--{{fixedSize}}{{/if}}" id={{stepId}}>
+<div class="form__block {{#each formStepClasses}}{{this}} {{/each}}" id={{stepId}}>
         <div class="form__header">
-            {{> components/form/formNavButton formNavButton}}
+            {{#if formNavButton}}
+                {{> components/form/formButton formNavButton}}
+            {{/if}}
             {{#if currentStep}}
                 <p class="form__step-count">{{currentStep}}</p>
             {{/if}}
         </div>
-        <div class="form__title"> 
-            <h1 >{{formTitle}}</h1>
+        <div class="form__title {{#each formTitleClasses}}{{this}} {{/each}}"> 
+            <p>{{formTitle}}</p>
         </div>
         {{#if formInfo}}
-            <div class="form__info">
+            <div class="form__info {{#each formInfoClasses}}{{this}} {{/each}}">
                 <p>{{formInfo}}</p>
             </div>
         {{/if}}
         <div class="form__input-container">
             {{#if fields}}
-                <div class="form__field-container">
+                <div class="form__field-container {{#each fieldContainerClasses}}{{this}} {{/each}}">
                     {{#each fields}}
                         {{> components/form/formField this}}
                     {{/each}}
@@ -25,26 +27,28 @@
         {{#if choices}}
         <div class="form__input-container">
             {{#if fieldsExtra}}
-                <div class="form__field-container {{#if side}}form__field-container--side{{/if}}">
+                <div class="form__field-container {{#each extraFieldContainerClasses}}{{this}} {{/each}}">
                     {{#each fieldsExtra}}
                         {{> components/form/formField this}}
                     {{/each}}
                 </div>
             {{/if}}
-                <div class="form__checkbox-container {{#if side}}form__checkbox-container--side{{/if}}">
+                <div class="form__checkbox-container {{#each checkBoxContainerClasses}}{{this}} {{/each}}">
                     {{#if choiceLabel}}
                         <label class="form__label">{{choiceLabel}}</label>
                     {{/if}}
-                    <div class="form__checkbox-list {{#if list}}form__checkbox-list--cut{{/if}}">
+                    <div class="form__checkbox-list {{#each checkBoxListClasses}}{{this}} {{/each}}">
                         {{#each choices}}
-                            {{> components/form/formCheckBox this}}
+                           {{> components/form/formButton this}}
                         {{/each}}
                     </div>
                 </div>
         </div>
         {{/if}}
-        <div class="form__button-container {{#if fixedSize}}form__button-container--fixed-{{fixedSize}}{{/if}}">
-            {{> components/form/formButton formButton}}
+        <div class="form__button-container {{#each buttonContainerClasses}}{{this}} {{/each}}">
+            {{#each stepButtons}}
+                {{> components/form/formButton this}}
+            {{/each}}
         </div>
         {{#if footerInfo}}
             <div class="form__footer">

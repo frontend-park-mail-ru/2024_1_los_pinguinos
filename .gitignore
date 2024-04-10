@@ -1,4 +1,5 @@
 node_modules/
 dist/
 docker-compose.yaml
+.DS_Store
 Dockerfile

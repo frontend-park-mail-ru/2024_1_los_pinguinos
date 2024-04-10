@@ -1,5 +1,9 @@
   <div class="header">
     <div class="header__logo">
     </div>
-      <button {{#if authState}}data-action="logout" {{/if}}{{#if notAuthState}}data-link data-url="/login" {{/if}}type="button" id="header__button{{#if authState}}--logout{{/if}}">{{#if authState}}Выйти{{/if}}{{#if notAuthState}}Войти{{/if}}</button>
+      {{#if authState}}
+        <button data-action="logout" type="button" id="header__button--logout">Выйти</button>
+      {{else}}
+        <button data-link data-url="/login" type="button" id="header__button">Войти</button>
+      {{/if}}
   </div>

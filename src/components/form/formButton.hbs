@@ -1,2 +1,20 @@
-<button type="button" class="form__button form__button--continue" id={{buttonId}}>{{buttonText}}</button>
-<div class="field__error"></div>
+<button type="button" class="form__button {{#each classes}}{{this}} {{/each}}" 
+        {{#if dataURL}}data-link data-url={{dataURL}}{{/if}} 
+        {{#if action}}data-action={{action}}{{/if}} 
+        {{#if submitAction}}submit={{submitAction}}{{/if}}
+        id={{id}}>
+        {{#if buttonImg}}
+            <img class="profile__icon profile__icon--navbar" 
+            {{#if action}}data-action="{{action}}"{{/if}} 
+            src='data:image/svg+xml,{{buttonImg}}'>
+        {{/if}}
+        <span class="button__span {{#each spanClasses}}{{this}} {{/each}}"
+        {{#if action}}data-action={{action}}{{/if}} >{{buttonText}}</span>
+</button>
+{{#if noErrors}}
+{{else}}
+    <div class="field__error"></div>
+{{/if}}
+{{#if file}}
+    <input class="form__input--file form__input--hidden" accept="{{#each acceptedFileTypes}}{{this}}, {{/each}}" type="file">
+{{/if}}

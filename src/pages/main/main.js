@@ -91,7 +91,7 @@ class Home {
   */
   async controller() {
 
-    let cards = await apiHandler.getCards();
+    let cards = await apiHandler.GetCards();
     cards = JSON.parse(cards);
 
     cards.forEach(card => {
