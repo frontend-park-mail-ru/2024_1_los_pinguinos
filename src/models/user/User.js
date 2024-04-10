@@ -1,5 +1,6 @@
 import apiHandler from '../../api/apiHandler';
 import componentHandler from '../../components/basic/ComponentHandler';
+import storage from '../storage/storage';
 
 class User {
     constructor() {
@@ -68,7 +69,15 @@ class User {
         return [];
     }
     Update(data) {
+        if ('interests' in data) {
+            this.userData['interests'] = new Array();
+            for (const interest of storage.rawAppInterests) {
+                if (data['interests'].includes(interest))
+                this.userData['interests'].push({'Name': interest});
+            }
+        }
         for (const key in data) {
+            if (key !== 'interests')
             this.userData[key] = data[key];
         }
     }

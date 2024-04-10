@@ -1,12 +1,11 @@
 import FormHandler from '../form/formHandler';
 
-const formHandler = new FormHandler();
-
 class ProfileHandler {
     constructor() {
         this.state = 0;
     }
     setup() {
+        const formHandler = new FormHandler();
         const navbar = document.querySelector('.profile__navbar-content');
         const navbarButtons = navbar.querySelectorAll('.form__button--navbar');
         navbarButtons[this.state].classList.toggle('form__button--navbar-selected');
@@ -102,6 +101,4 @@ class ProfileHandler {
     }
 }
 
-const profileHandler = new ProfileHandler();
-
-export default profileHandler;
+export default ProfileHandler;

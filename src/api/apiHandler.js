@@ -1,10 +1,11 @@
 import router from '../../index.js';
+import storage from '../models/storage/storage.js';
 
 const localhost = 'http://172.20.10.6:8080';
 const vm = 'http://185.241.192.216:8080';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
-const baseURL = localhost;
+const baseURL = vm;
 const registrationURL = baseURL + apiURL + '/registration';
 const authenticationURL = baseURL + apiURL + '/login';
 const logoutURL = baseURL + apiURL + '/logout';
@@ -80,7 +81,6 @@ class APIHandler {
         if (CSRFToken && 'csrft' in CSRFToken) {
             this.CSRFToken = CSRFToken['csrft'];
         }
-        console.log(this.CSRFToken);
     }
     /**
      * Sends request for registration
@@ -90,7 +90,9 @@ class APIHandler {
      */
     async Register(formData) {
         const response = await this.sendRequest(this.registrationURL, formData, 'POST');
-        await this.getCSRFToken(response);
+        if (response.ok) {
+            await this.getCSRFToken(response);
+        }
 
         return response.status;
     }
@@ -102,7 +104,9 @@ class APIHandler {
      */
     async Login(formData) {
         const response = await this.sendRequest(this.authenticationURL, formData, 'POST');
-        await this.getCSRFToken(response);
+        if (response.ok) {
+            await this.getCSRFToken(response);
+        }
 
         return response.status;
     }
@@ -113,6 +117,7 @@ class APIHandler {
      */
     async Logout() {
         router.navigateTo('/');
+        storage.user = null;
 
         return await this.sendRequest(this.logoutURL);
     }
@@ -123,7 +128,9 @@ class APIHandler {
      */
     async CheckAuth() {
         const response = await this.sendRequest(this.isAuthURL);
-        await this.getCSRFToken(response);
+        if (response.ok) {
+            await this.getCSRFToken(response);
+        }
 
         return response;
     }
