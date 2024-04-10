@@ -441,6 +441,7 @@ class FormHandler {
                 const photo = document.createElement('img');
                 photo.classList.add('profile__picture');
                 photo.src = photoURL;
+                storage.user.UpdatePicture(containerId - 1, photoURL);
 
                 photo.onload= () => {
                     container.appendChild(photo);
@@ -493,6 +494,7 @@ class FormHandler {
             actionButton.classList.toggle('form__button--remove');
             actionButton.removeEventListener('click', FormHandler.handleFileDelete);
             actionButton.addEventListener('click', FormHandler.handleFileInput);
+            storage.user.UpdatePicture(containerId - 1, null);
 
             const pictureBlock = fileContainer.closest('.profile__picture-block');
             const createBtns = pictureBlock.querySelectorAll('.form__button--create');

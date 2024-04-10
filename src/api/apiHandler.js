@@ -1,7 +1,7 @@
 import router from '../../index.js';
 import storage from '../models/storage/storage.js';
 
-const localhost = 'http://localhost:8080';
+const localhost = 'http://172.20.10.6:8080';
 const vm = 'http://185.241.192.216:8080';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
@@ -13,9 +13,6 @@ const isAuthURL = baseURL + apiURL + '/isAuth';
 const cardsURL = baseURL + apiURL + '/cards';
 const profileURL = baseURL + apiURL +'/profile';
 const imageURL = baseURL + apiURL + '/addImage';
-const matchesURL = baseURL + apiURL + '/matches';
-const likeURL = baseURL + apiURL + '/like';
-const dislikeURL = baseURL + apiURL + '/dislike';
 const removeImageURL = baseURL + apiURL + '/deleteImage';
 /**
  * APIHandler class
@@ -34,9 +31,6 @@ class APIHandler {
         this.logoutURL = logoutURL;
         this.isAuthURL = isAuthURL;
         this.cardsURL = cardsURL;
-        this.matchesURL = matchesURL;
-        this.likeURL = likeURL;
-        this.dislikeURL = dislikeURL;
         this.profileURL = profileURL;
         this.imageURL = imageURL;
         this.removeImageURL = removeImageURL;
@@ -81,11 +75,13 @@ class APIHandler {
         return response;
     }
     async getCSRFToken(response) {
-        const responseCopy = response.clone();
-        const responseCSRFT = await responseCopy.json();
-        const CSRFToken = JSON.parse(responseCSRFT);
-        if (CSRFToken && 'csrft' in CSRFToken) {
-            this.CSRFToken = CSRFToken['csrft'];
+        if (response.ok) {
+            const responseCopy = response.clone();
+            const responseCSRFT = await responseCopy.json();
+            const CSRFToken = JSON.parse(responseCSRFT);
+            if (CSRFToken && 'csrft' in CSRFToken) {
+                this.CSRFToken = CSRFToken['csrft'];
+            }
         }
     }
     /**
@@ -96,9 +92,7 @@ class APIHandler {
      */
     async Register(formData) {
         const response = await this.sendRequest(this.registrationURL, formData, 'POST');
-        if (response.ok) {
-            await this.getCSRFToken(response);
-        }
+        await this.getCSRFToken(response);
 
         return response.status;
     }
@@ -110,9 +104,7 @@ class APIHandler {
      */
     async Login(formData) {
         const response = await this.sendRequest(this.authenticationURL, formData, 'POST');
-        if (response.ok) {
-            await this.getCSRFToken(response);
-        }
+        await this.getCSRFToken(response);
 
         return response.status;
     }
@@ -134,9 +126,7 @@ class APIHandler {
      */
     async CheckAuth() {
         const response = await this.sendRequest(this.isAuthURL);
-        if (response.ok) {
-            await this.getCSRFToken(response);
-        }
+        await this.getCSRFToken(response);
 
         return response;
     }
@@ -159,25 +149,6 @@ class APIHandler {
 
         return await response.json();
     }
-
-    async GetMatches() {
-        const response = await this.sendRequest(this.matchesURL);
-
-        return await response.json();
-    }
-
-    async LikeCard(profile2) {
-        const response = await this.sendRequest(this.likeURL, {profile2}, 'POST');
-
-        return await response.status;
-    }
-
-    async DislikeCard(cardId) {
-        const response = await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
-
-        return await response.status;
-    }
-
     async GetProfile(userId=null) {
         let url = this.profileURL;
         if (userId) {
