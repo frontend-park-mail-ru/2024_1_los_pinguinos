@@ -37,7 +37,7 @@ class Home {
     }
 
     const card = new Card({
-      id: this.cardCount,
+      id: cardData.ID,
       imageUrl: photo,
       name: cardData.name,
       age: getAge(cardData.birthday),
@@ -46,10 +46,10 @@ class Home {
       onDismiss: () => {
       },
       onLike: () => {
-
+        apiHandler.LikeCard(cardData.id);
       },
       onDislike: () => {
-
+        apiHandler.DislikeCard(cardData.id);
       },
     });
     swiper.appendChild(card.element);

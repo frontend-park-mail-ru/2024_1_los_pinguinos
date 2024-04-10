@@ -486,7 +486,7 @@ class FormHandler {
         const containerId = pictureContainers.indexOf(fileContainer) + 1;
         const response = await apiHandler.DeleteImage({'cell': `${containerId}`});
 
-        if (response.ok) {
+        if (response === 200) {
             const actionButton = fileContainer.querySelector('.form__button');
             actionButton.style.display = 'none';
             actionButton.classList.toggle('form__button--create');
