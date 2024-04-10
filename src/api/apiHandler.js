@@ -4,7 +4,7 @@ const localhost = 'http://172.20.10.6:8080';
 const vm = 'http://185.241.192.216:8080';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
-const baseURL = vm;
+const baseURL = localhost;
 const registrationURL = baseURL + apiURL + '/registration';
 const authenticationURL = baseURL + apiURL + '/login';
 const logoutURL = baseURL + apiURL + '/logout';
@@ -31,9 +31,10 @@ class APIHandler {
         this.isAuthURL = isAuthURL;
         this.cardsURL = cardsURL;
         this.profileURL = profileURL;
-        this.authStatus = null;
         this.imageURL = imageURL;
         this.removeImageURL = removeImageURL;
+        this.authStatus = null;
+        this.CSRFToken = null;
     }
     /**
      * Sends request to specified url with specified data via specified method.
@@ -48,12 +49,19 @@ class APIHandler {
             method: method,
             credentials: 'include',
         };
+        if (this.CSRFToken) {
+            request['headers']['csrft'] = this.CSRFToken;
+        }
         if (method === 'POST') {
             if (!file)
             request['body'] = JSON.stringify(data);
             else request['body'] = data;
         }
         const response = await fetch(url, request);
+        const CSRFToken = response.headers['csrft'];
+        if (CSRFToken) {
+            this.CSRFToken = CSRFToken;
+        }
         if (!response.ok) {
             if (response.status === 401) {
                 this.authStatus = false;
