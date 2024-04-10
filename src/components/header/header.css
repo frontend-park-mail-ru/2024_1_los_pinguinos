@@ -8,8 +8,9 @@
 }
 
 .header__menu {
+    width: 100%;
     display: flex;
-    gap: 5px;
+    gap: 10px;
 }
 
 .header__menu-button {
@@ -21,6 +22,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border: none;
 }
 
 .header__menu-link {
