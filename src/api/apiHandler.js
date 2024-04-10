@@ -13,6 +13,7 @@ const isAuthURL = baseURL + apiURL + '/isAuth';
 const cardsURL = baseURL + apiURL + '/cards';
 const profileURL = baseURL + apiURL +'/profile';
 const imageURL = baseURL + apiURL + '/addImage';
+const matchesURL = baseURL + apiURL + '/matches';
 const likeURL = baseURL + apiURL + '/like';
 const dislikeURL = baseURL + apiURL + '/dislike';
 const removeImageURL = baseURL + apiURL + '/deleteImage';
@@ -35,6 +36,7 @@ class APIHandler {
         this.cardsURL = cardsURL;
         this.profileURL = profileURL;
         this.imageURL = imageURL;
+        this.matchesURL = matchesURL;
         this.likeURL = likeURL;
         this.dislikeURL = dislikeURL;
         this.removeImageURL = removeImageURL;
@@ -153,6 +155,13 @@ class APIHandler {
 
         return await response.json();
     }
+
+    async GetMatches() {
+        const response = await this.sendRequest(this.matchesURL);
+
+        return await response.json();
+    }
+
     async GetProfile(userId=null) {
         let url = this.profileURL;
         if (userId) {
