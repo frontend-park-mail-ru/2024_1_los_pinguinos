@@ -28,6 +28,14 @@
     /* padding: 20px; */
   }
 
+  .end-of-swipes {
+    position: absolute;
+    z-index: -1000;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
 .controllers {
     display: flex;
     justify-content: center;

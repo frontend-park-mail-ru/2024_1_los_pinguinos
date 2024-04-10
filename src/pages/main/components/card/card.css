@@ -10,7 +10,7 @@
   cursor: pointer;
   user-select: none;
   transition: transform 0.5s;
-  background: #DCD8D8;
+  background: #a39c9c;
   perspective: 1000px;
   gap: 60px;
 }
@@ -30,7 +30,7 @@
 .card__front {
   background-color: black;
   border-radius: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
   justify-content: center;
   align-items: center;
 }
@@ -41,7 +41,8 @@
 }
 
 .card__back-header {
-  font-size: medium;
+  font-size: 25px;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 
@@ -90,6 +91,7 @@
 .card__name {
   font-size: 24px;
   font-weight: 500;
+
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
@@ -103,7 +105,8 @@
   letter-spacing: 0em;
   text-align: left;
   transition: transform 0.5s;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
+  margin-bottom: 10px;
 }
 
 .card__interests {
