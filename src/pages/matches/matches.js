@@ -28,7 +28,7 @@ class Matches {
 
     const match = document.createElement('div');
     match.innerHTML = matchTemp({
-      image: photo,
+      image: Array.isArray(photo) ? photo[0] : photo ? photo : "https://los_ping.hb.ru-msk.vkcs.cloud/i.webp",
       name: matchData.name,
       age: getAge(matchData.birthday),
       description: matchData.description,
