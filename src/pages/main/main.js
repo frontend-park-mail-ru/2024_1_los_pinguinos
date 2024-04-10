@@ -67,6 +67,8 @@ class Home {
   async acceptCard() {
     const swiper = document.querySelector('#swiper');
     const card = swiper.querySelector('.card');
+    const index = parseInt(card.getAttribute('index'));
+    apiHandler.LikeCard(index);
     setTimeout(() => {
       card.remove();
     }, 300);
@@ -77,6 +79,8 @@ class Home {
   async rejectCard() {
     const swiper = document.querySelector('#swiper');
     const card = swiper.querySelector('.card');
+    const index = parseInt(card.getAttribute('index'));
+    apiHandler.DislikeCard(index);
     setTimeout(() => {
       card.remove();
     }, 300);
