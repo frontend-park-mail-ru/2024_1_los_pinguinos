@@ -29,7 +29,8 @@ class User {
         let photoURLS = this.userData['photos'];
         const acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
         if (!photoURLS) {
-            photoURLS = [null, null, null, null, null];
+            photoURLS = [];
+            this.userData['photos'] = photoURLS;
         }
         while (photoURLS.length < 5) {
             photoURLS.push(null);

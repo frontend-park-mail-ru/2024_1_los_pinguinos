@@ -410,6 +410,7 @@
     background: var(--form__button--remove-svg) no-repeat center center;
     background-size: cover;
     transition: var(--form__item--opacity);
+    filter: invert(48%) sepia(15%) saturate(5246%) hue-rotate(327deg) brightness(100%) contrast(84%);
 }
 
 .form__button--remove:hover {
