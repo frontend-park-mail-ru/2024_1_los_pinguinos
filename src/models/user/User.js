@@ -32,6 +32,7 @@ class User {
             photoURLS = [];
             this.userData['photos'] = photoURLS;
         }
+
         while (photoURLS.length < 5) {
             photoURLS.push(null);
         }

@@ -100,6 +100,7 @@ class Home {
     cards = JSON.parse(cards);
 
     cards.forEach(card => {
+      console.log(card.photo);
       this.appendNewCard(card.person, card.interests, card.photo);
     });
 

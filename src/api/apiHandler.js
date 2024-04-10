@@ -13,6 +13,9 @@ const isAuthURL = baseURL + apiURL + '/isAuth';
 const cardsURL = baseURL + apiURL + '/cards';
 const profileURL = baseURL + apiURL +'/profile';
 const imageURL = baseURL + apiURL + '/addImage';
+const matchesURL = baseURL + apiURL + '/matches';
+const likeURL = baseURL + apiURL + '/like';
+const dislikeURL = baseURL + apiURL + '/dislike';
 const removeImageURL = baseURL + apiURL + '/deleteImage';
 /**
  * APIHandler class
@@ -33,6 +36,9 @@ class APIHandler {
         this.cardsURL = cardsURL;
         this.profileURL = profileURL;
         this.imageURL = imageURL;
+        this.matchesURL = matchesURL;
+        this.likeURL = likeURL;
+        this.dislikeURL = dislikeURL;
         this.removeImageURL = removeImageURL;
         this.authStatus = null;
         this.CSRFToken = null;
@@ -149,6 +155,13 @@ class APIHandler {
 
         return await response.json();
     }
+
+    async GetMatches() {
+        const response = await this.sendRequest(this.matchesURL);
+
+        return await response.json();
+    }
+
     async GetProfile(userId=null) {
         let url = this.profileURL;
         if (userId) {
@@ -163,6 +176,7 @@ class APIHandler {
 
         return await response.status;
     }
+
     async DeleteProfile() {
         const response = await this.sendRequest(this.profileURL, null, 'DELETE');
         if (response.ok) {
@@ -171,13 +185,28 @@ class APIHandler {
 
         return await response.status;
     }
+
     async UploadImage(formData) {
         const response = await this.sendRequest(this.imageURL, formData, 'POST', true);
 
         return await response;
     }
+
     async DeleteImage(formData) {
         const response = await this.sendRequest(this.removeImageURL, formData, 'POST');
+
+        return await response.status;
+    }
+
+    
+    async LikeCard(profile2) {
+        const response = await this.sendRequest(this.likeURL, {profile2}, 'POST');
+
+        return await response.status;
+    }
+
+    async DislikeCard(cardId) {
+        const response = await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
 
         return await response.status;
     }
