@@ -475,11 +475,10 @@
 }
 
 .form__input--dialog:hover ~ .form__button--icon-dialog {
-    filter: grayscale(0%);
     filter: invert(0%);
 }
 
-.form__input--dialog:focus ~ .form__icon-button--dialog {
+.form__input--dialog:focus ~ .form__button--icon-dialog {
     filter: invert(0%);
 }
 
@@ -683,3 +682,21 @@ input[type="date"] {
 .any--hidden {
     opacity: 0;
 }
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 30%;
+    aspect-ratio: 1;
+    background: var(--form__button--hover);
+    border-radius: 50%;
+    animation: l1 3s infinite linear;
+  }
+  @keyframes l1{
+    12.5% {border-radius: 37% 63% 70% 30% / 30% 62% 38% 70%}
+    25%   {border-radius: 50% 50% 70% 30% / 52% 62% 38% 48%}
+    37.5% {border-radius: 33% 67% 18% 82% / 52% 75% 25% 48%}
+    50%   {border-radius: 73% 27% 18% 82% / 52% 32% 68% 48%}
+    62.5% {border-radius: 73% 27% 74% 26% / 64% 32% 68% 36%}
+    75%   {border-radius: 84% 16% 15% 85% / 55% 79% 21% 45%}
+    87.5% {border-radius: 12% 88% 69% 31% / 10% 66% 34% 90%}
+  }

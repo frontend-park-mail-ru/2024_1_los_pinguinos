@@ -82,6 +82,8 @@
 }
 
 .profile__picture-container {
+    display: grid;
+    place-items: center;
     aspect-ratio: 1;
     position: relative;
 }

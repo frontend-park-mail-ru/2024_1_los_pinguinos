@@ -1,5 +1,6 @@
 import loginTemplate from './login.hbs';
 import FormHandler from '../../components/form/formHandler.js';
+import componentHandler from '../../components/basic/ComponentHandler.js';
 
 const formHandler = new FormHandler();
 /**
@@ -10,11 +11,11 @@ const formHandler = new FormHandler();
 class Login {
     /**
      * Returns login page template
-     * @author roflanpotsan
      * @function
      * @returns {Promise<string>}  - template html string
      */
     async render() {
+        const textContinue = 'Продолжить';
         const formContext = {
             form : {
                 id: 'login',
@@ -26,21 +27,9 @@ class Login {
                         footerInfo: 'Нет аккаунта?',
                         footerLink: '/register',
                         footerLinkText: 'Регистрация',
-                        formNavButton: {
-                            classes: [
-                                'form__button--nav',
-                            ],
-                            id: 'navButton0',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
                         stepButtons: [
-                            {
-                                classes: [
-                                    'form__button--continue',
-                                ],
-                                buttonText: 'Продолжить',
-                                id: 'submit',
-                                submitAction: 'login',
-                            },
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue, submitAction: 'login'}),
                         ],
                         fields: [
                         {

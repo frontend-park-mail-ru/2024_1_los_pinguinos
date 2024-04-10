@@ -12,6 +12,7 @@ const isAuthURL = baseURL + apiURL + '/isAuth';
 const cardsURL = baseURL + apiURL + '/cards';
 const profileURL = baseURL + apiURL +'/profile';
 const imageURL = baseURL + apiURL + '/addImage';
+const removeImageURL = baseURL + apiURL + '/deleteImage';
 /**
  * APIHandler class
  * @class
@@ -32,6 +33,7 @@ class APIHandler {
         this.profileURL = profileURL;
         this.authStatus = null;
         this.imageURL = imageURL;
+        this.removeImageURL = removeImageURL;
     }
     /**
      * Sends request to specified url with specified data via specified method.
@@ -52,11 +54,16 @@ class APIHandler {
             else request['body'] = data;
         }
         const response = await fetch(url, request);
-        if ((response.status === 401 || response.status === 403 || url === this.logoutURL)) {
-            this.authStatus = false;
+        if (!response.ok) {
+            if (response.status === 401) {
+                this.authStatus = false;
+            }
         } else if (response.ok) {
             if (!(url === this.registrationURL && method === 'GET')){
                 this.authStatus = true;
+            }
+            if (url === this.logoutURL) {
+                this.authStatus = false;
             }
         }
 
@@ -147,6 +154,11 @@ class APIHandler {
         const response = await this.sendRequest(this.imageURL, formData, 'POST', true);
 
         return await response;
+    }
+    async DeleteImage(formData) {
+        const response = await this.sendRequest(this.removeImageURL, formData, 'POST');
+
+        return await response.status;
     }
 }
 

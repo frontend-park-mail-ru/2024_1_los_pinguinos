@@ -94,6 +94,9 @@ export class Router {
     if (!url) {
       url = '404';
     }
+    if (url == 'landing') {
+      body.style.backgroundSize = 'cover';
+    }
     body.style.backgroundImage = `var(--background--${url})`;
     const rootHTML = document.getElementById('root');
     rootHTML.innerHTML = await route.component.render();

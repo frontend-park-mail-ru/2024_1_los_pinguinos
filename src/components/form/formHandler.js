@@ -1,6 +1,9 @@
 import apiHandler from '../../api/apiHandler.js';
 import router from '../../../index.js';
 import appStorageHandler from '../basic/AppStorageHandler.js';
+
+let pictureContainers = null;
+const acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
 /**
  * Form handler class. It handles forms o_o
  * @class
@@ -15,7 +18,6 @@ class FormHandler {
         this.mcStep = 2;
         this.gender = null;
         this.multipleChoice = new Array();
-        this.acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
         this.errorMessages = {
             'password': 'Некорректный пароль',
             'email': 'Некорректный email',
@@ -169,7 +171,7 @@ class FormHandler {
     inputErrorHandler(formInput) {
         const form = formInput.closest('.form');
 
-        const passwordDisplayBtns = form.querySelectorAll('.form__icon-button');
+        const passwordDisplayBtns = form.querySelectorAll('.form__button--icon');
         for (const passwordDisplayBtn of passwordDisplayBtns) {
             const passwordField = passwordDisplayBtn.closest('.form__field');
             const passwordInput = passwordField.querySelector('.form__input');
@@ -285,21 +287,24 @@ class FormHandler {
                 return;
             }
 
-            const content = formData['description'] || formData['name'] || formData['email'];
+            let content = formData['description'] || formData['name'] || formData['email'];
             if (content) {
-                updatedElement.textContent = content;
                 const formInput = form.querySelector('.form__input');
                 if (formInput) {
-                    if (formInput.id === 'email') {
-                        updatedElement.textContent = content.replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');
-
-                        return;
+                    if (formInput.id !== 'email') {
+                        formInput.placeholder = content;
                     }
-                    formInput.placeholder = content;
-                    formInput.value = null;
+                    else {
+                        content = content.replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');
+                    }
                 }
-
-                return;
+                updatedElement.textContent = content;
+            }
+            const formInputs = form.querySelectorAll('.form__input');
+            for (const input of formInputs) {
+                if (!input.classList.contains('.form__textarea')) {
+                    input.value = null;
+                }
             }
         }
 
@@ -319,7 +324,7 @@ class FormHandler {
             this.removeErrorMsg(formErrF, 'registrationMsg', 200);
         }
         for (const input of formInputs) {
-            formData[input.id] = input.value;
+            formData[input.id.trim()] = input.value;
         }
         if (this.gender) {
             formData['gender'] = this.gender;
@@ -407,40 +412,119 @@ class FormHandler {
             });
         }
     }
-    async handleFile(file, container) {
-        if (this.acceptedFileTypes.includes(file.type)) {
+    static async handleFileUpload(file, container) {
+        if (!pictureContainers) {
+            const pictureBlock = container.closest('.profile__picture-block');
+            pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
+        }
+        const containerId = pictureContainers.indexOf(container) + 1;
+        if (acceptedFileTypes.includes(file.type)) {
             const formData = new FormData();
             formData.append('image', file);
+            formData.append('cell', containerId);
+
+            const actionButton = container.querySelector('.form__button');
+            actionButton.style.display = 'none';
+
+            const loader = document.createElement('div');
+            loader.classList.add('loader');
+            container.appendChild(loader);
 
             const response = await apiHandler.UploadImage(formData);
             const photoURL = await response.json();
-            const photo = document.createElement('img');
-            photo.classList.add('profile__picture');
-            photo.src = photoURL;
-            container.querySelector('.form__button').remove();
-            container.appendChild(photo);
-            const nextElement = container.nextElementSibling;
-            if (nextElement) {
-                const nextInput = nextElement.querySelector('.form__button');
-                nextInput.classList.toggle('form__button--inactive');
-                nextInput.classList.toggle('form__button--disabled');
+
+            if (response.ok) {
+                actionButton.classList.toggle('form__button--create');
+                actionButton.classList.toggle('form__button--remove');
+                actionButton.removeEventListener('click', FormHandler.handleFileInput);
+                actionButton.addEventListener('click', FormHandler.handleFileDelete);
+                const photo = document.createElement('img');
+                photo.classList.add('profile__picture');
+                photo.src = photoURL;
+
+                photo.onload= () => {
+                    container.appendChild(photo);
+                    loader.remove();
+                    actionButton.style.display = 'block';
+                    const nextElement = container.nextElementSibling;
+                    if (nextElement) {
+                        const nextInput = nextElement.querySelector('.form__button');
+                        if (nextInput.classList.contains('form__button--inactive')) {
+                            nextInput.classList.toggle('form__button--inactive');
+                            nextInput.classList.toggle('form__button--disabled');
+                        }
+                    }
+                };
+
+                return;
             }
+            loader.remove();
+            actionButton.style.display = 'block';
         }
+    }
+    static handleFileInput(event) {
+        document.activeElement.blur();
+        const fileContainer = event.target.closest('.profile__picture-container');
+        const uploadInput = fileContainer.querySelector('.form__input--file');
+        uploadInput.click();
+    }
+    static handleFile(event) {
+        const uploadInput = event.target;
+        if (uploadInput.files.length !== 1) {
+            return;
+        }
+        const file = uploadInput.files[0];
+        uploadInput.value = null;
+        FormHandler.handleFileUpload(file, uploadInput.closest('.profile__picture-container'));
+    }
+    static async handleFileDelete(event) {
+        const fileContainer = event.target.closest('.profile__picture-container');
+        if (!pictureContainers) {
+            const pictureBlock = fileContainer.closest('.profile__picture-block');
+            pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
+        }
+        const containerId = pictureContainers.indexOf(fileContainer) + 1;
+        const response = await apiHandler.DeleteImage({'CellNumber': containerId});
+
+        if (response.ok) {
+            const actionButton = fileContainer.querySelector('.form__button');
+            actionButton.style.display = 'none';
+            actionButton.classList.toggle('form__button--create');
+            actionButton.classList.toggle('form__button--remove');
+            actionButton.removeEventListener('click', FormHandler.handleFileDelete);
+            actionButton.addEventListener('click', FormHandler.handleFileInput);
+
+            const pictureBlock = fileContainer.closest('.profile__picture-block');
+            const createBtns = pictureBlock.querySelectorAll('.form__button--create');
+            const allowedBtn = createBtns[0];
+            for (const btn of createBtns) {
+                if (btn !== allowedBtn && !btn.classList.contains('form__button--disabled')) {
+                    btn.classList.toggle('form__button--inactive');
+                    btn.classList.toggle('form__button--disabled');
+                }
+            }
+
+            const photo = fileContainer.querySelector('.profile__picture');
+            photo.remove();
+            actionButton.style.display = 'block';
+            document.activeElement.blur();
+
+            return;
+        }
+
     }
     setupFileUploads(container) {
         const uploadButtons = container.querySelectorAll('.form__button--create');
+        const deleteButtons = container.querySelectorAll('.form__button--remove');
+        const uploadInputs = container.querySelectorAll('.form__input--file');
         for (const btn of uploadButtons) {
-            const btnContainer = btn.closest('div');
-            const uploadInput = btnContainer.querySelector('.form__input--file');
-            btn.addEventListener('click', () => {
-                uploadInput.click();
-            });
-            uploadInput.addEventListener('change', () => {
-                if (uploadInput.files.length > 0) {
-                    const file = uploadInput.files[0];
-                    this.handleFile(file, btnContainer);
-                  }
-            });
+            btn.addEventListener('click', FormHandler.handleFileInput);
+        }
+        for (const btn of deleteButtons) {
+            btn.addEventListener('click', FormHandler.handleFileDelete);
+        }
+        for (const input of uploadInputs) {
+            input.addEventListener('change', FormHandler.handleFile);
         }
     }
     /**
@@ -505,7 +589,7 @@ class FormHandler {
                 });
             }
 
-            const passwordDisplayBtns = form.querySelectorAll('.form__icon-button');
+            const passwordDisplayBtns = form.querySelectorAll('.form__button--icon');
             for (const passwordDisplayBtn of passwordDisplayBtns) {
                 const passwordField = passwordDisplayBtn.closest('.form__field');
                 const passwordInput = passwordField.querySelector('.form__input');
@@ -522,7 +606,6 @@ class FormHandler {
             }
             form.querySelector(`#step${this.currentStep}`).style.display = 'block';
 
-            // const form = document.querySelector('.form');
             const formBlocks = form.querySelectorAll('.form__block');
             for (const block of formBlocks) {
                 const button = block.querySelector('.form__button--continue');

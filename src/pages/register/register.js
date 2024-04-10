@@ -1,11 +1,11 @@
 import registerTemplate from './register.hbs';
 import FormHandler from '../../components/form/formHandler.js';
 import appStorageHandler from '../../components/basic/AppStorageHandler.js';
+import componentHandler from '../../components/basic/ComponentHandler.js';
 
 const formHandler = new FormHandler();
 /**
  * Registration page class
- * @author roflanpotsan
  * @class
  */
 class Register {
@@ -16,6 +16,8 @@ class Register {
      * @returns {Promise<string>}  - template html string
      */
     async render() {
+        const textSubmit = 'Завершить';
+        const textContinue = 'Продолжить';
         const totalSteps = 3;
         const formContext = {
             form : {
@@ -28,20 +30,9 @@ class Register {
                         footerInfo: 'Уже есть аккаунт?',
                         footerLink: '/login',
                         footerLinkText: 'Войти',
-                        formNavButton: {
-                            classes: [
-                                'form__button--nav',
-                            ],
-                            id: 'navButton0',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
                         stepButtons: [
-                            {
-                                classes: [
-                                    'form__button--continue',
-                                ],
-                                buttonText: 'Продолжить',
-                                id: 'continueButton0',
-                            },
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue}),
                         ],
                         fields: [
                         {
@@ -63,20 +54,9 @@ class Register {
                         ],
                         formTitle: 'Давайте знакомиться',
                         formInfo: 'Заполните оставшиеся данные, чтобы другие люди могли узнать вас лучше',
-                        formNavButton: {
-                            classes:[
-                                'form__button--nav',
-                            ],
-                            id: 'navButton1',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
                         stepButtons: [
-                            {
-                                classes:[
-                                    'form__button--continue',
-                                ],
-                                buttonText: 'Продолжить',
-                                id: 'continueButton1',
-                            },
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue}),
                         ],
                         currentStep: `1/${totalSteps}`,
                         fields:
@@ -140,20 +120,9 @@ class Register {
                         ],
                         formTitle: 'Чем будем заниматься?',
                         formInfo: 'Выберите какими типами активностей вы увлекаетесь',
-                        formNavButton: {
-                            classes:[
-                                'form__button--nav',
-                            ],
-                            id: 'navButton2',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
                         stepButtons: [
-                            {
-                                classes:[
-                                    'form__button--continue',
-                                ],
-                                buttonText: 'Продолжить',
-                                id: 'continueButton2',
-                            },
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue}),
                         ],
                         currentStep: `2/${totalSteps}`,
                         checkBoxListClasses:[
@@ -165,21 +134,9 @@ class Register {
                         stepId: 'step3',
                         formTitle: 'Почти закончили',
                         formInfo: 'Остался последний шаг, введите пароль',
-                        formNavButton: {
-                            classes:[
-                                'form__button--nav',
-                            ],
-                            id: 'navButton3',
-                        },
+                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
                         stepButtons: [
-                            {
-                                classes:[
-                                    'form__button--continue',
-                                ],
-                                buttonText: 'Завершить',
-                                id: 'submit',
-                                submitAction: 'register',
-                            },
+                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textSubmit, submitAction: 'register'}),
                         ],
                         currentStep: `3/${totalSteps}`,
                         fields:
@@ -196,7 +153,7 @@ class Register {
                                 maxlength: 32,
                                 iconButton: {
                                     classes:[
-                                        'form__icon-button',
+                                        'form__button--icon',
                                     ],
                                     id: 'pswdToggle',
                                 },

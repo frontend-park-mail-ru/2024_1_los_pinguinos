@@ -39,7 +39,7 @@ body {
 
 body {
   background-image: var(--background--landing);
-  background-size: 100% 100% !important;
+  background-size: 100% 100%;
 }
 
 .header__menu {

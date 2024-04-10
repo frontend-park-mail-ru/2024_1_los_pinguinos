@@ -10,6 +10,7 @@ class User {
         const profileData = JSON.parse(rawProfileData);
         this.userData = profileData[0]['person'];
         this.userData['interests'] = profileData[0]['interests'];
+        this.userData['photos'] = profileData[0]['photo'];
     }
     Email() {
         return this.userData['email'].replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');
@@ -25,6 +26,9 @@ class User {
         const acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
         if (!photoURLS) {
             photoURLS = [null, null, null, null, null];
+        }
+        while (photoURLS.length < 5) {
+            photoURLS.push(null);
         }
         const photos = Array.from(photoURLS, (pfpUrl, idx) => {
             const btnClasses = [

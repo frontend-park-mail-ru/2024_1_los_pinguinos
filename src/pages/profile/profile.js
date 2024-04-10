@@ -5,6 +5,7 @@ import passwordImg from '../../components/form/password.svg';
 import exitImg from '../../components/form/exit.svg';
 import profileHandler from '../../components/profile/profileHandler';
 import appStorageHandler from '../../components/basic/AppStorageHandler.js';
+import componentHandler from '../../components/basic/ComponentHandler.js';
 
 class Profile {
     async render() {
@@ -12,6 +13,11 @@ class Profile {
         const user = appStorageHandler.user;
         const userInterestsDisplay = user.DisplayInterests();
         const photos = user.DisplayPictures();
+        const textCancel = 'Отмена';
+        const cancelClasses = ['form__button--cancel', 'form__button--dialog'];
+        const submitClasses = ['form__button--continue', 'form__button--dialog'];
+        const actionUpdate = 'updateProfile';
+        const textSubmit = 'Сохранить';
         const profileContext = {
             profile: {
                 title1: 'Профиль',
@@ -21,12 +27,7 @@ class Profile {
                     blockId: 'biography',
                     labelText: 'О себе',
                     bioText: user.Description(),
-                    labelButton: {
-                        noErrors: 1,
-                        classes: [
-                            'form__button--edit',
-                        ],
-                    },
+                    labelButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                     settingDialog: {
                         dialogForm: {
                             noErrors: 1,
@@ -56,23 +57,8 @@ class Profile {
                                     formTitle: 'Изменить биографию',
                                     formInfo: 'Отредактируйте информацию о себе',
                                     stepButtons: [
-                                        {
-                                            classes: [
-                                                'form__button--cancel',
-                                                'form__button--dialog',
-                                            ],
-                                            id: 'dialogBtn1',
-                                            buttonText: 'Отмена',
-                                        },
-                                        {
-                                            classes: [
-                                                'form__button--continue',
-                                                'form__button--dialog',
-                                            ],
-                                            id: 'dialogBtn2',
-                                            buttonText: 'Сохранить',
-                                            submitAction: 'updateProfile',
-                                        },
+                                        componentHandler.generateComponentContext('btn', cancelClasses, {buttonText: textCancel}),
+                                        componentHandler.generateComponentContext('btn', submitClasses, {buttonText: textSubmit, submitAction: actionUpdate}),
                                     ],
                                     fields: [
                                         {
@@ -96,12 +82,7 @@ class Profile {
                 interests: {
                     blockId: 'interests',
                     labelText: 'Ваши интересы',
-                    labelButton: {
-                        noErrors: 1,
-                        classes: [
-                            'form__button--edit',
-                        ],
-                    },
+                    labelButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                     interests: userInterestsDisplay,
                     settingDialog: {
                         dialogForm: {
@@ -132,21 +113,8 @@ class Profile {
                                     formTitle: 'Изменить интересы',
                                     formInfo: 'Выберите интересы',
                                     stepButtons: [
-                                        {
-                                            classes: [
-                                                'form__button--cancel',
-                                                'form__button--dialog',
-                                            ],
-                                            buttonText: 'Отмена',
-                                        },
-                                        {
-                                            classes: [
-                                                'form__button--continue',
-                                                'form__button--dialog',
-                                            ],
-                                            buttonText: 'Сохранить',
-                                            submitAction: 'updateProfile',
-                                        },
+                                        componentHandler.generateComponentContext('btn', cancelClasses, {buttonText: textCancel}),
+                                        componentHandler.generateComponentContext('btn', submitClasses, {buttonText: textSubmit, submitAction: actionUpdate}),
                                     ],
                                     checkBoxListClasses: [
                                         'form__checkbox-list--mb',
@@ -177,13 +145,7 @@ class Profile {
                             iconSource: encodeURIComponent(profileImg),
                             labelText: 'Ваше имя',
                             valueText: user.Name(),
-                            actionButton: {
-                                noErrors: 1,
-                                classes: [
-                                    'form__button--edit',
-                                ],
-                                id: 'sec1',
-                            },
+                            actionButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                             settingDialog: {
                                 dialogForm: {
                                     noErrors: 1,
@@ -213,21 +175,8 @@ class Profile {
                                             formTitle: 'Изменить имя',
                                             formInfo: 'Введите новое имя',
                                             stepButtons: [
-                                                {
-                                                    classes: [
-                                                        'form__button--cancel',
-                                                        'form__button--dialog',
-                                                    ],
-                                                    buttonText: 'Отмена',
-                                                },
-                                                {
-                                                    classes: [
-                                                        'form__button--continue',
-                                                        'form__button--dialog',
-                                                    ],
-                                                    buttonText: 'Сохранить',
-                                                    submitAction: 'updateProfile',
-                                                },
+                                                componentHandler.generateComponentContext('btn', cancelClasses, {buttonText: textCancel}),
+                                                componentHandler.generateComponentContext('btn', submitClasses, {buttonText: textSubmit, submitAction: actionUpdate}),
                                             ],
                                             fields: [
                                                 {
@@ -253,13 +202,7 @@ class Profile {
                             iconSource: encodeURIComponent(emailImg),
                             labelText: 'Ваш email',
                             valueText: user.Email(),
-                            actionButton: {
-                                noErrors: 1,
-                                classes: [
-                                    'form__button--edit',
-                                ],
-                                id: 'sec2',
-                            },
+                            actionButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                             settingDialog: {
                                 dialogForm: {
                                     noErrors: 1,
@@ -289,21 +232,8 @@ class Profile {
                                             formTitle: 'Изменить email',
                                             formInfo: 'Введите новый email и текущий пароль',
                                             stepButtons: [
-                                                {
-                                                    classes: [
-                                                        'form__button--cancel',
-                                                        'form__button--dialog',
-                                                    ],
-                                                    buttonText: 'Отмена',
-                                                },
-                                                {
-                                                    classes: [
-                                                        'form__button--continue',
-                                                        'form__button--dialog',
-                                                    ],
-                                                    buttonText: 'Сохранить',
-                                                    submitAction: 'updateProfile',
-                                                },
+                                                componentHandler.generateComponentContext('btn', cancelClasses, {buttonText: textCancel}),
+                                                componentHandler.generateComponentContext('btn', submitClasses, {buttonText: textSubmit, submitAction: actionUpdate}),
                                             ],
                                             fields: [
                                                 {
@@ -331,7 +261,7 @@ class Profile {
                                                     ],
                                                     placeholder: 'Ваш пароль',
                                                     type: 'password',
-                                                    id: 'oldPassword',
+                                                    id: 'oldPassword ',
                                                     completion: 'current-password',
                                                     minlength: 8,
                                                     maxlength: 32,
@@ -353,13 +283,7 @@ class Profile {
                             iconSource: encodeURIComponent(passwordImg),
                             labelText: 'Ваш пароль',
                             valueText: '********',
-                            actionButton: {
-                                noErrors: 1,
-                                classes: [
-                                    'form__button--edit',
-                                ],
-                                id: 'sec3',
-                            },
+                            actionButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                             settingDialog: {
                                 dialogForm: {
                                     noErrors: 1,
@@ -389,21 +313,8 @@ class Profile {
                                             formTitle: 'Изменить пароль',
                                             formInfo: 'Введите текущий и новый пароль',
                                             stepButtons: [
-                                                {
-                                                    classes: [
-                                                        'form__button--cancel',
-                                                        'form__button--dialog',
-                                                    ],
-                                                    buttonText: 'Отмена',
-                                                },
-                                                {
-                                                    classes: [
-                                                        'form__button--continue',
-                                                        'form__button--dialog',
-                                                    ],
-                                                    buttonText: 'Сохранить',
-                                                    submitAction: 'updateProfile',
-                                                },
+                                                componentHandler.generateComponentContext('btn', cancelClasses, {buttonText: textCancel}),
+                                                componentHandler.generateComponentContext('btn', submitClasses, {buttonText: textSubmit, submitAction: actionUpdate}),
                                             ],
                                             fields: [
                                                 {
