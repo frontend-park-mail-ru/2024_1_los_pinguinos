@@ -2,35 +2,25 @@ import matches from './match.hbs';
 import matchTemp from './components/card.hbs';
 import apiHandler from '../../api/apiHandler';
 
-// const persons = [
-//   {
-//     image: 'https://source.unsplash.com/random/1000x1000/?woman',
-//     name: 'Alice',
-//     age: 24,
-//     description: 'Я тебя на бицепс жму, сладкий',
-//   },
-//   {
-//     image: 'https://source.unsplash.com/random/1000x1000/?woman',
-//     name: 'Gwen',
-//     age: 24,
-//     description: 'Ломаю арубузы бедрами',
-//   },
-//   {
-//     image: 'https://source.unsplash.com/random/1000x1000/?woman',
-//     name: 'Emma',
-//     age: 24,
-//     description: 'Мои глаза выше',
-//   },
-//   {
-//     image: 'https://source.unsplash.com/random/1000x1000/?woman',
-//     name: 'Bella',
-//     age: 24,
-//     description: 'Не лююлю разминать шею',
-//   },
-// ];
+/**
+* Возвращает возраст по дате рождения
+* @param {string} dateString - дата рождения в формате 'YYYY-MM-DD'
+* @returns {number} - возраст
+*/
+const getAge = (dateString) => {
+  const today = new Date();
+  const birthDate = new Date(dateString);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const month = today.getMonth() - birthDate.getMonth();
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+
+  return age;
+};
 
 class Matches {
-  async appendNewMatch(matchData) {
+  async appendNewMatch(matchData, photo) {
     const matches = document.querySelector('#matches__content');
     if (matches === null) {
       return;
@@ -38,9 +28,9 @@ class Matches {
 
     const match = document.createElement('div');
     match.innerHTML = matchTemp({
-      image: matchData.image,
+      image: photo,
       name: matchData.name,
-      age: matchData.age,
+      age: getAge(matchData.birthday),
       description: matchData.description,
     });
     matches.appendChild(match.firstElementChild);
@@ -52,10 +42,11 @@ class Matches {
 
   async controller() {
 
-    const persons = await apiHandler.GetMatches();
+    let persons = await apiHandler.GetMatches();
+    persons = JSON.parse(persons);
 
     persons.forEach((match) => {
-      this.appendNewMatch(match);
+      this.appendNewMatch(match.person, match.photo);
     });
   }
 }

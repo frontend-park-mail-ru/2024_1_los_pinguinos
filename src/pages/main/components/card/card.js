@@ -1,4 +1,5 @@
 import cardTemplate from './card.hbs';
+import apiHandler from '../../../../api/apiHandler';
 /**
  * Класс предоставляющий карточку
  */
@@ -166,7 +167,8 @@ class Card {
       this.onDismiss();
     }
     if (typeof this.onLike === 'function' && direction === 1) {
-      this.onLike();
+      // this.onLike();
+      apiHandler.LikeCard(this.id);
     }
     if (typeof this.onDislike === 'function' && direction === -1) {
       this.onDislike();
