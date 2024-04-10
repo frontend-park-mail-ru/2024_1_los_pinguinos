@@ -1,4 +1,4 @@
-import matchs from './match.hbs';
+import matches from './match.hbs';
 import matchTemp from './components/card.hbs';
 
 const persons = [
@@ -28,7 +28,7 @@ const persons = [
   },
 ];
 
-class Matchs {
+class Matches {
   async appendNewMatch(matchData) {
     const matches = document.querySelector('#matches__content');
     if (matches === null) {
@@ -46,7 +46,7 @@ class Matchs {
   }
 
   async render() {
-    return matchs();
+    return matches();
   }
 
   async controller() {
@@ -56,4 +56,4 @@ class Matchs {
   }
 }
 
-export default Matchs;
+export default Matches;
