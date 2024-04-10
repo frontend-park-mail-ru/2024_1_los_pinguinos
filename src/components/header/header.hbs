@@ -1,6 +1,13 @@
   <div class="header">
     <div class="header__logo">
     </div>
+    {{#if authState}}
+    <div class="header__menu">
+      <button data-link data-url="/main" type="button" class="header__menu-button">Главная</button>
+      <button data-link data-url="/matches" type="button" class="header__menu-button">Мэтчи</button>
+      <button data-link data-url="/profile" type="button" class="header__menu-button">Профиль</button>
+    </div>
+    {{/if}}
       {{#if authState}}
         <button data-action="logout" type="button" id="header__button--logout">Выйти</button>
       {{else}}

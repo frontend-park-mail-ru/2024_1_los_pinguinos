@@ -30,7 +30,7 @@ class Home {
   * Отображает новую карточку на странице
   * @param {Object} cardData - данные карточки
   */
-  async appendNewCard(cardData) {
+  async appendNewCard(cardData, interests, photo) {
     const swiper = document.querySelector('#swiper');
     if (swiper === null) {
       return;
@@ -38,10 +38,11 @@ class Home {
 
     const card = new Card({
       id: this.cardCount,
-      imageUrl: 'https://source.unsplash.com/random/1000x1000/?man',
+      imageUrl: photo,
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
+      interests: interests,
       onDismiss: () => {
       },
       onLike: () => {
@@ -95,7 +96,7 @@ class Home {
     cards = JSON.parse(cards);
 
     cards.forEach(card => {
-      this.appendNewCard(card);
+      this.appendNewCard(card.person, card.interests, card.photo);
     });
 
     const acceptButton = document.querySelector('#accept');

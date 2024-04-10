@@ -15,7 +15,7 @@ const routes = [
     new Route('/register', new Register(), false, '/main'),
     new Route('/main', new Home(), true),
     new Route('/profile', new Profile(), true),
-    new Route('/matchs', new Matches(), true),
+    new Route('/matches', new Matches(), true),
     new Route('*', new error404()),
 ];
 const router = new Router(routes);

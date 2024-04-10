@@ -14,12 +14,13 @@ class Card {
    * @param {function} onLike - обработчик события "лайк"
    * @param {function} onDislike - обработчик события "дизлайк"
    */
-  constructor({ id, imageUrl, name, age, description, onDismiss, onLike, onDislike }) {
+  constructor({ id, imageUrl, name, age, description, interests, onDismiss, onLike, onDislike }) {
     this.id = id;
     this.imageUrl = imageUrl;
     this.name = name;
     this.age = age;
     this.description = description;
+    this.interests = interests;
     this.onDismiss = onDismiss;
     this.onLike = onLike;
     this.onDislike = onDislike;
@@ -45,7 +46,7 @@ class Card {
    */
   #init = () => {
     const card = document.createElement('div');
-    card.innerHTML = cardTemplate({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description});
+    card.innerHTML = cardTemplate({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description, interests: this.interests});
     this.element = card.firstElementChild; // Получаем первый элемент-потомок, который содержит сгенерированный HTML
     if (this.#isTouchDevice()) {
       this.#listenToTouchEvents();
