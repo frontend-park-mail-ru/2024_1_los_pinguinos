@@ -17,7 +17,7 @@ class Card {
    */
   constructor({ id, imageUrl, name, age, description, interests, onDismiss, onLike, onDislike }) {
     this.id = id;
-    this.imageUrl = Array.isArray(imageUrl) ? imageUrl[0] : imageUrl ? imageUrl : "https://los_ping.hb.ru-msk.vkcs.cloud/i.webp";
+    this.imageUrl = Array.isArray(imageUrl) ? imageUrl[0]["url"] : imageUrl ? imageUrl : "https://los_ping.hb.ru-msk.vkcs.cloud/i.webp";
     this.name = name;
     this.age = age;
     this.description = description;
