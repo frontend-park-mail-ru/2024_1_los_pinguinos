@@ -37,6 +37,7 @@
 
 .card__back {
   background-color: inherit;
+  padding: 10px;
 }
 
 .card__back-header {

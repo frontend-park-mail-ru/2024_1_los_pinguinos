@@ -171,7 +171,7 @@ class Card {
       apiHandler.LikeCard(this.id);
     }
     if (typeof this.onDislike === 'function' && direction === -1) {
-      this.onDislike();
+      apiHandler.DislikeCard(this.id);
     }
   };
 
