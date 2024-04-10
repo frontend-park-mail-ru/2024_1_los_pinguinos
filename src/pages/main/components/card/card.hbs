@@ -1,14 +1,18 @@
 <div class="card" style="--i:{{index}}">
     <div class="card__front">
-        <img class="card__image" src="{{image}}" alt={{index}} >
+        <div class="card__image">
+        <img class="card__image-content" src="{{image}}" alt={{index}} >
         </img>
+        </div>
         <div class="card__content">
             <p class="card__name">{{name}}, {{age}}</p>
         </div>
     </div>
     <div class="card__back">
-        <div class="card__content">
+        <div class="card__back-content">
+            <p class="card__back-header">О себе</p>
             <p class="card__description">{{description}}</p>
+            <p class="card__back-header">Интересы</p>
             <div class="card__interests">
                 {{#each interests}}
                     <span class="card__interest">{{this}}</span>

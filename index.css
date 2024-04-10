@@ -6,6 +6,8 @@
 @import url("/src/components/header/header.css");
 @import url("/src/pages/main/components/card/card.css");
 @import url("/src/pages/landing/landing.css");
+@import url("/src/pages/matchs/components/card.scss");
+@import url("src/pages/matchs/matches.scss");
 
 :root {
   --background--landing: url(./background-landing.webp);
@@ -53,6 +55,8 @@ body {
   flex-direction: column;
   width: 100dvw;
   height: 100dvh;
-  overflow: auto;
 }
 
+ion-icon {
+  font-size: 80px;
+}

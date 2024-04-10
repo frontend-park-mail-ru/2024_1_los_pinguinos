@@ -1,51 +1,76 @@
 .card {
   width: 100%;
+  display: flex;
   height: 100%;
   position: absolute;
-  border-radius: 13px;
+  border-radius: 20px;
   overflow: hidden;
   transform: translateZ(calc(-1px * var(--i)));
   /* filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5)); */
   cursor: pointer;
   user-select: none;
   transition: transform 0.5s;
-  background: white;
+  background: #DCD8D8;
   perspective: 1000px;
+  gap: 60px;
 }
 
-.card__front, .card__back {
-  position: absolute;
+.card__front,
+.card__back {
+  /* position: absolute; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   transition: 1s;
   backface-visibility: hidden;
   width: 100%;
   height: 100%;
+  color: white;
 }
 
 .card__front {
-  background-color: white;
+  background-color: black;
+  border-radius: 20px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
 }
 
 .card__back {
-  background-color: darkgray;
-  transform: rotateY(180deg);
+  background-color: inherit;
 }
 
-.card:hover .card__front {
-  transform: rotateY(180deg);
+.card__back-header {
+  font-size: medium;
+  margin-bottom: 5px;
 }
 
-.card:hover .card__back {
-  transform: rotateY(360deg);
+.card__back-content {
+  height: 100%;
+  width: 100%;
 }
 
 .card__image {
-  width: 364px;
+  width: 100%;
   height: 571px;
-  border-radius: 13px;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.4) 70%,
+      rgba(0, 0, 0, 1) 100%
+    );
+  }
+}
+
+.card__image-content {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
 }
@@ -53,11 +78,12 @@
   height: 86px;
   padding: 20px, 0px, 20px, 20px;
   gap: 7px;
-  color: black;
+  color: white;
   font-size: 2.5vh;
   font-weight: 700;
   transition: transform 0.5s;
   padding: 0 6px;
+  background: #000;
 }
 
 .card__name {
@@ -101,23 +127,23 @@
   transition: transform 0.5s;
 }
 
-#like,
-#dislike {
-  font-size: 6vh;
+#accept,
+#reject {
+  /* font-size: 6vh;
   border-radius: 50%;
   padding: 20px;
   position: relative;
-  z-index: 1;
-  animation-name: animation1;
+  z-index: 1; */
+  animation-name: before_like;
   animation-duration: 1s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: both;
   animation-play-state: paused;
 }
 
-#like.trigger,
-#dislike.trigger {
-  animation-name: animation2;
+#accept.trigger,
+#reject.trigger {
+  animation-name: after_like;
 }
 
 #like {
@@ -130,24 +156,24 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-@keyframes animation1 {
+@keyframes before_like {
   0%,
   100% {
-    opacity: 0.2;
+    opacity: 1;
   }
 
   50% {
-    opacity: 1;
+    opacity: 0.5;
   }
 }
 
-@keyframes animation2 {
+@keyframes after_like {
   0%,
   100% {
-    opacity: 0.2;
+    opacity: 1;
   }
 
   50% {
-    opacity: 1;
+    opacity: 0.5;
   }
 }

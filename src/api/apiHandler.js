@@ -1,6 +1,6 @@
 import router from '../../index.js';
 
-const localhost = 'http://172.20.10.6:8080';
+const localhost = 'http://localhost:8080';
 const vm = 'http://185.241.192.216:8080';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
