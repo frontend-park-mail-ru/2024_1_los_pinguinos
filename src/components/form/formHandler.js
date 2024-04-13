@@ -1,6 +1,6 @@
 import apiHandler from '../../api/apiHandler.js';
 import router from '../../../index.js';
-import appStorageHandler from '../basic/AppStorageHandler.js';
+import storage from '../../models/storage/storage.js';
 
 let pictureContainers = null;
 const acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
@@ -354,7 +354,7 @@ class FormHandler {
             apiHandler.UpdateProfile(formData).then((res) => {
                 this.handleDialog(form, res);
                 this.updateData(form, formData, res);
-                appStorageHandler.user.Update(formData);
+                storage.user.Update(formData);
             });
         }
         else if (submitAction === 'deleteProfile') {
@@ -441,6 +441,7 @@ class FormHandler {
                 const photo = document.createElement('img');
                 photo.classList.add('profile__picture');
                 photo.src = photoURL;
+                storage.user.UpdatePicture(containerId - 1, photoURL);
 
                 photo.onload= () => {
                     container.appendChild(photo);
@@ -484,15 +485,16 @@ class FormHandler {
             pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
         }
         const containerId = pictureContainers.indexOf(fileContainer) + 1;
-        const response = await apiHandler.DeleteImage({'CellNumber': containerId});
+        const response = await apiHandler.DeleteImage({'cell': `${containerId}`});
 
-        if (response.ok) {
+        if (response === 200) {
             const actionButton = fileContainer.querySelector('.form__button');
             actionButton.style.display = 'none';
             actionButton.classList.toggle('form__button--create');
             actionButton.classList.toggle('form__button--remove');
             actionButton.removeEventListener('click', FormHandler.handleFileDelete);
             actionButton.addEventListener('click', FormHandler.handleFileInput);
+            storage.user.UpdatePicture(containerId - 1, null);
 
             const pictureBlock = fileContainer.closest('.profile__picture-block');
             const createBtns = pictureBlock.querySelectorAll('.form__button--create');

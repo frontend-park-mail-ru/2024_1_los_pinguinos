@@ -1,5 +1,6 @@
 import apiHandler from '../../api/apiHandler';
 import componentHandler from '../../components/basic/ComponentHandler';
+import storage from '../storage/storage';
 
 class User {
     constructor() {
@@ -21,12 +22,17 @@ class User {
     Description() {
         return this.userData['description'];
     }
+    UpdatePicture(id, value) {
+        this.userData['photos'][id] = value;
+    }
     DisplayPictures() {
         let photoURLS = this.userData['photos'];
         const acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
         if (!photoURLS) {
-            photoURLS = [null, null, null, null, null];
+            photoURLS = [];
+            this.userData['photos'] = photoURLS;
         }
+
         while (photoURLS.length < 5) {
             photoURLS.push(null);
         }
@@ -68,7 +74,15 @@ class User {
         return [];
     }
     Update(data) {
+        if ('interests' in data) {
+            this.userData['interests'] = new Array();
+            for (const interest of storage.rawAppInterests) {
+                if (data['interests'].includes(interest))
+                this.userData['interests'].push({'Name': interest});
+            }
+        }
         for (const key in data) {
+            if (key !== 'interests')
             this.userData[key] = data[key];
         }
     }

@@ -1,4 +1,5 @@
 import cardTemplate from './card.hbs';
+import apiHandler from '../../../../api/apiHandler';
 /**
  * Класс предоставляющий карточку
  */
@@ -14,12 +15,13 @@ class Card {
    * @param {function} onLike - обработчик события "лайк"
    * @param {function} onDislike - обработчик события "дизлайк"
    */
-  constructor({ id, imageUrl, name, age, description, onDismiss, onLike, onDislike }) {
+  constructor({ id, imageUrl, name, age, description, interests, onDismiss, onLike, onDislike }) {
     this.id = id;
-    this.imageUrl = imageUrl;
+    this.imageUrl = Array.isArray(imageUrl) ? imageUrl[0] : imageUrl ? imageUrl : "https://los_ping.hb.ru-msk.vkcs.cloud/i.webp";
     this.name = name;
     this.age = age;
     this.description = description;
+    this.interests = interests;
     this.onDismiss = onDismiss;
     this.onLike = onLike;
     this.onDislike = onDislike;
@@ -45,7 +47,7 @@ class Card {
    */
   #init = () => {
     const card = document.createElement('div');
-    card.innerHTML = cardTemplate({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description});
+    card.innerHTML = cardTemplate({index: this.id, image: this.imageUrl, name: this.name, age: this.age, description: this.description, interests: this.interests});
     this.element = card.firstElementChild; // Получаем первый элемент-потомок, который содержит сгенерированный HTML
     if (this.#isTouchDevice()) {
       this.#listenToTouchEvents();
@@ -165,10 +167,11 @@ class Card {
       this.onDismiss();
     }
     if (typeof this.onLike === 'function' && direction === 1) {
-      this.onLike();
+      // this.onLike();
+      apiHandler.LikeCard(this.id);
     }
     if (typeof this.onDislike === 'function' && direction === -1) {
-      this.onDislike();
+      apiHandler.DislikeCard(this.id);
     }
   };
 

@@ -1,4 +1,4 @@
-<div class="card" style="--i:{{index}}">
+<div class="card" style="--i:{{index}}" index="{{index}}">
     <div class="card__front">
         <div class="card__image">
         <img class="card__image-content" src="{{image}}" alt={{index}} >
@@ -15,7 +15,7 @@
             <p class="card__back-header">Интересы</p>
             <div class="card__interests">
                 {{#each interests}}
-                    <span class="card__interest">{{this}}</span>
+                    <span class="card__interest">{{this.Name}}</span>
                 {{/each}}
         </div>
     </div>  

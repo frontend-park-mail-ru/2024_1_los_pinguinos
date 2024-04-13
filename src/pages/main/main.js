@@ -30,25 +30,26 @@ class Home {
   * Отображает новую карточку на странице
   * @param {Object} cardData - данные карточки
   */
-  async appendNewCard(cardData) {
+  async appendNewCard(cardData, interests, photo) {
     const swiper = document.querySelector('#swiper');
     if (swiper === null) {
       return;
     }
 
     const card = new Card({
-      id: this.cardCount,
-      imageUrl: 'https://source.unsplash.com/random/1000x1000/?man',
+      id: cardData.ID,
+      imageUrl: photo,
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
+      interests: interests,
       onDismiss: () => {
       },
       onLike: () => {
-
+        apiHandler.LikeCard(cardData.id);
       },
       onDislike: () => {
-
+        apiHandler.DislikeCard(cardData.id);
       },
     });
     swiper.appendChild(card.element);
@@ -66,6 +67,8 @@ class Home {
   async acceptCard() {
     const swiper = document.querySelector('#swiper');
     const card = swiper.querySelector('.card');
+    const index = parseInt(card.getAttribute('index'));
+    apiHandler.LikeCard(index);
     setTimeout(() => {
       card.remove();
     }, 300);
@@ -76,6 +79,8 @@ class Home {
   async rejectCard() {
     const swiper = document.querySelector('#swiper');
     const card = swiper.querySelector('.card');
+    const index = parseInt(card.getAttribute('index'));
+    apiHandler.DislikeCard(index);
     setTimeout(() => {
       card.remove();
     }, 300);
@@ -95,7 +100,7 @@ class Home {
     cards = JSON.parse(cards);
 
     cards.forEach(card => {
-      this.appendNewCard(card);
+      this.appendNewCard(card.person, card.interests, card.photo);
     });
 
     const acceptButton = document.querySelector('#accept');

@@ -1,28 +1,32 @@
 import apiHandler from '../../api/apiHandler.js';
 import componentHandler from './ComponentHandler.js';
 import User from '../../models/user/User.js';
+import storage from '../../models/storage/storage.js';
 
 class AppStorageHandler {
     constructor() {
-        this.appInterests = null;
+        storage.appInterests = null;
+        storage.rawAppInterests = null;
         this.getInterests();
-        this.user = null;
+        storage.user = null;
     }
     async getInterests() {
-        const interests = await apiHandler.GetInterests();
+        const interestsRaw = await apiHandler.GetInterests();
+        const interests = JSON.parse(interestsRaw);
+        storage.rawAppInterests = Array.from(interests, (interest) => {return interest['Name'];});
         if (interests) {
-            this.appInterests = Array.from(JSON.parse(interests), (interest) => {
+            storage.appInterests = Array.from(interests, (interest) => {
                 return componentHandler.generateComponentContext('interest', ['form__button--checkbox'], {buttonText: interest['Name']});
             });
         } else {
-            this.appInterests = [];
+            storage.appInterests = [];
         }
     }
     async GetUser() {
-        if (!this.user) {
+        if (!storage.user) {
             const user = new User();
             await user.Load();
-            this.user = user;
+            storage.user = user;
         }
     }
 }

@@ -3,14 +3,15 @@ import profileImg from '../../components/form/profile.svg';
 import emailImg from '../../components/form/email.svg';
 import passwordImg from '../../components/form/password.svg';
 import exitImg from '../../components/form/exit.svg';
-import profileHandler from '../../components/profile/profileHandler';
+import ProfileHandler from '../../components/profile/profileHandler';
 import appStorageHandler from '../../components/basic/AppStorageHandler.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
+import storage from '../../models/storage/storage.js';
 
 class Profile {
     async render() {
         await appStorageHandler.GetUser();
-        const user = appStorageHandler.user;
+        const user = storage.user;
         const userInterestsDisplay = user.DisplayInterests();
         const photos = user.DisplayPictures();
         const textCancel = 'Отмена';
@@ -119,7 +120,7 @@ class Profile {
                                     checkBoxListClasses: [
                                         'form__checkbox-list--mb',
                                     ],
-                                    choices: appStorageHandler.appInterests,
+                                    choices: storage.appInterests,
                                 },
                             ],
                         },
@@ -417,6 +418,7 @@ class Profile {
         return profileTemplate(profileContext);
     }
     async controller() {
+        const profileHandler = new ProfileHandler();
         profileHandler.setup();
     }
 }

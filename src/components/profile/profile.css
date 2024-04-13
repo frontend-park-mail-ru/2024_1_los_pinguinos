@@ -32,6 +32,7 @@
     border-radius: 20px;
     padding: 20px 30px;
     transition: all 0.2s ease-in-out;
+    word-break: break-all;
 }
 
 .profile__block-group {

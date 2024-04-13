@@ -6,8 +6,8 @@
 @import url("/src/components/header/header.css");
 @import url("/src/pages/main/components/card/card.css");
 @import url("/src/pages/landing/landing.css");
-@import url("/src/pages/matchs/components/card.scss");
-@import url("src/pages/matchs/matches.scss");
+@import url("/src/pages/matches/components/card.scss");
+@import url("src/pages/matches/matches.scss");
 
 :root {
   --background--landing: url(./background-landing.webp);
@@ -16,6 +16,7 @@
   --background--register: url(./background-auth.webp);
   --background--profile: url(./background-main.webp);
   --background--404: url(./background-404.webp);
+  --background--matches: url(./background-main.webp);
 }
 
 * {

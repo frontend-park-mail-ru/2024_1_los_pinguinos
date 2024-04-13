@@ -79,10 +79,12 @@
         font-size: 0.9rem;
         color: white;
         margin-top: 1rem;
+        overflow-wrap: break-word;
       }
     }
     .data-bottom {
       position: absolute;
+      display: none!important;
       bottom: 1rem;
       left: 1.5rem;
       right: 1.5rem;

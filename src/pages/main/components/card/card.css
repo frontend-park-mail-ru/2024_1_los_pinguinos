@@ -10,7 +10,7 @@
   cursor: pointer;
   user-select: none;
   transition: transform 0.5s;
-  background: #DCD8D8;
+  background: #a39c9c;
   perspective: 1000px;
   gap: 60px;
 }
@@ -30,17 +30,19 @@
 .card__front {
   background-color: black;
   border-radius: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
   justify-content: center;
   align-items: center;
 }
 
 .card__back {
   background-color: inherit;
+  padding: 10px;
 }
 
 .card__back-header {
-  font-size: medium;
+  font-size: 25px;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 
@@ -89,6 +91,7 @@
 .card__name {
   font-size: 24px;
   font-weight: 500;
+
   line-height: 24px;
   letter-spacing: 0em;
   text-align: left;
@@ -102,8 +105,8 @@
   letter-spacing: 0em;
   text-align: left;
   transition: transform 0.5s;
-  overflow: hidden; /* Обрезать текст, который выходит за пределы */
-  text-overflow: ellipsis; /* Добавить многоточие (...) для обрезанного текста */
+  overflow-wrap: anywhere;
+  margin-bottom: 10px;
 }
 
 .card__interests {
@@ -122,8 +125,34 @@
   text-align: left;
   padding: 5px 10px;
   border-radius: 13px;
-  background-color: #f2f2f2;
-  color: #000;
+  color: white;
+  background-color: coral;
+  transition: transform 0.5s;
+}
+
+.card__interest1 {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 5px 10px;
+  border-radius: 13px;
+  color: white;
+  background-color: blueviolet;
+  transition: transform 0.5s;
+}
+
+.card__interest2 {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding: 5px 10px;
+  border-radius: 13px;
+  color: white;
+  background-color: chartreuse;
   transition: transform 0.5s;
 }
 

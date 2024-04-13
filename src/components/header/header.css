@@ -1,11 +1,28 @@
 .header {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
+}
+
+.header__logo {
+    display: none;
 }
 
 .header__menu {
+    width: 100%;
     display: flex;
-    gap: 5px;
+    gap: 10px;
+}
+
+.header__menu-button {
+    width: 100px;
+    height: 50px;
+    border-radius: 25px;
+    background: #7DE85A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
 }
 
 .header__menu-link {
