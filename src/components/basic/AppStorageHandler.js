@@ -12,7 +12,7 @@ class AppStorageHandler {
     }
     async getInterests() {
         const interestsRaw = await apiHandler.GetInterests();
-        const interests = JSON.parse(interestsRaw);
+        const interests = interestsRaw;
         storage.rawAppInterests = Array.from(interests, (interest) => {return interest['Name'];});
         if (interests) {
             storage.appInterests = Array.from(interests, (interest) => {

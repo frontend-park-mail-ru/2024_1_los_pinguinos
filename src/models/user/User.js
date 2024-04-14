@@ -8,10 +8,11 @@ class User {
     }
     async Load(userId=null) {
         const rawProfileData = await apiHandler.GetProfile(userId);
-        const profileData = JSON.parse(rawProfileData);
-        this.userData = profileData[0]['person'];
-        this.userData['interests'] = profileData[0]['interests'];
-        this.userData['photos'] = profileData[0]['photo'];
+        const profileData = rawProfileData;
+        this.userData = profileData;
+        // this.userData = profileData[0]['person'];
+        // this.userData['interests'] = profileData[0]['interests'];
+        // this.userData['photos'] = profileData[0]['photo'];
     }
     Email() {
         return this.userData['email'].replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');

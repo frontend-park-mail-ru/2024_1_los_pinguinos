@@ -45,6 +45,10 @@ body {
   background-size: 100% 100%;
 }
 
+.flex {
+  display: flex;
+}
+
 .header__menu {
   padding: 10px;
   color: white;

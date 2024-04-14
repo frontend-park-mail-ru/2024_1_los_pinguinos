@@ -8,6 +8,11 @@ import error404 from './src/pages/404/404.js';
 import Profile from './src/pages/profile/profile.js';
 import './index.css';
 import Matches from './src/pages/matches/matches.js';
+import { createStote } from './src/store/redux-kids.js';
+import { userReducer } from './src/models/user/reduser.js';
+
+const store = createStote(userReducer);
+export {store};
 
 const routes = [
     new Route('/', new Landing()),
@@ -19,4 +24,5 @@ const routes = [
     new Route('*', new error404()),
 ];
 const router = new Router(routes);
+
 export default router;

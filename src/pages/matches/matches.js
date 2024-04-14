@@ -1,6 +1,7 @@
 import matches from './match.hbs';
 import matchTemp from './components/card.hbs';
 import apiHandler from '../../api/apiHandler';
+import { store } from '../../..';
 
 /**
 * Возвращает возраст по дате рождения
@@ -20,7 +21,7 @@ const getAge = (dateString) => {
 };
 
 class Matches {
-  async appendNewMatch(matchData, photo) {
+  async appendNewMatch(matchData) {
     const matches = document.querySelector('#matches__content');
     if (matches === null) {
       return;
@@ -28,7 +29,7 @@ class Matches {
 
     const match = document.createElement('div');
     match.innerHTML = matchTemp({
-      image: Array.isArray(photo) ? photo[0] : photo ? photo : "https://los_ping.hb.ru-msk.vkcs.cloud/i.webp",
+      image: Array.isArray(matchData.photos) ? matchData.photos[0] : matchData.photos ? matchData.photos : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp',
       name: matchData.name,
       age: getAge(matchData.birthday),
       description: matchData.description,
@@ -42,11 +43,24 @@ class Matches {
 
   async controller() {
 
-    let persons = await apiHandler.GetMatches();
-    persons = JSON.parse(persons);
+    const matchesDiv = document.querySelector('.matches');
+    const tokenDisplay = document.createElement('div');
+    tokenDisplay.innerHTML = store.getState();
+    matchesDiv.appendChild(tokenDisplay);
+
+    // const navbar = {avatar: ''}
+
+    // store.subscribe((state) => {
+    //   if (state) {
+    //     navbar.avatar = state.avatar;
+    //   }
+    // });
+
+    const persons = await apiHandler.GetMatches();
+    // persons = JSON.parse(persons);
 
     persons.forEach((match) => {
-      this.appendNewMatch(match.person, match.photo);
+      this.appendNewMatch(match);
     });
   }
 }
