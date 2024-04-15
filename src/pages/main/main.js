@@ -38,8 +38,8 @@ class Home {
     }
 
     const card = new Card({
-      id: cardData.ID,
-      imageUrl: cardData.photos,
+      id: cardData.id,
+      images: cardData.photos,
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
@@ -99,7 +99,7 @@ class Home {
   subscribe() {
     store.subscribe(newState => {
       const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-      console.log(newState, navbarName);
+      // console.log(newState, navbarName);
       if (navbarName) {
         navbarName.innerHTML = newState.name;
       }

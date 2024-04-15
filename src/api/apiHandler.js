@@ -1,5 +1,4 @@
 import router from '../../index.js';
-import storage from '../models/storage/storage.js';
 import { store } from '../../index.js';
 
 const localhost = 'http://192.168.50.169:8080';
@@ -108,7 +107,7 @@ class APIHandler {
         const response = await this.sendRequest(this.registrationURL, formData, 'POST');
         await this.getCSRFToken(response);
 
-    return response;
+        return response;
   }
     /**
      * Sends request for login
@@ -158,18 +157,14 @@ class APIHandler {
    * @returns {Promise<Object>} - returns request result
    */
   async GetInterests() {
-      const response = await this.sendRequest(this.registrationURL);
-
-      return await response;
+      return await this.sendRequest(this.registrationURL);
   }
   /**
    * Возвращает массив карточек с сервера
    * @returns {Promise<Array>} - массив карточек
    */
   async GetCards() {
-      const response = await this.sendRequest(this.cardsURL);
-
-      return response;
+      return await this.sendRequest(this.cardsURL);
   }
 
   async GetMatches() {
@@ -183,14 +178,12 @@ class APIHandler {
       if (userId) {
           url += `?id=${userId}`;
       }
-      const response = await this.sendRequest(url);
 
-      return response;
+      return await this.sendRequest(url);
   }
-  async UpdateProfile(formData) {
-      const response = await this.sendRequest(this.profileURL, formData, 'POST');
 
-      return response;
+  async UpdateProfile(formData) {
+      return await this.sendRequest(this.profileURL, formData, 'POST');
   }
 
   async DeleteProfile() {
@@ -203,27 +196,19 @@ class APIHandler {
   }
 
   async UploadImage(formData) {
-      const response = await this.sendRequest(this.imageURL, formData, 'POST', true);
-
-      return response;
+      return await this.sendRequest(this.imageURL, formData, 'POST', true);
   }
 
   async DeleteImage(formData) {
-      const response = await this.sendRequest(this.removeImageURL, formData, 'POST');
-
-      return response;
+      return await this.sendRequest(this.removeImageURL, formData, 'POST');
   }
 
   async LikeCard(profile2) {
-      const response = await this.sendRequest(this.likeURL, {profile2}, 'POST');
-
-      return response;
+      return await this.sendRequest(this.likeURL, {profile2}, 'POST');
   }
 
   async DislikeCard(cardId) {
-      const response = await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
-
-      return response;
+      return await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
   }
 }
 
