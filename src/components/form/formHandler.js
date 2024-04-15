@@ -1,5 +1,5 @@
 import apiHandler from '../../api/apiHandler.js';
-import router from '../../../index.js';
+import router, { store } from '../../../index.js';
 import storage from '../../models/storage/storage.js';
 
 let pictureContainers = null;
@@ -356,12 +356,11 @@ class FormHandler {
         }
         else if (submitAction === 'updateProfile') {
             apiHandler.UpdateProfile(formData).then((res) => {
-                if (res) {
-                    const status = res.status;
-                    this.handleDialog(form, status);
-                    this.updateData(form, formData, status);
-                    storage.user.Update(formData);
-                }
+                this.handleDialog(form, res);
+                // this.updateData(form, formData, res);
+                // storage.user.Update(formData);
+                store.dispatch({ type: 'UPDATE_SOMETHING', payload: formData });
+                store.getState();
             });
         }
         else if (submitAction === 'deleteProfile') {

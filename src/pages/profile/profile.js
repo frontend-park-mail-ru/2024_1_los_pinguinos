@@ -7,8 +7,21 @@ import ProfileHandler from '../../components/profile/profileHandler';
 import appStorageHandler from '../../components/basic/AppStorageHandler.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
 import storage from '../../models/storage/storage.js';
+import { store } from '../../../index.js';
 
 class Profile {
+    user = null;
+
+    subscribe() {
+        store.subscribe(newState => {
+          const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+          console.log(newState, navbarName);
+          if (navbarName) {
+            navbarName.innerHTML = newState.name;
+          }
+        });
+      }
+
     async render() {
         await appStorageHandler.GetUser();
         const user = storage.user;
@@ -145,7 +158,7 @@ class Profile {
                         {
                             iconSource: encodeURIComponent(profileImg),
                             labelText: 'Ваше имя',
-                            valueText: user.Name(),
+                            valueText: store.getState().name,
                             actionButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                             settingDialog: {
                                 dialogForm: {
@@ -424,8 +437,13 @@ class Profile {
         return profileTemplate(profileContext);
     }
     async controller() {
+        this.subscribe();
         const profileHandler = new ProfileHandler();
         profileHandler.setup();
+        const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+        navbarName.innerHTML = store.getState().name;
+        const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
+        navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
     }
 }
 

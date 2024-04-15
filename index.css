@@ -45,6 +45,10 @@ body {
   transition: background-image 0.2s ease-in-out;
 }
 
+.flex {
+  display: flex;
+}
+
 .header__menu {
   padding: 10px;
   color: white;

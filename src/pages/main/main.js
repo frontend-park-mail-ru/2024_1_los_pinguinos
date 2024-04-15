@@ -1,6 +1,7 @@
 import main from './main.hbs';
 import Card from './components/card/card.js';
 import apiHandler from '../../api/apiHandler.js';
+import { store } from '../../../index.js';
 
 /**
 * Возвращает возраст по дате рождения
@@ -23,8 +24,8 @@ const getAge = (dateString) => {
 * Класс представляющий главную страницу
 */
 class Home {
-  cardCount = 0;
-  cardsPerLoad = 5;
+  // cardCount = 0;
+  // cardsPerLoad = 5;
 
   /**
   * Отображает новую карточку на странице
@@ -37,8 +38,8 @@ class Home {
     }
 
     const card = new Card({
-      id: 1,
-      images: cardData.photos,
+      id: cardData.ID,
+      imageUrl: cardData.photos,
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
@@ -91,19 +92,35 @@ class Home {
   async render() {
     return main();
   }
+
+  /**
+   * Подписывается на события
+    */
+  subscribe() {
+    store.subscribe(newState => {
+      const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+      console.log(newState, navbarName);
+      if (navbarName) {
+        navbarName.innerHTML = newState.name;
+      }
+    });
+  }
+
   /**
   * Функуция-контролер для обработки событий на главной странице.
   */
   async controller() {
 
-    let cards = await apiHandler.GetCards();
-    if (cards) {
-      cards = await cards.json();
-
-      cards.forEach(card => {
-        this.appendNewCard(card);
-      });
-    }
+    const cards = await apiHandler.GetCards();
+    this.subscribe();
+    // cards = JSON.parse(cards);
+    const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+      navbarName.innerHTML = store.getState().name;
+      const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
+      navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
+    cards.forEach(card => {
+      this.appendNewCard(card);
+    });
 
     const acceptButton = document.querySelector('#accept');
     const rejectButton = document.querySelector('#reject');
