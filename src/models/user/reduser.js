@@ -4,7 +4,6 @@ const initialState = {
 };
 
 export const userReducer = (state = initialState, action) => {
-  console.log(action.payload);
   let key = null;
   let value = null;
   if (action.payload) {

@@ -96,19 +96,6 @@ class Home {
   }
 
   /**
-   * Подписывается на события
-    */
-  subscribe() {
-    store.subscribe(newState => {
-      const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-      console.log(newState, navbarName);
-      if (navbarName) {
-        navbarName.innerHTML = newState.name;
-      }
-    });
-  }
-
-  /**
   * Функуция-контролер для обработки событий на главной странице.
   */
   async controller() {
@@ -117,13 +104,9 @@ class Home {
 
     let cards = await apiHandler.GetCards();
     cards = await cards.json();
-    this.subscribe();
     // cards = JSON.parse(cards);
-    const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-      navbarName.innerHTML = store.getState().name;
-      const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
-      navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
-    cards.forEach(card => {
+
+      cards.forEach(card => {
       this.appendNewCard(card);
     });
 

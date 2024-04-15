@@ -31,7 +31,7 @@ class Matches {
 
     const match = document.createElement('div');
     match.innerHTML = matchTemp({
-      image: Array.isArray(matchData.photos) ? matchData.photos[0] : matchData.photos ? matchData.photos : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp',
+      image: matchData.photos[0] ? matchData.photos[0].url : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp',
       name: matchData.name,
       age: getAge(matchData.birthday),
       description: matchData.description,
@@ -47,11 +47,6 @@ class Matches {
     subscribeHeader(store);
     loadHeader(store);
 
-    const matchesDiv = document.querySelector('.matches');
-    const tokenDisplay = document.createElement('div');
-    tokenDisplay.innerHTML = store.getState();
-    matchesDiv.appendChild(tokenDisplay);
-
     // const navbar = {avatar: ''}
 
     // store.subscribe((state) => {
@@ -60,7 +55,8 @@ class Matches {
     //   }
     // });
 
-    const persons = await apiHandler.GetMatches();
+    let persons = await apiHandler.GetMatches();
+    persons = await persons.json();
     // persons = JSON.parse(persons);
 
     persons.forEach((match) => {
