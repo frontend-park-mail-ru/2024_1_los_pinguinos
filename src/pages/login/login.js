@@ -5,7 +5,6 @@ import componentHandler from '../../components/basic/ComponentHandler.js';
 const formHandler = new FormHandler();
 /**
  * Login page class
- * @author roflanpotsan
  * @class
  */
 class Login {
@@ -67,7 +66,6 @@ class Login {
 
     /**
      * Sets up page event handlers
-     * @author roflanpotsan
      * @function
      */
     async controller() {

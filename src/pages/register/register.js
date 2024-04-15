@@ -11,7 +11,6 @@ const formHandler = new FormHandler();
 class Register {
     /**
      * Returns registration page template
-     * @author roflanpotsan
      * @function
      * @returns {Promise<string>}  - template html string
      */
@@ -168,7 +167,6 @@ class Register {
     }
     /**
      * Sets up page event handlers
-     * @author roflanpotsan
      * @function
      */
     async controller(){

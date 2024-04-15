@@ -1,9 +1,18 @@
 import FormHandler from '../form/formHandler';
-
+/**
+ * Profile handler class
+ * @class
+ */
 class ProfileHandler {
+    /** Creates instance of class ProfileHandler.
+     */
     constructor() {
         this.state = 0;
     }
+    /**
+     * Sets up all event listeners for profile elemens (not decomposed, bad architecture)...
+     * @function
+     */
     setup() {
         const formHandler = new FormHandler();
         const navbar = document.querySelector('.profile__navbar-content');

@@ -1,13 +1,30 @@
 import componentHandler from '../../components/basic/ComponentHandler';
-
+/**
+ * Check whether key value pair is in array
+ * @function
+ * @param {Object[]} array - array of key value pairs
+ * @param {string} key - a key
+ * @param {any} value - a value
+ */
 function containsKeyValuePair(array, key, value) {
     return array.some(obj => obj[key] === value);
 }
-
+/**
+ * User utility class
+ * @class
+ */
 class userUtility {
+    /**
+     * Returns formatted email
+     * @function
+     */
     formattedEmail(email) {
         return email.replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');
     }
+    /**
+     * Returns pictures in displayable state for profile
+     * @function
+     */
     DisplayPictures(pictures) {
         let photoObjects = pictures;
         if (!photoObjects) {
@@ -62,6 +79,10 @@ class userUtility {
 
         return photos;
     }
+    /**
+     * Returns interests in displayable state for profile
+     * @function
+     */
     DisplayInterests(interests) {
         if (interests) {
             const resultingInterests = Array.from(interests, (interest) => {
