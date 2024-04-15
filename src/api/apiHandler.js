@@ -1,11 +1,11 @@
 import router from '../../index.js';
 import { store } from '../../index.js';
 
-const localhost = 'http://localhost:8080';
+const localhost = 'http://172.20.10.6:8080';
 const vm = 'http://185.241.192.216:8080';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
-const baseURL = vm;
+const baseURL = localhost;
 const registrationURL = baseURL + apiURL + '/registration';
 const authenticationURL = baseURL + apiURL + '/login';
 const logoutURL = baseURL + apiURL + '/logout';
@@ -89,6 +89,12 @@ class APIHandler {
             return null;
         }
     }
+    /**
+     * Gets CSRF token from request response
+     * @function
+     * @param {Promise<Object>} response - response object
+     * @returns {Promise<Object>} - returns request response
+     */
     async getCSRFToken(response) {
         if (response && response.ok) {
             const CSRFToken = await response.clone().json();
@@ -170,13 +176,20 @@ class APIHandler {
     async GetCards() {
         return await this.sendRequest(this.cardsURL);
     }
-
+    /** Gets user matches from server
+    * @function
+    * @returns {Promise<Object>} - returns request response
+    */
     async GetMatches() {
         const response = await this.sendRequest(this.matchesURL);
 
         return response;
     }
-
+    /** Gets user proifle by id from server
+    * @function
+    * @param {Number} userId - user id
+    * @returns {Promise<Object>} - returns request response
+    */
     async GetProfile(userId=null) {
         let url = this.profileURL;
         if (userId) {
@@ -185,11 +198,18 @@ class APIHandler {
 
         return await this.sendRequest(url);
     }
-
+    /** Updates user profile on server
+    * @function
+    * @param {Object} formData - data to update
+    * @returns {Promise<Object>} - returns request response
+    */
     async UpdateProfile(formData) {
         return await this.sendRequest(this.profileURL, formData, 'POST');
     }
-
+     /** Deletes user profile
+    * @function
+    * @returns {Promise<Object>} - returns request response
+    */
     async DeleteProfile() {
         const response = await this.sendRequest(this.profileURL, null, 'DELETE');
         if (response && response.ok) {
@@ -198,23 +218,38 @@ class APIHandler {
 
         return response;
     }
-
+     /** Uploads an image to server
+    * @function
+    * @param {Object} formData - multipart form data for file
+    * @returns {Promise<Object>} - returns request response
+    */
     async UploadImage(formData) {
         return await this.sendRequest(this.imageURL, formData, 'POST', true);
     }
-
+    /** Deletes an image from server
+    * @function
+    * @param {Object} formData - image removal params
+    * @returns {Promise<Object>} - returns request response
+    */
     async DeleteImage(formData) {
         return await this.sendRequest(this.removeImageURL, formData, 'POST');
     }
-
-    async LikeCard(profile2) {
-        return await this.sendRequest(this.likeURL, {profile2}, 'POST');
+    /** Likes a user
+    * @function
+    * @param {Number} id - another user's id
+    * @returns {Promise<Object>} - returns request response
+    */
+    async LikeCard(id) {
+        return await this.sendRequest(this.likeURL, {id}, 'POST');
     }
-
-    async DislikeCard(cardId) {
-        return await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
+    /** Dislikes a user
+    * @function
+    * @param {Number} id - another user's id
+    * @returns {Promise<Object>} - returns request response
+    */
+    async DislikeCard(id) {
+        return await this.sendRequest(this.dislikeURL, {id}, 'POST');
     }
 }
 
-const apiHandler = new APIHandler();
-export default apiHandler;
+export default new APIHandler();

@@ -10,9 +10,16 @@ import { getInterests } from '../../components/basic/utils.js';
 import { store } from '../../../index.js';
 import { subscribeHeader } from '../../components/basic/utils.js';
 import { loadHeader } from '../../components/basic/utils.js';
-
+/**
+ * Profile page class
+ * @class
+ */
 class Profile {
-
+    /**
+     * Returns profile page template
+     * @function
+     * @returns {Promise<string>}  - template html string
+     */
     async render() {
         const user = store.getState();
         const userInterestsDisplay = userUtility.DisplayInterests(user.interests);
@@ -426,6 +433,10 @@ class Profile {
 
         return profileTemplate(profileContext);
     }
+     /**
+     * Sets up page event handlers
+     * @function
+     */
     async controller() {
         subscribeHeader(store);
         loadHeader(store);

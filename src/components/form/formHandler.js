@@ -219,16 +219,32 @@ class FormHandler {
 
         return formOk;
     }
+    /**
+     * Closes dialog window smoothly.
+     * @function
+     * @param {HTMLElement} dialog - the dialog itself
+     */
     closeDialog(dialog) {
         dialog.classList.toggle('any--hidden');
         setTimeout(() => {
             dialog.close();
         }, 200);
     }
+    /**
+     * Opens dialog window smoothly.
+     * @function
+     * @param {HTMLElement} dialog - the dialog itself
+     */
     openDialog(dialog) {
         dialog.showModal();
         dialog.classList.toggle('any--hidden');
     }
+    /**
+     * Handles dialog depending on form within.
+     * @function
+     * @param {HTMLElement} form - the form itself
+     * @param {Promise<Object>} result - form submission result
+     */
     handleDialog(form, result) {
         const dialog = form.closest('dialog');
         const updatedBlock = form.closest('.profile__content-block');
@@ -250,6 +266,13 @@ class FormHandler {
             updatedBlock.style.background = baseBackground;
         }, 800);
     }
+    /**
+     * Updates DOM in profile with form data (bad architecture....)
+     * @function
+     * @param {HTMLElement} form - the form itself
+     * @param {Object} formData - form data
+     * @param {Promise<Object>} result - form submission result
+     */
     updateData(form, formData, result) {
         if (result === 200) {
             const updatedContainer = form.closest('.profile__settings--row') || form.closest('.profile__content-block');
@@ -339,7 +362,7 @@ class FormHandler {
         if (submitAction === 'register') {
             apiHandler.Register(formData).then((res) => {
                 if (res && res.status !== 200) {
-                    this.addErrorMsg(formErrF, 'registrationMsg', `registration${res}`, this.helpMessages);
+                    this.addErrorMsg(formErrF, 'registrationMsg', `registration${res.status}`, this.helpMessages);
                 } else {
                     router.redirectTo('/main');
                 }
@@ -348,7 +371,7 @@ class FormHandler {
         else if (submitAction === 'login') {
             apiHandler.Login(formData).then((res) => {
                 if (res && res.status !== 200) {
-                    this.addErrorMsg(formErrF, 'loginMsg', `login${res}`, this.helpMessages);
+                    this.addErrorMsg(formErrF, 'loginMsg', `login${res.status}`, this.helpMessages);
                 } else {
                     router.redirectTo('/main');
                 }
@@ -425,6 +448,12 @@ class FormHandler {
             });
         }
     }
+    /**
+     * Handles file upload in profile
+     * @function
+     * @param {Object} file - file to upload
+     * @param {HTMLElement} container - the input container
+     */
     static async handleFileUpload(file, container) {
         const pictureBlock = container.closest('.profile__picture-block');
         pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
@@ -478,12 +507,22 @@ class FormHandler {
             actionButton.style.display = 'block';
         }
     }
+    /**
+     * Handles file input changes in profile
+     * @function
+     * @param {Object} event - file input event
+     */
     static handleFileInput(event) {
         document.activeElement.blur();
         const fileContainer = event.target.closest('.profile__picture-container');
         const uploadInput = fileContainer.querySelector('.form__input--file');
         uploadInput.click();
     }
+    /**
+     * Handles file input field (within profile)
+     * @function
+     * @param {Object} event - file input event
+     */
     static handleFile(event) {
         const uploadInput = event.target;
         if (uploadInput.files.length !== 1) {
@@ -493,6 +532,11 @@ class FormHandler {
         uploadInput.value = null;
         FormHandler.handleFileUpload(file, uploadInput.closest('.profile__picture-container'));
     }
+    /**
+     * Handles file deletion in profile
+     * @function
+     * @param {Object} event - file input event
+     */
     static async handleFileDelete(event) {
         const fileContainer = event.target.closest('.profile__picture-container');
         const pictureBlock = fileContainer.closest('.profile__picture-block');
@@ -535,6 +579,11 @@ class FormHandler {
         }
 
     }
+     /**
+     * Sets up event listeners for file inputs in profile
+     * @function
+     * @param {Object} event - file input event
+     */
     setupFileUploads(container) {
         const uploadButtons = container.querySelectorAll('.form__button--create');
         const deleteButtons = container.querySelectorAll('.form__button--remove');

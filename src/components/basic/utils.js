@@ -3,7 +3,11 @@ import componentHandler from './ComponentHandler';
 
 let rawAppInterests = null;
 let appInterests = null;
-
+/**
+ * Update app header flux (later will become an event handler)
+ * @function
+ * @param {Object} newState - redux state
+ */
 function updateHeader(newState) {
   if (newState) {
     const header = document.querySelector('.header__menu');
@@ -26,18 +30,30 @@ function updateHeader(newState) {
         }
   }
 }
-
+/**
+ * Subscribe header for state updates (will become an event handler)
+ * @function
+ * @param {Object} store - redux store
+ */
 function subscribeHeader(store) {
   store.subscribe(newState => {
       updateHeader(newState);
   });
 }
-
+/**
+ * Load header changes from store (later will become an event handler)
+ * @function
+ * @param {Object} store - redux store
+ */
 function loadHeader(store) {
   const newState = store.getState();
   updateHeader(newState);
 }
-
+/**
+ * Update app background depending on path
+ * @function
+ * @param {string} path - app path
+ */
 function handleBackground(path) {
     const body = document.body;
     let url = path.slice(1,path.length);
@@ -52,7 +68,10 @@ function handleBackground(path) {
     }
     body.style.backgroundImage = `var(--background--${url})`;
 }
-
+/**
+ * Returns interes context for UI composure
+ * @function
+ */
 async function getInterests() {
   let interests;
   if (rawAppInterests) {
