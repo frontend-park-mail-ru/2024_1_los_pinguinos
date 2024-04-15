@@ -9,7 +9,14 @@
 }
 
 #matches__content {
-    display: flex;
+    display: grid;
     gap: 10px;
     padding: 20px;
+}
+
+.matches__empty {
+    text-align: center;
+    color: white;
+    justify-self: center;
+    font-size: 6vw;
 }

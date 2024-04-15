@@ -107,7 +107,10 @@ class APIHandler {
      */
     async Register(formData) {
         const response = await this.sendRequest(this.registrationURL, formData, 'POST');
-        await this.getCSRFToken(response);
+        const data = await this.getCSRFToken(response);
+        if (data) {
+            store.dispatch({ type: 'UPDATE_USER', payload: data });
+        }
 
         return response;
   }
