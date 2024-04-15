@@ -4,47 +4,38 @@ import componentHandler from './ComponentHandler';
 let rawAppInterests = null;
 let appInterests = null;
 
+function updateHeader(newState) {
+  if (newState) {
+    const header = document.querySelector('.header__menu');
+        if (header) {
+            const pfp = header.querySelector('.header__pfp');
+            const name = header.querySelector('.header__paragraph');
+            let src = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
+            if (pfp) {
+                for (const photo of newState.photos) {
+                    if (photo.url) {
+                        src = photo.url;
+                        break;
+                    }
+                }
+                pfp.src = src;
+            }
+            if (name) {
+                name.innerText = newState.name;
+            }
+        }
+  }
+}
+
 function subscribeHeader(store) {
   store.subscribe(newState => {
-      const header = document.querySelector('.header__menu');
-      if (header) {
-          const pfp = header.querySelector('.header__pfp');
-          const name = header.querySelector('.header__paragraph');
-          let src = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
-          if (pfp) {
-              for (const photo of newState.photos) {
-                  if (photo.url) {
-                      src = photo.url;
-                      break;
-                  }
-              }
-              pfp.src = src;
-          }
-          if (name) {
-              name.innerText = newState.name;
-          }
-      }
+      updateHeader(newState);
   });
 }
 
 function loadHeader(store) {
   const newState = store.getState();
-  const header = document.querySelector('.header__menu');
-  if (header) {
-      const pfp = header.querySelector('.header__pfp');
-      const name = header.querySelector('.header__paragraph');
-      if (pfp) {
-          for (const photo of newState.photos) {
-              if (photo.url) {
-                  pfp.src = photo.url;
-                  break;
-              }
-          }
-      }
-      if (name) {
-          name.innerText = newState.name;
-      }
-  }
+  updateHeader(newState);
 }
 
 function handleBackground(path) {

@@ -28,6 +28,7 @@
     font-size: medium;
     font-weight: 600;
     color: var(--color__light--primary);
+    word-break: break-all;
 }
 
 .header__menu-button {
