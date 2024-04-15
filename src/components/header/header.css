@@ -12,7 +12,22 @@
 .header__menu {
     width: 100%;
     display: flex;
+    align-items: center;
     gap: 10px;
+}
+
+.header__pfp {
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    aspect-ratio: 1;
+}
+
+.header__paragraph {
+    font-size: medium;
+    font-weight: 600;
+    color: var(--color__light--primary);
 }
 
 .header__menu-button {

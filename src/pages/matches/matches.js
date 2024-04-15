@@ -2,6 +2,8 @@ import matches from './match.hbs';
 import matchTemp from './components/card.hbs';
 import apiHandler from '../../api/apiHandler';
 import { store } from '../../..';
+import { subscribeHeader } from '../../components/basic/utils.js';
+import { loadHeader } from '../../components/basic/utils.js';
 
 /**
 * Возвращает возраст по дате рождения
@@ -42,6 +44,8 @@ class Matches {
   }
 
   async controller() {
+    subscribeHeader(store);
+    loadHeader(store);
 
     const matchesDiv = document.querySelector('.matches');
     const tokenDisplay = document.createElement('div');

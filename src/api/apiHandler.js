@@ -134,9 +134,9 @@ class APIHandler {
         const response = await this.sendRequest(this.logoutURL);
         if (response && response.ok) {
             this.authStatus = false;
+            localStorage.clear();
             router.navigateTo('/');
             store.dispatch({ type: 'LOGOUT' });
-            localStorage.clear();
         }
 
         return response;

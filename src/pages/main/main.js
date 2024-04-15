@@ -2,6 +2,8 @@ import main from './main.hbs';
 import Card from './components/card/card.js';
 import apiHandler from '../../api/apiHandler.js';
 import { store } from '../../../index.js';
+import { subscribeHeader } from '../../components/basic/utils.js';
+import { loadHeader } from '../../components/basic/utils.js';
 
 /**
 * Возвращает возраст по дате рождения
@@ -98,11 +100,11 @@ class Home {
     */
   subscribe() {
     store.subscribe(newState => {
-      // const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-      // console.log(newState, navbarName);
-      // if (navbarName) {
-      //   navbarName.innerHTML = newState.name;
-      // }
+      const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+      console.log(newState, navbarName);
+      if (navbarName) {
+        navbarName.innerHTML = newState.name;
+      }
     });
   }
 
@@ -110,15 +112,17 @@ class Home {
   * Функуция-контролер для обработки событий на главной странице.
   */
   async controller() {
+    subscribeHeader(store);
+    loadHeader(store);
 
     let cards = await apiHandler.GetCards();
     cards = await cards.json();
     this.subscribe();
     // cards = JSON.parse(cards);
-    // const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-    //   navbarName.innerHTML = store.getState().name;
-    //   const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
-    //   navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
+    const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+      navbarName.innerHTML = store.getState().name;
+      const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
+      navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
     cards.forEach(card => {
       this.appendNewCard(card);
     });

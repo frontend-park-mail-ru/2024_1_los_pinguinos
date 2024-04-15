@@ -3,11 +3,11 @@
     </div>
     <div class="header__menu">
       {{#if authState}}
-      <button data-link data-url="/main" type="button" class="header__menu-button">Главная</button>
-      <button data-link data-url="/matches" type="button" class="header__menu-button">Мэтчи</button>
-      <button data-link data-url="/profile" type="button" class="header__menu-button">Профиль</button>
+      <button data-link data-url="/main" type="button" class="button button--success button--m">Главная</button>
+      <button data-link data-url="/matches" type="button" class="button button--success button--m">Мэтчи</button>
+      <img class="header__pfp" data-link data-url="/profile" src="https://los_ping.hb.ru-msk.vkcs.cloud/i.webp">
+      <p class="header__paragraph"></p>
       {{else}}
-        <button data-link data-url="/login" type="button" class="header__menu-button">Войти</button>
       {{/if}}
     </div>
   </div>

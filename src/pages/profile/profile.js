@@ -8,14 +8,10 @@ import userUtility from '../../models/user/User.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
 import { getInterests } from '../../components/basic/utils.js';
 import { store } from '../../../index.js';
+import { subscribeHeader } from '../../components/basic/utils.js';
+import { loadHeader } from '../../components/basic/utils.js';
 
 class Profile {
-
-    subscribe() {
-        store.subscribe(newState => {
-            console.log(newState);
-        });
-    }
 
     async render() {
         const user = store.getState();
@@ -431,7 +427,8 @@ class Profile {
         return profileTemplate(profileContext);
     }
     async controller() {
-        this.subscribe();
+        subscribeHeader(store);
+        loadHeader(store);
         const profileHandler = new ProfileHandler();
         profileHandler.setup();
     }

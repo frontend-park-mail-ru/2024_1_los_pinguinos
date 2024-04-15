@@ -47,6 +47,11 @@
     background-color: var(--color__success--primary);
 }
 
+.button--m {
+    font-size: medium;
+    font-weight: 600;
+}
+
 .button--l {
     font-size: large;
     font-weight: 700;
