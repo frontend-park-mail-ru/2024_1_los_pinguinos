@@ -23,6 +23,10 @@ const getAge = (dateString) => {
 };
 
 class Matches {
+  /**
+   * Отображает новый мэтч на странице
+   * @param {Object} matchData - данные карточки
+   */
   async appendNewMatch(matchData) {
     const matches = document.querySelector('#matches__content');
     if (matches === null) {
@@ -38,11 +42,15 @@ class Matches {
     });
     matches.appendChild(match.firstElementChild);
   }
-
+  /**
+   * Отображает страницу
+   */
   async render() {
     return matches();
   }
-
+  /**
+  * Функуция-контролер для обработки событий на странице.
+  */
   async controller() {
     subscribeHeader(store);
     loadHeader(store);

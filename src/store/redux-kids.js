@@ -1,3 +1,9 @@
+/**
+ * Функция создания хранилища
+ * @param {Function} reducer - функция редьюсер
+ * @param {Object} initialState - начальное состояние
+ * @returns {Object} - объект хранилища
+ */
 export const createStote = (reducer, initialState) => {
     const stateInLS = localStorage.getItem('state');
     let state = stateInLS ? JSON.parse(stateInLS) : initialState;

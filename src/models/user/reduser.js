@@ -2,7 +2,12 @@
 const initialState = {
   token: null,
 };
-
+/**
+ * Редьюсер для работы с пользователем
+ * @param {Object} state - начальное состояние
+ * @param {Object} action - объект с типом и данными
+ * @returns {Object} - новое состояние хранилища
+ */
 export const userReducer = (state = initialState, action) => {
   let key = null;
   let value = null;
