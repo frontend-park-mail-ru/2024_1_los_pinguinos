@@ -4,29 +4,23 @@ import emailImg from '../../components/form/email.svg';
 import passwordImg from '../../components/form/password.svg';
 import exitImg from '../../components/form/exit.svg';
 import ProfileHandler from '../../components/profile/profileHandler';
-import appStorageHandler from '../../components/basic/AppStorageHandler.js';
+import userUtility from '../../models/user/User.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
-import storage from '../../models/storage/storage.js';
+import { getInterests } from '../../components/basic/utils.js';
 import { store } from '../../../index.js';
 
 class Profile {
-    user = null;
 
     subscribe() {
         store.subscribe(newState => {
-          const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-          console.log(newState, navbarName);
-          if (navbarName) {
-            navbarName.innerHTML = newState.name;
-          }
+            console.log(newState);
         });
-      }
+    }
 
     async render() {
-        await appStorageHandler.GetUser();
-        const user = storage.user;
-        const userInterestsDisplay = user.DisplayInterests();
-        const photos = user.DisplayPictures();
+        const user = store.getState();
+        const userInterestsDisplay = userUtility.DisplayInterests(user.interests);
+        const photos = userUtility.DisplayPictures(user.photos);
         const textCancel = 'Отмена';
         const cancelClasses = ['form__button--cancel', 'form__button--dialog'];
         const submitClasses = ['form__button--continue', 'form__button--dialog'];
@@ -40,7 +34,7 @@ class Profile {
                 biography: {
                     blockId: 'biography',
                     labelText: 'О себе',
-                    bioText: user.Description(),
+                    bioText: user.description,
                     labelButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                     settingDialog: {
                         dialogForm: {
@@ -133,7 +127,7 @@ class Profile {
                                     checkBoxListClasses: [
                                         'form__checkbox-list--mb',
                                     ],
-                                    choices: storage.appInterests,
+                                    choices: await getInterests(),
                                 },
                             ],
                         },
@@ -201,7 +195,7 @@ class Profile {
                                                     classes: [
                                                         'form__input--dialog',
                                                     ],
-                                                    placeholder: user.Name(),
+                                                    placeholder: user.name,
                                                     type: 'text',
                                                     id: 'name',
                                                     maxlength: 32,
@@ -215,7 +209,7 @@ class Profile {
                         {
                             iconSource: encodeURIComponent(emailImg),
                             labelText: 'Ваш email',
-                            valueText: user.Email(),
+                            valueText: userUtility.formattedEmail(user.email),
                             actionButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                             settingDialog: {
                                 dialogForm: {
@@ -440,10 +434,6 @@ class Profile {
         this.subscribe();
         const profileHandler = new ProfileHandler();
         profileHandler.setup();
-        const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-        navbarName.innerHTML = store.getState().name;
-        const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
-        navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
     }
 }
 

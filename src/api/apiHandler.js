@@ -95,6 +95,8 @@ class APIHandler {
             if (CSRFToken && 'csrft' in CSRFToken) {
                 this.CSRFToken = CSRFToken['csrft'];
             }
+
+            return CSRFToken;
         }
     }
     /**
@@ -119,8 +121,7 @@ class APIHandler {
         const response = await this.sendRequest(this.authenticationURL, formData, 'POST');
         if (!response) return;
         const token = await this.getCSRFToken(response);
-        const tokenJson = await token.json();
-        store.dispatch({ type: 'UPDATE_USER', payload: tokenJson });
+        store.dispatch({ type: 'UPDATE_USER', payload: token });
 
         return response;
     }
@@ -150,66 +151,66 @@ class APIHandler {
       await this.getCSRFToken(response);
 
       return response;
-  }
-  /**
-   * Sends request for registration interest choices
-   * @function
-   * @returns {Promise<Object>} - returns request result
-   */
-  async GetInterests() {
-      return await this.sendRequest(this.registrationURL);
-  }
-  /**
-   * Возвращает массив карточек с сервера
-   * @returns {Promise<Array>} - массив карточек
-   */
-  async GetCards() {
-      return await this.sendRequest(this.cardsURL);
-  }
+    }
+    /**
+     * Sends request for registration interest choices
+     * @function
+     * @returns {Promise<Object>} - returns request result
+     */
+    async GetInterests() {
+        return await this.sendRequest(this.registrationURL);
+    }
+    /**
+     * Возвращает массив карточек с сервера
+     * @returns {Promise<Array>} - массив карточек
+     */
+    async GetCards() {
+        return await this.sendRequest(this.cardsURL);
+    }
 
-  async GetMatches() {
-      const response = await this.sendRequest(this.matchesURL);
+    async GetMatches() {
+        const response = await this.sendRequest(this.matchesURL);
 
-      return response;
-  }
+        return response;
+    }
 
-  async GetProfile(userId=null) {
-      let url = this.profileURL;
-      if (userId) {
-          url += `?id=${userId}`;
-      }
+    async GetProfile(userId=null) {
+        let url = this.profileURL;
+        if (userId) {
+            url += `?id=${userId}`;
+        }
 
-      return await this.sendRequest(url);
-  }
+        return await this.sendRequest(url);
+    }
 
-  async UpdateProfile(formData) {
-      return await this.sendRequest(this.profileURL, formData, 'POST');
-  }
+    async UpdateProfile(formData) {
+        return await this.sendRequest(this.profileURL, formData, 'POST');
+    }
 
-  async DeleteProfile() {
-      const response = await this.sendRequest(this.profileURL, null, 'DELETE');
-      if (response && response.ok) {
-          this.authStatus = false;
-      }
+    async DeleteProfile() {
+        const response = await this.sendRequest(this.profileURL, null, 'DELETE');
+        if (response && response.ok) {
+            this.authStatus = false;
+        }
 
-      return response;
-  }
+        return response;
+    }
 
-  async UploadImage(formData) {
-      return await this.sendRequest(this.imageURL, formData, 'POST', true);
-  }
+    async UploadImage(formData) {
+        return await this.sendRequest(this.imageURL, formData, 'POST', true);
+    }
 
-  async DeleteImage(formData) {
-      return await this.sendRequest(this.removeImageURL, formData, 'POST');
-  }
+    async DeleteImage(formData) {
+        return await this.sendRequest(this.removeImageURL, formData, 'POST');
+    }
 
-  async LikeCard(profile2) {
-      return await this.sendRequest(this.likeURL, {profile2}, 'POST');
-  }
+    async LikeCard(profile2) {
+        return await this.sendRequest(this.likeURL, {profile2}, 'POST');
+    }
 
-  async DislikeCard(cardId) {
-      return await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
-  }
+    async DislikeCard(cardId) {
+        return await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
+    }
 }
 
 const apiHandler = new APIHandler();

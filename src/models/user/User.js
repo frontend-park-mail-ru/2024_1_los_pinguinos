@@ -1,38 +1,17 @@
-import apiHandler from '../../api/apiHandler';
 import componentHandler from '../../components/basic/ComponentHandler';
-import storage from '../storage/storage';
 
 function containsKeyValuePair(array, key, value) {
     return array.some(obj => obj[key] === value);
 }
 
-class User {
-    constructor() {
-        this.userData = null;
+class userUtility {
+    formattedEmail(email) {
+        return email.replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');
     }
-    async Load(userId=null) {
-        let profileData = await apiHandler.GetProfile(userId);
-        if (!profileData) return;
-        profileData = await profileData.json();
-        this.userData = profileData;
-    }
-    Email() {
-        return this.userData['email'].replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');
-    }
-    Name() {
-        return this.userData['name'];
-    }
-    Description() {
-        return this.userData['description'];
-    }
-    UpdatePicture(id, value) {
-        this.userData['photos'][id]['url'] = value;
-    }
-    DisplayPictures() {
-        let photoObjects = this.userData['photos'];
+    DisplayPictures(pictures) {
+        let photoObjects = pictures;
         if (!photoObjects) {
             photoObjects = [];
-            this.userData['photos'] = photoObjects;
         }
         if (photoObjects.length < 5) {
             for (let i = 0; i < 5; i++) {
@@ -53,7 +32,7 @@ class User {
                 return 0;
             }
         });
-        this.userData['photos'] = photoObjects;
+
         let flag = true;
         const photos = Array.from(photoObjects, (photoObject, idx) => {
             const btnClasses = [
@@ -83,9 +62,8 @@ class User {
 
         return photos;
     }
-    DisplayInterests() {
-        if (this.userData['interests']) {
-            const interests = this.userData['interests'];
+    DisplayInterests(interests) {
+        if (interests) {
             const resultingInterests = Array.from(interests, (interest) => {
                 return componentHandler.generateComponentContext('interest', ['form__button--checkbox', 'form__button--inactive'], {
                     buttonText: interest.name,
@@ -97,20 +75,6 @@ class User {
 
         return [];
     }
-    Update(data) {
-        if ('interests' in data) {
-            this.userData['interests'] = new Array();
-            for (const interest of storage.rawAppInterests) {
-                if (data['interests'].includes(interest))
-                this.userData['interests'].push({'name': interest});
-            }
-        }
-        for (const key in data) {
-            if (key !== 'interests')
-            this.userData[key] = data[key];
-        }
-    }
-
 }
 
-export default User;
+export default new userUtility();

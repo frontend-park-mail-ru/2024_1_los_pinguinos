@@ -1,5 +1,5 @@
 import apiHandler from '../../api/apiHandler';
-import handleBackground from '../basic/backgroundHandler';
+import {handleBackground} from '../basic/utils';
 /**
  * Router class
  * @class

@@ -98,11 +98,11 @@ class Home {
     */
   subscribe() {
     store.subscribe(newState => {
-      const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+      // const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
       // console.log(newState, navbarName);
-      if (navbarName) {
-        navbarName.innerHTML = newState.name;
-      }
+      // if (navbarName) {
+      //   navbarName.innerHTML = newState.name;
+      // }
     });
   }
 
@@ -111,13 +111,14 @@ class Home {
   */
   async controller() {
 
-    const cards = await apiHandler.GetCards();
+    let cards = await apiHandler.GetCards();
+    cards = await cards.json();
     this.subscribe();
     // cards = JSON.parse(cards);
-    const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
-      navbarName.innerHTML = store.getState().name;
-      const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
-      navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
+    // const navbarName = document.getElementsByClassName('navbar__header__person__name')[0];
+    //   navbarName.innerHTML = store.getState().name;
+    //   const navbarPhoto = document.getElementsByClassName('navbar__header__person__image')[0];
+    //   navbarPhoto.src = store.getState().photos[0].url || 'https://via.placeholder.com/150';
     cards.forEach(card => {
       this.appendNewCard(card);
     });

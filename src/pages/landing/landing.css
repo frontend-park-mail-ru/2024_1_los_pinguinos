@@ -17,6 +17,7 @@
     justify-content: space-between;
     padding: 30px;
     padding-bottom: 0;
+    z-index: 1;
 }
 
 .header__logo--landing {

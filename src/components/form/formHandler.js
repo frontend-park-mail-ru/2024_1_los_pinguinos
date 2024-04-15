@@ -1,6 +1,6 @@
 import apiHandler from '../../api/apiHandler.js';
 import router, { store } from '../../../index.js';
-import storage from '../../models/storage/storage.js';
+import { appInterests } from '../basic/utils.js';
 
 let pictureContainers = null;
 const acceptedFileTypes = ['image/png', 'image/jpeg', 'image.jpg'];
@@ -240,7 +240,7 @@ class FormHandler {
             this.closeDialog(dialog);
         }
         setTimeout(() => {
-            if (result !== 200) {
+            if (!result || result && result.status !== 200) {
                 updatedBlock.style.background = 'var(--action-bgr--failure)';
             } else {
                 updatedBlock.style.background = 'var(--action-bgr--success)';
@@ -357,8 +357,15 @@ class FormHandler {
         else if (submitAction === 'updateProfile') {
             apiHandler.UpdateProfile(formData).then((res) => {
                 this.handleDialog(form, res);
-                // this.updateData(form, formData, res);
-                // storage.user.Update(formData);
+                if ('interests' in formData) {
+                    const tempInterests = new Array();
+                    for (const interest of appInterests) {
+                        if (formData.interests.includes(interest))
+                        tempInterests.push({'name': interest});
+                    }
+                    formData.interests = tempInterests;
+                }
+                this.updateData(form, formData, res.status);
                 store.dispatch({ type: 'UPDATE_SOMETHING', payload: formData });
                 store.getState();
             });
@@ -446,7 +453,10 @@ class FormHandler {
                 const photo = document.createElement('img');
                 photo.classList.add('profile__picture');
                 photo.src = photoURL;
-                storage.user.UpdatePicture(containerId, photoURL);
+                const newPhotos = store.getState().photos;
+                newPhotos[containerId]['url'] = photoURL;
+                store.dispatch({type: 'UPDATE_SOMETHING', payload: newPhotos});
+                // storage.user.UpdatePicture(containerId, photoURL);
 
                 photo.onload= () => {
                     container.appendChild(photo);
@@ -500,7 +510,10 @@ class FormHandler {
             actionButton.disabled = false;
             actionButton.removeEventListener('click', FormHandler.handleFileDelete);
             actionButton.addEventListener('click', FormHandler.handleFileInput);
-            storage.user.UpdatePicture(containerId, null);
+            const newPhotos = store.getState().photos;
+            newPhotos[containerId]['url'] = null;
+            store.dispatch({type: 'UPDATE_SOMETHING', payload: newPhotos});
+            // storage.user.UpdatePicture(containerId, null);
 
             const pictureBlock = fileContainer.closest('.profile__picture-block');
             const createBtns = pictureBlock.querySelectorAll('.form__button--create');
