@@ -1,7 +1,7 @@
 import registerTemplate from './register.hbs';
 import FormHandler from '../../components/form/formHandler.js';
-import storage from '../../models/storage/storage.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
+import { getInterests } from '../../components/basic/utils.js';
 
 const formHandler = new FormHandler();
 /**
@@ -11,7 +11,6 @@ const formHandler = new FormHandler();
 class Register {
     /**
      * Returns registration page template
-     * @author roflanpotsan
      * @function
      * @returns {Promise<string>}  - template html string
      */
@@ -128,7 +127,7 @@ class Register {
                         checkBoxListClasses:[
                             'form__checkbox-list--cut',
                         ],
-                        choices: storage.appInterests,
+                        choices: await getInterests(),
                     },
                     {
                         stepId: 'step3',
@@ -168,7 +167,6 @@ class Register {
     }
     /**
      * Sets up page event handlers
-     * @author roflanpotsan
      * @function
      */
     async controller(){

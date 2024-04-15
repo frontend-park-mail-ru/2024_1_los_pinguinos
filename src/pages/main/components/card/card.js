@@ -15,9 +15,9 @@ class Card {
    * @param {function} onLike - обработчик события "лайк"
    * @param {function} onDislike - обработчик события "дизлайк"
    */
-  constructor({ id, imageUrl, name, age, description, interests, onDismiss, onLike, onDislike }) {
+  constructor({ id, images, name, age, description, interests, onDismiss, onLike, onDislike }) {
     this.id = id;
-    this.imageUrl = Array.isArray(imageUrl) ? imageUrl[0] : imageUrl ? imageUrl : "https://los_ping.hb.ru-msk.vkcs.cloud/i.webp";
+    this.imageUrl = images.length > 0 ? images[0]['url'] : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     this.name = name;
     this.age = age;
     this.description = description;

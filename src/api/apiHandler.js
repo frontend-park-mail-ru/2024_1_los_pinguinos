@@ -1,17 +1,17 @@
 import router from '../../index.js';
-import storage from '../models/storage/storage.js';
+import { store } from '../../index.js';
 
 const localhost = 'http://172.20.10.6:8080';
 const vm = 'http://185.241.192.216:8080';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
-const baseURL = vm;
+const baseURL = localhost;
 const registrationURL = baseURL + apiURL + '/registration';
 const authenticationURL = baseURL + apiURL + '/login';
 const logoutURL = baseURL + apiURL + '/logout';
 const isAuthURL = baseURL + apiURL + '/isAuth';
 const cardsURL = baseURL + apiURL + '/cards';
-const profileURL = baseURL + apiURL +'/profile';
+const profileURL = baseURL + apiURL + '/profile';
 const imageURL = baseURL + apiURL + '/addImage';
 const matchesURL = baseURL + apiURL + '/matches';
 const likeURL = baseURL + apiURL + '/like';
@@ -52,42 +52,57 @@ class APIHandler {
      * @returns {Promise<Object>} - returns request response
      */
     async sendRequest(url = this.baseURL, data = null, method='GET', file=false) {
-        const request = {
-            method: method,
-            credentials: 'include',
-            headers: {
-                'Csrft': this.CSRFToken,
-            },
-        };
-        if (method === 'POST') {
-            if (!file)
-            request['body'] = JSON.stringify(data);
-            else request['body'] = data;
-        }
-        const response = await fetch(url, request);
-        if (!response.ok) {
-            if (response.status === 401) {
-                this.authStatus = false;
+        try {
+            const request = {
+                method: method,
+                credentials: 'include',
+                headers: {
+                    'Csrft': this.CSRFToken,
+                },
+            };
+            if (method === 'POST') {
+                if (!file)
+                request['body'] = JSON.stringify(data);
+                else request['body'] = data;
             }
-        } else if (response.ok) {
-            if (!(url === this.registrationURL && method === 'GET')){
-                this.authStatus = true;
+            const response = await fetch(url, request);
+            if (!response.ok) {
+                if (response.status === 401) {
+                    this.authStatus = false;
+                }
+                if (response.status === 408) {
+                    if (!navigator.onLine) {
+                        router.navigateTo('/offline');
+                    }
+                }
+            } else if (response.ok) {
+                if (!(url === this.registrationURL && method === 'GET')){
+                    this.authStatus = true;
+                }
+                if (url === this.logoutURL) {
+                    this.authStatus = false;
+                }
             }
-            if (url === this.logoutURL) {
-                this.authStatus = false;
-            }
-        }
 
-        return response;
+            return response;
+        } catch(error) {
+            return null;
+        }
     }
+    /**
+     * Gets CSRF token from request response
+     * @function
+     * @param {Promise<Object>} response - response object
+     * @returns {Promise<Object>} - returns request response
+     */
     async getCSRFToken(response) {
-        if (response.ok) {
-            const responseCopy = response.clone();
-            const responseCSRFT = await responseCopy.json();
-            const CSRFToken = JSON.parse(responseCSRFT);
+        if (response && response.ok) {
+            const CSRFToken = await response.clone().json();
             if (CSRFToken && 'csrft' in CSRFToken) {
                 this.CSRFToken = CSRFToken['csrft'];
             }
+
+            return CSRFToken;
         }
     }
     /**
@@ -98,10 +113,13 @@ class APIHandler {
      */
     async Register(formData) {
         const response = await this.sendRequest(this.registrationURL, formData, 'POST');
-        await this.getCSRFToken(response);
+        const data = await this.getCSRFToken(response);
+        if (data) {
+            store.dispatch({ type: 'UPDATE_USER', payload: data });
+        }
 
-        return response.status;
-    }
+        return response;
+  }
     /**
      * Sends request for login
      * @function
@@ -110,9 +128,11 @@ class APIHandler {
      */
     async Login(formData) {
         const response = await this.sendRequest(this.authenticationURL, formData, 'POST');
-        await this.getCSRFToken(response);
+        if (!response) return;
+        const token = await this.getCSRFToken(response);
+        store.dispatch({ type: 'UPDATE_USER', payload: token });
 
-        return response.status;
+        return response;
     }
     /**
      * Sends request for logout
@@ -120,10 +140,15 @@ class APIHandler {
      * @returns {Promise<Object>} - returns request result
      */
     async Logout() {
-        router.navigateTo('/');
-        storage.user = null;
+        const response = await this.sendRequest(this.logoutURL);
+        if (response && response.ok) {
+            this.authStatus = false;
+            localStorage.clear();
+            router.navigateTo('/');
+            store.dispatch({ type: 'LOGOUT' });
+        }
 
-        return await this.sendRequest(this.logoutURL);
+        return response;
     }
     /**
      * Sends request tp check if user is authorized
@@ -131,10 +156,10 @@ class APIHandler {
      * @returns {Promise<Object>} - returns request result
      */
     async CheckAuth() {
-        const response = await this.sendRequest(this.isAuthURL);
-        await this.getCSRFToken(response);
+      const response = await this.sendRequest(this.isAuthURL);
+      await this.getCSRFToken(response);
 
-        return response;
+      return response;
     }
     /**
      * Sends request for registration interest choices
@@ -142,75 +167,89 @@ class APIHandler {
      * @returns {Promise<Object>} - returns request result
      */
     async GetInterests() {
-        const response = await this.sendRequest(this.registrationURL);
-
-        return await response.json();
+        return await this.sendRequest(this.registrationURL);
     }
     /**
      * Возвращает массив карточек с сервера
      * @returns {Promise<Array>} - массив карточек
      */
     async GetCards() {
-        const response = await this.sendRequest(this.cardsURL);
-
-        return await response.json();
+        return await this.sendRequest(this.cardsURL);
     }
-
+    /** Gets user matches from server
+    * @function
+    * @returns {Promise<Object>} - returns request response
+    */
     async GetMatches() {
         const response = await this.sendRequest(this.matchesURL);
 
-        return await response.json();
+        return response;
     }
-
+    /** Gets user proifle by id from server
+    * @function
+    * @param {Number} userId - user id
+    * @returns {Promise<Object>} - returns request response
+    */
     async GetProfile(userId=null) {
         let url = this.profileURL;
         if (userId) {
             url += `?id=${userId}`;
         }
-        const response = await this.sendRequest(url);
 
-        return await response.json();
+        return await this.sendRequest(url);
     }
+    /** Updates user profile on server
+    * @function
+    * @param {Object} formData - data to update
+    * @returns {Promise<Object>} - returns request response
+    */
     async UpdateProfile(formData) {
-        const response = await this.sendRequest(this.profileURL, formData, 'POST');
-
-        return await response.status;
+        return await this.sendRequest(this.profileURL, formData, 'POST');
     }
-
+     /** Deletes user profile
+    * @function
+    * @returns {Promise<Object>} - returns request response
+    */
     async DeleteProfile() {
         const response = await this.sendRequest(this.profileURL, null, 'DELETE');
-        if (response.ok) {
+        if (response && response.ok) {
             this.authStatus = false;
         }
 
-        return await response.status;
+        return response;
     }
-
+     /** Uploads an image to server
+    * @function
+    * @param {Object} formData - multipart form data for file
+    * @returns {Promise<Object>} - returns request response
+    */
     async UploadImage(formData) {
-        const response = await this.sendRequest(this.imageURL, formData, 'POST', true);
-
-        return await response;
+        return await this.sendRequest(this.imageURL, formData, 'POST', true);
     }
-
+    /** Deletes an image from server
+    * @function
+    * @param {Object} formData - image removal params
+    * @returns {Promise<Object>} - returns request response
+    */
     async DeleteImage(formData) {
-        const response = await this.sendRequest(this.removeImageURL, formData, 'POST');
-
-        return await response.status;
+        return await this.sendRequest(this.removeImageURL, formData, 'POST');
     }
-
-    
-    async LikeCard(profile2) {
-        const response = await this.sendRequest(this.likeURL, {profile2}, 'POST');
-
-        return await response.status;
+    /** Likes a user
+    * @function
+    * @param {Number} id - another user's id
+    * @returns {Promise<Object>} - returns request response
+    */
+    async LikeCard(id) {
+        return await this.sendRequest(this.likeURL, {id}, 'POST');
     }
-
-    async DislikeCard(cardId) {
-        const response = await this.sendRequest(this.dislikeURL, {cardId}, 'POST');
-
-        return await response.status;
+    /** Dislikes a user
+    * @function
+    * @param {Number} id - another user's id
+    * @returns {Promise<Object>} - returns request response
+    */
+    async DislikeCard(id) {
+        return await this.sendRequest(this.dislikeURL, {id}, 'POST');
     }
 }
 
-const apiHandler = new APIHandler();
-export default apiHandler;
+export default new APIHandler();

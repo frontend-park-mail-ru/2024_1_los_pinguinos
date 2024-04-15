@@ -4,16 +4,26 @@ import emailImg from '../../components/form/email.svg';
 import passwordImg from '../../components/form/password.svg';
 import exitImg from '../../components/form/exit.svg';
 import ProfileHandler from '../../components/profile/profileHandler';
-import appStorageHandler from '../../components/basic/AppStorageHandler.js';
+import userUtility from '../../models/user/User.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
-import storage from '../../models/storage/storage.js';
-
+import { getInterests } from '../../components/basic/utils.js';
+import { store } from '../../../index.js';
+import { subscribeHeader } from '../../components/basic/utils.js';
+import { loadHeader } from '../../components/basic/utils.js';
+/**
+ * Profile page class
+ * @class
+ */
 class Profile {
+    /**
+     * Returns profile page template
+     * @function
+     * @returns {Promise<string>}  - template html string
+     */
     async render() {
-        await appStorageHandler.GetUser();
-        const user = storage.user;
-        const userInterestsDisplay = user.DisplayInterests();
-        const photos = user.DisplayPictures();
+        const user = store.getState();
+        const userInterestsDisplay = userUtility.DisplayInterests(user.interests);
+        const photos = userUtility.DisplayPictures(user.photos);
         const textCancel = 'Отмена';
         const cancelClasses = ['form__button--cancel', 'form__button--dialog'];
         const submitClasses = ['form__button--continue', 'form__button--dialog'];
@@ -27,7 +37,7 @@ class Profile {
                 biography: {
                     blockId: 'biography',
                     labelText: 'О себе',
-                    bioText: user.Description(),
+                    bioText: user.description,
                     labelButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                     settingDialog: {
                         dialogForm: {
@@ -120,7 +130,7 @@ class Profile {
                                     checkBoxListClasses: [
                                         'form__checkbox-list--mb',
                                     ],
-                                    choices: storage.appInterests,
+                                    choices: await getInterests(),
                                 },
                             ],
                         },
@@ -145,7 +155,7 @@ class Profile {
                         {
                             iconSource: encodeURIComponent(profileImg),
                             labelText: 'Ваше имя',
-                            valueText: user.Name(),
+                            valueText: store.getState().name,
                             actionButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                             settingDialog: {
                                 dialogForm: {
@@ -188,7 +198,7 @@ class Profile {
                                                     classes: [
                                                         'form__input--dialog',
                                                     ],
-                                                    placeholder: user.Name(),
+                                                    placeholder: user.name,
                                                     type: 'text',
                                                     id: 'name',
                                                     maxlength: 32,
@@ -202,7 +212,7 @@ class Profile {
                         {
                             iconSource: encodeURIComponent(emailImg),
                             labelText: 'Ваш email',
-                            valueText: user.Email(),
+                            valueText: userUtility.formattedEmail(user.email),
                             actionButton: componentHandler.generateComponentContext('btn', ['form__button--edit'], {noErrors: 1}),
                             settingDialog: {
                                 dialogForm: {
@@ -291,7 +301,7 @@ class Profile {
                                     classes: [
                                         'form__dialog',
                                     ],
-                                    id: 'passwordDialog',
+                                    id: 'pswdDialog',
                                     steps:
                                     [
                                         {
@@ -318,6 +328,12 @@ class Profile {
                                                 componentHandler.generateComponentContext('btn', submitClasses, {buttonText: textSubmit, submitAction: actionUpdate}),
                                             ],
                                             fields: [
+                                                {
+                                                    id: 'username',
+                                                    completion: 'email',
+                                                    type: 'text',
+                                                    classes: ['any--none'],
+                                                },
                                                 {
                                                     label: 'Текущий пароль',
                                                     labelClasses: [
@@ -417,7 +433,13 @@ class Profile {
 
         return profileTemplate(profileContext);
     }
+     /**
+     * Sets up page event handlers
+     * @function
+     */
     async controller() {
+        subscribeHeader(store);
+        loadHeader(store);
         const profileHandler = new ProfileHandler();
         profileHandler.setup();
     }

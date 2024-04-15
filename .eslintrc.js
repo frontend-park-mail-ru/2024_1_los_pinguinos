@@ -11,6 +11,10 @@ module.exports = {
       browser: true,
       node: true,
     },
+    'globals': {
+      'window': true,
+      'Promise': true,
+    },
     rules: {
       'camelcase': 'error',
       'semi': ['error', 'always'], //точки с запятой

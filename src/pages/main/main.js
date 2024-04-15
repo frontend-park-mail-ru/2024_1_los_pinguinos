@@ -1,6 +1,9 @@
 import main from './main.hbs';
 import Card from './components/card/card.js';
 import apiHandler from '../../api/apiHandler.js';
+import { store } from '../../../index.js';
+import { subscribeHeader } from '../../components/basic/utils.js';
+import { loadHeader } from '../../components/basic/utils.js';
 
 /**
 * Возвращает возраст по дате рождения
@@ -23,26 +26,26 @@ const getAge = (dateString) => {
 * Класс представляющий главную страницу
 */
 class Home {
-  cardCount = 0;
-  cardsPerLoad = 5;
+  // cardCount = 0;
+  // cardsPerLoad = 5;
 
   /**
   * Отображает новую карточку на странице
   * @param {Object} cardData - данные карточки
   */
-  async appendNewCard(cardData, interests, photo) {
+  async appendNewCard(cardData) {
     const swiper = document.querySelector('#swiper');
     if (swiper === null) {
       return;
     }
 
     const card = new Card({
-      id: cardData.ID,
-      imageUrl: photo,
+      id: cardData.id,
+      images: cardData.photos,
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
-      interests: interests,
+      interests: cardData.interests,
       onDismiss: () => {
       },
       onLike: () => {
@@ -91,16 +94,20 @@ class Home {
   async render() {
     return main();
   }
+
   /**
   * Функуция-контролер для обработки событий на главной странице.
   */
   async controller() {
+    subscribeHeader(store);
+    loadHeader(store);
 
     let cards = await apiHandler.GetCards();
-    cards = JSON.parse(cards);
+    cards = await cards.json();
+    // cards = JSON.parse(cards);
 
-    cards.forEach(card => {
-      this.appendNewCard(card.person, card.interests, card.photo);
+      cards.forEach(card => {
+      this.appendNewCard(card);
     });
 
     const acceptButton = document.querySelector('#accept');

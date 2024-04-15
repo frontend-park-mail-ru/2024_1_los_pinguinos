@@ -8,15 +8,26 @@ import error404 from './src/pages/404/404.js';
 import Profile from './src/pages/profile/profile.js';
 import './index.css';
 import Matches from './src/pages/matches/matches.js';
+import { createStote } from './src/store/redux-kids.js';
+import { userReducer } from './src/models/user/reduser.js';
+
+const store = createStote(userReducer);
+export {store};
+
+if (typeof navigator.serviceWorker !== 'undefined') {
+    window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js');});
+}
 
 const routes = [
-    new Route('/', new Landing()),
+    new Route('/', new Landing(), false, '/main'),
     new Route('/login', new Login(), false, '/main'),
     new Route('/register', new Register(), false, '/main'),
     new Route('/main', new Home(), true),
     new Route('/profile', new Profile(), true),
     new Route('/matches', new Matches(), true),
+    new Route('/offline', new error404(true)),
     new Route('*', new error404()),
 ];
 const router = new Router(routes);
+
 export default router;

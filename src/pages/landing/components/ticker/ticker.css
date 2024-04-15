@@ -1,0 +1,50 @@
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.ticker__content {
+    will-change: auto;
+    color: transparent;
+    font-size: xx-large;
+    padding: 10px 0 10px 0;
+    display: inline-block;
+    animation: ticker 80s linear infinite;
+    -webkit-text-stroke: 4px white;
+    font-size: 6rem;
+    font-style: italic;
+    font-weight: 800;
+}
+
+.ticker__container:nth-child(2) {
+    animation-delay: 40s;
+}
+
+.ticker__container {
+    content-visibility: auto;
+    width: 100%;
+    min-height: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@media only screen and (max-width: 940px) {
+    .ticker__content {
+        font-size: 4rem;
+        -webkit-text-stroke: 2px white;
+    }
+    .ticker__container {
+        min-height: 120px;
+    }
+}

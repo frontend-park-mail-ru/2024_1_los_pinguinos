@@ -1,4 +1,5 @@
 import apiHandler from '../../api/apiHandler';
+import {handleBackground} from '../basic/utils';
 /**
  * Router class
  * @class
@@ -33,10 +34,6 @@ export class Router {
         const action = e.target.getAttribute('data-action');
         if (action === 'logout'){
           apiHandler.Logout();
-        }
-        if (action === 'deleteProfile') {
-          apiHandler.DeleteProfile();
-          this.redirectTo('/');
         }
         if (action === 'back') {
           history.back();
@@ -89,19 +86,8 @@ export class Router {
         return;
       }
     }
-    const body = document.body;
-    let url = route.path.slice(1,route.path.length);
-    if (route.path === '/') {
-      url = 'landing';
-    }
-    if (!url) {
-      url = '404';
-    }
-    if (url == 'landing') {
-      body.style.backgroundSize = 'cover';
-    }
-    body.style.backgroundImage = `var(--background--${url})`;
     const rootHTML = document.getElementById('root');
+    handleBackground(route.path);
     rootHTML.innerHTML = await route.component.render();
     if (route.component.controller) {
       await route.component.controller();

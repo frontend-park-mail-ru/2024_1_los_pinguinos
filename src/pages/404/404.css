@@ -5,29 +5,38 @@
     --error--bgr: rgba(0, 0, 0, 0.5);
 }
 
-.text--404 {
+.unavailable__container {
     display: flex;
     flex-flow: column;
     justify-content: center;
-    font-size: 1.5rem;
-    color: var(--404--text);
     text-align: center;
     background-color: var(--error--bgr);
     border-radius: 10px;
     padding: 50px;
+    font-size: 1.5rem;
 }
 
-.link--404 {
-    font-size: 1.3rem;
+.unavailable__title {
+    -webkit-text-stroke: 2px var(--color__light--primary);
+    font-size: 3rem;
+    font-weight: 600;
+    color: transparent;
+}
+
+.unavailable__text {
+    color: var(--color__light--primary);
+}
+
+.unavailable__link {
     color: var(--404-link);
 }
 
-.link--404:hover {
+.unavailable__link:hover {
     color: var(--404-link--hover);
 }
 
 @media only screen and (max-width: 896px) {
-    .text--404 {
+    .unavailable__container {
         width: 100dvw;
         height: 100dvh;
         border-radius: 0;

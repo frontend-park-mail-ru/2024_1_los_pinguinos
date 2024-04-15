@@ -9,7 +9,7 @@
     {{else}}
         <input class="form__input {{#each classes}}{{this}} {{/each}}" 
             id="{{id}}" type="{{type}}" minlength="{{minlength}}" 
-            maxlength="{{maxlength}}" autocomplete="{{completion}}" 
+            maxlength="{{maxlength}}" {{#if completion}}autocomplete="{{completion}}"{{/if}} 
             placeholder="{{placeholder}}" min="{{min}}" max="{{max}}">
     {{/if}}
     {{#if iconButton}}

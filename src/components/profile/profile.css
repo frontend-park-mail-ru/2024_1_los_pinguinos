@@ -1,3 +1,6 @@
+* {
+    word-break: auto-phrase;
+}
 :root {
     --action-bgr--success: rgba(30, 255, 0, 0.3);
     --action-bgr--failure: rgba(255, 0, 0, 0.3);
@@ -32,7 +35,6 @@
     border-radius: 20px;
     padding: 20px 30px;
     transition: all 0.2s ease-in-out;
-    word-break: break-all;
 }
 
 .profile__block-group {
@@ -94,6 +96,7 @@
     display: block;
     border-radius: 10%;
     aspect-ratio: 1;
+    object-fit: cover;
 }
 
 .profile__navbar-wrapper {
@@ -130,6 +133,7 @@
     font-weight: 200;
     color: white;
     white-space-collapse: preserve-breaks;
+    word-break: break-all !important;
 }
 
 .profile__text--title {
@@ -204,7 +208,7 @@
     .profile__content-wrapper {
         width: 100%;
         padding: 15px;
-        padding-bottom: 30px;
+        padding-bottom: 120px;
     }
     .profile__navbar-wrapper {
         width: 100dvw;
