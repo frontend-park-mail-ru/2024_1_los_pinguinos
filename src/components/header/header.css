@@ -1,6 +1,8 @@
 .header {
     display: flex;
     justify-content: space-between;
+    position: sticky;
+    width: auto;
 }
 
 .header__logo {

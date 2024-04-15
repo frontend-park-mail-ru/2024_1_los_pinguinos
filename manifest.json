@@ -1,0 +1,16 @@
+{
+    "name": "JimderApp",
+    "short_name": "Jimder",
+    "start_url": "/",
+    "icons": [
+      {
+        "src": "./src/assets/logo.wepb",
+        "sizes": "192x192",
+        "type": "image/wepb"
+      }
+    ],
+    "theme_color": "#000000",
+    "background_color": "#FFFFFF",
+    "display": "fullscreen",
+    "orientation": "portrait"
+  }

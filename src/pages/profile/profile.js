@@ -291,7 +291,7 @@ class Profile {
                                     classes: [
                                         'form__dialog',
                                     ],
-                                    id: 'passwordDialog',
+                                    id: 'pswdDialog',
                                     steps:
                                     [
                                         {
@@ -318,6 +318,12 @@ class Profile {
                                                 componentHandler.generateComponentContext('btn', submitClasses, {buttonText: textSubmit, submitAction: actionUpdate}),
                                             ],
                                             fields: [
+                                                {
+                                                    id: 'username',
+                                                    completion: 'email',
+                                                    type: 'text',
+                                                    classes: ['any--none'],
+                                                },
                                                 {
                                                     label: 'Текущий пароль',
                                                     labelClasses: [

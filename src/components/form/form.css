@@ -401,6 +401,11 @@
     opacity: 0.5;   
 }
 
+.form__button--create:focus {
+    outline: none;
+    filter: invert(36%) sepia(64%) saturate(604%) hue-rotate(86deg) brightness(95%) contrast(87%);
+}
+
 .form__button--remove {
     height: 10%;
     position: absolute;
@@ -601,6 +606,10 @@ input[type="date"] {
         align-items: center;
     }
 
+    .form__checkbox-container {
+        width: auto;
+    }
+
     .form__checkbox-container--side {
         max-width: 325px;
         min-width: 325px;
@@ -681,7 +690,11 @@ input[type="date"] {
 }
 
 .any--hidden {
-    opacity: 0;
+    opacity: 0 !important;
+}
+
+.any--none {
+    display: none;
 }
 
 /* HTML: <div class="loader"></div> */

@@ -25,14 +25,14 @@ class FormHandler {
             'date': 'Некорректная дата',
         };
         this.helpMessages = {
-            'password': '• Пароль должен быть длиной от 8 до 32 символов. Без emoji. Разрешены стандартные спецсимволы',
-            'email': '• Формат email - example@mailservice.domain, длина до 320 символов',
-            'text': '• Имя не должно содержать специальных символов (и пробелов), длина 2-32 символа',
-            'date': '• Дата в формате вашей системы, c 1970 по 2008',
-            'login401': '• Неверный логин или пароль',
-            'registration401': '• Такой email уже зарегистрирован',
-            'multipleChoice': '• Выберите хотя бы один интерес',
-            'genderChoice': '• Выберите пол',
+            'password': 'Пароль должен быть длиной от 8 до 32 символов. Без emoji. Разрешены стандартные спецсимволы',
+            'email': 'Формат email - example@mailservice.domain, длина до 320 символов',
+            'text': 'Имя не должно содержать специальных символов (и пробелов), длина 2-32 символа',
+            'date': 'Дата в формате вашей системы, c 1970 по 2008',
+            'login401': 'Неверный логин или пароль',
+            'registration409': 'Такой email уже зарегистрирован',
+            'multipleChoice': 'Выберите хотя бы один интерес',
+            'genderChoice': 'Выберите пол',
         };
     }
     /**
@@ -46,7 +46,6 @@ class FormHandler {
         const expressions = {
             password: /^.{8,32}$/,
             email: /^(?=.{1,320}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            date: /^(?:(?:19[6-9]\d|200[0-8])-(?:(?:0[13578]|1[02])-31|(?:0[1,3-9]|1[0-2])-(?:29|30)|02-29(?=-((?:19[6-9]\d|200[0-8])00|((?:19[6-9]\d|200[0-8])(?:04|08|[2468][048]|[13579][26]))))|(?:0[1-9]|1[0-2])-0[1-9]|(?:0[13-9]|1[0-2])-1\d|(?:0[1-9]|1[0-2])-2[0-8]))$/,
             text: /^(?=.{2,32}$)[\p{L}]+$/u,
             emoji: /^[\x20-\x7E]+$/,
         };
@@ -54,6 +53,11 @@ class FormHandler {
         const regexEmoji = expressions['emoji'];
         if (type === 'text'){
             return regexExpression.test(input);
+        }
+        if (type === 'date') {
+            const timeStamp = Date.parse(input)/1000;
+
+            return 0 <= timeStamp && timeStamp < 1230757200;
         }
 
         return regexExpression.test(input) && regexEmoji.test(input);
@@ -334,7 +338,7 @@ class FormHandler {
         }
         if (submitAction === 'register') {
             apiHandler.Register(formData).then((res) => {
-                if (res !== 200) {
+                if (res && res.status !== 200) {
                     this.addErrorMsg(formErrF, 'registrationMsg', `registration${res}`, this.helpMessages);
                 } else {
                     router.redirectTo('/main');
@@ -343,7 +347,7 @@ class FormHandler {
         }
         else if (submitAction === 'login') {
             apiHandler.Login(formData).then((res) => {
-                if (res !== 200) {
+                if (res && res.status !== 200) {
                     this.addErrorMsg(formErrF, 'loginMsg', `login${res}`, this.helpMessages);
                 } else {
                     router.redirectTo('/main');
@@ -352,15 +356,18 @@ class FormHandler {
         }
         else if (submitAction === 'updateProfile') {
             apiHandler.UpdateProfile(formData).then((res) => {
-                this.handleDialog(form, res);
-                this.updateData(form, formData, res);
-                storage.user.Update(formData);
+                if (res) {
+                    const status = res.status;
+                    this.handleDialog(form, status);
+                    this.updateData(form, formData, status);
+                    storage.user.Update(formData);
+                }
             });
         }
         else if (submitAction === 'deleteProfile') {
             apiHandler.DeleteProfile().then((res) => {
-                if (res === 200) {
-                    router.redirectTo('/');
+                if (res && res.status === 200) {
+                    apiHandler.Logout();
                 }
             });
         }
@@ -413,11 +420,9 @@ class FormHandler {
         }
     }
     static async handleFileUpload(file, container) {
-        if (!pictureContainers) {
-            const pictureBlock = container.closest('.profile__picture-block');
-            pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
-        }
-        const containerId = pictureContainers.indexOf(container) + 1;
+        const pictureBlock = container.closest('.profile__picture-block');
+        pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
+        const containerId = pictureContainers.indexOf(container);
         if (acceptedFileTypes.includes(file.type)) {
             const formData = new FormData();
             formData.append('image', file);
@@ -431,6 +436,7 @@ class FormHandler {
             container.appendChild(loader);
 
             const response = await apiHandler.UploadImage(formData);
+            if (!response) return;
             const photoURL = await response.json();
 
             if (response.ok) {
@@ -441,16 +447,16 @@ class FormHandler {
                 const photo = document.createElement('img');
                 photo.classList.add('profile__picture');
                 photo.src = photoURL;
-                storage.user.UpdatePicture(containerId - 1, photoURL);
+                storage.user.UpdatePicture(containerId, photoURL);
 
                 photo.onload= () => {
                     container.appendChild(photo);
                     loader.remove();
                     actionButton.style.display = 'block';
-                    const nextElement = container.nextElementSibling;
-                    if (nextElement) {
-                        const nextInput = nextElement.querySelector('.form__button');
+                    const nextInput = pictureBlock.querySelector('.form__button--disabled');
+                    if (nextInput) {
                         if (nextInput.classList.contains('form__button--inactive')) {
+                            nextInput.disabled = false;
                             nextInput.classList.toggle('form__button--inactive');
                             nextInput.classList.toggle('form__button--disabled');
                         }
@@ -480,27 +486,29 @@ class FormHandler {
     }
     static async handleFileDelete(event) {
         const fileContainer = event.target.closest('.profile__picture-container');
-        if (!pictureContainers) {
-            const pictureBlock = fileContainer.closest('.profile__picture-block');
-            pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
-        }
-        const containerId = pictureContainers.indexOf(fileContainer) + 1;
+        const pictureBlock = fileContainer.closest('.profile__picture-block');
+        pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
+        const containerId = pictureContainers.indexOf(fileContainer);
         const response = await apiHandler.DeleteImage({'cell': `${containerId}`});
 
-        if (response === 200) {
+        if (!response) return;
+
+        if (response.ok) {
             const actionButton = fileContainer.querySelector('.form__button');
             actionButton.style.display = 'none';
             actionButton.classList.toggle('form__button--create');
             actionButton.classList.toggle('form__button--remove');
+            actionButton.disabled = false;
             actionButton.removeEventListener('click', FormHandler.handleFileDelete);
             actionButton.addEventListener('click', FormHandler.handleFileInput);
-            storage.user.UpdatePicture(containerId - 1, null);
+            storage.user.UpdatePicture(containerId, null);
 
             const pictureBlock = fileContainer.closest('.profile__picture-block');
             const createBtns = pictureBlock.querySelectorAll('.form__button--create');
             const allowedBtn = createBtns[0];
             for (const btn of createBtns) {
                 if (btn !== allowedBtn && !btn.classList.contains('form__button--disabled')) {
+                    btn.disabled = true;
                     btn.classList.toggle('form__button--inactive');
                     btn.classList.toggle('form__button--disabled');
                 }
@@ -520,6 +528,9 @@ class FormHandler {
         const deleteButtons = container.querySelectorAll('.form__button--remove');
         const uploadInputs = container.querySelectorAll('.form__input--file');
         for (const btn of uploadButtons) {
+            if (btn.classList.contains('form__button--disabled')) {
+                btn.disabled = true;
+            }
             btn.addEventListener('click', FormHandler.handleFileInput);
         }
         for (const btn of deleteButtons) {

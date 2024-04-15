@@ -11,12 +11,18 @@ class AppStorageHandler {
         storage.user = null;
     }
     async getInterests() {
-        const interestsRaw = await apiHandler.GetInterests();
-        const interests = JSON.parse(interestsRaw);
-        storage.rawAppInterests = Array.from(interests, (interest) => {return interest['Name'];});
+        let interests= await apiHandler.GetInterests();
+        if (!interests) {
+            storage.appInterests = [];
+
+            return;
+        }
+        interests = await interests.json();
+        // const interests = JSON.parse(interestsRaw);
+        storage.rawAppInterests = Array.from(interests, (interest) => {return interest.name;});
         if (interests) {
             storage.appInterests = Array.from(interests, (interest) => {
-                return componentHandler.generateComponentContext('interest', ['form__button--checkbox'], {buttonText: interest['Name']});
+                return componentHandler.generateComponentContext('interest', ['form__button--checkbox'], {buttonText: interest.name});
             });
         } else {
             storage.appInterests = [];

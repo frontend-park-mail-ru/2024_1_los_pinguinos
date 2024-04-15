@@ -43,7 +43,8 @@ class Matches {
   async controller() {
 
     let persons = await apiHandler.GetMatches();
-    persons = JSON.parse(persons);
+    if (!persons) return;
+    persons = await persons.json();
 
     persons.forEach((match) => {
       this.appendNewMatch(match.person, match.photo);

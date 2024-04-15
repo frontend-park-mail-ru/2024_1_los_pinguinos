@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    entry: './index.js',
+    entry: {'app': './index.js', 'sw': './sw.js'},
         output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
@@ -34,6 +34,8 @@ module.exports = {
             {
                 template: './index.html',
                 filename: 'index.html',
+                favicon: './src/assets/logo.webp',
+                manifest: './manifest.json',
                 inject: true,
                 publicPath: '/',
             },

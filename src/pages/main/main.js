@@ -30,19 +30,19 @@ class Home {
   * Отображает новую карточку на странице
   * @param {Object} cardData - данные карточки
   */
-  async appendNewCard(cardData, interests, photo) {
+  async appendNewCard(cardData) {
     const swiper = document.querySelector('#swiper');
     if (swiper === null) {
       return;
     }
 
     const card = new Card({
-      id: cardData.ID,
-      imageUrl: photo,
+      id: 1,
+      images: cardData.photos,
       name: cardData.name,
       age: getAge(cardData.birthday),
       description: cardData.description,
-      interests: interests,
+      interests: cardData.interests,
       onDismiss: () => {
       },
       onLike: () => {
@@ -97,11 +97,13 @@ class Home {
   async controller() {
 
     let cards = await apiHandler.GetCards();
-    cards = JSON.parse(cards);
+    if (cards) {
+      cards = await cards.json();
 
-    cards.forEach(card => {
-      this.appendNewCard(card.person, card.interests, card.photo);
-    });
+      cards.forEach(card => {
+        this.appendNewCard(card);
+      });
+    }
 
     const acceptButton = document.querySelector('#accept');
     const rejectButton = document.querySelector('#reject');

@@ -16,6 +16,7 @@
   --background--register: url(./background-auth.webp);
   --background--profile: url(./background-main.webp);
   --background--404: url(./background-404.webp);
+  --background--offline: url(./background-404.webp);
   --background--matches: url(./background-main.webp);
 }
 
@@ -34,15 +35,14 @@ html {
 
 html,
 body {
-  width: 100dvw;
-  height: 100dvh;
-  overflow: hidden;
-  font-family: "Poppins", sans-serif;
+  overflow: clip;
+  display: flow-root;
 }
 
 body {
   background-image: var(--background--landing);
   background-size: 100% 100%;
+  transition: background-image 0.2s ease-in-out;
 }
 
 .header__menu {
@@ -54,8 +54,8 @@ body {
 #root {
   display: flex;
   flex-direction: column;
-  width: 100dvw;
   height: 100dvh;
+  width: 100dvw;
 }
 
 ion-icon {
