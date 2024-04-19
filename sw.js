@@ -1,4 +1,4 @@
-const CACHE = 'jimder-cache-v0';
+const CACHE = 'jimder-cache-v1';
 const PRECACHE_URLS = [
     '/offline',
     '/176c4714b229b0ae6633.webp',
@@ -32,7 +32,9 @@ self.addEventListener('fetch', async (event) => {
     event.respondWith(caches.open(CACHE).then((cache) => {
         return cache.match(event.request).then((cachedResponse) => {
             if (cachedResponse) {
-                if (!(event.request.url.includes('/api/v1/isAuth'))) {
+                if (!(event.request.url.includes('/api/v1/isAuth') ||
+                    event.request.url.includes('/api/v1/cards') ||
+                    event.request.url.includes('/api/v1/matches'))) {
                     return cachedResponse;
                 }
             }
