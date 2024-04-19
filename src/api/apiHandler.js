@@ -74,17 +74,21 @@ class APIHandler {
             } else if (response.ok) {
                 if (!(url === this.registrationURL && method === 'GET')){
                     this.authStatus = true;
-                    channel.postMessage({
-                        type: 'AUTHENTICATION',
-                        request: '/isAuth',
-                    });
+                    if (channel) {
+                        channel.postMessage({
+                            type: 'AUTHENTICATION',
+                            request: '/isAuth',
+                        });
+                    }
                 }
                 if (url === this.logoutURL) {
                     this.authStatus = false;
-                    channel.postMessage({
-                        type: 'AUTHENTICATION',
-                        request: '/isAuth',
-                    });
+                    if (channel) {
+                        channel.postMessage({
+                            type: 'AUTHENTICATION',
+                            request: '/isAuth',
+                        });
+                    }
                 }
             }
 
