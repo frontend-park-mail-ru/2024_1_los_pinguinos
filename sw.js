@@ -32,8 +32,9 @@ self.addEventListener('fetch', async (event) => {
     event.respondWith(caches.open(CACHE).then((cache) => {
         return cache.match(event.request).then((cachedResponse) => {
             if (cachedResponse) {
-                if (!(event.request === '/isAuth'))
-                return cachedResponse;
+                if (!(event.request.url.includes('/api/v1/isAuth'))) {
+                    return cachedResponse;
+                }
             }
 
             return fetch(event.request).then((response) => {
