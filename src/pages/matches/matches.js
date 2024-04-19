@@ -68,7 +68,7 @@ class Matches {
     persons = await persons.json();
     // persons = JSON.parse(persons);
     if(persons.length === 0) {
-      const matches = document.querySelector('#matches__content');
+      const matches = document.querySelector('.matches');
       matches.innerHTML = '<div class="matches__empty">Пока нет новых кандидатов</div>';
     }
     persons.forEach((match) => {

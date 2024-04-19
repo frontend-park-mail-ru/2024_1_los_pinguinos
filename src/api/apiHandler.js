@@ -1,11 +1,11 @@
 import router from '../../index.js';
 import { store } from '../../index.js';
 
-const localhost = 'http://192.168.50.169:8080';
-const vm = 'http://185.241.192.216:8080';
+const localhost = 'http://172.20.10.6:8080';
+const vm = 'https://api.jimder.ru';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
-const baseURL = localhost;
+const baseURL = vm;
 const registrationURL = baseURL + apiURL + '/registration';
 const authenticationURL = baseURL + apiURL + '/login';
 const logoutURL = baseURL + apiURL + '/logout';
@@ -239,7 +239,7 @@ class APIHandler {
     }
     /** Dislikes a user
     * @function
-    * @param {Number} id - another user's id
+    * @param {Number} id - another user's xid
     * @returns {Promise<Object>} - returns request response
     */
     async DislikeCard(id) {
