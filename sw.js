@@ -36,7 +36,9 @@ self.addEventListener('fetch', async (event) => {
             }
 
             return fetch(event.request).then((response) => {
-                cache.put(event.request, response.clone());
+                if (event.request.method === 'GET') {
+                    cache.put(event.request, response.clone());
+                }
 
                 return response;
             }).catch((error) => {
@@ -53,6 +55,12 @@ channel.addEventListener('message', (event) => {
         channel.postMessage({cacheRevaluation: true});
         caches.open(CACHE).then((cache) => {
             cache.delete(event.data.filename);
+        });
+    }
+    if (event.data.type === 'AUTHENTICATION') {
+        channel.postMessage({cacheRevaluation: true});
+        caches.open(CACHE).then((cache) => {
+            cache.delete(event.data.request);
         });
     }
 });
