@@ -290,6 +290,7 @@
     display: block;
     place-self: center;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
 .form__button:focus {
@@ -365,7 +366,8 @@
     margin-bottom: 13px;
     padding: 8px 13px;
     text-align: center;
-    transition: var(--form__item--background-color);
+    font-weight: 500;
+    font-size: medium;
 }
 
 .form__button--checkbox:hover {

@@ -1,4 +1,15 @@
 const CACHE = 'jimder-cache-v0';
+const PRECACHE_URLS = [
+    '/offline',
+    '/176c4714b229b0ae6633.webp',
+];
+const channel = new BroadcastChannel('sw-messages');
+
+self.addEventListener('install', function(event){
+    event.waitUntil(caches.open(CACHE).then((cache) => {
+       return cache.addAll(PRECACHE_URLS);
+    }));
+});
 
 self.addEventListener('activate', function(event) {
     event.waitUntil(
@@ -15,28 +26,33 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', async (event) => {
-    if(!event.request.url.startsWith('http')){
+    if(!event.request.url.startsWith('http')){ // our domain here (contains - not starts)
         return;
     }
     event.respondWith(caches.open(CACHE).then((cache) => {
-        return fetch(event.request).then((response) => {
-            if (event.request.method === 'GET') {
-                cache.put(event.request, response.clone()).catch(error => error);
+        return cache.match(event.request).then((cachedResponse) => {
+            if (cachedResponse) {
+                return cachedResponse;
             }
 
-            return response;
-            },
-        ).catch((error) => {
-            error;
+            return fetch(event.request).then((response) => {
+                cache.put(event.request, response.clone());
 
-            return cache.match(event.request).then((res) => {
-                if (res) {
-                    return cache.match(event.request);
-                }
-                else {
-                    return new Response('You are offline', { status: 408, statusText: 'offline' });
-                }
+                return response;
+            }).catch((error) => {
+                channel.postMessage({offline: true});
+
+                return new Response(`${error}`, {status: 408, statusText: 'offline'});
             });
         });
     }));
+});
+
+channel.addEventListener('message', (event) => {
+    if (event.data.type === 'ERROR_OCCURRED') {
+        channel.postMessage({cacheRevaluation: true});
+        caches.open(CACHE).then((cache) => {
+            cache.delete(event.data.filename);
+        });
+    }
 });

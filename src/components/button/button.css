@@ -6,6 +6,8 @@
     --color__success--primary: #7DE85A;
     --color__success--secondary: #1ED760;
     --color__success--outline: #169C46;
+    --color__primary--primary: #9747FF;
+    --color__new--primary: #3C60FF;
     --transition--default: all 0.2s ease-in-out;
 }
 
@@ -37,6 +39,24 @@
 .button--info {
     color: var(--color__dark--primary);
     background-color: var(--color__light--primary);
+}
+
+.button--danger {
+    color: var(--color__light--primary);
+    background-color: var(--color__danger--primary);
+}
+
+.button--primary {
+    color: var(--color__light--primary);
+    background-color: var(--color__primary--primary);
+}
+
+.button--new {
+    color: var(--color__light--primary);
+    background-color: var(--color__new--primary);
+}
+
+.button--link {
     height: 50px !important;
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -71,5 +91,3 @@
         padding: 10px 20px;
     }
 }
-
-

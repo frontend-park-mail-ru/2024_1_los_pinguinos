@@ -64,6 +64,7 @@ class Matches {
     // });
 
     let persons = await apiHandler.GetMatches();
+    if (!(persons && persons.ok)) return;
     persons = await persons.json();
     // persons = JSON.parse(persons);
     if(persons.length === 0) {

@@ -11,12 +11,26 @@ import Matches from './src/pages/matches/matches.js';
 import { createStote } from './src/store/redux-kids.js';
 import { userReducer } from './src/models/user/reduser.js';
 
-const store = createStote(userReducer);
-export {store};
-
 if (typeof navigator.serviceWorker !== 'undefined') {
     window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js');});
+    const channel = new BroadcastChannel('sw-messages');
+    channel.addEventListener('message', (event) => {
+        if (event.data.offline && !navigator.onLine) {
+            router.redirectTo('/offline');
+        }
+    });
+    window.addEventListener('error', (event) => {
+        channel.postMessage({
+            type: 'ERROR_OCCURRED',
+            message: event.message,
+            filename: event.filename,
+            lineno: event.lineno,
+        });
+    });
 }
+
+const store = createStote(userReducer);
+export {store};
 
 const routes = [
     new Route('/', new Landing(), false, '/main'),
@@ -28,6 +42,7 @@ const routes = [
     new Route('/offline', new error404(true)),
     new Route('*', new error404()),
 ];
+
 const router = new Router(routes);
 
 export default router;

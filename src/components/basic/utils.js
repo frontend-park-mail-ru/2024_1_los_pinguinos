@@ -16,11 +16,13 @@ function updateHeader(newState) {
             const name = header.querySelector('.header__paragraph');
             let src = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
             if (pfp) {
-                for (const photo of newState.photos) {
-                    if (photo.url) {
-                        src = photo.url;
-                        break;
-                    }
+                if (newState.photos) {
+                  for (const photo of newState.photos) {
+                      if (photo.url) {
+                          src = photo.url;
+                          break;
+                      }
+                  }
                 }
                 pfp.src = src;
             }
@@ -78,6 +80,7 @@ async function getInterests() {
     interests = rawAppInterests;
   } else {
     interests = await apiHandler.GetInterests();
+    if (!(interests && interests.ok)) return [];
     interests = await interests.json();
     rawAppInterests = interests;
     appInterests = Array.from(interests, (interest) => {return interest.name;});

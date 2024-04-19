@@ -303,11 +303,14 @@ class FormHandler {
                     item.remove();
                 }
                 const updatedChoices = form.querySelectorAll('.form__button--checkbox-selected');
+                const cls = ['button--danger', 'button--primary', 'button--success', 'button--new', 'button--info'];
+                let i = 0;
                 for (const interest of updatedChoices) {
                     const item = interest.cloneNode(true);
                     item.id = 'user' + item.id;
                     item.classList.remove('form__button--checkbox-selected');
                     item.classList.add('form__button--inactive');
+                    item.classList.add(cls[i++ % cls.length]);
                     updatedElement.appendChild(item);
                 }
 
@@ -471,7 +474,7 @@ class FormHandler {
             container.appendChild(loader);
 
             const response = await apiHandler.UploadImage(formData);
-            if (!response) return;
+            if (!(response && response.ok)) return;
             const photoURL = await response.json();
 
             if (response.ok) {

@@ -84,9 +84,10 @@ class userUtility {
      * @function
      */
     DisplayInterests(interests) {
+        const cls = ['button--danger', 'button--primary', 'button--success', 'button--new', 'button--info'];
         if (interests) {
-            const resultingInterests = Array.from(interests, (interest) => {
-                return componentHandler.generateComponentContext('interest', ['form__button--checkbox', 'form__button--inactive'], {
+            const resultingInterests = Array.from(interests, (interest, i) => {
+                return componentHandler.generateComponentContext('interest', ['form__button--checkbox', 'form__button--inactive', cls[i % cls.length]], {
                     buttonText: interest.name,
                 });
             });

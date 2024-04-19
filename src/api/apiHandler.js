@@ -1,7 +1,7 @@
 import router from '../../index.js';
 import { store } from '../../index.js';
 
-const localhost = 'http://172.20.10.6:8080';
+const localhost = 'http://192.168.50.169:8080';
 const vm = 'http://185.241.192.216:8080';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
@@ -69,11 +69,6 @@ class APIHandler {
             if (!response.ok) {
                 if (response.status === 401) {
                     this.authStatus = false;
-                }
-                if (response.status === 408) {
-                    if (!navigator.onLine) {
-                        router.navigateTo('/offline');
-                    }
                 }
             } else if (response.ok) {
                 if (!(url === this.registrationURL && method === 'GET')){

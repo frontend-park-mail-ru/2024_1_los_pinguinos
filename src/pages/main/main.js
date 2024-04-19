@@ -103,10 +103,9 @@ class Home {
     loadHeader(store);
 
     let cards = await apiHandler.GetCards();
+    if (!(cards && cards.ok)) return;
     cards = await cards.json();
-    // cards = JSON.parse(cards);
-
-      cards.forEach(card => {
+    cards.forEach(card => {
       this.appendNewCard(card);
     });
 
