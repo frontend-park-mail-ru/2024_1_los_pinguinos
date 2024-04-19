@@ -32,6 +32,7 @@ self.addEventListener('fetch', async (event) => {
     event.respondWith(caches.open(CACHE).then((cache) => {
         return cache.match(event.request).then((cachedResponse) => {
             if (cachedResponse) {
+                if (!(event.request === '/isAuth'))
                 return cachedResponse;
             }
 
@@ -42,6 +43,9 @@ self.addEventListener('fetch', async (event) => {
 
                 return response;
             }).catch((error) => {
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
                 channel.postMessage({offline: true});
 
                 return new Response(`${error}`, {status: 408, statusText: 'offline'});
@@ -55,12 +59,6 @@ channel.addEventListener('message', (event) => {
         channel.postMessage({cacheRevaluation: true});
         caches.open(CACHE).then((cache) => {
             cache.delete(event.data.filename);
-        });
-    }
-    if (event.data.type === 'AUTHENTICATION') {
-        channel.postMessage({cacheRevaluation: true});
-        caches.open(CACHE).then((cache) => {
-            cache.delete(event.data.request);
         });
     }
 });

@@ -1,6 +1,5 @@
 import router from '../../index.js';
 import { store } from '../../index.js';
-import { channel } from '../../index.js';
 
 const localhost = 'http://172.20.10.6:8080';
 const vm = 'https://api.jimder.ru';
@@ -74,21 +73,9 @@ class APIHandler {
             } else if (response.ok) {
                 if (!(url === this.registrationURL && method === 'GET')){
                     this.authStatus = true;
-                    if (channel) {
-                        channel.postMessage({
-                            type: 'AUTHENTICATION',
-                            request: '/isAuth',
-                        });
-                    }
                 }
                 if (url === this.logoutURL) {
                     this.authStatus = false;
-                    if (channel) {
-                        channel.postMessage({
-                            type: 'AUTHENTICATION',
-                            request: '/isAuth',
-                        });
-                    }
                 }
             }
 
