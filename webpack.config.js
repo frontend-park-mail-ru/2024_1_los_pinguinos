@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    entry: {'app': './index.js', 'sw': './sw.js'},
+    entry: {'app': './index.ts', 'sw': './sw.js'},
         output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
@@ -19,7 +19,21 @@ module.exports = {
                 },
               },
         ] },
-            {test: /\.js$/, exclude: /node_modules/, use: ['babel-loader']},
+        {
+            test: /\.tsx?$/,
+            use: 'ts-loader',
+            exclude: /node_modules/,
+        },
+        {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['@babel/preset-env'],
+                },
+            },
+        },
             {test: /\.hbs$/,
             loader: 'handlebars-loader',
             options: {

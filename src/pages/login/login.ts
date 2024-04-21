@@ -1,13 +1,13 @@
 import loginTemplate from './login.hbs';
-import FormHandler from '../../components/form/formHandler.js';
-import componentHandler from '../../components/basic/ComponentHandler.js';
-
-const formHandler = new FormHandler();
+// import FormHandler from '../../components/form/formHandler.js';
+// import componentHandler from '../../components/basic/ComponentHandler.js';
+import { IPage } from '../../shared/config/interfaces';
+// const formHandler = new FormHandler();
 /**
  * Login page class
  * @class
  */
-class Login {
+class Login implements IPage{
     /**
      * Returns login page template
      * @function
@@ -26,9 +26,9 @@ class Login {
                         footerInfo: 'Нет аккаунта?',
                         footerLink: '/register',
                         footerLinkText: 'Регистрация',
-                        formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
+                        // formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
                         stepButtons: [
-                            componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue, submitAction: 'login'}),
+                            // componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue, submitAction: 'login'}),
                         ],
                         fields: [
                         {
@@ -69,7 +69,7 @@ class Login {
      * @function
      */
     async controller() {
-        formHandler.setupDisplay(document.querySelector('.form'));
+        // formHandler.setupDisplay(document.querySelector('.form'));
     }
 }
 

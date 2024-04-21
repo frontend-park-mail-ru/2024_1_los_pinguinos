@@ -1,10 +1,12 @@
-import apiHandler from '../../api/apiHandler';
-import {handleBackground} from '../basic/utils';
+// import apiHandler from '../../api/apiHandler';
+import store
+import {handleBackground} from '../../components/basic/utils';
 /**
  * Router class
  * @class
  */
 export class Router {
+  // routes: Route[];
   /**
    * Creates instance of class Router.
    * @param {Route[]} routes - list of specified routes
@@ -33,7 +35,8 @@ export class Router {
         e.preventDefault();
         const action = e.target.getAttribute('data-action');
         if (action === 'logout'){
-          apiHandler.Logout();
+          // apiHandler.Logout();
+          
         }
         if (action === 'back') {
           history.back();
@@ -64,22 +67,23 @@ export class Router {
    * @function
    */
   async loadRoute() {
-    if (apiHandler.authStatus === null) {
-      await apiHandler.CheckAuth();
-    }
+    // if (apiHandler.authStatus === null) {
+    //   await apiHandler.CheckAuth();
+    // }
     const route =
       this.routes.find((r) => r.path === location.pathname) ||
       this.routes.find((r) => r.path === '*');
 
-    if (route.protected) {
-      if (!apiHandler.authStatus) {
-        this.redirectTo('/login');
+    if (route && route.protected) {
+      // if (!apiHandler.authStatus) {
+      if (s)  
+      this.redirectTo('/login');
 
         return;
       }
     }
 
-    if (route.redirectOnAuth) {
+    if (route && route.redirectOnAuth) {
       if (apiHandler.authStatus) {
         this.redirectTo(route.redirectOnAuth);
 
@@ -87,10 +91,12 @@ export class Router {
       }
     }
     const rootHTML = document.getElementById('root');
-    handleBackground(route.path);
-    rootHTML.innerHTML = await route.component.render();
-    if (route.component.controller) {
-      await route.component.controller();
+    if (route) {
+      handleBackground(route.path);
+      rootHTML.innerHTML = await route.component.render();
+      if (route.component.controller) {
+        await route.component.controller();
+      }
     }
   }
 }
@@ -99,6 +105,10 @@ export class Router {
  * @class
  */
 export class Route {
+  // path: string;
+  // component: object;
+  // protected: boolean;
+  // redirectOnAuth: string | null;
   /**
    * Creates instance of class Route.
    * @param {string} path - request url

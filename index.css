@@ -2,22 +2,22 @@
 @import url(./src/pages/404/404.css);
 @import url(./src/components/profile/profile.css);
 @import url("/src/pages/main/main.css");
-@import url("/src/components/navbar/navbar.css");
-@import url("/src/components/header/header.css");
-@import url("/src/pages/main/components/card/card.css");
+@import url("/src/widgets/navbar/navbar.css");
+@import url("/src/widgets/header/header.css");
+@import url("/src/entities/person/ui/card/card.css");
 @import url("/src/pages/landing/landing.css");
-@import url("/src/pages/matches/components/card.scss");
+@import url("/src/entities/person/ui/match/card.scss");
 @import url("src/pages/matches/matches.scss");
 
 :root {
-  --background--landing: url(./background-landing.webp);
-  --background--main: url(./background-main.webp);
-  --background--login: url(./background-auth.webp);
-  --background--register: url(./background-auth.webp);
-  --background--profile: url(./background-main.webp);
-  --background--404: url(./background-404.webp);
-  --background--offline: url(./background-404.webp);
-  --background--matches: url(./background-main.webp);
+  --background--landing: url(./src/assets/background/background-landing.webp);
+  --background--main: url(./src/assets/background/background-main.webp);
+  --background--login: url(./src/assets/background/background-auth.webp);
+  --background--register: url(./src/assets/background/background-auth.webp);
+  --background--profile: url(./src/assets/background/background-main.webp);
+  --background--404: url(./src/assets/background/background-404.webp);
+  --background--offline: url(./src/assets/background/background-404.webp);
+  --background--matches: url(./src/assets/background/background-main.webp);
 }
 
 * {

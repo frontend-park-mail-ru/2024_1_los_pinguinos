@@ -4,7 +4,7 @@ import runImg from '../../assets/run.svg';
 import workoutImg from '../../assets/workout.svg';
 import logoImg from '../../assets/logo.svg';
 
-function checkVisible(elm) {
+function checkVisible(elm: HTMLElement) {
     const rect = elm.getBoundingClientRect();
     const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
 
@@ -57,20 +57,22 @@ class Landing {
         return landing(renderContext);
    }
    async controller() {
-        const wrapper = document.querySelector('.landing-wrapper');
-        const element = document.querySelector('.point');
-        const image = document.querySelector('.landing__picture');
-        image.onload = () => {
-            if (!checkVisible(element)) {
-                const scrollNotifier = document.createElement('div');
-                scrollNotifier.classList.add('scroll__notifier');
-                wrapper.addEventListener('scroll', () => {
-                    scrollNotifier.classList.toggle('any--hidden');
-                    setTimeout(() => {scrollNotifier.remove();}, 200);
-                }, {once: true});
-                wrapper.appendChild(scrollNotifier);
-            }
-        };
+        const wrapper = document.querySelector('.landing-wrapper') as HTMLElement; // Cast element to HTMLElement
+        const element = document.querySelector('.point') as HTMLElement; // Cast element to HTMLElement
+        const image = document.querySelector('.landing__picture') as HTMLImageElement; // Cast element to HTMLImageElement
+        if (image) {
+            image.onload = () => {
+                if (!checkVisible(element)) {
+                    const scrollNotifier = document.createElement('div');
+                    scrollNotifier.classList.add('scroll__notifier');
+                    wrapper.addEventListener('scroll', () => {
+                        scrollNotifier.classList.toggle('any--hidden');
+                        setTimeout(() => {scrollNotifier.remove();}, 200);
+                    }, {once: true});
+                    wrapper.appendChild(scrollNotifier);
+                }
+            };
+        }
    }
 }
 
