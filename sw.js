@@ -58,6 +58,7 @@ self.addEventListener('fetch', async (event) => {
 });
 
 channel.addEventListener('message', (event) => {
+    console.log(event.data);
     if (event.data.type === 'ERROR_OCCURRED') {
         channel.postMessage({cacheRevaluation: true});
         caches.open(CACHE).then((cache) => {

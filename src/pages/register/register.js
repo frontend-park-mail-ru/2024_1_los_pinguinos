@@ -2,8 +2,7 @@ import registerTemplate from './register.hbs';
 import FormHandler from '../../components/form/formHandler.js';
 import componentHandler from '../../components/basic/ComponentHandler.js';
 import { getInterests } from '../../components/basic/utils.js';
-
-const formHandler = new FormHandler();
+let formHandler = null;
 /**
  * Registration page class
  * @class
@@ -15,6 +14,7 @@ class Register {
      * @returns {Promise<string>}  - template html string
      */
     async render() {
+        formHandler = new FormHandler();
         const textSubmit = 'Завершить';
         const textContinue = 'Продолжить';
         const totalSteps = 3;

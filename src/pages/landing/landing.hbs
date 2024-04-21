@@ -18,8 +18,8 @@
         <div class="landing__points">
             {{#each points}}
                 <div class="point">
-                    <img class="point__image" src="data:image/svg+xml,{{pointImage}}">
-                    <p class="point__text">{{pointText}}</p>
+                    <img class="point__image" src="data:image/svg+xml,{{icon}}">
+                    <p class="point__text">{{text}}</p>
                 </div>
             {{/each}}
         </div>
@@ -35,13 +35,13 @@
         {{#each reviews}}
             <div class="review">
                 <div class="review__header">
-                    <img class="review__avatar" src="{{reviewAvatar}}"/>
+                    <img class="review__avatar" src="{{avatar}}"/>
                     <p class="review__title">
-                        {{reviewTitle}}
+                        {{title}}
                     </p>
                 </div>
                 <p class="review__text">
-                    {{reviewContent}}
+                    {{content}}
                 </p>
             </div>
         {{/each}}

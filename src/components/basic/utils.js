@@ -85,9 +85,6 @@ async function getInterests() {
     rawAppInterests = interests;
     appInterests = Array.from(interests, (interest) => {return interest.name;});
   }
-  if (!interests) {
-      return [];
-  }
   if (interests) {
       interests = Array.from(interests, (interest) => {
           return componentHandler.generateComponentContext('interest', ['form__button--checkbox'], {buttonText: interest.name});
@@ -95,7 +92,7 @@ async function getInterests() {
   } else {
       return [];
   }
-
+  console.log("INTERESTS OK", rawAppInterests);
   return interests;
 }
 
