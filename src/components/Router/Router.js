@@ -92,7 +92,12 @@ export class Router {
         }
         const rootElement = document.getElementById('root');
         // handleBackground(route.path);
-        Didact.render(route.component, rootElement);
+        const page = (
+            <div className="landing-wrapper">
+                <route.component />
+            </div>
+        );
+        Didact.render(page, rootElement);
         // if (route.component.controller) {
         //     await route.component.controller();
         // }

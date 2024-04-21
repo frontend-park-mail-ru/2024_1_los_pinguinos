@@ -1,11 +1,12 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { useEffect } from '../../reactive/reactive.js';
+import { Didact } from '../../reactive/reactive.js';
 
 export const Landing = () => {
-    useEffect(() => {
-        alert('hello');
-    }, []);
+    const [state, setState] = Didact.useState(0);
+    Didact.useEffect(() => {
+        console.log(state);
+    }, [state]);
 
     return (
         <div className="landing-wrapper">
@@ -42,11 +43,12 @@ export const Landing = () => {
                         <b className="landing__title title--highlight">да</b>
                     </p>
                     <button
+                        onClick={() => setState((c) => c + 1)}
                         className="button button--success button--xl"
                         data-link
                         data-url="/register"
                     >
-                        Регистрация
+                        Регистрация {state}
                     </button>
                 </div>
             </div>

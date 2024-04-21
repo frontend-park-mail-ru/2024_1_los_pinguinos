@@ -83,11 +83,30 @@ function updateDom(dom, prevProps, nextProps) {
 }
 
 function commitRoot() {
-    deletions.forEach(commitWork); // Commit all deletions
-    commitWork(wipRoot.child); // Recursively commit all DOM updates
-    commitEffects(wipRoot); // Commit all effects after the DOM updates
-    currentRoot = wipRoot; // Update current root
-    wipRoot = null; // Clear the work in progress root
+    deletions.forEach(commitWork);
+    commitWork(wipRoot.child);
+    currentRoot = wipRoot;
+    wipRoot = null;
+}
+
+function cancelEffects(fiber) {
+    if (fiber.hooks) {
+        fiber.hooks
+            .filter((hook) => hook.tag === 'effect' && hook.cancel)
+            .forEach((effectHook) => {
+                effectHook.cancel();
+            });
+    }
+}
+
+function runEffects(fiber) {
+    if (fiber.hooks) {
+        fiber.hooks
+            .filter((hook) => hook.tag === 'effect' && hook.effect)
+            .forEach((effectHook) => {
+                effectHook.cancel = effectHook.effect();
+            });
+    }
 }
 
 function commitWork(fiber) {
@@ -101,11 +120,19 @@ function commitWork(fiber) {
     }
     const domParent = domParentFiber.dom;
 
-    if (fiber.effectTag === 'PLACEMENT' && fiber.dom != null) {
-        domParent.appendChild(fiber.dom);
-    } else if (fiber.effectTag === 'UPDATE' && fiber.dom != null) {
-        updateDom(fiber.dom, fiber.alternate.props, fiber.props);
+    if (fiber.effectTag === 'PLACEMENT') {
+        if (fiber.dom != null) {
+            domParent.appendChild(fiber.dom);
+        }
+        runEffects(fiber);
+    } else if (fiber.effectTag === 'UPDATE') {
+        cancelEffects(fiber);
+        if (fiber.dom != null) {
+            updateDom(fiber.dom, fiber.alternate.props, fiber.props);
+        }
+        runEffects(fiber);
     } else if (fiber.effectTag === 'DELETION') {
+        cancelEffects(fiber);
         commitDeletion(fiber, domParent);
     }
 
@@ -118,13 +145,6 @@ function commitDeletion(fiber, domParent) {
         domParent.removeChild(fiber.dom);
     } else {
         commitDeletion(fiber.child, domParent);
-    }
-    if (fiber.hooks) {
-        fiber.hooks
-            .filter((hook) => hook.tag === 'effect' && hook.cleanup)
-            .forEach((hook) => {
-                hook.cleanup(); // Cleanup on deletion
-            });
     }
 }
 
@@ -219,8 +239,32 @@ function useState(initial) {
 
     wipFiber.hooks.push(hook);
     hookIndex++;
-
     return [hook.state, setState];
+}
+
+const hasDepsChanged = (prevDeps, nextDeps) =>
+    !prevDeps ||
+    !nextDeps ||
+    prevDeps.length !== nextDeps.length ||
+    prevDeps.some((dep, index) => dep !== nextDeps[index]);
+
+function useEffect(effect, deps) {
+    const oldHook =
+        wipFiber.alternate &&
+        wipFiber.alternate.hooks &&
+        wipFiber.alternate.hooks[hookIndex];
+
+    const hasChanged = hasDepsChanged(oldHook ? oldHook.deps : undefined, deps);
+
+    const hook = {
+        tag: 'effect',
+        effect: hasChanged ? effect : null,
+        cancel: hasChanged && oldHook && oldHook.cancel,
+        deps,
+    };
+
+    wipFiber.hooks.push(hook);
+    hookIndex++;
 }
 
 function updateHostComponent(fiber) {
@@ -285,70 +329,8 @@ export const Didact = {
     createElement,
     render,
     useState,
+    useEffect,
 };
-
-export function useEffect(effect, deps) {
-    const oldHook =
-        wipFiber.alternate &&
-        wipFiber.alternate.hooks &&
-        wipFiber.alternate.hooks[hookIndex];
-    const hook = {
-        tag: 'effect',
-        effect,
-        deps,
-        cleanup: oldHook ? oldHook.cleanup : undefined,
-    };
-
-    if (oldHook) {
-        const depsChanged =
-            !deps ||
-            !oldHook.deps ||
-            deps.some((dep, i) => dep !== oldHook.deps[i]);
-        if (!depsChanged && oldHook.cleanup) {
-            hook.effect = null; // Prevent running the effect if dependencies haven't changed
-        }
-    }
-
-    wipFiber.hooks = wipFiber.hooks || [];
-    wipFiber.hooks.push(hook);
-    hookIndex++;
-}
-
-// function commitEffects(fiber) {
-//     if (!fiber) {
-//         return;
-//     }
-//     const effectHooks = fiber.hooks.filter((hook) => hook.tag === 'effect');
-//     effectHooks.forEach((effectHook) => {
-//         if (effectHook.cleanup) {
-//             effectHook.cleanup(); // Call the cleanup function if it exists
-//         }
-//         if (effectHook.effect) {
-//             effectHook.cleanup = effectHook.effect(); // Execute the effect and store the cleanup function
-//         }
-//     });
-
-//     commitEffects(fiber.child);
-//     commitEffects(fiber.sibling);
-// }
-
-function commitEffects(fiber) {
-    if (!fiber) return;
-
-    if (fiber.hooks) {
-        fiber.hooks.forEach((hook) => {
-            if (hook.tag === 'effect' && hook.effect) {
-                if (hook.cleanup) {
-                    hook.cleanup(); // Call the cleanup function from the previous effect
-                }
-                hook.cleanup = hook.effect(); // Execute the effect and store the cleanup function
-            }
-        });
-    }
-
-    commitEffects(fiber.child);
-    commitEffects(fiber.sibling);
-}
 
 // export function clsx() {
 //     let i = 0,

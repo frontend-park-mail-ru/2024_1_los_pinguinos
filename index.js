@@ -35,7 +35,7 @@ const store = createStote(userReducer);
 export { store };
 
 const routes = [
-    new Route('/', new Landing(), false, '/main'),
+    new Route('/', Landing, false, '/main'),
     // new Route('/login', new Login(), false, '/main'),
     // new Route('/register', new Register(), false, '/main'),
     // new Route('/main', new Home(), true),
