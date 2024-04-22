@@ -50,7 +50,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx'], // Разрешаем импорт файлов без указания расширения
         alias: {
-            reactive: path.resolve('./src/reactive/reactive.js'),
+            reactor: path.resolve('./src/reactor/index.js'),
         },
     },
     plugins: [
@@ -63,7 +63,7 @@ module.exports = {
             publicPath: '/',
         }),
         new webpack.ProvidePlugin({
-            createElement: ['reactive', 'createElement'],
+            createElement: ['reactor', 'createElement'],
         }),
     ],
     devServer: {

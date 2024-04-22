@@ -1,11 +1,11 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { Didact } from '../../reactive/reactive.js';
+import { Reactor } from '../../reactor/index.js';
 
 export const Landing = () => {
-    const [state, setState] = Didact.useState(0);
-    Didact.useEffect(() => {
-        console.log(state);
+    const [state, setState] = Reactor.useState(0);
+    Reactor.useEffect(() => {
+        console.log('REACTOR', state);
     }, [state]);
 
     return (
@@ -56,7 +56,11 @@ export const Landing = () => {
                 <div className="landing__points">
                     {points.map((point, idx) => (
                         <div key={idx} className="point">
-                            <img className="point__image" src={point.icon} />
+                            <img
+                                alt="pointImg"
+                                className="point__image"
+                                src={point.icon}
+                            />
                             <p className="point__text">{point.text}</p>
                         </div>
                     ))}
@@ -88,6 +92,7 @@ export const Landing = () => {
                     <div key={idx} className="review">
                         <div className="review__header">
                             <img
+                                alt="reviewAvatar"
                                 className="review__avatar"
                                 src={review.avatar}
                             />

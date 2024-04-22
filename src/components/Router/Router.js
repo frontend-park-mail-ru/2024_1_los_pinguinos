@@ -1,5 +1,5 @@
 import apiHandler from '../../api/apiHandler';
-import { Didact } from '../../reactive/reactive';
+import { Reactor } from '../../reactor/index';
 /**
  * Router class
  * @class
@@ -92,12 +92,12 @@ export class Router {
         }
         const rootElement = document.getElementById('root');
         // handleBackground(route.path);
-        const page = (
-            <div className="landing-wrapper">
-                <route.component />
-            </div>
-        );
-        Didact.render(page, rootElement);
+        // const page = (
+        //     <div className="landing-wrapper">
+        //         <route.component />
+        //     </div>
+        // );
+        Reactor.render(<route.component />, rootElement);
         // if (route.component.controller) {
         //     await route.component.controller();
         // }
