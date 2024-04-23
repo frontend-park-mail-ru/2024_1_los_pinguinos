@@ -43,6 +43,9 @@ module.exports = {
             {test: /\.html$/, use: ['html-loader']},
         ],
     },
+    resolve: {
+        extensions: ['.jsx', '.ts', '.js'],
+    },
     plugins: [
         new HtmlWebpackPlugin(
             {
