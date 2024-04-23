@@ -10,14 +10,14 @@
 @import url("src/pages/matches/matches.scss");
 
 :root {
-  --background--landing: url(./background-landing.webp);
-  --background--main: url(./background-main.webp);
-  --background--login: url(./background-auth.webp);
-  --background--register: url(./background-auth.webp);
-  --background--profile: url(./background-main.webp);
-  --background--404: url(./background-404.webp);
-  --background--offline: url(./background-404.webp);
-  --background--matches: url(./background-main.webp);
+  --background--landing: url(./src/assets/background/background-landing.webp);
+  --background--main: url(./src/assets/background/background-main.webp);
+  --background--login: url(./src/assets/background/background-auth.webp);
+  --background--register: url(./src/assets/background/background-auth.webp);
+  --background--profile: url(./src/assets/background/background-main.webp);
+  --background--404: url(./src/assets/background/background-404.webp);
+  --background--offline: url(./src/assets/background/background-404.webp);
+  --background--matches: url(./src/assets/background/background-main.webp);
 }
 
 * {

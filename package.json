@@ -2,7 +2,7 @@
   "name": "sport_bro",
   "version": "1.0.0",
   "description": "maybe?",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "test",
     "start": "npm run build && node server/server.mjs",
@@ -33,7 +33,8 @@
     "handlebars-loader": "^1.7.3",
     "mini-css-extract-plugin": "^2.8.0",
     "postcss-import": "^15.1.0",
-    "postcss-preset-env": "^9.4.0"
+    "postcss-preset-env": "^9.4.0",
+    "ts-loader": "^9.5.1"
   },
   "devDependencies": {
     "babel-loader": "^9.1.3",

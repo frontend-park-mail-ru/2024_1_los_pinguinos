@@ -1,14 +1,14 @@
-import { Router } from './src/components/Router/Router.js';
-import { Route } from './src/components/Router/Router.js';
+import { Router } from './src/app/router/router.js';
+import { Route } from './src/app/router/router.js';
 // import Home from './src/pages/main/main.js';
 // import Login from './src/pages/login/login.js';
 // import Register from './src/pages/register/register.js';
-import { Landing } from './src/pages/landing/landing';
+import { Landing } from './src/pages/landing/landing.jsx';
 // import error404 from './src/pages/404/404.js';
 // import Profile from './src/pages/profile/profile.js';
 import './index.css';
 // import Matches from './src/pages/matches/matches.js';
-import { createStote } from './src/store/redux-kids.js';
+import { createStore } from './src/app/store/redux-kids.ts';
 import { userReducer } from './src/models/user/reduser.js';
 
 // let channel = null;
@@ -31,7 +31,7 @@ import { userReducer } from './src/models/user/reduser.js';
 // }
 // export {channel};
 
-const store = createStote(userReducer);
+const store = createStore(userReducer);
 export { store };
 
 const routes = [
