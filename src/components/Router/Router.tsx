@@ -1,5 +1,5 @@
 import apiHandler from '../../api/apiHandler';
-import { Reactor } from '../../reactor/index';
+import { render } from '../../reactor/index';
 /**
  * Router class
  * @class
@@ -24,25 +24,25 @@ export class Router {
             if (e.target.matches('[data-link]')) {
                 e.preventDefault();
                 this.navigateTo(
-                    e.target.getAttribute('data-url') || e.target.href,
+                    e.target.href || e.target.getAttribute('data-link'),
                 );
             }
-            if (e.target.matches('[data-link-persistent]')) {
-                e.preventDefault();
-                this.redirectTo(
-                    e.target.getAttribute('data-url') || e.target.href,
-                );
-            }
-            if (e.target.matches('[data-action]')) {
-                e.preventDefault();
-                const action = e.target.getAttribute('data-action');
-                if (action === 'logout') {
-                    apiHandler.Logout();
-                }
-                if (action === 'back') {
-                    history.back();
-                }
-            }
+            // if (e.target.matches('[data-link-persistent]')) {
+            //     e.preventDefault();
+            //     this.redirectTo(
+            //         e.target.getAttribute('data-url') || e.target.href,
+            //     );
+            // }
+            // if (e.target.matches('[data-action]')) {
+            //     e.preventDefault();
+            //     const action = e.target.getAttribute('data-action');
+            //     if (action === 'logout') {
+            //         apiHandler.Logout();
+            //     }
+            //     if (action === 'back') {
+            //         history.back();
+            //     }
+            // }
         });
     }
     /**
@@ -76,31 +76,24 @@ export class Router {
             this.routes.find((r) => r.path === '*');
 
         if (route.protected) {
-            if (!apiHandler.authStatus) {
-                this.redirectTo('/login');
+            // if (!apiHandler.authStatus) {
+            //     this.redirectTo('/login');
 
-                return;
-            }
+            //     return;
+            // }
+            console.log('protected');
         }
 
         if (route.redirectOnAuth) {
-            if (apiHandler.authStatus) {
-                this.redirectTo(route.redirectOnAuth);
+            // if (apiHandler.authStatus) {
+            //     this.redirectTo(route.redirectOnAuth);
 
-                return;
-            }
+            //     return;
+            // }
+            console.log('redirect');
         }
         const rootElement = document.getElementById('root');
-        // handleBackground(route.path);
-        // const page = (
-        //     <div className="landing-wrapper">
-        //         <route.component />
-        //     </div>
-        // );
-        Reactor.render(<route.component />, rootElement);
-        // if (route.component.controller) {
-        //     await route.component.controller();
-        // }
+        render(<route.component />, rootElement);
     }
 }
 /**

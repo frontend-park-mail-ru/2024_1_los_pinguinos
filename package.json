@@ -1,8 +1,8 @@
 {
-  "name": "sport_bro",
+  "name": "jimder",
   "version": "1.0.0",
   "description": "maybe?",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "test",
     "start": "npm run build && node server/server.mjs",
@@ -36,6 +36,8 @@
     "postcss-preset-env": "^9.4.0"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.24.1",
+    "@babel/preset-typescript": "^7.24.1",
     "babel-loader": "^9.1.3",
     "css-loader": "^6.10.0",
     "eslint-plugin-react": "^7.34.1",

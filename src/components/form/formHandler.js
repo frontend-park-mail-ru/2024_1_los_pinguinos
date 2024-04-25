@@ -1,5 +1,5 @@
 import apiHandler from '../../api/apiHandler.js';
-import router, { store } from '../../../index.js';
+import router, { store } from '../../../index.ts';
 import { appInterests } from '../basic/utils.js';
 
 let pictureContainers = null;
@@ -19,20 +19,21 @@ class FormHandler {
         this.gender = null;
         this.multipleChoice = new Array();
         this.errorMessages = {
-            'password': 'Некорректный пароль',
-            'email': 'Некорректный email',
-            'text': 'Некорректное имя',
-            'date': 'Некорректная дата',
+            password: 'Некорректный пароль',
+            email: 'Некорректный email',
+            text: 'Некорректное имя',
+            date: 'Некорректная дата',
         };
         this.helpMessages = {
-            'password': 'Пароль должен быть длиной от 8 до 32 символов. Без emoji. Разрешены стандартные спецсимволы',
-            'email': 'Формат email - example@mailservice.domain, длина до 320 символов',
-            'text': 'Имя не должно содержать специальных символов (и пробелов), длина 2-32 символа',
-            'date': 'Дата в формате вашей системы, c 1970 по 2008',
-            'login401': 'Неверный логин или пароль',
-            'registration409': 'Такой email уже зарегистрирован',
-            'multipleChoice': 'Выберите хотя бы один интерес',
-            'genderChoice': 'Выберите пол',
+            password:
+                'Пароль должен быть длиной от 8 до 32 символов. Без emoji. Разрешены стандартные спецсимволы',
+            email: 'Формат email - example@mailservice.domain, длина до 320 символов',
+            text: 'Имя не должно содержать специальных символов (и пробелов), длина 2-32 символа',
+            date: 'Дата в формате вашей системы, c 1970 по 2008',
+            login401: 'Неверный логин или пароль',
+            registration409: 'Такой email уже зарегистрирован',
+            multipleChoice: 'Выберите хотя бы один интерес',
+            genderChoice: 'Выберите пол',
         };
     }
     /**
@@ -51,11 +52,11 @@ class FormHandler {
         };
         const regexExpression = expressions[type];
         const regexEmoji = expressions['emoji'];
-        if (type === 'text'){
+        if (type === 'text') {
             return regexExpression.test(input);
         }
         if (type === 'date') {
-            const timeStamp = Date.parse(input)/1000;
+            const timeStamp = Date.parse(input) / 1000;
 
             return 0 <= timeStamp && timeStamp < 1230757200;
         }
@@ -68,7 +69,7 @@ class FormHandler {
      */
     formForward(form) {
         const currentFormStep = form.querySelector(`#step${this.currentStep}`);
-        const nextFormStep = form.querySelector(`#step${(this.currentStep + 1)}`);
+        const nextFormStep = form.querySelector(`#step${this.currentStep + 1}`);
         if (nextFormStep) {
             this.currentStep++;
             currentFormStep.classList.toggle('any--hidden');
@@ -87,7 +88,7 @@ class FormHandler {
      */
     formBackward(form) {
         const currentFormStep = form.querySelector(`#step${this.currentStep}`);
-        const prevFormStep = form.querySelector(`#step${(this.currentStep - 1)}`);
+        const prevFormStep = form.querySelector(`#step${this.currentStep - 1}`);
         if (prevFormStep) {
             const formErrF = form.querySelector('.form__error');
             const formInputs = currentFormStep.querySelectorAll('.form__input');
@@ -95,7 +96,13 @@ class FormHandler {
                 if (formErrF) {
                     this.removeErrorMsg(formErrF, input.id + 'Msg', 200);
                 }
-                this.removeErrorMsg(input.closest('.form__field').querySelector('.field__error'), input.id + 'Err', 200);
+                this.removeErrorMsg(
+                    input
+                        .closest('.form__field')
+                        .querySelector('.field__error'),
+                    input.id + 'Err',
+                    200,
+                );
             }
             if (formErrF) {
                 this.removeErrorMsg(formErrF, 'genderMsg', 200);
@@ -133,7 +140,7 @@ class FormHandler {
         newErrP.innerHTML = errMsgs[errType];
         newErrP.id = errId;
         container.appendChild(newErrP);
-        if (container.classList.contains('any--hidden')){
+        if (container.classList.contains('any--hidden')) {
             container.classList.toggle('any--hidden');
         }
 
@@ -154,7 +161,10 @@ class FormHandler {
                 errP.classList.toggle('any--hidden');
                 setTimeout(() => {
                     const newErrPs = container.querySelectorAll('p');
-                    if (!container.classList.contains('any--hidden') && newErrPs.length === 1) {
+                    if (
+                        !container.classList.contains('any--hidden') &&
+                        newErrPs.length === 1
+                    ) {
                         container.classList.toggle('any--hidden');
                     }
                     errP.remove();
@@ -175,7 +185,9 @@ class FormHandler {
     inputErrorHandler(formInput) {
         const form = formInput.closest('.form');
 
-        const passwordDisplayBtns = form.querySelectorAll('.form__button--icon');
+        const passwordDisplayBtns = form.querySelectorAll(
+            '.form__button--icon',
+        );
         for (const passwordDisplayBtn of passwordDisplayBtns) {
             const passwordField = passwordDisplayBtn.closest('.form__field');
             const passwordInput = passwordField.querySelector('.form__input');
@@ -184,14 +196,21 @@ class FormHandler {
                 passwordDisplayBtn.style.background = 'var(--pswd--hidden)';
             }
         }
-        const errF = formInput.closest('.form__field').querySelector('.field__error');
+        const errF = formInput
+            .closest('.form__field')
+            .querySelector('.field__error');
         const formErrF = form.querySelector('.form__error');
         const errId = formInput.id + 'Err';
         const msgId = formInput.id + 'Msg';
         if (!this.validateInput(formInput.type, formInput.value)) {
-            this.addErrorMsg(errF, errId,formInput.type, this.errorMessages);
+            this.addErrorMsg(errF, errId, formInput.type, this.errorMessages);
             if (formErrF) {
-                this.addErrorMsg(formErrF, msgId, formInput.type, this.helpMessages);
+                this.addErrorMsg(
+                    formErrF,
+                    msgId,
+                    formInput.type,
+                    this.helpMessages,
+                );
             }
 
             return true;
@@ -256,7 +275,7 @@ class FormHandler {
             this.closeDialog(dialog);
         }
         setTimeout(() => {
-            if (!result || result && result.status !== 200) {
+            if (!result || (result && result.status !== 200)) {
                 updatedBlock.style.background = 'var(--action-bgr--failure)';
             } else {
                 updatedBlock.style.background = 'var(--action-bgr--success)';
@@ -275,17 +294,21 @@ class FormHandler {
      */
     updateData(form, formData, result) {
         if (result === 200) {
-            const updatedContainer = form.closest('.profile__settings--row') || form.closest('.profile__content-block');
+            const updatedContainer =
+                form.closest('.profile__settings--row') ||
+                form.closest('.profile__content-block');
             if (!updatedContainer) {
                 return;
             }
 
             let updatedElement;
             if (updatedContainer.classList.contains('profile__content-block')) {
-                updatedElement = (updatedContainer.querySelector('.profile__text') ||
-                updatedContainer.querySelector('.profile__item-container'));
+                updatedElement =
+                    updatedContainer.querySelector('.profile__text') ||
+                    updatedContainer.querySelector('.profile__item-container');
             } else {
-                updatedElement = updatedContainer.querySelectorAll('.profile__text')[1];
+                updatedElement =
+                    updatedContainer.querySelectorAll('.profile__text')[1];
             }
 
             if (!updatedElement) {
@@ -298,12 +321,22 @@ class FormHandler {
             }
 
             if (updatedElement.classList.contains('profile__item-container')) {
-                const items = updatedElement.querySelectorAll('.form__button--inactive');
+                const items = updatedElement.querySelectorAll(
+                    '.form__button--inactive',
+                );
                 for (const item of items) {
                     item.remove();
                 }
-                const updatedChoices = form.querySelectorAll('.form__button--checkbox-selected');
-                const cls = ['button--danger', 'button--primary', 'button--success', 'button--new', 'button--info'];
+                const updatedChoices = form.querySelectorAll(
+                    '.form__button--checkbox-selected',
+                );
+                const cls = [
+                    'button--danger',
+                    'button--primary',
+                    'button--success',
+                    'button--new',
+                    'button--info',
+                ];
                 let i = 0;
                 for (const interest of updatedChoices) {
                     const item = interest.cloneNode(true);
@@ -317,15 +350,20 @@ class FormHandler {
                 return;
             }
 
-            let content = formData['description'] || formData['name'] || formData['email'];
+            let content =
+                formData['description'] ||
+                formData['name'] ||
+                formData['email'];
             if (content) {
                 const formInput = form.querySelector('.form__input');
                 if (formInput) {
                     if (formInput.id !== 'email') {
                         formInput.placeholder = content;
-                    }
-                    else {
-                        content = content.replace(/(\w{3})[\w.-]+@([\w.]+\w)/, '$1***@$2');
+                    } else {
+                        content = content.replace(
+                            /(\w{3})[\w.-]+@([\w.]+\w)/,
+                            '$1***@$2',
+                        );
                     }
                 }
                 updatedElement.textContent = content;
@@ -346,7 +384,9 @@ class FormHandler {
      * @param {HTMLElement} form - the form itself
      */
     formSubmit(form, submitAction) {
-        const formInputs = form.querySelectorAll('.form__input, .form__textarea');
+        const formInputs = form.querySelectorAll(
+            '.form__input, .form__textarea',
+        );
         const formErrF = form.querySelector('.form__error');
         const formData = {};
         if (formErrF) {
@@ -365,29 +405,37 @@ class FormHandler {
         if (submitAction === 'register') {
             apiHandler.Register(formData).then((res) => {
                 if (res && res.status !== 200) {
-                    this.addErrorMsg(formErrF, 'registrationMsg', `registration${res.status}`, this.helpMessages);
+                    this.addErrorMsg(
+                        formErrF,
+                        'registrationMsg',
+                        `registration${res.status}`,
+                        this.helpMessages,
+                    );
                 } else {
                     router.redirectTo('/main');
                 }
             });
-        }
-        else if (submitAction === 'login') {
+        } else if (submitAction === 'login') {
             apiHandler.Login(formData).then((res) => {
                 if (res && res.status !== 200) {
-                    this.addErrorMsg(formErrF, 'loginMsg', `login${res.status}`, this.helpMessages);
+                    this.addErrorMsg(
+                        formErrF,
+                        'loginMsg',
+                        `login${res.status}`,
+                        this.helpMessages,
+                    );
                 } else {
                     router.redirectTo('/main');
                 }
             });
-        }
-        else if (submitAction === 'updateProfile') {
+        } else if (submitAction === 'updateProfile') {
             apiHandler.UpdateProfile(formData).then((res) => {
                 this.handleDialog(form, res);
                 if ('interests' in formData) {
                     const tempInterests = new Array();
                     for (const interest of appInterests) {
                         if (formData.interests.includes(interest))
-                        tempInterests.push({'name': interest});
+                            tempInterests.push({ name: interest });
                     }
                     formData.interests = tempInterests;
                 }
@@ -395,8 +443,7 @@ class FormHandler {
                 store.dispatch({ type: 'UPDATE_SOMETHING', payload: formData });
                 store.getState();
             });
-        }
-        else if (submitAction === 'deleteProfile') {
+        } else if (submitAction === 'deleteProfile') {
             apiHandler.DeleteProfile().then((res) => {
                 if (res && res.status === 200) {
                     apiHandler.Logout();
@@ -410,23 +457,28 @@ class FormHandler {
      * @param {HTMLElement} formInput - the input itself
      * @param {KeyboardEvent} event - key press event
      */
-    inputEnterHandler (formInput, event) {
+    inputEnterHandler(formInput, event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            const nextFormInputAncestor = (formInput.closest('.form__field').nextElementSibling ||
-            formInput.closest('.form__input-container').nextElementSibling);
-            const nextFormInput = nextFormInputAncestor.querySelector('.form__input');
+            const nextFormInputAncestor =
+                formInput.closest('.form__field').nextElementSibling ||
+                formInput.closest('.form__input-container').nextElementSibling;
+            const nextFormInput =
+                nextFormInputAncestor.querySelector('.form__input');
             if (!nextFormInput) {
-                const continueButton = formInput.closest('.form__block').querySelector('.form__button--continue');
-                const nextBlock = formInput.closest('.form__block').nextElementSibling;
+                const continueButton = formInput
+                    .closest('.form__block')
+                    .querySelector('.form__button--continue');
+                const nextBlock =
+                    formInput.closest('.form__block').nextElementSibling;
                 continueButton.click();
 
                 if (nextBlock) {
-                    const nextBlockFirstInput = nextBlock.querySelectorAll('.form__input')[0];
+                    const nextBlockFirstInput =
+                        nextBlock.querySelectorAll('.form__input')[0];
                     if (nextBlockFirstInput) {
                         setTimeout(() => {
-                            if (`step${this.currentStep}` === nextBlock.id)
-                            {
+                            if (`step${this.currentStep}` === nextBlock.id) {
                                 nextBlockFirstInput.focus();
                             }
                         }, 200);
@@ -459,7 +511,9 @@ class FormHandler {
      */
     static async handleFileUpload(file, container) {
         const pictureBlock = container.closest('.profile__picture-block');
-        pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
+        pictureContainers = Array.from(
+            pictureBlock.querySelectorAll('.profile__picture-container'),
+        );
         const containerId = pictureContainers.indexOf(container);
         if (acceptedFileTypes.includes(file.type)) {
             const formData = new FormData();
@@ -480,26 +534,45 @@ class FormHandler {
             if (response.ok) {
                 actionButton.classList.toggle('form__button--create');
                 actionButton.classList.toggle('form__button--remove');
-                actionButton.removeEventListener('click', FormHandler.handleFileInput);
-                actionButton.addEventListener('click', FormHandler.handleFileDelete);
+                actionButton.removeEventListener(
+                    'click',
+                    FormHandler.handleFileInput,
+                );
+                actionButton.addEventListener(
+                    'click',
+                    FormHandler.handleFileDelete,
+                );
                 const photo = document.createElement('img');
                 photo.classList.add('profile__picture');
                 photo.src = photoURL;
                 const newPhotos = store.getState().photos;
                 newPhotos[containerId]['url'] = photoURL;
-                store.dispatch({type: 'UPDATE_SOMETHING', payload: newPhotos});
+                store.dispatch({
+                    type: 'UPDATE_SOMETHING',
+                    payload: newPhotos,
+                });
                 // storage.user.UpdatePicture(containerId, photoURL);
 
-                photo.onload= () => {
+                photo.onload = () => {
                     container.appendChild(photo);
                     loader.remove();
                     actionButton.style.display = 'block';
-                    const nextInput = pictureBlock.querySelector('.form__button--disabled');
+                    const nextInput = pictureBlock.querySelector(
+                        '.form__button--disabled',
+                    );
                     if (nextInput) {
-                        if (nextInput.classList.contains('form__button--inactive')) {
+                        if (
+                            nextInput.classList.contains(
+                                'form__button--inactive',
+                            )
+                        ) {
                             nextInput.disabled = false;
-                            nextInput.classList.toggle('form__button--inactive');
-                            nextInput.classList.toggle('form__button--disabled');
+                            nextInput.classList.toggle(
+                                'form__button--inactive',
+                            );
+                            nextInput.classList.toggle(
+                                'form__button--disabled',
+                            );
                         }
                     }
                 };
@@ -517,7 +590,9 @@ class FormHandler {
      */
     static handleFileInput(event) {
         document.activeElement.blur();
-        const fileContainer = event.target.closest('.profile__picture-container');
+        const fileContainer = event.target.closest(
+            '.profile__picture-container',
+        );
         const uploadInput = fileContainer.querySelector('.form__input--file');
         uploadInput.click();
     }
@@ -533,7 +608,10 @@ class FormHandler {
         }
         const file = uploadInput.files[0];
         uploadInput.value = null;
-        FormHandler.handleFileUpload(file, uploadInput.closest('.profile__picture-container'));
+        FormHandler.handleFileUpload(
+            file,
+            uploadInput.closest('.profile__picture-container'),
+        );
     }
     /**
      * Handles file deletion in profile
@@ -541,11 +619,17 @@ class FormHandler {
      * @param {Object} event - file input event
      */
     static async handleFileDelete(event) {
-        const fileContainer = event.target.closest('.profile__picture-container');
+        const fileContainer = event.target.closest(
+            '.profile__picture-container',
+        );
         const pictureBlock = fileContainer.closest('.profile__picture-block');
-        pictureContainers = Array.from(pictureBlock.querySelectorAll('.profile__picture-container'));
+        pictureContainers = Array.from(
+            pictureBlock.querySelectorAll('.profile__picture-container'),
+        );
         const containerId = pictureContainers.indexOf(fileContainer);
-        const response = await apiHandler.DeleteImage({'cell': `${containerId}`});
+        const response = await apiHandler.DeleteImage({
+            cell: `${containerId}`,
+        });
 
         if (!response) return;
 
@@ -555,18 +639,28 @@ class FormHandler {
             actionButton.classList.toggle('form__button--create');
             actionButton.classList.toggle('form__button--remove');
             actionButton.disabled = false;
-            actionButton.removeEventListener('click', FormHandler.handleFileDelete);
+            actionButton.removeEventListener(
+                'click',
+                FormHandler.handleFileDelete,
+            );
             actionButton.addEventListener('click', FormHandler.handleFileInput);
             const newPhotos = store.getState().photos;
             newPhotos[containerId]['url'] = null;
-            store.dispatch({type: 'UPDATE_SOMETHING', payload: newPhotos});
+            store.dispatch({ type: 'UPDATE_SOMETHING', payload: newPhotos });
             // storage.user.UpdatePicture(containerId, null);
 
-            const pictureBlock = fileContainer.closest('.profile__picture-block');
-            const createBtns = pictureBlock.querySelectorAll('.form__button--create');
+            const pictureBlock = fileContainer.closest(
+                '.profile__picture-block',
+            );
+            const createBtns = pictureBlock.querySelectorAll(
+                '.form__button--create',
+            );
             const allowedBtn = createBtns[0];
             for (const btn of createBtns) {
-                if (btn !== allowedBtn && !btn.classList.contains('form__button--disabled')) {
+                if (
+                    btn !== allowedBtn &&
+                    !btn.classList.contains('form__button--disabled')
+                ) {
                     btn.disabled = true;
                     btn.classList.toggle('form__button--inactive');
                     btn.classList.toggle('form__button--disabled');
@@ -580,16 +674,19 @@ class FormHandler {
 
             return;
         }
-
     }
-     /**
+    /**
      * Sets up event listeners for file inputs in profile
      * @function
      * @param {Object} event - file input event
      */
     setupFileUploads(container) {
-        const uploadButtons = container.querySelectorAll('.form__button--create');
-        const deleteButtons = container.querySelectorAll('.form__button--remove');
+        const uploadButtons = container.querySelectorAll(
+            '.form__button--create',
+        );
+        const deleteButtons = container.querySelectorAll(
+            '.form__button--remove',
+        );
         const uploadInputs = container.querySelectorAll('.form__input--file');
         for (const btn of uploadButtons) {
             if (btn.classList.contains('form__button--disabled')) {
@@ -612,7 +709,7 @@ class FormHandler {
         const checkboxes = form.querySelectorAll('.form__button--checkbox');
         const roundCheckboxes = form.querySelectorAll('.form__button--round');
         const roundCheckboxesArray = Array.from(roundCheckboxes);
-        for (const checkbox of checkboxes){
+        for (const checkbox of checkboxes) {
             checkbox.addEventListener('click', () => {
                 if (roundCheckboxesArray.includes(checkbox)) {
                     if (this.gender === checkbox.textContent) {
@@ -620,19 +717,30 @@ class FormHandler {
                     } else {
                         this.gender = checkbox.textContent;
                     }
-                    for (const singleCheckbox of roundCheckboxes){
-                        if (singleCheckbox !== checkbox && singleCheckbox.classList.contains('form__button--checkbox-selected')) {
-                            singleCheckbox.classList.toggle('form__button--checkbox-selected');
+                    for (const singleCheckbox of roundCheckboxes) {
+                        if (
+                            singleCheckbox !== checkbox &&
+                            singleCheckbox.classList.contains(
+                                'form__button--checkbox-selected',
+                            )
+                        ) {
+                            singleCheckbox.classList.toggle(
+                                'form__button--checkbox-selected',
+                            );
                         }
                     }
                 }
                 checkbox.classList.toggle('form__button--checkbox-selected');
                 if (!roundCheckboxesArray.includes(checkbox)) {
-                    const val = checkbox.querySelector('.button__span').innerText;
+                    const val =
+                        checkbox.querySelector('.button__span').innerText;
                     if (!this.multipleChoice.includes(val)) {
                         this.multipleChoice.push(val);
                     } else {
-                        this.multipleChoice.splice(this.multipleChoice.indexOf(val), 1);
+                        this.multipleChoice.splice(
+                            this.multipleChoice.indexOf(val),
+                            1,
+                        );
                     }
                 }
             });
@@ -647,7 +755,8 @@ class FormHandler {
             this.setupCheckboxes(form);
             this.setupEnterEvents(form);
 
-            const navigationButtons = form.getElementsByClassName('form__button--nav');
+            const navigationButtons =
+                form.getElementsByClassName('form__button--nav');
             const formErrF = form.querySelector('.form__error');
             for (const button of navigationButtons) {
                 const blockElement = button.closest('.form__block');
@@ -666,22 +775,28 @@ class FormHandler {
                 });
             }
 
-            const passwordDisplayBtns = form.querySelectorAll('.form__button--icon');
+            const passwordDisplayBtns = form.querySelectorAll(
+                '.form__button--icon',
+            );
             for (const passwordDisplayBtn of passwordDisplayBtns) {
-                const passwordField = passwordDisplayBtn.closest('.form__field');
-                const passwordInput = passwordField.querySelector('.form__input');
+                const passwordField =
+                    passwordDisplayBtn.closest('.form__field');
+                const passwordInput =
+                    passwordField.querySelector('.form__input');
                 passwordDisplayBtn.addEventListener('click', () => {
                     if (passwordInput.type === 'password') {
                         passwordInput.type = 'text';
-                        passwordDisplayBtn.style.background = 'var(--pswd--visible)';
-                    }
-                    else {
+                        passwordDisplayBtn.style.background =
+                            'var(--pswd--visible)';
+                    } else {
                         passwordInput.type = 'password';
-                        passwordDisplayBtn.style.background = 'var(--pswd--hidden)';
+                        passwordDisplayBtn.style.background =
+                            'var(--pswd--hidden)';
                     }
                 });
             }
-            form.querySelector(`#step${this.currentStep}`).style.display = 'block';
+            form.querySelector(`#step${this.currentStep}`).style.display =
+                'block';
 
             const formBlocks = form.querySelectorAll('.form__block');
             for (const block of formBlocks) {
@@ -690,27 +805,47 @@ class FormHandler {
                     event.stopPropagation();
                     let blockOk = this.formStepErrorHandler(block);
 
-                    if (this.gender === null && (this.currentStep === this.genderStep)) {
-                        this.addErrorMsg(formErrF, 'genderMsg', 'genderChoice', this.helpMessages);
+                    if (
+                        this.gender === null &&
+                        this.currentStep === this.genderStep
+                    ) {
+                        this.addErrorMsg(
+                            formErrF,
+                            'genderMsg',
+                            'genderChoice',
+                            this.helpMessages,
+                        );
                         blockOk = false;
                     }
-                    if (this.multipleChoice.length < 1 && (this.currentStep === this.mcStep || form.id === 'interestsDialog')) {
+                    if (
+                        this.multipleChoice.length < 1 &&
+                        (this.currentStep === this.mcStep ||
+                            form.id === 'interestsDialog')
+                    ) {
                         if (formErrF) {
-                            this.addErrorMsg(formErrF, 'multipleChoiceMsg', 'multipleChoice', this.helpMessages);
+                            this.addErrorMsg(
+                                formErrF,
+                                'multipleChoiceMsg',
+                                'multipleChoice',
+                                this.helpMessages,
+                            );
                         }
                         blockOk = false;
                     }
 
-                    if (blockOk){
+                    if (blockOk) {
                         if (formErrF) {
                             this.removeErrorMsg(formErrF, 'genderMsg', 200);
-                            this.removeErrorMsg(formErrF, 'multipleChoiceMsg', 200);
+                            this.removeErrorMsg(
+                                formErrF,
+                                'multipleChoiceMsg',
+                                200,
+                            );
                         }
                         const submitAction = button.getAttribute('submit');
                         if (!submitAction) {
                             this.formForward(form);
-                        }
-                        else {
+                        } else {
                             this.formSubmit(form, submitAction);
                         }
                     }

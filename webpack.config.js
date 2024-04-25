@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: { app: './index.js', sw: './sw.js' },
+    entry: { app: './index.ts', sw: './sw.js' },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
@@ -27,17 +27,21 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(ts|tsx|js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['@babel/preset-env'],
+                        presets: [
+                            '@babel/preset-env',
+                            '@babel/preset-react',
+                            '@babel/preset-typescript',
+                        ],
                         plugins: [
                             [
                                 '@babel/plugin-transform-react-jsx',
                                 {
-                                    pragma: 'createElement', // Ensure this matches your Babel config
+                                    pragma: 'createElement', // Match this with your createElement function
                                 },
                             ],
                         ],
@@ -48,9 +52,9 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx'], // Разрешаем импорт файлов без указания расширения
+        extensions: ['.js', '.jsx', '.ts', '.tsx'], // Разрешаем импорт файлов без указания расширения
         alias: {
-            reactor: path.resolve('./src/reactor/index.js'),
+            reactor: path.resolve('./src/reactor/index.ts'),
         },
     },
     plugins: [

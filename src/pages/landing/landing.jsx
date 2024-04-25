@@ -1,12 +1,19 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { Reactor } from '../../reactor/index.js';
+import { useState, useEffect, clsx } from '../../reactor/index';
 
 export const Landing = () => {
-    const [state, setState] = Reactor.useState(0);
-    Reactor.useEffect(() => {
-        console.log('REACTOR', state);
-    }, [state]);
+    const [state, setState] = useState(0);
+    const [otherState, setOtherState] = useState(0);
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setState((c) => c + 1);
+        }, 500);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
 
     return (
         <div className="landing-wrapper">
@@ -14,21 +21,22 @@ export const Landing = () => {
                 <div className="logo__container" data-link data-url="/">
                     <img
                         alt="logo"
-                        data-link
-                        data-url="/"
+                        data-link="/"
                         className="header__logo--landing"
                         src={logo}
                     />
-                    <p data-link data-url="/" className="logo__text">
+                    <p data-link="/" className="logo__text">
                         jimder
                     </p>
                 </div>
                 <button
                     className="button button--xl button--info button--link"
-                    data-link
-                    data-url="/login"
+                    // data-link="/login"
+                    onClick={() => {
+                        setOtherState((c) => c + 2);
+                    }}
                 >
-                    войти
+                    войти {otherState}
                 </button>
             </div>
             <div className="landing__slide slide--first">
@@ -43,10 +51,9 @@ export const Landing = () => {
                         <b className="landing__title title--highlight">да</b>
                     </p>
                     <button
-                        onClick={() => setState((c) => c + 1)}
-                        className="button button--success button--xl"
-                        data-link
-                        data-url="/register"
+                        // onClick={() => setState((c) => c + 1)}
+                        className={'button button--success button--xl'}
+                        // data-link="/register"
                     >
                         Регистрация {state}
                     </button>
