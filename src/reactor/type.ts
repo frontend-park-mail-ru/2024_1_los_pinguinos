@@ -1,69 +1,15 @@
-export type Key = TText
 export interface RefObject<T> {
   current: T
 }
-
-export type RefCallback<T> = {
-  bivarianceHack(instance: T | null): void
-}['bivarianceHack']
-export type Ref<T = any> = RefCallback<T> | RefObject<T> | null
-
-export interface Attributes extends Record<string, any> {
-  key?: Key
-  children?: TNode
-  ref?: Ref
-}
-
-export interface FC<P extends Attributes = {}> {
-  (props: P): TElement<P> | null
-  fiber?: IFiber
-  type?: string
-  memo?: boolean
-  shouldUpdate?: (newProps: P, oldProps: P) => boolean
-}
-
-export interface TElement<P extends Attributes = any, T = string> {
+export type TRefCallback<T> = {
+  bivarianceFix(instance: T | null): void
+}['bivarianceFix']
+export type TRef<T = any> = TRefCallback<T> | RefObject<T> | null
+export interface TElement<IProps extends IAttributes = any, T = string> {
   type: T
-  props: P
+  props: IProps
   key: string
 }
-
-export type HookTypes = 'list' | 'effect' | 'layout'
-
-export interface IHook {
-  list: IEffect[]
-  layout: IEffect[]
-  effect: IEffect[]
-}
-
-export type IRef = (
-  e: HTMLElement | undefined
-) => void | { current?: HTMLElement }
-
-export interface IFiber<P extends Attributes = any> {
-  key?: string
-  type: string | FC<P>
-  parentNode: HTMLElementEx
-  node: HTMLElementEx
-  children?: any
-  dirty:boolean,
-  parent?: IFiber<P>
-  sibling?: IFiber<P>
-  child?: IFiber<P>
-  done?: () => void
-  ref: IRef
-  hooks: IHook
-  oldProps: P
-  action: any
-  props: P
-  lane: string
-  isComponent: boolean
-}
-
-export type HTMLElementEx = HTMLElement & { last: IFiber | null }
-export type IEffect = [Function?, number?, Function?]
-
-export type TText = string | number
 export type TNode =
   | TText
   | TElement
@@ -71,22 +17,67 @@ export type TNode =
   | boolean
   | null
   | undefined
-export type SetStateAction<S> = S | ((prevState: S) => S)
-export type Dispatch<A> = (value: A, resume?: boolean) => void
-export type Reducer<S, A> = (prevState: S, action: A) => S
-export type IVoidCb = () => void
-export type EffectCallback = () => void | (IVoidCb | undefined)
-export type DependencyList = Array<any>
+export interface IAttributes extends Record<string, any> {
+  key?: TKey
+  children?: TNode
+  ref?: TRef
+}
 
-export interface PropsWithChildren {
+export interface IFunctionalComponent<IProps extends IAttributes = {}> {
+  (props: IProps): TElement<IProps> | null
+  fiber?: IFiber
+  type?: string
+  memo?: boolean
+  shouldUpdate?: (newProps: IProps, oldProps: IProps) => boolean
+}
+
+export interface IHook {
+  list: TEffect[]
+  effect: TEffect[]
+}
+
+export type TReference = (
+  element: HTMLElement | undefined
+) => void | { current?: HTMLElement }
+
+export interface IFiber<IProps extends IAttributes = any> {
+  key?: string
+  type: string | IFunctionalComponent<IProps>
+  parentNode: THTMLElementEx
+  node: THTMLElementEx
+  children?: any
+  dirty:boolean,
+  parent?: IFiber<IProps>
+  sibling?: IFiber<IProps>
+  child?: IFiber<IProps>
+  done?: () => void
+  ref: TReference
+  hooks: IHook
+  oldProps: IProps
+  action: any
+  props: IProps
+  lane: string
+  isComponent: boolean
+}
+export type TText = string | number
+export type TKey = TText
+export type THTMLElementEx = HTMLElement & { last: IFiber | null }
+export type THooks = 'list' | 'effect'
+export type TEffect = [Function?, number?, Function?]
+export type TSetStateAction<State> = State | ((prevState: State) => State)
+export type TDispatch<Action> = (value: Action, resume?: boolean) => void
+export type TReducer<State, Action> = (prevState: State, action: Action) => State
+export type TVoidCallback = () => void
+export type TEffectCallback = () => void | (TVoidCallback | undefined)
+export type TTaskCallback = ((time: boolean) => boolean) | null
+export type TDependencyList = Array<any>
+export type TDOM = HTMLElement | SVGElement
+
+export interface IPropsWithChildren {
   children?: TNode
 }
 
-export type ITaskCallback = ((time: boolean) => boolean) | null
-
 export interface ITask {
-  callback?: ITaskCallback
+  callback?: TTaskCallback
   fiber: IFiber
 }
-
-export type DOM = HTMLElement | SVGElement

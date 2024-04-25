@@ -3,10 +3,10 @@ import { ITask } from './type'
 const queue: ITask[] = []
 const threshold: number = 5
 const transitions: any[] = []
-let deadline: number = 0
+let executionDeadline: number = 0
 
-export const startTransition = (cb: { (): void; (): void }) => {
-  transitions.push(cb) && translate()
+export const startTransition = (callback: { (): void; (): void }) => {
+  transitions.push(callback) && translate()
 }
 
 export const schedule = (callback: any): void => {
@@ -15,39 +15,37 @@ export const schedule = (callback: any): void => {
 }
 
 const task = (pending: boolean) => {
-  const cb = () => transitions.splice(0, 1).forEach(c => c())
+  const callback = () => transitions.splice(0, 1).forEach(callback => callback());
   if (!pending && typeof queueMicrotask !== 'undefined') {
-    return () => queueMicrotask(cb)
+    return () => queueMicrotask(callback);
   }
-  if (typeof MessageChannel !== 'undefined') {
-    const { port1, port2 } = new MessageChannel()
-    port1.onmessage = cb
-    return () => port2.postMessage(null)
-  }
-  return () => setTimeout(cb)
+  return () => setTimeout(callback);
 }
 
 let translate = task(false)
-
 const flush = (): void => {
-  deadline = getTime() + threshold
-  let job = peek(queue)
-  while (job && !shouldYield()) {
-    const { callback } = job as any
-    job.callback = null
-    const next = callback()
-    if (next) {
-      job.callback = next as any
-    } else {
-      queue.shift()
+  executionDeadline = getTime() + threshold;
+  let currentJob = peek(queue);
+
+  while (currentJob && !shouldYield()) {
+    const { callback } = currentJob as any
+    currentJob.callback = null;
+    const nextTask = callback();
+    currentJob.callback = nextTask ? nextTask as any : null;
+    if (!nextTask) {
+      queue.shift();
     }
-    job = peek(queue)
+    currentJob = peek(queue);
   }
-  job && (translate = task(shouldYield())) && startTransition(flush)
+  if (currentJob) {
+    translate = task(shouldYield());
+    startTransition(flush);
+  }
 }
 
+
 export const shouldYield = (): boolean => {
-  return getTime() >= deadline
+  return getTime() >= executionDeadline
 }
 
 export const getTime = () => performance.now()

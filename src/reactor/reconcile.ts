@@ -1,11 +1,11 @@
 import {
   IFiber,
   TElement,
-  FC,
-  Attributes,
-  HTMLElementEx,
+  IFunctionalComponent,
+  IAttributes,
+  THTMLElementEx,
   TNode,
-  IEffect,
+  TEffect,
   TText,
 } from './type'
 import { createElement } from './dom'
@@ -49,9 +49,9 @@ const reconcile = (fiber?: IFiber): boolean => {
 }
 
 const memo = (fiber: any) => {
-  if ((fiber.type as FC).memo && fiber.old?.props) {
-    let scu = (fiber.type as FC).shouldUpdate || shouldUpdate
-    if (!scu(fiber.props, fiber.old.props)) {
+  if ((fiber.type as IFunctionalComponent).memo && fiber.old?.props) {
+    let updateFiber = (fiber.type as IFunctionalComponent).shouldUpdate || shouldUpdate
+    if (!updateFiber(fiber.props, fiber.old.props)) {
       return getSibling(fiber)
     }
   }
@@ -59,7 +59,7 @@ const memo = (fiber: any) => {
 }
 
 const capture = (fiber: IFiber): IFiber | undefined => {
-  fiber.isComponent = isFn(fiber.type)
+  fiber.isComponent = isFunctionalElement(fiber.type)
   if (fiber.isComponent) {
     const memoFiber = memo(fiber)
     if (memoFiber) {
@@ -88,25 +88,24 @@ const getSibling = (fiber: IFiber<any>) => {
   return null
 }
 
-const bubble = (fiber: { isComponent: any; hooks: { layout: IEffect[]; effect: IEffect[] } }) => {
+const bubble = (fiber: { isComponent: any; hooks: { effect: TEffect[] } }) => {
   if (fiber.isComponent) {
     if (fiber.hooks) {
-      side(fiber.hooks.layout)
       schedule(() => side(fiber.hooks.effect))
     }
   }
 }
 
 
-const shouldUpdate = (a: { [x: string]: any }, b: { [x: string]: any }) => {
-  for (let i in a) if (!(i in b)) return true
-  for (let i in b) if (a[i] !== b[i]) return true
+const shouldUpdate = (oldProps: { [x: string]: any }, newProps: { [x: string]: any }) => {
+  for (const prop in oldProps) if (!(prop in newProps)) return true
+  for (const prop in newProps) if (oldProps[prop] !== newProps[prop]) return true
 }
 
-const updateHook = <P = Attributes>(fiber: IFiber): any => {
+const updateHook = <IProps = IAttributes>(fiber: IFiber): any => {
   resetCursor()
   currentFiber = fiber
-  let children = (fiber.type as FC<P>)(fiber.props)
+  let children = (fiber.type as IFunctionalComponent<IProps>)(fiber.props)
   reconcileChidren(fiber, simpleVnode(children))
 }
 
@@ -114,13 +113,13 @@ const updateHost = (fiber: IFiber): void => {
   fiber.parentNode = (getParentNode(fiber) as any) || {}
   if (!fiber.node) {
     if (fiber.type === 'svg') fiber.lane = TAG.SVG
-    fiber.node = createElement(fiber) as HTMLElementEx
+    fiber.node = createElement(fiber) as THTMLElementEx
   }
   reconcileChidren(fiber, fiber.props.children)
 }
 
 const simpleVnode = (type: any) =>
-  isStr(type) ? createText(type as string) : type
+  isText(type) ? createText(type as string) : type
 
 const getParentNode = (fiber: IFiber): HTMLElement | undefined => {
   while ((fiber = fiber.parent)) {
@@ -149,19 +148,19 @@ const reconcileChidren = (fiber: any, children: TNode): void => {
   }
 }
 
-function clone(a: { hooks: any; ref: any; node: any; children: any }, b: { hooks: any; ref: any; node: any; children: any; old: any }) {
-  b.hooks = a.hooks
-  b.ref = a.ref
-  b.node = a.node
-  b.children = a.children
-  b.old = a
+function clone(referenceNode: { hooks: any; ref: any; node: any; children: any }, currentNode: { hooks: any; ref: any; node: any; children: any; old: any }) {
+  currentNode.hooks = referenceNode.hooks
+  currentNode.ref = referenceNode.ref
+  currentNode.node = referenceNode.node
+  currentNode.children = referenceNode.children
+  currentNode.old = referenceNode
 }
 
 export const arrayfy = (arr: boolean | TText | TElement<any, string> | TNode[] | null | undefined) => (!arr ? [] : isArr(arr) ? arr : [arr])
 
-const side = (effects: IEffect[]): void => {
-  effects.forEach(e => e[2] && e[2]())
-  effects.forEach(e => (e[2] = e[0]()))
+const side = (effects: TEffect[]): void => {
+  effects.forEach(effect => effect[2] && effect[2]())
+  effects.forEach(effect => (effect[2] = effect[0]()))
   effects.length = 0
 }
 
@@ -223,6 +222,6 @@ const diff = (oldVDOM: any[], newVDOM: any[]) => {
 
 
 export const getCurrentFiber = () => currentFiber || null
-export const isFn = (x: any): x is Function => typeof x === 'function'
-export const isStr = (s: any): s is number | string =>
+export const isFunctionalElement = (x: any): x is Function => typeof x === 'function'
+export const isText = (s: any): s is number | string =>
   typeof s === 'number' || typeof s === 'string'

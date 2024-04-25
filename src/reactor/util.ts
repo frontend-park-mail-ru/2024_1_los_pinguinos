@@ -1,5 +1,5 @@
-import { isStr, arrayfy } from './reconcile'
-import { FC, TElement } from './type'
+import { isText, arrayfy } from './reconcile'
+import { IFunctionalComponent, TElement } from './type'
 
 export const createElement = (type: any, props: any, ...children: any[]) => {
   props = props || {}
@@ -22,7 +22,7 @@ const flat = (arr: any[], target: any[] = []) => {
   arr.forEach(v => {
     isArr(v)
       ? flat(v, target)
-      : some(v) && target.push(isStr(v) ? createText(v) : v)
+      : some(v) && target.push(isText(v) ? createText(v) : v)
   })
   return target
 }
@@ -41,7 +41,7 @@ export function Fragment(props: { children: any }) {
   return props.children
 }
 
-export function memo<T extends object>(fn: FC<T>, compare?: FC<T>['shouldUpdate']) {
+export function memo<T extends object>(fn: IFunctionalComponent<T>, compare?: IFunctionalComponent<T>['shouldUpdate']) {
   fn.memo = true
   fn.shouldUpdate = compare
   return fn

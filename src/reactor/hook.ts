@@ -1,13 +1,13 @@
-import { update, isFn, getCurrentFiber } from "./reconcile"
+import { update, isFunctionalElement, getCurrentFiber } from "./reconcile"
 import {
-  DependencyList,
-  Reducer,
+  TDependencyList,
+  TReducer,
   IFiber,
-  Dispatch,
-  SetStateAction,
-  EffectCallback,
-  HookTypes,
-  IEffect,
+  TDispatch,
+  TSetStateAction,
+  TEffectCallback,
+  THooks,
+  TEffect,
 } from "./type"
 
 const EMPTY_ARR = []
@@ -18,21 +18,21 @@ export const resetCursor = () => {
   cursor = 0
 }
 
-export const useState = <T>(initState: T): [T, Dispatch<SetStateAction<T>>] => {
+export const useState = <T>(initState: T): [T, TDispatch<TSetStateAction<T>>] => {
   return useReducer(undefined, initState)
 }
 
 export const useReducer = <S, A>(
-  reducer?: Reducer<S, A>,
+  reducer?: TReducer<S, A>,
   initState?: S
-): [S, Dispatch<A>] => {
+): [S, TDispatch<A>] => {
   const [hook, current]: [any, IFiber] = getHook<S>(cursor++)
   if (hook.length === 0) {
     hook[0] = initState
-    hook[1] = (value: A | Dispatch<A>) => {
+    hook[1] = (value: A | TDispatch<A>) => {
       let v = reducer
         ? reducer(hook[0], value as any)
-        : isFn(value)
+        : isFunctionalElement(value)
           ? value(hook[0])
           : value
       if (hook[0] !== v) {
@@ -44,14 +44,14 @@ export const useReducer = <S, A>(
   return hook
 }
 
-export const useEffect = (cb: EffectCallback, deps?: DependencyList): void => {
+export const useEffect = (cb: TEffectCallback, deps?: TDependencyList): void => {
   return effectImpl(cb, deps!, "effect")
 }
 
 const effectImpl = (
-  cb: EffectCallback,
-  deps: DependencyList,
-  key: HookTypes
+  cb: TEffectCallback,
+  deps: TDependencyList,
+  key: THooks
 ): void => {
   const [hook, current] = getHook(cursor++)
   if (isChanged(hook[1], deps)) {
@@ -61,18 +61,18 @@ const effectImpl = (
   }
 }
 
-export const getHook = <S = Function | undefined, Dependency = any>(
+export const getHook = <State = Function | undefined, Dependency = any>(
   cursor: number
-): [[S, Dependency], IFiber] => {
+): [[State, Dependency], IFiber] => {
   const current: IFiber<any> = getCurrentFiber()
   const hooks =
-    current.hooks || (current.hooks = { list: [], effect: [], layout: [] })
+    current.hooks || (current.hooks = { list: [], effect: [] })
   if (cursor >= hooks.list.length) {
-    hooks.list.push([] as IEffect)
+    hooks.list.push([] as TEffect)
   }
-  return [(hooks.list[cursor] as unknown) as [S, Dependency], current]
+  return [(hooks.list[cursor] as unknown) as [State, Dependency], current]
 }
 
-export const isChanged = (a: DependencyList, b: DependencyList) => {
+export const isChanged = (a: TDependencyList, b: TDependencyList) => {
   return !a || a.length !== b.length || b.some((arg, index) => !Object.is(arg, a[index]))
 }
