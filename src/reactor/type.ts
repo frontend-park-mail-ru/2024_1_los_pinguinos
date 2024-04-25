@@ -1,10 +1,7 @@
 export interface RefObject<T> {
   current: T
 }
-export type TRefCallback<T> = {
-  bivarianceFix(instance: T | null): void
-}['bivarianceFix']
-export type TRef<T = any> = TRefCallback<T> | RefObject<T> | null
+export type TRef<T = any> = RefObject<T> | null
 export interface TElement<IProps extends IAttributes = any, T = string> {
   type: T
   props: IProps

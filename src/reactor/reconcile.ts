@@ -128,12 +128,12 @@ const getParentNode = (fiber: IFiber): HTMLElement | undefined => {
 }
 
 const reconcileChidren = (fiber: any, children: TNode): void => {
-  let aCh = fiber.children || [],
-    bCh = (fiber.children = arrayfy(children) as any)
-  const actions = diff(aCh, bCh)
+  let oldChildren = fiber.children || [],
+    newChildren = (fiber.children = arrayfy(children) as any)
+  const actions = diff(oldChildren, newChildren)
 
-  for (let i = 0, prev = null, len = bCh.length; i < len; i++) {
-    const child = bCh[i]
+  for (let i = 0, prev = null, len = newChildren.length; i < len; i++) {
+    const child = newChildren[i]
     child.action = actions[i]
     if (fiber.lane === TAG.SVG) {
       child.lane = TAG.SVG

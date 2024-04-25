@@ -24,15 +24,15 @@ export const updateElement = <IProps extends IAttributes>(
     } else if (name === 'style' && !isText(newFiber)) {
       compareProps(oldFiber, newFiber, (styleKey, oldStyle, newStyle) => {
         if (oldStyle !== newStyle) {
-          ;(dom as any)[name][styleKey] = newStyle || ''
+          (dom as any)[name][styleKey] = newStyle || ''
         }
       })
-    } else if (name[0] === 'o' && name[1] === 'n') {
+    } else if (name.startsWith('on')) {
       name = name.slice(2).toLowerCase() as Extract<keyof IProps, string>
       if (oldFiber) dom.removeEventListener(name, oldFiber)
       dom.addEventListener(name, newFiber)
     } else if (name in dom && !(dom instanceof SVGElement)) {
-      ;(dom as any)[name] = newFiber || ''
+      (dom as any)[name] = newFiber || ''
     } else if (newFiber == null || newFiber === false) {
       dom.removeAttribute(name)
     } else {

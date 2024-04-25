@@ -10,10 +10,7 @@ import {
   TEffect,
 } from "./type"
 
-const EMPTY_ARR = []
-
 let cursor = 0
-
 export const resetCursor = () => {
   cursor = 0
 }
@@ -22,14 +19,14 @@ export const useState = <T>(initState: T): [T, TDispatch<TSetStateAction<T>>] =>
   return useReducer(undefined, initState)
 }
 
-export const useReducer = <S, A>(
-  reducer?: TReducer<S, A>,
-  initState?: S
-): [S, TDispatch<A>] => {
-  const [hook, current]: [any, IFiber] = getHook<S>(cursor++)
+export const useReducer = <State, Action>(
+  reducer?: TReducer<State, Action>,
+  initState?: State
+): [State, TDispatch<Action>] => {
+  const [hook, current]: [any, IFiber] = getHook<State>(cursor++)
   if (hook.length === 0) {
     hook[0] = initState
-    hook[1] = (value: A | TDispatch<A>) => {
+    hook[1] = (value: Action | TDispatch<Action>) => {
       let v = reducer
         ? reducer(hook[0], value as any)
         : isFunctionalElement(value)
@@ -73,6 +70,6 @@ export const getHook = <State = Function | undefined, Dependency = any>(
   return [(hooks.list[cursor] as unknown) as [State, Dependency], current]
 }
 
-export const isChanged = (a: TDependencyList, b: TDependencyList) => {
-  return !a || a.length !== b.length || b.some((arg, index) => !Object.is(arg, a[index]))
+export const isChanged = (oldDepList: TDependencyList, newDepList: TDependencyList) => {
+  return !oldDepList || oldDepList.length !== newDepList.length || newDepList.some((arg, index) => !Object.is(arg, oldDepList[index]))
 }
