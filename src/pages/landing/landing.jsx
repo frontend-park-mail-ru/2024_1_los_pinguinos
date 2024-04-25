@@ -52,7 +52,10 @@ export const Landing = () => {
                     </p>
                     <button
                         // onClick={() => setState((c) => c + 1)}
-                        className={'button button--success button--xl'}
+                        className={clsx(
+                            'button button--success button--xl',
+                            // state > 10 && 'test',
+                        )}
                         // data-link="/register"
                     >
                         Регистрация {state}
