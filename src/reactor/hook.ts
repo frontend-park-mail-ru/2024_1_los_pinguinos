@@ -8,6 +8,8 @@ import {
   TEffectCallback,
   THooks,
   TEffect,
+  IRefObject,
+  TNode,
 } from "./type"
 
 let cursor = 0
@@ -72,4 +74,35 @@ export const getHook = <State = Function | undefined, Dependency = any>(
 
 export const isChanged = (oldDepList: TDependencyList, newDepList: TDependencyList) => {
   return !oldDepList || oldDepList.length !== newDepList.length || newDepList.some((arg, index) => !Object.is(arg, oldDepList[index]))
+}
+
+export type ContextType<T> = {
+  ({ value, children }: { value: T, children: TNode }): TNode;
+  initialValue: T;
+}
+type SubscriberCb = () => void;
+export const useContext = <T>(contextType: ContextType<T>): T => {
+  let subscribersSet: Set<Function>
+
+  const triggerUpdate = useReducer(null, null)[1] as SubscriberCb
+
+  useEffect(() => {
+    return () => subscribersSet && subscribersSet.delete(triggerUpdate)
+  }, []);
+
+  let contextFiber = getCurrentFiber().parent
+  while (contextFiber && contextFiber.type !== contextType) {
+    contextFiber = contextFiber.parent
+  }
+
+  if (contextFiber) {
+    const hooks = contextFiber.hooks.list as unknown as [[IRefObject<T>], [Set<SubscriberCb>]]
+    const [[value], [subscribers]] = hooks;
+
+    subscribersSet = subscribers.add(triggerUpdate)
+
+    return value.current
+  } else {
+    return contextType.initialValue
+  }
 }
