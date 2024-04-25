@@ -1,6 +1,7 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { useState, useEffect, clsx } from '../../reactor/index';
+import { useState, useEffect } from '../../reactor/index';
+import { clsx } from '../../clsx/index';
 
 export const Landing = () => {
     const [state, setState] = useState(0);

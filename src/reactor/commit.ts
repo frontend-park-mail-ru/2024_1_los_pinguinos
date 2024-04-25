@@ -1,4 +1,4 @@
-import { IFiber, TReference } from './type'
+import { TReference } from './type'
 import { updateElement } from './dom'
 import { isFunctionalElement, TAG } from './reconcile'
 
@@ -7,12 +7,12 @@ export const commit = (fiber: any) => {
   if (!fiber) {
     return
   }
-  const { operation, before, elm } = fiber.action || {}
+  const { operation, referenceNode, currentFiber } = fiber.action || {}
   if (operation === TAG.INSERT || operation === TAG.MOVE) {
     if (fiber.isComponent && fiber.child) {
       fiber.child.action.operation = fiber.action.operation
     } else {
-      fiber.parentNode.insertBefore(elm.node, before?.node)
+      fiber.parentNode.insertBefore(currentFiber.node, referenceNode?.node)
     }
   }
   if (operation === TAG.UPDATE) {
@@ -45,7 +45,7 @@ const childrenRefer = (children: any): void => {
 
 export const removeElement = (fiber: { isComponent: any; hooks: { list: any[] }; children: any[]; parentNode: { removeChild: (arg0: any) => void }; node: any; ref: TReference }) => {
   if (fiber.isComponent) {
-    fiber.hooks && fiber.hooks.list.forEach((e: (() => any)[]) => e[2] && e[2]())
+    fiber.hooks && fiber.hooks.list.forEach((effect: (() => any)[]) => effect[2] && effect[2]())
     fiber.children.forEach(removeElement)
   } else {
     fiber.parentNode.removeChild(fiber.node)

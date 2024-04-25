@@ -6,12 +6,11 @@ import {
   THTMLElementEx,
   TNode,
   TEffect,
-  TText,
 } from './type'
 import { createElement } from './dom'
 import { resetCursor } from './hook'
 import { schedule, shouldYield } from './schedule'
-import { isArr, createText } from './util'
+import { createText, arrayfy } from './util'
 import { commit, removeElement } from './commit'
 
 let currentFiber: IFiber = null
@@ -156,8 +155,6 @@ function clone(referenceNode: { hooks: any; ref: any; node: any; children: any }
   currentNode.old = referenceNode
 }
 
-export const arrayfy = (arr: boolean | TText | TElement<any, string> | TNode[] | null | undefined) => (!arr ? [] : isArr(arr) ? arr : [arr])
-
 const side = (effects: TEffect[]): void => {
   effects.forEach(effect => effect[2] && effect[2]())
   effects.forEach(effect => (effect[2] = effect[0]()))
@@ -192,7 +189,7 @@ const diff = (oldVDOM: any[], newVDOM: any[]) => {
       removeElement(oldElement);
       i++;
     } else if (i >= oldVDOM.length) {
-      actions.push({ operation: TAG.INSERT, elm: newElement, before: oldVDOM[i] });
+      actions.push({ operation: TAG.INSERT, currentFiber: newElement, referenceNode: oldVDOM[i] });
       j++;
     } else if (createKey(oldElement) === createKey(newElement)) {
       clone(oldElement, newElement);
@@ -207,11 +204,11 @@ const diff = (oldVDOM: any[], newVDOM: any[]) => {
         removeElement(oldElement);
         i++;
       } else if (wantedElementInOld === undefined) {
-        actions.push({ operation: TAG.INSERT, elm: newElement, before: oldVDOM[i] });
+        actions.push({ operation: TAG.INSERT, currentFiber: newElement, referenceNode: oldVDOM[i] });
         j++;
       } else {
         clone(oldVDOM[wantedElementInOld], newElement);
-        actions.push({ operation: TAG.MOVE, elm: oldVDOM[wantedElementInOld], before: oldVDOM[i] });
+        actions.push({ operation: TAG.MOVE, currentFiber: oldVDOM[wantedElementInOld], referenceNode: oldVDOM[i] });
         oldVDOM[wantedElementInOld] = null;
         j++;
       }

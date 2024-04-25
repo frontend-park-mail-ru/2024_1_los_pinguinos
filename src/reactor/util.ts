@@ -1,5 +1,7 @@
-import { isText, arrayfy } from './reconcile'
-import { IFunctionalComponent, TElement } from './type'
+import { isText } from './reconcile'
+import { IFunctionalComponent, TElement, TNode, TText } from './type'
+
+export const arrayfy = (arr: boolean | TText | TElement<any, string> | TNode[] | null | undefined) => (!arr ? [] : isArr(arr) ? arr : [arr])
 
 export const createElement = (type: any, props: any, ...children: any[]) => {
   props = props || {}
@@ -16,15 +18,15 @@ export const createElement = (type: any, props: any, ...children: any[]) => {
   return createVnode(type, props, key, ref)
 }
 
-const some = (x: unknown) => x != null && x !== true && x !== false
+const flat = (array: any[]) => {
+  const flattenedArray = array.flat(Infinity);
 
-const flat = (arr: any[], target: any[] = []) => {
-  arr.forEach(v => {
-    isArr(v)
-      ? flat(v, target)
-      : some(v) && target.push(isText(v) ? createText(v) : v)
-  })
-  return target
+  return flattenedArray.reduce((acc, item) => {
+    if (item !== null && typeof item !== 'boolean') {
+      acc.push(isText(item) ? createText(item) : item);
+    }
+    return acc;
+  }, []);
 }
 
 export const createVnode = (type: any, props: any, key: any, ref: any) => ({
@@ -41,13 +43,10 @@ export function Fragment(props: { children: any }) {
   return props.children
 }
 
-export function memo<T extends object>(fn: IFunctionalComponent<T>, compare?: IFunctionalComponent<T>['shouldUpdate']) {
-  fn.memo = true
-  fn.shouldUpdate = compare
-  return fn
+export function memo<T extends object>(func: IFunctionalComponent<T>, compare?: IFunctionalComponent<T>['shouldUpdate']) {
+  func.memo = true
+  func.shouldUpdate = compare
+  return func
 }
 
 export const isArr = Array.isArray
-
-export const clsx = (...args: string[]) =>
-  args.filter((arg) => typeof arg === 'string').join(' ');
