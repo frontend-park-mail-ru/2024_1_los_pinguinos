@@ -1,20 +1,21 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { useState, useEffect } from '../../reactor/index';
+// import { useState, useEffect } from '../../reactor/index';
 import { clsx } from '../../clsx/index';
+import { Link } from '../../components/Router/Router';
 
 export const Landing = () => {
-    const [state, setState] = useState(0);
-    const [otherState, setOtherState] = useState(0);
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setState((c) => c + 1);
-        }, 500);
+    // const [state, setState] = useState(0);
+    // const [otherState, setOtherState] = useState(0);
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         setState((c) => c + 1);
+    //     }, 500);
 
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, []);
+    //     return () => {
+    //         clearInterval(intervalId);
+    //     };
+    // }, []);
 
     return (
         <div className="landing-wrapper">
@@ -30,15 +31,17 @@ export const Landing = () => {
                         jimder
                     </p>
                 </div>
-                <button
-                    className="button button--xl button--info button--link"
-                    // data-link="/login"
-                    onClick={() => {
-                        setOtherState((c) => c + 2);
-                    }}
-                >
-                    войти {otherState}
-                </button>
+                <Link to={'/login'}>
+                    <button
+                        className="button button--xl button--info button--link"
+                        // data-link="/login"
+                        // onClick={() => {
+                        //     setOtherState((c) => c + 2);
+                        // }}
+                    >
+                        войти
+                    </button>
+                </Link>
             </div>
             <div className="landing__slide slide--first">
                 <img
@@ -55,11 +58,11 @@ export const Landing = () => {
                         // onClick={() => setState((c) => c + 1)}
                         className={clsx(
                             'button button--success button--xl',
-                            state > 10 && 'test',
+                            // state > 10 && 'test',
                         )}
                         // data-link="/register"
                     >
-                        Регистрация {state}
+                        Регистрация
                     </button>
                 </div>
             </div>

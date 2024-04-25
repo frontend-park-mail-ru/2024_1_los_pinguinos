@@ -1,5 +1,5 @@
-import router from '../../index';
-import { store } from '../../index';
+// import router from '../../index';
+// import { store } from '../../index';
 
 const localhost = 'http://172.20.10.6:8080';
 const vm = 'https://api.jimder.ru';

@@ -1,10 +1,14 @@
 // import loginTemplate from './login.hbs';
 // import FormHandler from '../../components/form/formHandler.js';
 // import componentHandler from '../../components/basic/ComponentHandler.js';
-
+import { Landing } from '../landing/landing';
 // const formHandler = new FormHandler();
 export const Login = () => {
-    return <div className="wrapper"></div>;
+    return (
+        <div className="wrapper">
+            <Landing />
+        </div>
+    );
     // async render() {
     //     const textContinue = 'Продолжить';
     //     const formContext = {

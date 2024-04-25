@@ -4,7 +4,8 @@
         "noImplicitAny": true,
         "module": "es6",
         "target": "es5",
-        "jsx": "react",
+        "jsx": "preserve", // or "react-jsx" if your library handles it like React
+        "jsxFactory": "reactor.createElement", // Specify your createElement function
         "allowJs": true,
     },
     "include": [
