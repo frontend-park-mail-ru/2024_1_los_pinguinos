@@ -1,4 +1,4 @@
-import { Link } from '../../../app/Router';
+// import { Link } from '../../../app/Router';
 
 const Header = () => {
     return(
@@ -7,12 +7,12 @@ const Header = () => {
                 <img src="https://via.placeholder.com/150" alt="logo" />
             </div>
             <div className="header__menu">
-                <Link to='/main'>
+                {/* <Link to='/main'> */}
                     <button className='button button--success button--m'>Главная</button>
-                </Link>
-                <Link to='/matches'>
+                {/* </Link> */}
+                {/* <Link to='/matches'> */}
                     <button className='button button--success button--m'>Мэтчи</button>
-                </Link>
+                {/* </Link> */}
                 <img src="https://via.placeholder.com/50" alt="avatar" className='header__pfp' />
                 <p className='header__paragraph'></p>
             </div>
