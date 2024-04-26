@@ -41,23 +41,9 @@ export const update = (fiber?: IFiber) => {
   }
 }
 
-export const unRender = (vnode: TElement, node: Node): void => {
-  updateRemove(rootFiber)
-}
-
-export const updateRemove = (fiber?: IFiber) => {
-    fiber.dirty = true
-    schedule(() => reconcileRemove(fiber))
-}
 
 const reconcile = (fiber?: IFiber): boolean => {
   while (fiber && !shouldYield()) fiber = capture(fiber)
-  if (fiber) return reconcile.bind(null, fiber)
-  return null
-}
-
-const reconcileRemove = (fiber?: IFiber): boolean => {
-  while (fiber && !shouldYield()) fiber = captureRemove(fiber)
   if (fiber) return reconcile.bind(null, fiber)
   return null
 }
@@ -88,21 +74,6 @@ const capture = (fiber: IFiber): IFiber | undefined => {
   return sibling
 }
 
-const captureRemove = (fiber: IFiber): IFiber | undefined => {
-  fiber.isComponent = isFunctionalElement(fiber.type)
-  if (fiber.isComponent) {
-    const memoFiber = memo(fiber)
-    if (memoFiber) {
-      return memoFiber
-    }
-    updateHookRemove(fiber)
-  } else {
-    updateHostRemove(fiber)
-  }
-  if (fiber.child) return fiber.child
-  const sibling = getSibling(fiber)
-  return sibling
-}
 
 const getSibling = (fiber: IFiber<any>) => {
   while (fiber) {
@@ -126,7 +97,6 @@ const bubble = (fiber: { isComponent: any; hooks: { effect: TEffect[] } }) => {
   }
 }
 
-
 const shouldUpdate = (oldProps: { [x: string]: any }, newProps: { [x: string]: any }) => {
   for (const prop in oldProps) if (!(prop in newProps)) return true
   for (const prop in newProps) if (oldProps[prop] !== newProps[prop]) return true
@@ -139,13 +109,6 @@ const updateHook = <IProps = IAttributes>(fiber: IFiber): any => {
   reconcileChildren(fiber, simpleVnode(children))
 }
 
-const updateHookRemove = <IProps = IAttributes>(fiber: IFiber): any => {
-  resetCursor()
-  currentFiber = fiber
-  let children = (fiber.type as IFunctionalComponent<IProps>)(fiber.props)
-  reconcileChildrenRemove(fiber, simpleVnode(children))
-}
-
 const updateHost = (fiber: IFiber): void => {
   fiber.parentNode = (getParentNode(fiber) as any) || {}
   if (!fiber.node) {
@@ -153,15 +116,6 @@ const updateHost = (fiber: IFiber): void => {
     fiber.node = createElement(fiber) as THTMLElementEx
   }
   reconcileChildren(fiber, fiber.props.children)
-}
-
-const updateHostRemove = (fiber: IFiber): void => {
-  fiber.parentNode = (getParentNode(fiber) as any) || {}
-  if (!fiber.node) {
-    if (fiber.type === 'svg') fiber.lane = TAG.SVG
-    fiber.node = createElement(fiber) as THTMLElementEx
-  }
-  reconcileChildrenRemove(fiber, fiber.props.children)
 }
 
 const simpleVnode = (type: any) =>
@@ -177,27 +131,6 @@ const reconcileChildren = (fiber: any, children: TNode): void => {
   let oldChildren = fiber.children || [],
     newChildren = (fiber.children = arrayfy(children) as any)
   const actions = diff(oldChildren, newChildren)
-
-  for (let i = 0, prev = null, len = newChildren.length; i < len; i++) {
-    const child = newChildren[i]
-    child.action = actions[i]
-    if (fiber.lane === TAG.SVG) {
-      child.lane = TAG.SVG
-    }
-    child.parent = fiber
-    if (i > 0) {
-      prev.sibling = child
-    } else {
-      fiber.child = child
-    }
-    prev = child
-  }
-}
-
-const reconcileChildrenRemove = (fiber: any, children: TNode): void => {
-  let oldChildren = fiber.children || [],
-    newChildren = (fiber.children = arrayfy(children) as any)
-  const actions = removeDiff(oldChildren, newChildren)
 
   for (let i = 0, prev = null, len = newChildren.length; i < len; i++) {
     const child = newChildren[i]
@@ -299,17 +232,27 @@ const removeDiff = (oldVDOM: any[], newVDOM: any[]) => {
   const indexOld: IndexMap = {};
   const createKey = (item: { key: any; type: any }) => item.key + item.type;
 
-  // Index the old VDOM elements by their key and type.
   oldVDOM.forEach((item: any, index: any) => {
     indexOld[createKey(item)] = index;
   });
 
-  // Loop through the old VDOM to generate REMOVE actions for each element.
   oldVDOM.forEach((item: any) => {
-    if (item !== null) { // Ensure the item isn't already marked as removed.
+    if (item !== null) {
       actions.push({ operation: 'REMOVE', currentFiber: item });
     }
   });
 
   return actions;
+};
+
+export const clearVDOM = (root: any = rootFiber): void => {
+  const removalActions = removeDiff(root.children || [], []);
+
+  removalActions.forEach(action => {
+    if (action.operation === TAG.REMOVE) {
+      removeElement(action.currentFiber);
+    }
+  });
+
+  root.children = [];
 };

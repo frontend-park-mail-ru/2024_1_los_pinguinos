@@ -1,23 +1,8 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { useState, useEffect } from '../../reactor/index';
-import { clsx } from '../../clsx/index';
-// import { Link } from '../../app/Router';
+import { Link } from '../../shared/routing/link'
 
 export const Landing = () => {
-    const [state, setState] = useState(0);
-    // const [otherState, setOtherState] = useState(0);
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            console.log('PIPIPUPU');
-            setState((c) => c + 1);
-        }, 1000);
-
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, []);
-
     return (
         <div className="landing-wrapper">
             <div className="landing__header">
@@ -32,17 +17,13 @@ export const Landing = () => {
                         jimder
                     </p>
                 </div>
-                {/* <Link to='/login'> */}
+                <Link to='/login'>
                     <button
                         className="button button--xl button--info button--link"
-                        // data-link="/login"
-                        // onClick={() => {
-                        //     setOtherState((c) => c + 2);
-                        // }}
                     >
                         войти
                     </button>
-                {/* </Link> */}
+                </Link>
             </div>
             <div className="landing__slide slide--first">
                 <img
@@ -55,16 +36,13 @@ export const Landing = () => {
                         Ты готов? Потому что они —{' '}
                         <b className="landing__title title--highlight">да</b>
                     </p>
+                    <Link to='/register'>
                     <button
-                        onClick={() => setState((c) => c + 1)}
-                        className={clsx(
-                            'button button--success button--xl',
-                            state > 10 && 'test',
-                        )}
-                        // data-link="/register"
+                        className={'button button--success button--xl'}
                     >
-                        Регистрация {state}
+                        Регистрация
                     </button>
+                    </Link>
                 </div>
             </div>
             <div className="landing__slide slide--second">

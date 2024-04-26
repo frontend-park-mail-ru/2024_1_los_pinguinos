@@ -1,4 +1,4 @@
-import { Link } from '../../../app/Router';
+import { Link } from '../../../shared/routing/link';
 
 const Header = () => {
     return(

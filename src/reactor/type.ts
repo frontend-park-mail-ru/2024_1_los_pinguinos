@@ -3,9 +3,9 @@ export interface IRefObject<T> {
 }
 export type TRef<T = any> = IRefObject<T> | null
 export interface TElement<IProps extends IAttributes = any, T = string> {
-  type: T
-  props: IProps
-  key: string
+  type?: T
+  props?: IProps
+  key?: string
 }
 export type TNode =
   | TText
