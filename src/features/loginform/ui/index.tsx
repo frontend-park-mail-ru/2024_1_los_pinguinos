@@ -1,13 +1,13 @@
-import styles from './index.css';
 import { useState} from '../../../reactor';
+// import {Link } from '../../../app/Router';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     return (
-        <div className={styles['form']}>
-            <div className={styles['form__field']}>
+        <div className={'form'}>
+            <div className={'form__field'}>
                 <label htmlFor="email">Email</label>
                 <input
                     type="email"
@@ -16,7 +16,7 @@ const LoginForm = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
-            <div className={styles['form__field']}>
+            <div className={'form__field'}>
                 <label htmlFor="password">Password</label>
                 <input
                     type="password"
@@ -25,6 +25,7 @@ const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
+            {/* <Link to={'/'}>MAIN PAGE</Link> */}
         </div>
     );
 };
