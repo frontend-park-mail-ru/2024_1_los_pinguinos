@@ -17,7 +17,7 @@ export const Landing = () => {
                         jimder
                     </p>
                 </div>
-                <Link to='/login'>
+                <Link to='/register'>
                     <button
                         className="button button--xl button--info button--link"
                     >

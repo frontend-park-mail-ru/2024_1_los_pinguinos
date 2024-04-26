@@ -74,83 +74,85 @@ export const Registeration = () => {
         <div>
             <Header />
             <div className="container">
-                {form1 && (
-                    <div className="form">
-                        <div className="form__field">
-                            <label htmlFor="name">Почта</label>
-                            <input
-                                onChange={(e) => setEmail(e.target.value)}
-                                type="text"
-                                id="email"
-                            />
-                        </div>
-                        <button onClick={from1to2}>Next</button>
+                <div
+                    style={{ display: form1 ? 'block' : 'none' }}
+                    className="form"
+                >
+                    <div className="form__field">
+                        <label htmlFor="name">Почта</label>
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            id="email"
+                        />
                     </div>
-                )}
-                {form2 && (
-                    <div className="form">
-                        <button onClick={() => console.log(234)}>Back</button>
-                        <div className="form__field">
-                            <label htmlFor="name">Имя</label>
-                            <input
-                                onChange={(e) => setName(e.target.value)}
-                                type="text"
-                                id="name"
-                            />
-                        </div>
-                        <div className="form__field">
-                            <label htmlFor="age">Возраст</label>
-                            <input
-                                onChange={(e) => setAge(e.target.value)}
-                                type="date"
-                                id="age"
-                            />
-                        </div>
-                        <div className="form__field">
-                            <label htmlFor="sex">Пол</label>
-                            <input
-                                onChange={(e) => setSex(e.target.value)}
-                                type="text"
-                                id="sex"
-                            />
-                        </div>
+                    <button onClick={from1to2}>Next</button>
+                </div>
+                <div
+                    style={{ display: form2 ? 'block' : 'none' }}
+                    className="form"
+                >
+                    <button onClick={from2to1}>Back</button>
+                    <div className="form__field">
+                        <label htmlFor="name">Имя</label>
+                        <input
+                            onChange={(e) => setName(e.target.value)}
+                            type="text"
+                            id="name"
+                        />
+                    </div>
+                    <div className="form__field">
+                        <label htmlFor="age">Возраст</label>
+                        <input
+                            onChange={(e) => setAge(e.target.value)}
+                            type="date"
+                            id="age"
+                        />
+                    </div>
+                    <div className="form__field">
+                        <label htmlFor="sex">Пол</label>
+                        <input
+                            onChange={(e) => setSex(e.target.value)}
+                            type="text"
+                            id="sex"
+                        />
+                    </div>
 
-                        <button onClick={from2to3}>Next</button>
+                    <button onClick={from2to3}>Next</button>
+                </div>
+                <div
+                    style={{ display: form3 ? 'block' : 'none' }}
+                    className="form"
+                >
+                    <button onClick={from3to2}>Back</button>
+                    <div className="form__field">
+                        <label htmlFor="name">Интересы</label>
+                        <InterestsInput
+                            interests={interests}
+                            selectedInterests={selectedInterests}
+                            setSelectedInterests={setSelectedInterests}
+                        />
                     </div>
-                )}
-                {form3 && (
-                    <div className="form">
-                        <button onClick={from3to2}>Back</button>
-                        <div className="form__field">
-                            <label htmlFor="name">Интересы</label>
-                            <InterestsInput
-                                interests={interests}
-                                selectedInterests={selectedInterests}
-                                setSelectedInterests={setSelectedInterests}
-                            />
-                        </div>
-                        <button onClick={from3to4}>Next</button>
+                    <button onClick={from3to4}>Next</button>
+                </div>
+                <div
+                    style={{ display: form4 ? 'block' : 'none' }}
+                    className="form"
+                >
+                    <button onClick={from4to3}>Back</button>
+                    <div className="form__field">
+                        <label htmlFor="name">Пароль</label>
+                        <input
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            id="password"
+                        />
                     </div>
-                )}
-                {form4 && (
-                    <div className="form">
-                        <button onClick={from4to3}>Back</button>
-                        <div className="form__field">
-                            <label htmlFor="name">Пароль</label>
-                            <input
-                                onChange={(e) => setPassword(e.target.value)}
-                                type="password"
-                                id="password"
-                            />
-                        </div>
-                        {error && (
-                            <div className="form__error">Произошла ошибка</div>
-                        )}
-                        <button onClick={registerUser}>
-                            Зарегестироваться
-                        </button>
-                    </div>
-                )}
+                    {error && (
+                        <div className="form__error">Произошла ошибка</div>
+                    )}
+                    <button onClick={registerUser}>Зарегестироваться</button>
+                </div>
             </div>
         </div>
     );
