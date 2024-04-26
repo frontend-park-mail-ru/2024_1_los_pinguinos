@@ -3,8 +3,9 @@ export interface ILink {
     children?: any,
     persistent?: boolean,
     back?: boolean,
+    className?: string,
 }
-export const Link = ({ to, children, persistent, back }: ILink) => { 
+export const Link = ({ to, children, persistent, back, className }: ILink) => { 
     const handleClick = (event: any) => { 
       event.preventDefault();
       if (back) {
@@ -19,7 +20,7 @@ export const Link = ({ to, children, persistent, back }: ILink) => {
     }; 
    
     return ( 
-      <a style='text-decoration: none' href={to} onClick={handleClick}> 
+      <a class={className} style='text-decoration: none' href={to} onClick={handleClick}> 
         {children} 
       </a> 
     ); 

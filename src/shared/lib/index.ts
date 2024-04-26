@@ -19,3 +19,31 @@ export const getAge = (dateString: string): number => {
   
     return age;
   };
+
+/**
+* Validates input according to predefined regex parameters.
+* @function
+* @param {string} type - input type
+* @param {string} input - the input itself
+* @returns {boolean} - regex validation result
+*/
+export const validateInput = (type: string, input: string): boolean => {
+    const expressions = {
+        password: /^.{8,32}$/,
+        email: /^(?=.{1,320}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        text: /^(?=.{2,32}$)[\p{L}]+$/u,
+        emoji: /^[\x20-\x7E]+$/,
+    };
+    const regexExpression = expressions[type];
+    const regexEmoji = expressions['emoji'];
+    if (type === 'text') {
+        return regexExpression.test(input);
+    }
+    if (type === 'date') {
+        const timeStamp = Date.parse(input) / 1000;
+
+        return 0 <= timeStamp && timeStamp < 1230757200;
+    }
+
+    return regexExpression.test(input) && regexEmoji.test(input);
+}
