@@ -1,21 +1,22 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-// import { useState, useEffect } from '../../reactor/index';
+import { useState, useEffect } from '../../reactor/index';
 import { clsx } from '../../clsx/index';
 import { Link } from '../../app/Router';
 
 export const Landing = () => {
-    // const [state, setState] = useState(0);
+    const [state, setState] = useState(0);
     // const [otherState, setOtherState] = useState(0);
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         setState((c) => c + 1);
-    //     }, 500);
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            console.log('PIPIPUPU');
+            setState((c) => c + 1);
+        }, 1000);
 
-    //     return () => {
-    //         clearInterval(intervalId);
-    //     };
-    // }, []);
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
 
     return (
         <div className="landing-wrapper">
@@ -55,14 +56,14 @@ export const Landing = () => {
                         <b className="landing__title title--highlight">да</b>
                     </p>
                     <button
-                        // onClick={() => setState((c) => c + 1)}
+                        onClick={() => setState((c) => c + 1)}
                         className={clsx(
                             'button button--success button--xl',
-                            // state > 10 && 'test',
+                            state > 10 && 'test',
                         )}
                         // data-link="/register"
                     >
-                        Регистрация
+                        Регистрация {state}
                     </button>
                 </div>
             </div>

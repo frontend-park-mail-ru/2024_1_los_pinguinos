@@ -14,7 +14,7 @@ import { createText, arrayfy } from './util'
 import { commit, removeElement } from './commit'
 
 let currentFiber: IFiber = null
-let rootFiber = null
+let rootFiber: any = null
 
 export const enum TAG {
   UPDATE = 'UPDATE',
@@ -105,7 +105,7 @@ const updateHook = <IProps = IAttributes>(fiber: IFiber): any => {
   resetCursor()
   currentFiber = fiber
   let children = (fiber.type as IFunctionalComponent<IProps>)(fiber.props)
-  reconcileChidren(fiber, simpleVnode(children))
+  reconcileChildren(fiber, simpleVnode(children))
 }
 
 const updateHost = (fiber: IFiber): void => {
@@ -114,7 +114,7 @@ const updateHost = (fiber: IFiber): void => {
     if (fiber.type === 'svg') fiber.lane = TAG.SVG
     fiber.node = createElement(fiber) as THTMLElementEx
   }
-  reconcileChidren(fiber, fiber.props.children)
+  reconcileChildren(fiber, fiber.props.children)
 }
 
 const simpleVnode = (type: any) =>
@@ -126,7 +126,7 @@ const getParentNode = (fiber: IFiber): HTMLElement | undefined => {
   }
 }
 
-const reconcileChidren = (fiber: any, children: TNode): void => {
+const reconcileChildren = (fiber: any, children: TNode): void => {
   let oldChildren = fiber.children || [],
     newChildren = (fiber.children = arrayfy(children) as any)
   const actions = diff(oldChildren, newChildren)

@@ -1,66 +1,116 @@
-import { useEffect, useState } from '../reactor/index';
-import { TNode, IFunctionalComponent } from '../reactor/index';
+import { render, clear } from '../reactor/index'
+/**
+ * Router class
+ * @class
+ */
+export class Router {
+    /**
+     * Creates instance of class Router.
+     * @param {Route[]} routes - list of specified routes
+     */
+    constructor(routes) {
+        this.routes = routes;
+        this.init();
+    }
+    /**
+     * Initializes DOM event listeners to capture page rerouting.
+     * @function
+     */
+    init() {
+        window.addEventListener('load', () => this.loadRoute());
+        window.addEventListener('popstate', () => this.loadRoute());
+        document.body.addEventListener('click', (e) => {
+            if (e.target.matches('[data-link]')) {
+                e.preventDefault();
+                this.navigateTo(
+                    e.target.href || e.target.getAttribute('data-link'),
+                );
+            }
+            // if (e.target.matches('[data-link-persistent]')) {
+            //     e.preventDefault();
+            //     this.redirectTo(
+            //         e.target.getAttribute('data-url') || e.target.href,
+            //     );
+            // }
+            // if (e.target.matches('[data-action]')) {
+            //     e.preventDefault();
+            //     const action = e.target.getAttribute('data-action');
+            //     if (action === 'logout') {
+            //         apiHandler.Logout();
+            //     }
+            //     if (action === 'back') {
+            //         history.back();
+            //     }
+            // }
+        });
+    }
+    /**
+     * Navigates to specified page without reload, creates new history entry
+     * @function
+     * @param {string} url - navigation url
+     */
+    navigateTo(url) {
+        history.pushState(null, null, url);
+        this.loadRoute();
+    }
+    /**
+     * Redirect to specified page without reload, does not create new history entry
+     * @function
+     * @param {string} url - redirection url
+     */
+    redirectTo(url) {
+        history.replaceState(null, null, url);
+        this.loadRoute();
+    }
+    /**
+     * Loads route components and adds them into root inner html, redirects to specified route depending on auth status
+     * @function
+     */
+    async loadRoute() {
+        const route =
+            this.routes.find((r) => r.path === location.pathname) ||
+            this.routes.find((r) => r.path === '*');
 
-type TLink = {
-    to: string;
-    children: TNode[];
-};
-export const Link = ({ to, children }: TLink) => {
-    const handleClick = (event: any) => {
-        event.preventDefault();
-        window.history.pushState(null, null, to);
-        window.dispatchEvent(new Event('popstate'));
-    };
+        if (route.protected) {
+            // if (!apiHandler.authStatus) {
+            //     this.redirectTo('/login');
 
-    return (
-        <a href={to} onClick={handleClick}>
-            {children}
-        </a>
-    );
-};
+            //     return;
+            // }
+            console.log('protected');
+        }
 
-interface IRoute {
-    path: string;
-    component: any;
+        if (route.redirectOnAuth) {
+            // if (apiHandler.authStatus) {
+            //     this.redirectTo(route.redirectOnAuth);
+
+            //     return;
+            // }
+            console.log('redirect');
+        }
+        const rootElement = document.getElementById('root');
+        if (rootElement.innerHTML !== ''){
+            clear();
+        }
+        render(<route.component />, rootElement);
+    }
 }
-
-type TRouter = {
-    routes: IRoute[];
-};
-
-export const Router = ({ routes }: TRouter) => {
-    const [currentPath, setCurrentPath] = useState(window.location.pathname);
-
-    useEffect(() => {
-        const handlePopState = () => {
-            setCurrentPath(window.location.pathname);
-        };
-        window.addEventListener('popstate', handlePopState);
-        return () => {
-          console.log('remove event listener');
-            window.removeEventListener('popstate', handlePopState);
-        };
-    }, []);
-
-    const currentRoute = routes.find((route) => route.path === currentPath);
-    return currentRoute ? currentRoute.component : <div>404</div>;
-};
-
-export const Route = ({ path, component }: IRoute) => {
-    const currentPath = window.location.pathname; // Предположим, что у вас есть хук для получения текущего пути
-
-    return path === currentPath ? <component /> : null;
-};
-
-export const ProtectedRoute = ({ path, component }: IRoute) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-    useEffect(() => {
-        // Ваша логика проверки авторизации здесь
-        // Например, проверка наличия токена аутентификации в localStorage
-        const token = localStorage.getItem('authToken');
-        setIsAuthenticated(!!token);
-    }, []);
-
-    return isAuthenticated ? <component /> : null;
-};
+/**
+ * Route class
+ * @class
+ */
+export class Route {
+    /**
+     * Creates instance of class Route.
+     * @param {string} path - request url
+     * @param {Object} component - page component
+     * @param {boolean} protect - wheter the route is protected
+     * @param {string} redirectURL - redirection url
+     */
+    constructor(path, component, protect = false, redirectURL = null) {
+        this.path = path;
+        this.component = component;
+        this.protected = protect;
+        this.redirectOnAuth = redirectURL;
+    }
+}
