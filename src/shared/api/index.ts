@@ -6,7 +6,7 @@ export async function sendRequest<T>(url: string, method: string, body?: any): P
         method,
         headers: {
             'Content-Type': 'application/json',
-            'Csrdt': localStorage.getItem('Csrdt') || 'null',
+            'Csrft': localStorage.getItem('Csrft') || 'null',
         },
         body: JSON.stringify(body),
     });

@@ -89,9 +89,9 @@ export class Router {
             console.log('redirect');
         }
         const rootElement = document.getElementById('root');
-        if (rootElement.innerHTML !== ''){
-            clear();
-        }
+        // if (rootElement.innerHTML !== ''){
+        //     clear();
+        // }
         render(<route.component />, rootElement);
     }
 }

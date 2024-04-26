@@ -2,7 +2,7 @@ import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
 import { useState, useEffect } from '../../reactor/index';
 import { clsx } from '../../clsx/index';
-import { Link } from '../../app/Router';
+// import { Link } from '../../app/Router';
 
 export const Landing = () => {
     const [state, setState] = useState(0);
