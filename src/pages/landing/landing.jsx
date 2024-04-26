@@ -2,7 +2,7 @@ import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
 // import { useState, useEffect } from '../../reactor/index';
 import { clsx } from '../../clsx/index';
-import { Link } from '../../components/Router/Router';
+// import { Link } from '../../app/Router.jsx';
 
 export const Landing = () => {
     // const [state, setState] = useState(0);
@@ -31,7 +31,7 @@ export const Landing = () => {
                         jimder
                     </p>
                 </div>
-                <Link to={'/login'}>
+                {/* <Link to={'/login'}> */}
                     <button
                         className="button button--xl button--info button--link"
                         // data-link="/login"
@@ -41,7 +41,7 @@ export const Landing = () => {
                     >
                         войти
                     </button>
-                </Link>
+                {/* </Link> */}
             </div>
             <div className="landing__slide slide--first">
                 <img

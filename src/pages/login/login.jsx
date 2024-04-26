@@ -1,72 +1,14 @@
 // import loginTemplate from './login.hbs';
 // import FormHandler from '../../components/form/formHandler.js';
 // import componentHandler from '../../components/basic/ComponentHandler.js';
-import { Landing } from '../landing/landing';
+import LoginForm from '../../features/loginform/index';
 // const formHandler = new FormHandler();
 export const Login = () => {
     return (
         <div className="wrapper">
-            <Landing />
+            <LoginForm />
         </div>
     );
-    // async render() {
-    //     const textContinue = 'Продолжить';
-    //     const formContext = {
-    //         form : {
-    //             id: 'login',
-    //             steps:
-    //             [
-    //                 {
-    //                     stepId: 'step0',
-    //                     formTitle: 'Вход',
-    //                     footerInfo: 'Нет аккаунта?',
-    //                     footerLink: '/register',
-    //                     footerLinkText: 'Регистрация',
-    //                     formNavButton: componentHandler.generateComponentContext('btn', ['form__button--nav']),
-    //                     stepButtons: [
-    //                         componentHandler.generateComponentContext('btn', ['form__button--continue'], {buttonText: textContinue, submitAction: 'login'}),
-    //                     ],
-    //                     fields: [
-    //                     {
-    //                         placeholder: 'Ваш email',
-    //                         type: 'email',
-    //                         id: 'email',
-    //                         completion: 'email',
-    //                         maxlength: 320,
-    //                     },
-    //                     {
-    //                         classes: [
-    //                             'form__input--icon',
-    //                         ],
-    //                         placeholder: 'Ваш пароль',
-    //                         type: 'password',
-    //                         id: 'password',
-    //                         completion: 'current-password',
-    //                         minlength: 8,
-    //                         maxlength: 32,
-    //                         iconButton: {
-    //                             classes: [
-    //                                 'form__button--icon',
-    //                             ],
-    //                             id: 'pswdToggle',
-    //                         },
-    //                     },
-    //                     ],
-    //                 },
-    //             ],
-    //         },
-    //     };
-
-    //     return loginTemplate(formContext);
-    // }
-
-    // /**
-    //  * Sets up page event handlers
-    //  * @function
-    //  */
-    // async controller() {
-    //     formHandler.setupDisplay(document.querySelector('.form'));
-    // }
 };
 
 export default Login;
