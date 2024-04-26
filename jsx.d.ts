@@ -6,6 +6,11 @@ declare namespace JSX {
       a: any
       div: any
       component: any
+      img: any
+      p: any
+      button: any
+      b: any
+      Link: any
     }
   }
   

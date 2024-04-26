@@ -1,13 +1,23 @@
-import styles from './index.css';
-import { useState} from '../../../reactor';
-
+import { useState } from '../../../reactor';
+import { login } from '../../../entities/session/api';
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(false);
+
+    const handleLogin = async () => {
+        try {
+            const response = await login(email, password);
+            localStorage.setItem('Csrft', response.csrft);
+            setError(false);
+        } catch (error) {
+            setError(true);
+        }
+    };
 
     return (
-        <div className={styles['form']}>
-            <div className={styles['form__field']}>
+        <div className="form">
+            <div className="form__field">
                 <label htmlFor="email">Email</label>
                 <input
                     type="email"
@@ -16,7 +26,7 @@ const LoginForm = () => {
                     onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
-            <div className={styles['form__field']}>
+            <div className="form__field">
                 <label htmlFor="password">Password</label>
                 <input
                     type="password"
@@ -25,6 +35,8 @@ const LoginForm = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
+            {error && <div className="form__error">Ошибка входа</div>}
+            <button onClick={handleLogin}>Войти</button>
         </div>
     );
 };

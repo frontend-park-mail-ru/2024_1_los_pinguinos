@@ -1,7 +1,8 @@
 // import Person from '../../model/index'
-import styles from './index.css';
+// import styles from './index.css';
 
 const Card = ({ person }) => {
+    console.log(person);
     return (
         <div className='card'>
             <div className='card__front'>
@@ -9,7 +10,7 @@ const Card = ({ person }) => {
                     <img src={person.image} alt={person.name} className='card__img-content' />
                 </div>
                 <div className='card__content'>
-                    <p className={styles['card__name']}>{person.name}, {person.age}</p>
+                    <p className='card__name'>{person.name}, {person.age}</p>
                 </div>
             </div>
             <div className='card__back'>

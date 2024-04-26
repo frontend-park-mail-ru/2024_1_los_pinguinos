@@ -1,8 +1,8 @@
-import Card from '../../../entities/person/ui/card';
+import Match from "../../../entities/person/ui/match";
 
-const CardsList = () => {
+const MatchesList = () => {
 
-    const cards = [
+    const matches = [
         {
             name: 'Иван',
             age: 25,
@@ -26,13 +26,16 @@ const CardsList = () => {
         },
     ];
 
-    return (
-        <div id='swiper'>
-            {cards.map((card, index) => (
-                <Card key={index} person={card} />
-            ))}
+    return(
+        <div className="matches">
+            <h1 className="matches__header">Ваши мэтчи</h1>
+            <div id="matches__content">
+                {matches.map((match, index) => (
+                    <Match key={index} person={match} />
+                ))}
+            </div>
         </div>
     );
 };
 
-export default CardsList;
+export default MatchesList;

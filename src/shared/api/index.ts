@@ -1,5 +1,4 @@
 import { API_URL } from "../config";
-// import { store } from "../../../index"
 
 export async function sendRequest<T>(url: string, method: string, body?: any): Promise<T> {
     const response = await fetch(`${API_URL}${url}`, {
@@ -7,7 +6,7 @@ export async function sendRequest<T>(url: string, method: string, body?: any): P
         method,
         headers: {
             'Content-Type': 'application/json',
-            // 'Csrdt': store.getState().session.token,
+            'Csrdt': localStorage.getItem('Csrdt') || 'null',
         },
         body: JSON.stringify(body),
     });
