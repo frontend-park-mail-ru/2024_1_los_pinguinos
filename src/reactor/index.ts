@@ -1,5 +1,5 @@
 export {createElement } from './util'
-export { render } from './reconcile'
+export { render, clearVDOM } from './reconcile'
 export {
   useState,
   useEffect,

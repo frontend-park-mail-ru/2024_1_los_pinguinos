@@ -1,14 +1,15 @@
-import { render, clear } from '../reactor/index'
+import { clearVDOM, render } from '../reactor/index'
 /**
  * Router class
  * @class
  */
 export class Router {
+    routes: any;
     /**
      * Creates instance of class Router.
      * @param {Route[]} routes - list of specified routes
      */
-    constructor(routes) {
+    constructor(routes: Route[]) {
         this.routes = routes;
         this.init();
     }
@@ -19,37 +20,13 @@ export class Router {
     init() {
         window.addEventListener('load', () => this.loadRoute());
         window.addEventListener('popstate', () => this.loadRoute());
-        document.body.addEventListener('click', (e) => {
-            if (e.target.matches('[data-link]')) {
-                e.preventDefault();
-                this.navigateTo(
-                    e.target.href || e.target.getAttribute('data-link'),
-                );
-            }
-            // if (e.target.matches('[data-link-persistent]')) {
-            //     e.preventDefault();
-            //     this.redirectTo(
-            //         e.target.getAttribute('data-url') || e.target.href,
-            //     );
-            // }
-            // if (e.target.matches('[data-action]')) {
-            //     e.preventDefault();
-            //     const action = e.target.getAttribute('data-action');
-            //     if (action === 'logout') {
-            //         apiHandler.Logout();
-            //     }
-            //     if (action === 'back') {
-            //         history.back();
-            //     }
-            // }
-        });
     }
     /**
      * Navigates to specified page without reload, creates new history entry
      * @function
      * @param {string} url - navigation url
      */
-    navigateTo(url) {
+    navigateTo(url: string) {
         history.pushState(null, null, url);
         this.loadRoute();
     }
@@ -58,7 +35,7 @@ export class Router {
      * @function
      * @param {string} url - redirection url
      */
-    redirectTo(url) {
+    redirectTo(url: string) {
         history.replaceState(null, null, url);
         this.loadRoute();
     }
@@ -68,30 +45,21 @@ export class Router {
      */
     async loadRoute() {
         const route =
-            this.routes.find((r) => r.path === location.pathname) ||
-            this.routes.find((r) => r.path === '*');
+            this.routes.find((r : Route) => r.path === location.pathname) ||
+            this.routes.find((r: Route) => r.path === '*');
 
         if (route.protected) {
-            // if (!apiHandler.authStatus) {
-            //     this.redirectTo('/login');
-
-            //     return;
-            // }
             console.log('protected');
         }
 
         if (route.redirectOnAuth) {
-            // if (apiHandler.authStatus) {
-            //     this.redirectTo(route.redirectOnAuth);
-
-            //     return;
-            // }
             console.log('redirect');
         }
+        // render
         const rootElement = document.getElementById('root');
-        // if (rootElement.innerHTML !== ''){
-        //     clear();
-        // }
+        if (rootElement.innerHTML != '') {
+            clearVDOM();
+        }
         render(<route.component />, rootElement);
     }
 }
@@ -100,14 +68,18 @@ export class Router {
  * @class
  */
 export class Route {
+    path: string;
+    component: Function;
+    protected: boolean;
+    redirectOnAuth: string;
     /**
      * Creates instance of class Route.
      * @param {string} path - request url
-     * @param {Object} component - page component
+     * @param {Function} component - page component
      * @param {boolean} protect - wheter the route is protected
      * @param {string} redirectURL - redirection url
      */
-    constructor(path, component, protect = false, redirectURL = null) {
+    constructor(path: string, component: Function, protect: boolean = false, redirectURL: string = null) {
         this.path = path;
         this.component = component;
         this.protected = protect;

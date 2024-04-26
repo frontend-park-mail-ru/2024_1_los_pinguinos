@@ -1,5 +1,6 @@
 import { useState } from '../../../reactor';
 import { login } from '../../../entities/session/api';
+import { Link } from '../../../shared/routing/link';
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +18,12 @@ const LoginForm = () => {
 
     return (
         <div className="form">
+            <div className='form__header'>
+                <Link back={true}>
+                    <button className={'button chevron--left'}></button>
+                </Link>
+                <p class='form__title'>Вход</p>
+            </div>
             <div className="form__field">
                 <label htmlFor="email">Email</label>
                 <input

@@ -1,7 +1,7 @@
 import { Router, Route } from './src/app/Router';
 // import Home from './src/pages/main/main.js';
 import Login from './src/pages/login/login';
-// import Register from './src/pages/register/register.js';
+import {Register} from './src/pages/register/register';
 import { Landing } from './src/pages/landing/landing';
 import { Registeration } from './src/pages/register/registr';
 
