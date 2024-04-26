@@ -36,7 +36,7 @@ export const Landing = () => {
                         Ты готов? Потому что они —{' '}
                         <b className="landing__title title--highlight">да</b>
                     </p>
-                    <Link to='/register'>
+                    <Link to='/profile'>
                     <button
                         className={'button button--success button--xl'}
                     >

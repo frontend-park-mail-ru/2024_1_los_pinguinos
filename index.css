@@ -8,6 +8,7 @@
 @import url("/src/pages/landing/landing.css");
 @import url("/src/pages/matches/components/card.scss");
 @import url("src/pages/matches/matches.scss");
+@import url('/src//shared/ui/modal/index.css');
 
 :root {
   --background--landing: url(./src/assets/background/background-landing.webp);
