@@ -36,23 +36,27 @@ class CSAT {
         let rootHTML = document.querySelector('#root');
         buttons.forEach((button) => {
             button.addEventListener('click', () => {
-                const id = button.getAttribute('id');
-                window.parent.postMessage(
-                    { command: 'trackIframeResponse', response: id },
-                    '*'
-                );
+                const q1 = button.getAttribute('id');
                 const current = shouldShowNext();
+                let id = 1;
                 if (current) {
                     if (current === 'Приложение') {
                         localStorage.setItem('appAns', 'Приложение');
+                        id = 1;
                     }
                     if (current === 'Ленту') {
                         localStorage.setItem('likeAns', 'Лента');
+                        id = 2;
                     }
                     if (current === 'Профиль') {
                         localStorage.setItem('profileAns', 'Профиль');
+                        id = 3;
                     }
                 }
+                window.parent.postMessage(
+                    { command: 'trackIframeResponse', response: q1, title: id },
+                    '*'
+                );
                 rootHTML.innerHTML = `<div class='csat'>Спасибо за ответ.</div>`;
                 setTimeout(() => {
                     const next = shouldShowNext();
