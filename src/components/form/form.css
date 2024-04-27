@@ -139,6 +139,7 @@
 
 .form__link {
     color: var(--form__text--secondary);
+    text-decoration: underline !important;
 }
 
 .form__link:focus {
@@ -475,6 +476,27 @@
     right: 30px;
     opacity: 0.5;
     transition: var(--form__item--background-image);
+}
+.eye {
+    position: absolute;
+    width: 24px;
+    aspect-ratio: 1;
+    bottom: 11.5px;
+    right: 30px;
+    opacity: 0.5;
+    transition: var(--form__item--background-image);
+}
+
+.eye:focus {
+    outline: none;
+}
+
+.eye--inv {
+    background: var(--pswd--hidden);
+}
+
+.eye--vis {
+    background: var(--pswd--visible);
 }
 
 .form__button--icon-dialog {
