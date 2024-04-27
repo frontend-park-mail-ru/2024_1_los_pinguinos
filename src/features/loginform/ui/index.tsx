@@ -2,7 +2,7 @@ import { useState } from '../../../reactor';
 import { login } from '../../../entities/session/api';
 import { Link } from '../../../shared/routing/link';
 import {clsx} from '../../../clsx/index';
-import { validateInput } from '../../../shared/lib';
+import { validateInput, togglePassword } from '../../../shared/lib';
 import { errorMessages, helpMessages } from './const';
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -47,13 +47,6 @@ const LoginForm = () => {
         }
     }
     };
-
-    const togglePswd = (event: any) => {
-        event.target.classList.toggle('eye--inv');
-        event.target.classList.toggle('eye--vis');
-        const input = event.target.closest('div').querySelector('input');
-        input.type = input.type === 'text' ? 'password' : 'text';
-    }
 
     return (
         <form class="form " id="login" onSubmit={handleLogin}>
@@ -100,7 +93,7 @@ const LoginForm = () => {
                                 class="form__button eye eye--inv"
                                 id="pswdToggle"
                                 // style="background: var(--pswd--hidden);"
-                                onclick={togglePswd}
+                                onclick={togglePassword}
                             >
                             </button>
                             <div class={clsx("field__error", !errorPswd && "any--hidden")}>{errorPswd}</div>

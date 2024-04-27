@@ -17,7 +17,7 @@ export const Landing = () => {
                         jimder
                     </p>
                 </div>
-                <Link to='/register'>
+                <Link to='/login'>
                     <button
                         className="button button--xl button--info button--link"
                     >
@@ -36,7 +36,7 @@ export const Landing = () => {
                         Ты готов? Потому что они —{' '}
                         <b className="landing__title title--highlight">да</b>
                     </p>
-                    <Link to='/profile'>
+                    <Link to='/register'>
                     <button
                         className={'button button--success button--xl'}
                     >

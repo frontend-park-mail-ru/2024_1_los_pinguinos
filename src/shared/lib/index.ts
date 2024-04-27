@@ -47,3 +47,10 @@ export const validateInput = (type: string, input: string): boolean => {
 
     return regexExpression.test(input) && regexEmoji.test(input);
 }
+
+export const togglePassword = (event: any) => {
+  event.target.classList.toggle('eye--inv');
+  event.target.classList.toggle('eye--vis');
+  const input = event.target.closest('div').querySelector('input');
+  input.type = input.type === 'text' ? 'password' : 'text';
+}

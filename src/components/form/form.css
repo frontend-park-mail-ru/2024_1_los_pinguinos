@@ -140,6 +140,11 @@
 .form__link {
     color: var(--form__text--secondary);
     text-decoration: underline !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.form__link:hover {
+    opacity: 0.5;
 }
 
 .form__link:focus {
