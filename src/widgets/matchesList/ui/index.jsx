@@ -1,30 +1,16 @@
-import Match from "../../../entities/person/ui/match";
+import Match from '../../../entities/person/ui/match';
+import { useState, useEffect } from '../../../reactor';
+import { getMatches } from '../../../entities/person/api';
 
 const MatchesList = () => {
 
-    const matches = [
-        {
-            name: 'Иван',
-            age: 25,
-            image: 'https://i.pinimg.com/originals/3b/9d/7b/3b9d7b8d0d5e1c7b4f5a5c7d9e5a4d9c.jpg',
-            description: 'Программист',
-            interests: ['Программирование', 'Музыка', 'Спорт']
-        },
-        {
-            name: 'Алексей',
-            age: 30,
-            image: 'https://i.pinimg.com/originals/3b/9d/7b/3b9d7b8d0d5e1c7b4f5a5c7d9e5a4d9c.jpg',
-            description: 'Программист',
-            interests: ['Программирование', 'Музыка', 'Спорт']
-        },
-        {
-            name: 'Александр',
-            age: 35,
-            image: 'https://i.pinimg.com/originals/3b/9d/7b/3b9d7b8d0d5e1c7b4f5a5c7d9e5a4d9c.jpg',
-            description: 'Программист',
-            interests: ['Программирование', 'Музыка', 'Спорт']
-        },
-    ];
+    const [matches, setMatches] = useState([]);
+
+    useEffect(() => {
+        getMatches().then((response) => {
+            setMatches(response);
+        });
+    }, []);
 
     return(
         <div className="matches">

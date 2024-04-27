@@ -5,11 +5,10 @@ import MailEdit from '../../widgets/mailEdit/index';
 import PasswordEdit from '../../widgets/passwordEdit';
 import InterestsEdit from '../../widgets/interestsEdit';
 import PhotoEdit from '../../widgets/photoEdit';
+import DescriptionEdit from '../../widgets/decriptionEdit/ui';
 
 export const ProfilePage = () => {
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [interests, setInterests] = useState([]);
+
     const [isProfile, setIsProfile] = useState(true);
     const [isSecurity, setIsSecurity] = useState(false);
 
@@ -30,16 +29,7 @@ export const ProfilePage = () => {
                             <InterestsEdit />
                         </div>
                         <div className="profile__description">
-                            <div className="profile__description-header">
-                                <h2>О себе</h2>
-                                <button>Редактировать</button>
-                            </div>
-                            <div className="profile__description-text">
-                                <p>
-                                    Меня зовут Иван, мне 25 лет. Люблю игры и
-                                    музыку.
-                                </p>
-                            </div>
+                            <DescriptionEdit />
                         </div>
                     </div>
                     <div

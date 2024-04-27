@@ -4,7 +4,7 @@
 const Card = ({ person }) => {
     console.log(person);
     return (
-        <div className='card'>
+        <div id={person.id} className='card'>
             <div className='card__front'>
                 <div className='card__image'>
                     <img src={person.image} alt={person.name} className='card__img-content' />
