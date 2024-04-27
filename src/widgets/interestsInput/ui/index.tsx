@@ -13,18 +13,14 @@ const InterestsInput = ( { interests, selectedInterests, setSelectedInterests} )
       };
 
     return (
-        <div className="interests-input">
-            <div>
-                {interests.map((interest, index) => (
+                interests.map((interest, index) => (
                     <InterestButton
                         key={index}
                         interest={interest}
                         isActive={selectedInterests.includes(interest)}
                         onClick={toggleInterest}
                     />
-                ))}
-            </div>
-        </div>
+                ))
     );
 };
 

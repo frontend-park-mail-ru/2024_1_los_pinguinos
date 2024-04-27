@@ -2,35 +2,50 @@ import { useState } from '../../../reactor';
 import { login } from '../../../entities/session/api';
 import { Link } from '../../../shared/routing/link';
 import {clsx} from '../../../clsx/index';
-import { validateInput } from '../../../shared/lib';
+import { validateInput, togglePassword } from '../../../shared/lib';
 import { errorMessages, helpMessages } from './const';
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorForm, setErrorForm] = useState({});
-    const [errorEmail, setErrorEmail] = useState(null);
-    const [errorPswd, setErrorPswd] = useState(null);
+    const [errorForm, setErrorForm] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPswd, setErrorPswd] = useState('');
 
     const handleLogin = async (event: any) => {
+        const pswd = document.getElementById('password');
+        pswd.type = 'password';
+        setErrorForm((err) => err.replace(helpMessages.login, ''));
         event.preventDefault();
-        if (!validateInput('password', password)) {
-            console.log('INVALID PASSWD', password);
-            setErrorPswd(errorMessages.password);
-            setErrorForm(err => {err.password = helpMessages.password});
+        const validPswd = validateInput('password', password);
+        const validEmail = validateInput('email', email); 
+        if (!validPswd) {
+            if (!errorForm.includes(helpMessages.password)){
+                setErrorPswd(errorMessages.password);
+                setErrorForm((err) => err + '\n' + helpMessages.password);
+            }
         }
-        if (!validateInput('email', email)) {
+        else {
+            setErrorPswd('');
+            setErrorForm((err) => err.replace(helpMessages.password, ''));
+        }
+        if (!validEmail) {
+            if (!errorForm.includes(helpMessages.email)) {
             setErrorEmail(errorMessages.email);
-            setErrorForm(err => {err.email = helpMessages.email});
+            setErrorForm((err) => err + '\n' + helpMessages.email);
+            }
         }
-        // if (!errorEmail && !errorPswd) {
-        //     try {
-        //         const response = await login(email, password);
-        //         localStorage.setItem('Csrft', response.csrft);
-        //         setErrorForm(false);
-        //     } catch (error) {
-        //         setErrorForm(true);
-        //     }
-        // }
+        else {
+            setErrorEmail('');
+            setErrorForm((err) => err.replace(helpMessages.email, ''));
+        }
+        if (validPswd && validEmail) {
+        try {
+            const response = await login(email, password);
+            localStorage.setItem('Csrft', response.csrft);
+        } catch (error) {
+            setErrorForm(helpMessages.login);
+        }
+    }
     };
 
     return (
@@ -75,10 +90,10 @@ const LoginForm = () => {
                             />
                             <button
                                 type="button"
-                                class="form__button form__button--icon"
+                                class="form__button eye eye--inv"
                                 id="pswdToggle"
                                 // style="background: var(--pswd--hidden);"
-                                // onclick={togglePassword}
+                                onclick={togglePassword}
                             >
                             </button>
                             <div class={clsx("field__error", !errorPswd && "any--hidden")}>{errorPswd}</div>
@@ -107,7 +122,7 @@ const LoginForm = () => {
                     </p>
                 </div>
             </div>
-            <div class={clsx("form__error", (Object.keys(errorForm).length === 0) && "any--hidden")}>error occured</div>
+            <div class={clsx("form__error", !errorForm && "any--hidden")}>{errorForm}</div>
         </form>
     );
 };
