@@ -1,7 +1,7 @@
 import router from '../../index.js';
 import { store } from '../../index.js';
 
-const localhost = 'http://127.0.0.1:8080';
+const localhost = 'http://localhost:8080';
 const vm = 'https://api.jimder.ru';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
@@ -17,6 +17,7 @@ const matchesURL = baseURL + apiURL + '/matches';
 const likeURL = baseURL + apiURL + '/like';
 const dislikeURL = baseURL + apiURL + '/dislike';
 const removeImageURL = baseURL + apiURL + '/deleteImage';
+const rateURL = baseURL + apiURL + '/rate';
 /**
  * APIHandler class
  * @class
@@ -39,6 +40,7 @@ class APIHandler {
         this.matchesURL = matchesURL;
         this.likeURL = likeURL;
         this.dislikeURL = dislikeURL;
+        this.rateURL = rateURL;
         this.removeImageURL = removeImageURL;
         this.authStatus = null;
         this.CSRFToken = null;
@@ -260,6 +262,10 @@ class APIHandler {
      */
     async DislikeCard(id) {
         return await this.sendRequest(this.dislikeURL, { id }, 'POST');
+    }
+
+    async sendRate(rate) {
+        return await this.sendRequest(this.rateURL, { rate }, 'POST');
     }
 }
 
