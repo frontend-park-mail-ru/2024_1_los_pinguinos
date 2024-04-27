@@ -1,0 +1,21 @@
+{{> components/header/header authState=1}}
+<div class="wrapper">
+    <div class="question-stat">
+    <div class="question-stat__row">
+        <p class="stat__text stat__text--header">Фича</p>
+        <p class="stat__text stat__text--header">Avg</p>
+        <p class="stat__text stat__text--header">😡</p>
+        <p class="stat__text stat__text--header">🙁</p>
+        <p class="stat__text stat__text--header">😐</p>
+        <p class="stat__text stat__text--header">🙂</p>
+        <p class="stat__text stat__text--header">🤩</p>
+    </div>
+    {{#each questions}}
+        <div class="question-stat__row">
+            {{#each this}}
+                <p class="stat__text">{{this}}</p>
+            {{/each}}
+        </div>
+    {{/each}}
+    </div>
+</div>

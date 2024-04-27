@@ -1,0 +1,25 @@
+.question-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 80%;
+    background-color: rgba(0, 0, 0, 0.4);
+    max-height: 500px;
+    overflow: auto;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.question-stat__row {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.stat__text {
+    color: var(--color__light--primary);
+}
+
+.stat__text--header {
+    font-size: x-large;
+}

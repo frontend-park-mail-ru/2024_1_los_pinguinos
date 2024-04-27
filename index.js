@@ -6,12 +6,23 @@ import Register from './src/pages/register/register.js';
 import Landing from './src/pages/landing/landing.js';
 import error404 from './src/pages/404/404.js';
 import Profile from './src/pages/profile/profile.js';
-import CSAT from './src/pages/csat/csat.js';
+import CSAT, { shouldShowNext } from './src/pages/csat/csat.js';
 import './index.css';
 import Matches from './src/pages/matches/matches.js';
 import { createStote } from './src/store/redux-kids.js';
 import { userReducer } from './src/models/user/reduser.js';
+import apiHandler from './src/api/apiHandler.js';
+import CSATOverview from './src/pages/csatOverview/csatOverview.js';
 
+localStorage.setItem('usercsat', {
+    countLikes: 0,
+    answered: {
+        likes: null,
+        app: null,
+        profile: null,
+    },
+    profileAccess: null,
+});
 // let channel = null;
 // if (typeof navigator.serviceWorker !== 'undefined') {
 //     window.addEventListener('load', () => {
@@ -34,6 +45,18 @@ import { userReducer } from './src/models/user/reduser.js';
 // }
 // export { channel };
 
+window.addEventListener('message', (event) => {
+    if (event.data.command === 'closeIframe') {
+        const iframe = document.getElementById('yourIframeId');
+        if (iframe) {
+            iframe.parentNode.removeChild(iframe);
+        }
+    }
+    if (event.data.command === 'trackIframeResponse') {
+        apiHandler.sendRate(event.data.response);
+    }
+});
+
 const store = createStote(userReducer);
 export { store };
 
@@ -46,6 +69,7 @@ const routes = [
     new Route('/matches', new Matches(), true),
     new Route('/offline', new error404(true)),
     new Route('/csat__r0ut3', new CSAT(), true),
+    new Route('/csat', new CSATOverview(), true),
     new Route('*', new error404()),
 ];
 

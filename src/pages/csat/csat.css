@@ -3,8 +3,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background: var(--color__light--primary);
     padding: 10px 20px;
+    min-height: 155px;
 }
 .csat__ratings {
     display: flex;
@@ -26,6 +28,10 @@
     position: absolute;
     top: 10px;
     left: 10px;
+}
+
+.csat__closer:hover {
+    opacity: 0.5;
 }
 
 .iframe__csat {

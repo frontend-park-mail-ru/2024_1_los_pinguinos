@@ -2,6 +2,7 @@
 @import url(./src/pages//csat/csat.css);
 @import url(./src/pages/404/404.css);
 @import url(./src/components/profile/profile.css);
+@import url(src/pages/csatOverview/csatOverview.css);
 @import url("/src/pages/main/main.css");
 @import url("/src/components/navbar/navbar.css");
 @import url("/src/components/header/header.css");
@@ -19,6 +20,7 @@
   --background--404: url(./background-404.webp);
   --background--offline: url(./background-404.webp);
   --background--matches: url(./background-main.webp);
+  --background--csat: url(./background-main.webp);
 }
 
 * {
