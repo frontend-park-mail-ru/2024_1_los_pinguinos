@@ -2,8 +2,8 @@ import router from '../../index.js';
 import { store } from '../../index.js';
 
 const localhost = 'http://127.0.0.1:8080';
-const localhostAuth = 'http://127.0.0.1:8081';
-const localhostCSAT = 'http://127.0.0.1:8082';
+const localhostAuth = 'http://185.241.192.216:8081';
+const localhostCSAT = 'http://185.241.192.216:8082';
 const vm = 'https://api.jimder.ru';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
@@ -270,12 +270,8 @@ class APIHandler {
         return await this.sendRequest(this.dislikeURL, { id }, 'POST');
     }
 
-    async sendRate(rate, id) {
-        return await this.sendRequest(
-            this.createRateURL,
-            { q1: rate, title: id },
-            'POST'
-        );
+    async sendRate(rate) {
+        return await this.sendRequest(this.createRateURL, { q1: rate }, 'POST');
     }
     async getRates() {
         return await this.sendRequest(this.rateURL, 'GET');
