@@ -270,8 +270,12 @@ class APIHandler {
         return await this.sendRequest(this.dislikeURL, { id }, 'POST');
     }
 
-    async sendRate(rate) {
-        return await this.sendRequest(this.createRateURL, { q1: rate }, 'POST');
+    async sendRate(rate, id) {
+        return await this.sendRequest(
+            this.createRateURL,
+            { q1: rate, title: id },
+            'POST'
+        );
     }
     async getRates() {
         return await this.sendRequest(this.rateURL, 'GET');

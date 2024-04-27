@@ -53,7 +53,7 @@ window.addEventListener('message', (event) => {
         }
     }
     if (event.data.command === 'trackIframeResponse') {
-        apiHandler.sendRate(event.data.response);
+        apiHandler.sendRate(event.data.response, event.data.title);
     }
 });
 
