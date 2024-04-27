@@ -83,7 +83,15 @@ class Home {
     const swiper = document.querySelector('#swiper');
     const card = swiper.querySelector('.card');
     const index = parseInt(card.getAttribute('index'));
-    apiHandler.DislikeCard(index);
+    apiHandler.DislikeCard(index)
+    .then((response) => {
+      console.log(response);
+      if (response.data == 0) {
+        console.log('notification');
+        const notification = document.querySelector('.csat');
+        notification.style.display = 'block';
+      }
+    });
     setTimeout(() => {
       card.remove();
     }, 300);
