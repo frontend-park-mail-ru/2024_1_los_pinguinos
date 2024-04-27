@@ -12,27 +12,27 @@ import Matches from './src/pages/matches/matches.js';
 import { createStote } from './src/store/redux-kids.js';
 import { userReducer } from './src/models/user/reduser.js';
 
-let channel = null;
-if (typeof navigator.serviceWorker !== 'undefined') {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js');
-    });
-    channel = new BroadcastChannel('sw-messages');
-    channel.addEventListener('message', (event) => {
-        if (event.data.offline && !navigator.onLine) {
-            router.redirectTo('/offline');
-        }
-    });
-    window.addEventListener('error', (event) => {
-        channel.postMessage({
-            type: 'ERROR_OCCURRED',
-            message: event.message,
-            filename: event.filename,
-            lineno: event.lineno,
-        });
-    });
-}
-export { channel };
+// let channel = null;
+// if (typeof navigator.serviceWorker !== 'undefined') {
+//     window.addEventListener('load', () => {
+//         navigator.serviceWorker.register('/sw.js');
+//     });
+//     channel = new BroadcastChannel('sw-messages');
+//     channel.addEventListener('message', (event) => {
+//         if (event.data.offline && !navigator.onLine) {
+//             router.redirectTo('/offline');
+//         }
+//     });
+//     window.addEventListener('error', (event) => {
+//         channel.postMessage({
+//             type: 'ERROR_OCCURRED',
+//             message: event.message,
+//             filename: event.filename,
+//             lineno: event.lineno,
+//         });
+//     });
+// }
+// export { channel };
 
 const store = createStote(userReducer);
 export { store };
