@@ -8,19 +8,19 @@ const vm = 'https://api.jimder.ru';
 const apiV1 = '/api/v1';
 const apiURL = apiV1;
 const baseURL = localhost;
-const registrationURL = baseURL + apiURL + '/registration';
-const authenticationURL = baseURL + apiURL + '/login';
-const logoutURL = baseURL + apiURL + '/logout';
-const isAuthURL = baseURL + apiURL + '/isAuth';
+const registrationURL = localhostAuth + apiURL + '/registration';
+const authenticationURL = localhostAuth + apiURL + '/login';
+const logoutURL = localhostAuth + apiURL + '/logout';
+const isAuthURL = localhostAuth + apiURL + '/isAuth';
 const cardsURL = baseURL + apiURL + '/cards';
-const profileURL = baseURL + apiURL + '/profile';
+const profileURL = localhostAuth + apiURL + '/profile';
 const imageURL = baseURL + apiURL + '/addImage';
 const matchesURL = baseURL + apiURL + '/matches';
 const likeURL = baseURL + apiURL + '/like';
 const dislikeURL = baseURL + apiURL + '/dislike';
 const removeImageURL = baseURL + apiURL + '/deleteImage';
-const rateURL = localhostCSAT + apiURL + '/rate';
-const createRateURL = localhostCSAT + apiURL + '/createrate';
+const rateURL = localhostCSAT + apiURL + '/getStat';
+const createRateURL = localhostCSAT + apiURL + '/createRate';
 /**
  * APIHandler class
  * @class
