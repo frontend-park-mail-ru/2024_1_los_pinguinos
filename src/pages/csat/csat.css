@@ -1,0 +1,21 @@
+.csat {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.csat__ratings {
+    display: flex;
+    gap: 10px;
+    width: auto;
+}
+
+.csat__footer {
+    display: flex;
+    gap: 300px;
+    justify-content: space-between;
+}
+
+.csat__title {
+    font-size: xx-large;
+}
