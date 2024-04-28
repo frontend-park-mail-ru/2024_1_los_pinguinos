@@ -1,8 +1,18 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { Link } from '../../shared/routing/link'
+import { Link } from '../../shared/routing/link';
+import { useEffect } from '../../reactor/index';
 
 export const Landing = () => {
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('hehe');
+        }, 1000);
+        return () => {
+            clearInterval(interval);
+            console.log('not hehe anymore huh?');
+        };
+    });
     return (
         <div className="landing-wrapper">
             <div className="landing__header">
@@ -17,10 +27,8 @@ export const Landing = () => {
                         jimder
                     </p>
                 </div>
-                <Link to='/login'>
-                    <button
-                        className="button button--xl button--info button--link"
-                    >
+                <Link to="/login">
+                    <button className="button button--xl button--info button--link">
                         войти
                     </button>
                 </Link>
@@ -36,12 +44,10 @@ export const Landing = () => {
                         Ты готов? Потому что они —{' '}
                         <b className="landing__title title--highlight">да</b>
                     </p>
-                    <Link to='/register'>
-                    <button
-                        className={'button button--success button--xl'}
-                    >
-                        Регистрация
-                    </button>
+                    <Link to="/register">
+                        <button className={'button button--success button--xl'}>
+                            Регистрация
+                        </button>
                     </Link>
                 </div>
             </div>

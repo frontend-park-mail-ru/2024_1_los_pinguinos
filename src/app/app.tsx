@@ -3,15 +3,15 @@ import { Landing } from '../pages/landing/landing';
 import { Login } from '../pages/login/login';
 import MainPage from '../pages/main/main';
 import MatchesPage from '../pages/matches/matches';
-export const Application = () => {
+import { Register } from '../pages/register/register';
+const App = () => {
     return (
-        <Router
-            routes={[
-                { path: '/', component: <Landing /> },
-                { path: '/login', component: <Login /> },
-                { path: '/main', component: <MainPage /> },
-                { path: '/matches', component: <MatchesPage /> },
-            ]}
-        />
+        <Router>
+            <Route path="/" component={Landing} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+        </Router>
     );
 };
+
+export default App;
