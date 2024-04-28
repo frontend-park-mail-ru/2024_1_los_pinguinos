@@ -10,7 +10,7 @@ export const Route = ({ path, component }: IRoute) => {
     return path === window.location.pathname ? component : null;
 };
 
-export const Router = ({ routes }: any) => {
+export const Router = ({ children: routes }: any) => {
     console.log(routes);
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
