@@ -4,6 +4,8 @@ import { Login } from '../pages/login/login';
 import MainPage from '../pages/main/main';
 import MatchesPage from '../pages/matches/matches';
 import { Register } from '../pages/register/register';
+import { Button } from '../shared/ui/button/button';
+
 const App = () => {
     return (
         <Router>

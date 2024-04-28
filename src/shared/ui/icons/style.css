@@ -1,0 +1,103 @@
+@font-face {
+  font-family: 'jimder-icons';
+  src: url('./jimder-icons.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'jimder-icons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-ban:before {
+  content: "\e900";
+}
+.icon-search:before {
+  content: "\e901";
+}
+.icon-box-arrow-right:before {
+  content: "\e902";
+}
+.icon-box-arrow-left:before {
+  content: "\e903";
+}
+.icon-eye:before {
+  content: "\e904";
+}
+.icon-eye-slash:before {
+  content: "\e905";
+}
+.icon-pencil-fill:before {
+  content: "\e906";
+}
+.icon-pencil-square:before {
+  content: "\e907";
+}
+.icon-x:before {
+  content: "\e908";
+}
+.icon-trash3-fill:before {
+  content: "\e909";
+}
+.icon-trash-fill:before {
+  content: "\e90a";
+}
+.icon-three-dots-vertical:before {
+  content: "\e90b";
+}
+.icon-tags:before {
+  content: "\e90c";
+}
+.icon-tags-fill:before {
+  content: "\e90d";
+}
+.icon-question:before {
+  content: "\e90e";
+}
+.icon-pin-map-fill:before {
+  content: "\e90f";
+}
+.icon-pin-map:before {
+  content: "\e910";
+}
+.icon-person-circle:before {
+  content: "\e911";
+}
+.icon-person:before {
+  content: "\e912";
+}
+.icon-person-fill:before {
+  content: "\e913";
+}
+.icon-gear:before {
+  content: "\e914";
+}
+.icon-gear-fill:before {
+  content: "\e915";
+}
+.icon-cursor:before {
+  content: "\e916";
+}
+.icon-cursor-fill:before {
+  content: "\e917";
+}
+.icon-chevron-left:before {
+  content: "\e918";
+}
+.icon-check-all:before {
+  content: "\e919";
+}
+.icon-check:before {
+  content: "\e91a";
+}

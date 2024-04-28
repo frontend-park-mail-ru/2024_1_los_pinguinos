@@ -1,51 +1,49 @@
 import { useState } from '../../../reactor';
 import { login } from '../../../entities/session/api';
 import { Link } from '../../../shared/routing/link';
-import {clsx} from '../../../clsx/index';
+import { clsx } from '../../../clsx/index';
 import { validateInput, togglePassword } from '../../../shared/lib';
 import { errorMessages, helpMessages } from './const';
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordType, setPasswordType] = useState('password');
     const [errorForm, setErrorForm] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPswd, setErrorPswd] = useState('');
 
     const handleLogin = async (event: any) => {
-        const pswd = document.getElementById('password');
-        pswd.type = 'password';
+        setPasswordType('password');
         setErrorForm((err) => err.replace(helpMessages.login, ''));
         event.preventDefault();
         const validPswd = validateInput('password', password);
-        const validEmail = validateInput('email', email); 
+        const validEmail = validateInput('email', email);
         if (!validPswd) {
-            if (!errorForm.includes(helpMessages.password)){
+            if (!errorForm.includes(helpMessages.password)) {
                 setErrorPswd(errorMessages.password);
                 setErrorForm((err) => err + '\n' + helpMessages.password);
             }
-        }
-        else {
+        } else {
             setErrorPswd('');
             setErrorForm((err) => err.replace(helpMessages.password, ''));
         }
         if (!validEmail) {
             if (!errorForm.includes(helpMessages.email)) {
-            setErrorEmail(errorMessages.email);
-            setErrorForm((err) => err + '\n' + helpMessages.email);
+                setErrorEmail(errorMessages.email);
+                setErrorForm((err) => err + '\n' + helpMessages.email);
             }
-        }
-        else {
+        } else {
             setErrorEmail('');
             setErrorForm((err) => err.replace(helpMessages.email, ''));
         }
         if (validPswd && validEmail) {
-        try {
-            const response = await login(email, password);
-            localStorage.setItem('Csrft', response.csrft);
-        } catch (error) {
-            setErrorForm(helpMessages.login);
+            try {
+                const response = await login(email, password);
+                localStorage.setItem('Csrft', response.csrft);
+            } catch (error) {
+                setErrorForm(helpMessages.login);
+            }
         }
-    }
     };
 
     return (
@@ -73,20 +71,31 @@ const LoginForm = () => {
                                 maxlength="320"
                                 autocomplete="email"
                                 placeholder="Ваш email"
-                                onInput={(event: any) => {setEmail(event.target.value);}}
+                                onInput={(event: any) => {
+                                    setEmail(event.target.value);
+                                }}
                             />
-                            <div class={clsx("field__error", !errorEmail && "any--hidden")}>{errorEmail}</div>
+                            <div
+                                class={clsx(
+                                    'field__error',
+                                    !errorEmail && 'any--hidden',
+                                )}
+                            >
+                                {errorEmail}
+                            </div>
                         </div>
                         <div class="form__field">
                             <input
                                 class="form__input form__input--icon"
                                 id="password"
-                                type="password"
+                                type={passwordType}
                                 minlength="8"
                                 maxlength="32"
                                 autocomplete="current-password"
                                 placeholder="Ваш пароль"
-                                onInput={(event: any) => {setPassword(event.target.value);}}
+                                onInput={(event: any) => {
+                                    setPassword(event.target.value);
+                                }}
                             />
                             <button
                                 type="button"
@@ -94,9 +103,15 @@ const LoginForm = () => {
                                 id="pswdToggle"
                                 // style="background: var(--pswd--hidden);"
                                 onclick={togglePassword}
+                            ></button>
+                            <div
+                                class={clsx(
+                                    'field__error',
+                                    !errorPswd && 'any--hidden',
+                                )}
                             >
-                            </button>
-                            <div class={clsx("field__error", !errorPswd && "any--hidden")}>{errorPswd}</div>
+                                {errorPswd}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,7 +137,9 @@ const LoginForm = () => {
                     </p>
                 </div>
             </div>
-            <div class={clsx("form__error", !errorForm && "any--hidden")}>{errorForm}</div>
+            <div class={clsx('form__error', !errorForm && 'any--hidden')}>
+                {errorForm}
+            </div>
         </form>
     );
 };

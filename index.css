@@ -1,6 +1,8 @@
 @import url(./src/components/form/form.css);
 @import url(./src/pages/404/404.css);
 @import url(./src/components/profile/profile.css);
+@import url(./src/shared/ui/icons/style.css);
+@import url(./src/shared/ui/button/button.css);
 @import url("/src/pages/main/index.css");
 @import url("/src/widgets/navbar/navbar.css");
 @import url("/src/widgets/header/header.css");
@@ -19,6 +21,15 @@
   --background--404: url(./src/assets/background/background-404.webp);
   --background--offline: url(./src/assets/background/background-404.webp);
   --background--matches: url(./src/assets/background/background-main.webp);
+  --color__light--primary: #FFFFFF;
+  --color__light--secondary: #BBBBBB;
+  --color__dark--primary: #000000;
+  --color__dark--secondary: #5d5d5d;
+  --color__danger--primary: #EA5B5B;
+  --color__success--primary: #7DE85A;
+  --color__success--secondary: #1ED760;
+  --color__success--outline: #169C46;
+  --transition--default: all 0.2s ease-in-out;
 }
 
 * {

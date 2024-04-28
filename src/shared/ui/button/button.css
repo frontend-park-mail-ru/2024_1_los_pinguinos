@@ -1,0 +1,106 @@
+.button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    background: transparent;
+    border: transparent;
+    cursor: pointer;
+    height: 50px;
+    width: fit-content;
+    padding: 0 40px;
+    border-radius: 80px;
+    transition: var(--transition--default);
+}
+
+.button:focus {
+    outline: medium solid;
+}
+
+.button--success {
+    color: var(--color__dark--primary);
+    background-color: var(--color__success--primary);
+}
+
+.button--success:hover {
+    background-color: var(--color__success--secondary);
+}
+
+.button--success:focus {
+    outline-color: var(--color__success--outline);
+}
+
+.button--info {
+    color: var(--color__dark--primary);
+    background-color: var(--color__light--primary);
+}
+
+.button--danger {
+    color: var(--color__light--primary);
+    background-color: var(--color__danger--primary);
+}
+
+.button--info:hover {
+    color: var(--color__dark--primary);
+    background-color: var(--color__success--primary);
+}
+
+.button--info:focus {
+    outline-color: var(--color__success--outline);
+}
+
+.button--disabled {
+    cursor:initial;
+    pointer-events: none;
+    opacity: 0.6;
+}
+.button__label--disabled {
+    user-select: none;
+}
+/* .button--disabled:focus {
+    outline-color: var(--color__dark--primary);
+} */
+
+/* .button--m {
+    font-size: medium;
+    font-weight: 600;
+} */
+
+/* .button--l {
+    font-size: large;
+    font-weight: 700;
+} */
+
+.button__label--m {
+    font-size: medium;
+    font-weight: 600;
+}
+
+.button__label--l {
+    font-size: large;
+    font-weight: 700;
+}
+
+.button__label--xl {
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.button--xl {
+    /* font-size: x-large;
+    font-weight: 700; */
+    padding: 0 40px;
+    height: 70px;
+}
+
+@media only screen and (max-width: 350px) {
+    .button--xl {
+        /* font-size: large; */
+        height: 50px;
+        padding: 0 20px;
+    }
+    .button__label--xl {
+        font-size: large;
+    }
+}

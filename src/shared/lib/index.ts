@@ -4,29 +4,29 @@ export function getAuthorizationToken() {
 }
 
 /**
-* Возвращает возраст по дате рождения
-* @param {string} dateString - дата рождения в формате 'YYYY-MM-DD'
-* @returns {number} - возраст
-*/
+ * Возвращает возраст по дате рождения
+ * @param {string} dateString - дата рождения в формате 'YYYY-MM-DD'
+ * @returns {number} - возраст
+ */
 export const getAge = (dateString: string): number => {
     const today = new Date();
     const birthDate = new Date(dateString);
     let age = today.getFullYear() - birthDate.getFullYear();
     const month = today.getMonth() - birthDate.getMonth();
     if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+        age--;
     }
-  
+
     return age;
-  };
+};
 
 /**
-* Validates input according to predefined regex parameters.
-* @function
-* @param {string} type - input type
-* @param {string} input - the input itself
-* @returns {boolean} - regex validation result
-*/
+ * Validates input according to predefined regex parameters.
+ * @function
+ * @param {string} type - input type
+ * @param {string} input - the input itself
+ * @returns {boolean} - regex validation result
+ */
 export const validateInput = (type: string, input: string): boolean => {
     const expressions = {
         password: /^.{8,32}$/,
@@ -46,11 +46,11 @@ export const validateInput = (type: string, input: string): boolean => {
     }
 
     return regexExpression.test(input) && regexEmoji.test(input);
-}
+};
 
 export const togglePassword = (event: any) => {
-  event.target.classList.toggle('eye--inv');
-  event.target.classList.toggle('eye--vis');
-  const input = event.target.closest('div').querySelector('input');
-  input.type = input.type === 'text' ? 'password' : 'text';
-}
+    event.target.classList.toggle('eye--inv');
+    event.target.classList.toggle('eye--vis');
+    const input = event.target.closest('div').querySelector('input');
+    input.type = input.type === 'text' ? 'password' : 'text';
+};
