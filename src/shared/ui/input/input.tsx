@@ -10,7 +10,7 @@ export type TInput = {
     label?: string;
     name?: string;
     disabled?: boolean;
-    onChange?: (event: any) => void;
+    onInput?: (event: any) => void;
     value?: string;
     size?: TSize;
     minlength?: number;
@@ -36,7 +36,7 @@ export const Input = ({
     label,
     name,
     disabled,
-    onChange,
+    onInput,
     value,
     size,
     minlength,
@@ -45,27 +45,24 @@ export const Input = ({
 }: TInput) => {
     const [currentType, setCurrentType] = useState(type);
     const [currentIcon, setCurrentIcon] = useState(icon);
+    const togglePasswordVisibility = () => {
+        setCurrentType((currentType) =>
+            currentType === 'text' ? 'password' : 'text',
+        );
+        setCurrentIcon((currentIcon) =>
+            currentIcon === 'icon-eye-slash' ? 'icon-eye' : 'icon-eye-slash',
+        );
+    };
     return (
-        <div class="input-container">
+        <div className={clsx('input-container', disabled && 'any--disabled')}>
             <span
-                // className={clsx(
-                //     'input__icon',
-                //     getClassBySize('input__icon', size),
-                //     currentIcon,
-                //     !currentIcon && 'any--none',
-                // )}
-                className={`input__icon input__icon--m ${currentIcon}`}
-                onClick={() => {
-                    setCurrentType((currentType) => {
-                        return currentType === 'text' ? 'password' : 'text';
-                    });
-                    setCurrentIcon((currentIcon) => {
-                        return currentIcon === 'icon-eye-slash'
-                            ? 'icon-eye'
-                            : 'icon-eye-slash';
-                    });
-                    console.log('sdadas');
-                }}
+                className={clsx(
+                    'input__icon',
+                    getClassBySize('input__icon', size),
+                    currentIcon,
+                    !currentIcon && 'any--none',
+                )}
+                onClick={togglePasswordVisibility}
             ></span>
             <label
                 className={clsx(
@@ -84,15 +81,11 @@ export const Input = ({
                 autoFocus={autofocus}
                 autoComplete={autocomplete}
                 disabled={disabled}
-                onChange={onChange}
+                onInput={onInput}
                 value={value}
                 minLength={minlength}
                 maxLength={maxlength}
-                className={clsx(
-                    'input',
-                    getClassBySize('input', size),
-                    disabled && 'any--disabled',
-                )}
+                className={clsx('input', getClassBySize('input', size))}
             />
         </div>
     );
