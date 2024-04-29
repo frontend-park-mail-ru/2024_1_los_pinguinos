@@ -1,20 +1,8 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { Link } from '../../shared/routing/link';
-import { useEffect } from '../../reactor/index';
-import { Button } from '../../shared/ui/button/button';
 import { ButtonLink } from '../../shared/ui/button/buttonLink';
 
 export const Landing = () => {
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         console.log('hehe');
-    //     }, 1000);
-    //     return () => {
-    //         clearInterval(interval);
-    //         console.log('not hehe anymore huh?');
-    //     };
-    // });
     return (
         <div className="landing-wrapper">
             <div className="landing__header">
@@ -34,7 +22,6 @@ export const Landing = () => {
                     fontSize="xl"
                     severity="info"
                     label="войти"
-                    // disabled={true}
                 />
             </div>
             <div className="landing__slide slide--first">
@@ -54,7 +41,6 @@ export const Landing = () => {
                         size="xl"
                         fontSize="xl"
                         label="Регистрация"
-                        disabled={true}
                     />
                 </div>
             </div>

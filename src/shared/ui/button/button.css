@@ -50,14 +50,12 @@
     outline-color: var(--color__success--outline);
 }
 
-.button--disabled {
+.any--disabled {
     cursor:initial;
     pointer-events: none;
     opacity: 0.6;
-}
-.button__label--disabled {
     user-select: none;
-}
+} /* move to basic */
 /* .button--disabled:focus {
     outline-color: var(--color__dark--primary);
 } */

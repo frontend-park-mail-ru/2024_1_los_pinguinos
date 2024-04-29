@@ -1,4 +1,5 @@
 import { clsx } from '../../../clsx/index';
+import { TSize, getClassBySize } from '../types';
 
 export type TButton = {
     severity?: TSeverity;
@@ -12,53 +13,6 @@ export type TButton = {
 };
 export type TButtonType = 'button' | 'submit' | 'reset';
 export type TSeverity = 'danger' | 'success' | 'info';
-export type TSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
-export const getClassBySeverity = (sev: TSeverity) => {
-    switch (sev) {
-        case 'danger':
-            return 'button--danger';
-        case 'success':
-            return 'button--success';
-        case 'info':
-            return 'button--info';
-    }
-};
-export const getClassBySize = (size: TSize) => {
-    switch (size) {
-        case 'xxs':
-            return 'button--xxs';
-        case 'xs':
-            return 'button--xs';
-        case 's':
-            return 'button--s';
-        case 'm':
-            return 'button--m';
-        case 'l':
-            return 'button--l';
-        case 'xl':
-            return 'button--xl';
-        case 'xxl':
-            return 'button--xxl';
-    }
-};
-export const getClassByFontSize = (size: TSize) => {
-    switch (size) {
-        case 'xxs':
-            return 'button__label--xxs';
-        case 'xs':
-            return 'button__label--xs';
-        case 's':
-            return 'button__label--s';
-        case 'm':
-            return 'button__label--m';
-        case 'l':
-            return 'button__label--l';
-        case 'xl':
-            return 'button__label--xl';
-        case 'xxl':
-            return 'button__label--xxl';
-    }
-};
 
 export const Button = ({
     label,
@@ -70,6 +24,16 @@ export const Button = ({
     fontSize,
     disabled,
 }: TButton) => {
+    const getClassBySeverity = (sev: TSeverity) => {
+        switch (sev) {
+            case 'danger':
+                return 'button--danger';
+            case 'success':
+                return 'button--success';
+            case 'info':
+                return 'button--info';
+        }
+    };
     return (
         <button
             type={type}
@@ -77,24 +41,22 @@ export const Button = ({
             className={clsx(
                 'button',
                 getClassBySeverity(severity),
-                getClassBySize(size),
-                disabled && 'button--disabled',
+                getClassBySize('button', size),
+                disabled && 'any--disabled',
             )}
         >
             <span
                 className={clsx(
                     'button__label',
-                    getClassByFontSize(fontSize),
+                    getClassBySize('button__label', fontSize),
                     icon,
                     !icon && 'any--none',
-                    disabled && 'button__label--disabled',
                 )}
             ></span>
             <span
                 className={clsx(
                     'button__label',
-                    getClassByFontSize(fontSize),
-                    disabled && 'button__label--disabled',
+                    getClassBySize('button__label', fontSize),
                 )}
             >
                 {label}

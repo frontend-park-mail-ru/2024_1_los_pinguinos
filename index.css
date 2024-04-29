@@ -3,6 +3,7 @@
 @import url(./src/components/profile/profile.css);
 @import url(./src/shared/ui/icons/style.css);
 @import url(./src/shared/ui/button/button.css);
+@import url(./src/shared/ui/input/input.css);
 @import url("/src/pages/main/index.css");
 @import url("/src/widgets/navbar/navbar.css");
 @import url("/src/widgets/header/header.css");

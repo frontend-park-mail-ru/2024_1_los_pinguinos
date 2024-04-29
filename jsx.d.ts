@@ -13,5 +13,7 @@ declare namespace JSX {
         Link: any;
         span: any;
         i: any;
+        input: any;
+        label: any;
     }
 }

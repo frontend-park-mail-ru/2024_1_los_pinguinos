@@ -19,7 +19,6 @@ export const ButtonLink = ({
     back,
 }: TButtonLink) => {
     const handleClick = (event: any) => {
-        console.log('IMA BUTTON LINK YO');
         event.preventDefault();
         if (back) {
             history.back();
