@@ -62,7 +62,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30%;
+    width: 100%;
     aspect-ratio: 1;
     transition: all 0.2s ease-in-out;
     position: relative;
@@ -105,13 +105,14 @@
   }
 
   .photo__cross {
+    cursor: pointer;
     position: absolute;
-    top: 10%;
-    right: 10%;
-    scale: 3;
+    top: 5%;
+    right: 5%;
+    font-size: 4rem;
     font-weight: 700;
     filter: invert(48%) sepia(15%) saturate(5246%) hue-rotate(327deg) brightness(100%) contrast(84%);
-    transition: var(--transition--default);
+    transition: opacity 0.2s ease-in-out;
   }
 
   .photo__cross:hover {

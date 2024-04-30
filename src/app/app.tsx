@@ -10,6 +10,7 @@ import { Input } from '../shared/ui/input/input';
 import { InputPhoto } from '../shared/ui/input/inputPhoto';
 import { useEffect, useState } from '../reactor/index';
 import { clsx } from '../clsx/index';
+import ProfilePhotoWidget from '../widgets/profilePhoto/index';
 const testRoute = () => {
     const [state, setState] = useState('abc');
     useEffect(() => {
@@ -18,7 +19,7 @@ const testRoute = () => {
     const [loading, setLoading] = useState(false);
     const [currentImage, setCurrentImage] = useState(null);
     return (
-        <div>
+        <div style="overflow: auto">
             <Input
                 disabled={state.length > 5}
                 type="password"
@@ -32,27 +33,7 @@ const testRoute = () => {
                     setState(event.target.value);
                 }}
             />
-            <InputPhoto
-                accept="image/*"
-                onUpload={(file) => {
-                    console.log(file);
-                    setLoading(true);
-                    setCurrentImage(
-                        'https://www.dictionary.com/e/wp-content/uploads/2018/05/pfp.png',
-                    );
-                }}
-                onLoad={(result) => {
-                    setTimeout(() => {
-                        console.log('loaded image');
-                        setLoading(false);
-                    }, 1000);
-                }}
-                onDelete={() => {
-                    setCurrentImage(null);
-                }}
-                loading={loading}
-                currentImage={currentImage}
-            />
+            <ProfilePhotoWidget></ProfilePhotoWidget>
         </div>
     );
 };
