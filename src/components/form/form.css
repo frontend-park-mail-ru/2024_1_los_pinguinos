@@ -1,4 +1,4 @@
-@import url(/src/assets/fonts/MailSans/stylesheet.css);
+/* @import url(/src/assets/fonts/MailSans/stylesheet.css);
 
 * {
     font-family: 'Mail Sans Roman';
@@ -158,8 +158,8 @@
     flex-flow: row;
     justify-content: center;
     width: 100%;
-    /* margin-left: auto;
-    margin-right: auto; */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .form__field-container {
@@ -175,8 +175,8 @@
 }
 
 .form__field {
-    /* margin-left: auto;
-    margin-right: auto; */
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
     position: relative;
     margin-bottom: 30px;
@@ -690,7 +690,6 @@ input[type="date"] {
         min-width: 220px;
         max-width: 220px;
         flex-flow: column;
-        /* justify-content: flex-start; */
     }
 
     .form__checkbox-container--side {
@@ -724,4 +723,4 @@ input[type="date"] {
 
 .any--none {
     display: none;
-}
+} */

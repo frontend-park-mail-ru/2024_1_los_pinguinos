@@ -12,7 +12,7 @@ export type TButton = {
     disabled?: boolean;
 };
 export type TButtonType = 'button' | 'submit' | 'reset';
-export type TSeverity = 'danger' | 'success' | 'info';
+export type TSeverity = 'danger' | 'success' | 'info' | 'link';
 
 export const Button = ({
     label,
@@ -32,6 +32,8 @@ export const Button = ({
                 return 'button--success';
             case 'info':
                 return 'button--info';
+            case 'link':
+                return 'button--link';
         }
     };
     return (

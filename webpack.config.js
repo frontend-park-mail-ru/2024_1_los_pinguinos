@@ -76,6 +76,9 @@ module.exports = {
         },
         port: 3000, // Порт для dev сервера
         open: true, // Автоматически открывать браузер при запуске dev сервера
+        historyApiFallback: true, // This is the key config to redirect all server requests to /index.html
+        compress: true, // Enable gzip compression
+        hot: true, // Enable webpack's Hot Module Replacement feature
     },
     mode: 'development',
     optimization: {

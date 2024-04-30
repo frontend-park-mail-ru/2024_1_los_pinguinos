@@ -1,13 +1,8 @@
-import LoginForm from '../../features/loginform/index';
+import { LoginForm } from '../../features/loginform/index';
+import { useEffect } from '../../reactor/index';
 
 export const Login = () => {
-    return (
-        <div>
-            <div className="wrapper">
-                <LoginForm />
-            </div>
-        </div>
-    );
+    return <div className="wrapper">{LoginForm()}</div>;
 };
 
 export default Login;

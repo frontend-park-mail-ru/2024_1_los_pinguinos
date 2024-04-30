@@ -15,7 +15,7 @@ export type TInput = {
     size?: TSize;
     minlength?: number;
     maxlength?: number;
-    icon?: string;
+    error?: string;
 };
 
 export type TInputType =
@@ -41,10 +41,12 @@ export const Input = ({
     size,
     minlength,
     maxlength,
-    icon,
+    error,
 }: TInput) => {
     const [currentType, setCurrentType] = useState(type);
-    const [currentIcon, setCurrentIcon] = useState(icon);
+    const [currentIcon, setCurrentIcon] = useState(
+        type === 'password' ? 'icon-eye-slash' : null,
+    );
     const togglePasswordVisibility = () => {
         setCurrentType((currentType) =>
             currentType === 'text' ? 'password' : 'text',
@@ -85,8 +87,16 @@ export const Input = ({
                 value={value}
                 minLength={minlength}
                 maxLength={maxlength}
-                className={clsx('input', getClassBySize('input', size))}
+                className={clsx(
+                    'input',
+                    getClassBySize('input', size),
+                    currentIcon && 'input--password',
+                    error && 'input--invalid',
+                )}
             />
+            <span className={clsx('input__error', !error && 'any--none')}>
+                {error}
+            </span>
         </div>
     );
 };

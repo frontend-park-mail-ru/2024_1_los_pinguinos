@@ -11,9 +11,14 @@ declare namespace JSX {
         button: any;
         b: any;
         Link: any;
+        Input: any;
+        InputPhoto: any;
+        Button: any;
+        ButtonLink: any;
         span: any;
         i: any;
         input: any;
         label: any;
+        form: any;
     }
 }

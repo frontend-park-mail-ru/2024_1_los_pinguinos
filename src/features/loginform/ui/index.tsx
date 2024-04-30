@@ -1,147 +1,121 @@
-import { useState } from '../../../reactor';
-import { login } from '../../../entities/session/api';
+import { useEffect, useState } from '../../../reactor/index';
+import { login } from '../../../entities/session/api/index';
 import { Link } from '../../../shared/routing/link';
-import { clsx } from '../../../clsx/index';
-import { validateInput, togglePassword } from '../../../shared/lib';
-import { errorMessages, helpMessages } from './const';
-const LoginForm = () => {
+import { validateInput, togglePassword } from '../../../shared/lib/index';
+import { Input } from '../../../shared/ui/input/input';
+import { ButtonLink } from '../../../shared/ui/button/buttonLink';
+import { Button } from '../../../shared/ui/button/button';
+export const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordType, setPasswordType] = useState('password');
-    const [errorForm, setErrorForm] = useState('');
-    const [errorEmail, setErrorEmail] = useState('');
-    const [errorPswd, setErrorPswd] = useState('');
-
-    const handleLogin = async (event: any) => {
-        setPasswordType('password');
-        setErrorForm((err) => err.replace(helpMessages.login, ''));
+    const [emailEmpty, setEmailEmpty] = useState('');
+    const [passwordEmpty, setPasswordEmpty] = useState('');
+    const [touchedEmail, setTouchedEmail] = useState(false);
+    const [touchedPassword, setTouchedPassword] = useState(false);
+    const [formError, setFormError] = useState('');
+    const emptyErrorText = 'Поле не может быть пустым';
+    const formErrorText = 'Неверный логин или пароль';
+    useEffect(() => {
+        if (!email && touchedEmail) {
+            setEmailEmpty(emptyErrorText);
+        } else {
+            setEmailEmpty('');
+        }
+        if (!touchedEmail) {
+            setTouchedEmail(true);
+        }
+        return () => {};
+    }, [email]);
+    useEffect(() => {
+        if (!password && touchedPassword) {
+            setPasswordEmpty(emptyErrorText);
+        } else {
+            setPasswordEmpty('');
+        }
+        if (!touchedPassword) {
+            setTouchedPassword(true);
+        }
+        return () => {};
+    }, [password]);
+    async function submitLogin(event: any) {
         event.preventDefault();
-        const validPswd = validateInput('password', password);
-        const validEmail = validateInput('email', email);
-        if (!validPswd) {
-            if (!errorForm.includes(helpMessages.password)) {
-                setErrorPswd(errorMessages.password);
-                setErrorForm((err) => err + '\n' + helpMessages.password);
+        setFormError('');
+        if (!password || !email) {
+            if (!password) {
+                setPasswordEmpty(emptyErrorText);
             }
-        } else {
-            setErrorPswd('');
-            setErrorForm((err) => err.replace(helpMessages.password, ''));
-        }
-        if (!validEmail) {
-            if (!errorForm.includes(helpMessages.email)) {
-                setErrorEmail(errorMessages.email);
-                setErrorForm((err) => err + '\n' + helpMessages.email);
+            if (!email) {
+                setEmailEmpty(emptyErrorText);
             }
-        } else {
-            setErrorEmail('');
-            setErrorForm((err) => err.replace(helpMessages.email, ''));
+            return;
         }
-        if (validPswd && validEmail) {
-            try {
-                const response = await login(email, password);
-                localStorage.setItem('Csrft', response.csrft);
-            } catch (error) {
-                setErrorForm(helpMessages.login);
+        if (!passwordEmpty && !emailEmpty) {
+            const emailValid = validateInput('email', email);
+            const passwordValid = validateInput('password', password);
+            if (emailValid && passwordValid) {
+                try {
+                    const response = await login(email, password);
+                    localStorage.setItem('Csrft', response.csrft); // store properly in redux
+                    return;
+                } catch (error) {
+                    setFormError(formErrorText);
+                    return;
+                }
             }
+            setFormError(formErrorText);
         }
-    };
-
+    }
     return (
-        <form class="form " id="login" onSubmit={handleLogin}>
-            <div class="form__block " id="step0" style="display: block;">
-                <div class="form__header">
-                    <Link back={true}>
-                        <button
-                            type="button"
-                            class="form__button form__button--nav"
-                            id="btn2"
-                        ></button>
-                    </Link>
-                </div>
-                <div class="form__title ">
-                    <p>Вход</p>
-                </div>
-                <div class="form__input-container">
-                    <div class="form__field-container ">
-                        <div class="form__field">
-                            <input
-                                class="form__input "
-                                id="email"
-                                type="email"
-                                maxlength="320"
-                                autocomplete="email"
-                                placeholder="Ваш email"
-                                onInput={(event: any) => {
-                                    setEmail(event.target.value);
-                                }}
-                            />
-                            <div
-                                class={clsx(
-                                    'field__error',
-                                    !errorEmail && 'any--hidden',
-                                )}
-                            >
-                                {errorEmail}
-                            </div>
-                        </div>
-                        <div class="form__field">
-                            <input
-                                class="form__input form__input--icon"
-                                id="password"
-                                type={passwordType}
-                                minlength="8"
-                                maxlength="32"
-                                autocomplete="current-password"
-                                placeholder="Ваш пароль"
-                                onInput={(event: any) => {
-                                    setPassword(event.target.value);
-                                }}
-                            />
-                            <button
-                                type="button"
-                                class="form__button eye eye--inv"
-                                id="pswdToggle"
-                                // style="background: var(--pswd--hidden);"
-                                onclick={togglePassword}
-                            ></button>
-                            <div
-                                class={clsx(
-                                    'field__error',
-                                    !errorPswd && 'any--hidden',
-                                )}
-                            >
-                                {errorPswd}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form__button-container ">
-                    <button
-                        type="submit"
-                        class="form__button form__button--continue"
-                        id="btn3"
-                    >
-                        <span class="button__span ">Продолжить</span>
-                    </button>
-                </div>
-                <div class="form__footer">
-                    <p>
-                        Нет аккаунта?{' '}
-                        <Link
-                            className="form__link"
-                            to="/register"
-                            persistent={true}
-                        >
-                            Регистрация
-                        </Link>
-                    </p>
-                </div>
+        <form className="form" onSubmit={submitLogin}>
+            <div className="form__header">
+                <ButtonLink
+                    icon="icon-chevron-left"
+                    fontSize="xl"
+                    severity="link"
+                    back
+                />
             </div>
-            <div class={clsx('form__error', !errorForm && 'any--hidden')}>
-                {errorForm}
+            <span className="form__title">Вход</span>
+            <div className="form__input-container">
+                <Input
+                    type="email"
+                    autocomplete="email"
+                    placeholder="Ваш email"
+                    maxlength={320}
+                    autofocus
+                    value={email}
+                    onInput={(event: any) => {
+                        setEmail(event.target.value);
+                    }}
+                    error={emailEmpty}
+                />
+                <Input
+                    type="password"
+                    autocomplete="password"
+                    placeholder="Ваш пароль"
+                    minlength={8}
+                    maxlength={32}
+                    value={password}
+                    onInput={(event: any) => {
+                        setPassword(event.target.value);
+                    }}
+                    error={passwordEmpty}
+                />
+                <Button
+                    label="Продолжить"
+                    type="submit"
+                    severity="success"
+                    size="max-width"
+                    fontSize="l"
+                />
             </div>
+            <span className="form__footer">
+                Нет аккаунта?
+                <Link to="/register" persistent>
+                    Регистрация
+                </Link>
+            </span>
+            <span className="form__error">{formError}</span>
         </form>
     );
 };
-
-export default LoginForm;

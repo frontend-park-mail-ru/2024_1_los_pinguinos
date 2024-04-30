@@ -5,6 +5,7 @@
 @import url(./src/shared/ui/button/button.css);
 @import url(./src/shared/ui/input/input.css);
 @import url(./src/widgets/profilePhoto/ui/photoWidget.css);
+@import url(./src/features/loginform/ui/index.css);
 @import url("/src/pages/main/index.css");
 @import url("/src/widgets/navbar/navbar.css");
 @import url("/src/widgets/header/header.css");
@@ -12,7 +13,8 @@
 @import url("/src/pages/landing/landing.css");
 @import url("/src/pages/matches/components/card.scss");
 @import url("src/pages/matches/matches.scss");
-@import url('/src//shared/ui/modal/index.css');
+@import url('/src/shared/ui/modal/index.css');
+@import url(/src/assets/fonts/MailSans/stylesheet.css);
 
 :root {
   --background--landing: url(./src/assets/background/background-landing.webp);
@@ -38,6 +40,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Mail Sans Roman';
 }
 
 html {
@@ -78,4 +81,26 @@ body {
 
 ion-icon {
   font-size: 80px;
+}
+
+.any--none {
+  display: none;
+}
+
+.any--hidden {
+  opacity: 0;
+}
+
+.any:hover {
+  opacity: 0.6;
+}
+
+.link {
+    color: var(--color__light--secondary);
+    text-decoration: underline !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.link:hover {
+  opacity: 0.6;
 }

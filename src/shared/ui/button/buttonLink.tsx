@@ -1,6 +1,6 @@
 import { Button, TButton } from './button';
 export interface TButtonLink extends TButton {
-    to: string;
+    to?: string;
     persistent?: boolean;
     back?: boolean;
 }

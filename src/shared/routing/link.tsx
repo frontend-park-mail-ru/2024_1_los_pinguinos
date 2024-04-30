@@ -19,12 +19,7 @@ export const Link = ({ to, children, persistent, back, className }: ILink) => {
     };
 
     return (
-        <a
-            class={className}
-            style="text-decoration: none"
-            href={to}
-            onClick={handleClick}
-        >
+        <a class="link" href={to} onClick={handleClick}>
             {children}
         </a>
     );
