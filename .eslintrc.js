@@ -6,6 +6,8 @@ module.exports = {
         allowImportExportEverywhere: true,
         ecmaFeatures: {
             jsx: true,
+            tsx: true,
+            ts: true,
         },
     },
     env: {

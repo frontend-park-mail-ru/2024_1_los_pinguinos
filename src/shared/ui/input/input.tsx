@@ -43,29 +43,22 @@ export const Input = ({
     maxlength,
     error,
 }: TInput) => {
-    const [currentType, setCurrentType] = useState(type);
-    const [currentIcon, setCurrentIcon] = useState(
-        type === 'password' ? 'icon-eye-slash' : null,
-    );
+    const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
-        setCurrentType((currentType) =>
-            currentType === 'text' ? 'password' : 'text',
-        );
-        setCurrentIcon((currentIcon) =>
-            currentIcon === 'icon-eye-slash' ? 'icon-eye' : 'icon-eye-slash',
-        );
+        setPasswordVisible((passwordVisible) => !passwordVisible);
     };
     return (
         <div className={clsx('input-container', disabled && 'any--disabled')}>
-            <span
-                className={clsx(
-                    'input__icon',
-                    getClassBySize('input__icon', size),
-                    currentIcon,
-                    !currentIcon && 'any--none',
-                )}
-                onClick={togglePasswordVisibility}
-            ></span>
+            {type === 'password' && (
+                <span
+                    className={clsx(
+                        'input__icon',
+                        getClassBySize('input__icon', size),
+                        passwordVisible ? 'icon-eye' : 'icon-eye-slash',
+                    )}
+                    onClick={togglePasswordVisibility}
+                ></span>
+            )}
             <label
                 className={clsx(
                     'input__label',
@@ -77,7 +70,7 @@ export const Input = ({
                 {label}
             </label>
             <input
-                type={currentType}
+                type={passwordVisible ? 'text' : type}
                 name={name}
                 placeholder={placeholder}
                 autoFocus={autofocus}
@@ -90,7 +83,7 @@ export const Input = ({
                 className={clsx(
                     'input',
                     getClassBySize('input', size),
-                    currentIcon && 'input--password',
+                    type === 'password' && 'input--password',
                     error && 'input--invalid',
                 )}
             />

@@ -65,6 +65,7 @@
     right: 25px;
     bottom: 13px;
     font-size: x-large;
+    cursor: pointer;
 }
 
 .input-container__photo {

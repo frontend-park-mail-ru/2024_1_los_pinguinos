@@ -1,12 +1,16 @@
-import { API_URL } from "../config";
+import { API_URL } from '../config/index';
 
-export async function sendRequest<T>(url: string, method: string, body?: any): Promise<T> {
+export async function sendRequest<T>(
+    url: string,
+    method: string,
+    body?: any,
+): Promise<T> {
     const response = await fetch(`${API_URL}${url}`, {
         credentials: 'include',
         method,
         headers: {
             'Content-Type': 'application/json',
-            'Csrft': localStorage.getItem('Csrft') || 'null',
+            Csrft: localStorage.getItem('Csrft') || 'null',
         },
         body: JSON.stringify(body),
     });

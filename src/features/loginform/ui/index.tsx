@@ -1,7 +1,7 @@
 import { useEffect, useState } from '../../../reactor/index';
 import { login } from '../../../entities/session/api/index';
 import { Link } from '../../../shared/routing/link';
-import { validateInput, togglePassword } from '../../../shared/lib/index';
+import { validateInput } from '../../../shared/lib/index';
 import { Input } from '../../../shared/ui/input/input';
 import { ButtonLink } from '../../../shared/ui/button/buttonLink';
 import { Button } from '../../../shared/ui/button/button';
@@ -89,6 +89,19 @@ export const LoginForm = () => {
                     }}
                     error={emailEmpty}
                 />
+                {/* {Input({
+                    type: 'email',
+                    autocomplete: 'email',
+                    placeholder: 'Ваш email',
+                    maxlength: 320,
+                    autofocus: true,
+                    value: email,
+                    onInput: (event: any) => {
+                        setEmail(event.target.value);
+                    },
+                    error: emailEmpty,
+                })} */}
+
                 <Input
                     type="password"
                     autocomplete="password"
