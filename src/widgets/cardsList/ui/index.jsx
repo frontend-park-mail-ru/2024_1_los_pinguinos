@@ -14,9 +14,9 @@ const CardsList = () => {
 
     return (
         <div id='swiper'>
-            {cards.map((card, index) => (
-                <Card key={index} person={card} />
-            ))}
+            {cards.map((card, index) =>
+            {Card({person: card})}
+            )}
         </div>
     );
 };

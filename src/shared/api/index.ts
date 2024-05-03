@@ -1,11 +1,11 @@
-import { API_URL } from '../config/index';
 
 export async function sendRequest<T>(
+    baseUrl: string,
     url: string,
     method: string,
     body?: any,
 ): Promise<T> {
-    const response = await fetch(`${API_URL}${url}`, {
+    const response = await fetch(`${baseUrl}${url}`, {
         credentials: 'include',
         method,
         headers: {

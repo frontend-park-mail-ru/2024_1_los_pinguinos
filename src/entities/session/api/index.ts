@@ -2,12 +2,13 @@ import { sendRequest } from '../../../shared/api/index';
 import { SessionResponse } from './types';
 import { Interest } from '../../person/model';
 import { Person } from '../../person/model';
+import { AUTH_URL, API_URL } from '../../../shared/config/index';
 
 export const login = async (
     email: string,
     password: string,
 ): Promise<SessionResponse> => {
-    return sendRequest('/login', 'POST', { email, password });
+    return sendRequest(AUTH_URL,'/login', 'POST', { email, password });
 };
 
 export const register = async (
@@ -17,7 +18,7 @@ export const register = async (
     age: number,
     interests: string[],
 ): Promise<SessionResponse> => {
-    return sendRequest('/register', 'POST', {
+    return sendRequest(AUTH_URL ,'/register', 'POST', {
         email,
         name,
         age,
@@ -27,29 +28,29 @@ export const register = async (
 };
 
 export const logout = async () => {
-    return sendRequest('/logout', 'POST');
+    return sendRequest( AUTH_URL,'/logout', 'POST');
 };
 
 export const updateName = async (name: string) => {
-    return sendRequest('/profile', 'POST', { name });
+    return sendRequest(API_URL, '/profile', 'POST', { name });
 };
 
 export const updateDescription = async (description: string) => {
-    return sendRequest('/profile', 'POST', { description });
+    return sendRequest(API_URL, '/profile', 'POST', { description });
 };
 
 export const updateInterests = async (interests: Interest[]) => {
-    return sendRequest('/profile', 'POST', { interests });
+    return sendRequest(API_URL, '/profile', 'POST', { interests });
 };
 
 export const updateEmail = async (email: string) => {
-    return sendRequest('/profile', 'POST', { email });
+    return sendRequest(API_URL, '/profile', 'POST', { email });
 };
 
 export const updatePassword = async (password: string) => {
-    return sendRequest('/profile', 'POST', { password });
+    return sendRequest(API_URL, '/profile', 'POST', { password });
 };
 
 export const checkAuth = async () => {
-    return sendRequest('/isAuth', 'GET');
+    return sendRequest(API_URL, '/isAuth', 'GET');
 };
