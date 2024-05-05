@@ -4,7 +4,10 @@ import { Link } from '../../../shared/routing/link';
 import { validateInput, updateInputError } from '../../../shared/lib/index';
 import { Input, Button, ButtonLink } from '../../../shared/ui/index';
 import { redirectTo } from '../../../app/Router';
+import { store } from '../../../app/app';
+
 export const LoginForm = () => {
+
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
 
@@ -30,9 +33,9 @@ export const LoginForm = () => {
             return;
         }
         try {
-            const response = await login(email, password);
+            const response = await login(email, password)
+            store.dispatch({ type: 'UPDATE_USER', payload: response });
             redirectTo('/profile');
-            console.log(response.csrft);
             localStorage.setItem('X-CSRF-TOKEN', response.csrft); // store in redux!!!!
         } catch (error) {
             setFormError(formErrorText);

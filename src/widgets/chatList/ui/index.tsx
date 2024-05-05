@@ -2,11 +2,22 @@ import { useEffect, useState } from '../../../reactor';
 import { Link } from '../../../shared/routing/link';
 import { ChatItem } from './chatitem';
 import { getChats } from '../../../features/chat/api';
+import { store } from '../../../app/app';
 
 const ChatList = () => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
     const [ws, setWs] = useState<WebSocket | null>(null);
+    const user = store.getState();
+
+    useEffect(() => {
+        store.subscribe(() => {
+            const state = store.getState();
+            console.log(state);
+        });
+    }, []);
+
+    console.log('user', user);
 
     useEffect(() => {
         const socket = new WebSocket(

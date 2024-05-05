@@ -1,4 +1,3 @@
-import { Person } from '.';
 import { Action } from '../../../app/store';
 const initialState = {
     id: '0',
@@ -20,6 +19,7 @@ const initialState = {
 export const userReducer = (state = initialState, action: Action) => {
     let key = '';
     let value = null;
+    console.log(action.payload);
     if (action.payload) {
         key = Object.keys(action.payload)[0];
         value = action.payload[key];
@@ -35,13 +35,10 @@ export const userReducer = (state = initialState, action: Action) => {
                 ...state,
                 [key]: value,
             };
-        case 'UPDATE_CURRENT_CARD':
+        case 'UPDATE_CURRENT_CHAT':
             return {
                 ...state,
-                user: {
-                    ...state,
-                    currentCard: action.payload,
-                },
+                currentChat: value,
             };
         case 'LOGOUT':
             return {};

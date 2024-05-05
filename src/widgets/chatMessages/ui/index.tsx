@@ -1,24 +1,6 @@
 import { useState, useEffect } from '../../../reactor';
 import { getMessages } from '../../../features/chat/api';
-
-function formatDate(date) {
-    const year = date.getFullYear().toString().padStart(4, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    const seconds = date.getSeconds().toString().padStart(2, '0');
-    const timezoneOffset = date.getTimezoneOffset();
-    const timezoneHours = Math.abs(Math.floor(timezoneOffset / 60))
-        .toString()
-        .padStart(2, '0');
-    const timezoneMinutes = (Math.abs(timezoneOffset) % 60)
-        .toString()
-        .padStart(2, '0');
-    const timezoneSign = timezoneOffset < 0 ? '-' : '+';
-
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
-}
+import { store } from '../../../app/app';
 
 const ChatMessages = () => {
     const [messages, setMessages] = useState([]);
@@ -84,34 +66,19 @@ const ChatMessages = () => {
         }
     };
 
-    const userID = 1;
+    const [userID, setUserID] = useState(0);
 
-    // const messages = [
-    //     {
-    //         Data: 'Привет',
-    //         Sender: 1,
-    //         Receiver: 2,
-    //         Time: '12:00',
-    //     },
-    //     {
-    //         Data: 'Привет',
-    //         Sender: 2,
-    //         Receiver: 1,
-    //         Time: '12:00',
-    //     },
-    //     {
-    //         Data: 'Как дела?',
-    //         Sender: 1,
-    //         Receiver: 2,
-    //         Time: '12:00',
-    //     },
-    //     {
-    //         Data: 'Нормально',
-    //         Sender: 2,
-    //         Receiver: 1,
-    //         Time: '12:00',
-    //     },
-    // ];
+    useEffect(() => {
+        store.subscribe(() => {
+            const state = store.getState();
+            console.log(state);
+            setUserID(state.id);
+        });
+    }, []);
+
+    console.log(userID);
+
+
     return (
         <div className="chatMessages">
             <div className="chatMessages__list">
