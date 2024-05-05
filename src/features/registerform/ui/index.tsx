@@ -15,12 +15,16 @@ const RegisterForm = () => {
     const [password, setPassword] = useState('');
 
     const [step, setStep] = useState(0);
+    useEffect(() => {
+        console.log(step);
+    }, [step]);
     const navigateBack = () => {
         setStep((step) => {
             return step - 1 > 0 ? step - 1 : 0;
         });
     };
     const navigateForward = () => {
+        // console.log('NAV FORWARD', step);
         setStep((step) => step + 1);
     };
 
@@ -44,30 +48,30 @@ const RegisterForm = () => {
 
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <StepEmail
-                display={step === 0}
-                onNavigateForward={navigateForward}
-                email={email}
-                setEmail={setEmail}
-            />
-            <StepData
-                display={step === 1}
-                onNavigateBack={navigateBack}
-                onNavigateForward={navigateForward}
-                name={name}
-                setName={setName}
-                date={date}
-                setDate={setDate}
-                gender={gender}
-                setGender={setGender}
-            />
-            <StepInterests
-                display={step === 2}
-                onNavigateBack={navigateBack}
-                onNavigateForward={navigateForward}
-                interests={interests}
-                setInterests={setInterests}
-            />
+            {StepEmail({
+                display: step === 0,
+                onNavigateForward: navigateForward,
+                email: email,
+                setEmail: setEmail,
+            })}
+            {StepData({
+                display: step === 1,
+                onNavigateBack: navigateBack,
+                onNavigateForward: navigateForward,
+                name: name,
+                setName: setName,
+                date: date,
+                setDate: setDate,
+                gender: gender,
+                setGender: setGender,
+            })}
+            {StepInterests({
+                display: step === 2,
+                onNavigateBack: navigateBack,
+                onNavigateForward: navigateForward,
+                interests: interests,
+                setInterests: setInterests,
+            })}
             {StepPassword({
                 display: step === 3,
                 onNavigateBack: navigateBack,

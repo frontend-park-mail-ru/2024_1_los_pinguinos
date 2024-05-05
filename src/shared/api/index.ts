@@ -3,16 +3,20 @@ export async function sendRequest<T>(
     url: string,
     method: string,
     body?: any,
+    file?: boolean,
 ): Promise<T> {
+    console.log(body);
+    console.log(file);
     const response = await fetch(`${baseUrl}${url}`, {
         credentials: 'include',
         method,
         headers: {
+            'X-Csrf-Token': localStorage.getItem('X-CSRF-TOKEN') || 'null',
             'Content-Type': 'application/json',
             'Csrft': localStorage.getItem('Csrft') || 'null',
             
         },
-        body: JSON.stringify(body),
+        body: file ? body : JSON.stringify(body),
     });
 
     if (!response.ok) {

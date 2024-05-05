@@ -21,5 +21,7 @@ declare namespace JSX {
         label: any;
         form: any;
         h1: any;
+        textarea: any;
+        svg: any;
     }
 }

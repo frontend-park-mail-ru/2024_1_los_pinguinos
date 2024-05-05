@@ -108,3 +108,27 @@ export const updateInputError = ({
         setTouched(true);
     }
 };
+
+export const updateFormError = ({
+    type,
+    value,
+    error,
+    setError,
+    errorMessage,
+}: any) => {
+    const isValid = validateInput(type, value);
+    if (isValid) {
+        setError((currentError: string) =>
+            currentError.replace(errorMessage + '\n', ''),
+        );
+    } else {
+        if (error) {
+            console.log('error present');
+            setError((currentError: string) => {
+                if (!currentError.includes(errorMessage))
+                    currentError += errorMessage + '\n';
+                return currentError;
+            });
+        }
+    }
+};

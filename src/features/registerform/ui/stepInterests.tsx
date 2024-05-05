@@ -22,7 +22,7 @@ const StepInterests = ({
     }, [interests]);
     const allowContinue = () => {
         if (interests.length === 0) {
-            setStepError('pick something');
+            setStepError('Выберите хотя бы один интерес');
             return;
         }
         if (onNavigateForward) onNavigateForward();

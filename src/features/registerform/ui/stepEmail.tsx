@@ -4,7 +4,7 @@ import { Link } from '../../../shared/routing/link';
 import {
     validateInput,
     IStep,
-    updateInputError,
+    updateFormError,
 } from '../../../shared/lib/index';
 import { clsx } from '../../../clsx';
 
@@ -20,32 +20,29 @@ const StepEmail = ({
 }: TEmailStep) => {
     const [currentEmail, setCurrentEmail] = useState('');
     const [emailError, setEmailError] = useState('');
-    const [touchedEmail, setTouchedEmail] = useState(false);
-    const [validatedEmail, setValidatedEmail] = useState(false);
     const [stepError, setStepError] = useState('');
     useEffect(() => {
-        updateInputError({
-            inputType: 'email',
-            inputValue: currentEmail,
-            isTouched: touchedEmail,
-            setTouched: setTouchedEmail,
-            isValidated: validatedEmail,
-            errorMessageEmpty: 'Поле не может быть пустым',
-            errorMessageInvalid: 'Некорректный email',
-            setErrorMessage: setEmailError,
-            helpMessage: 'email should be cooler',
-            setHelpMessage: setStepError,
+        updateFormError({
+            type: 'email',
+            value: currentEmail,
+            error: emailError,
+            setError: setStepError,
+            errorMessage: 'Введите email в формате mail@domain.ru',
         });
-
-        return () => {};
-    }, [currentEmail, validatedEmail]);
+    }, [emailError]);
     const allowContinue = () => {
-        const emailValid = validateInput('email', currentEmail);
-        if (emailValid) {
+        setStepError('');
+        const isValidEmail = validateInput('email', currentEmail);
+        if (!emailError && isValidEmail) {
             if (onNavigateForward) onNavigateForward();
             return;
+        } else {
+            if (currentEmail) {
+                setEmailError('Поле некорректно');
+            } else {
+                setEmailError('Поле не может быть пустым');
+            }
         }
-        setValidatedEmail(true);
     };
     return (
         <div className={clsx('form__step', !display && 'any--none')}>
@@ -72,7 +69,9 @@ const StepEmail = ({
                         setEmail(event.target.value);
                     }}
                     value={email}
+                    validate
                     error={emailError}
+                    setError={setEmailError}
                 />
                 <Button
                     label="Продолжить"

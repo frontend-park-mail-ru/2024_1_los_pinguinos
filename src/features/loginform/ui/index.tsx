@@ -6,37 +6,14 @@ import { Input, Button, ButtonLink } from '../../../shared/ui/index';
 import { redirectTo } from '../../../app/Router';
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
-    const [touchedEmail, setTouchedEmail] = useState(false);
     const [emailError, setEmailError] = useState('');
 
     const [password, setPassword] = useState('');
-    const [touchedPassword, setTouchedPassword] = useState(false);
     const [passwordError, setPasswordError] = useState('');
 
     const [formError, setFormError] = useState('');
     const emptyErrorText = 'Поле не может быть пустым';
     const formErrorText = 'Неверный логин или пароль';
-    useEffect(() => {
-        updateInputError({
-            inputType: 'email',
-            inputValue: email,
-            isTouched: touchedEmail,
-            setTouched: setTouchedEmail,
-            errorMessageEmpty: emptyErrorText,
-            setErrorMessage: setEmailError,
-        });
-    }, [email]);
-    useEffect(() => {
-        updateInputError({
-            inputType: 'password',
-            inputValue: password,
-            isTouched: touchedPassword,
-            setTouched: setTouchedPassword,
-            errorMessageEmpty: emptyErrorText,
-            setErrorMessage: setPasswordError,
-        });
-        return () => {};
-    }, [password]);
     async function submitLogin(event: any) {
         event.preventDefault();
         setFormError('');
@@ -55,7 +32,8 @@ export const LoginForm = () => {
         try {
             const response = await login(email, password);
             redirectTo('/profile');
-            localStorage.setItem('Csrft', response.csrft); // store in redux!!!!
+            console.log(response.csrft);
+            localStorage.setItem('X-CSRF-TOKEN', response.csrft); // store in redux!!!!
         } catch (error) {
             setFormError(formErrorText);
         }
@@ -73,17 +51,18 @@ export const LoginForm = () => {
             </div>
             <span className="form__title">Вход</span>
             <div className="form__input-container">
-                <Input
-                    type="email"
-                    autocomplete="email"
-                    placeholder="Ваш email"
-                    maxlength={40}
-                    autofocus
-                    onInput={(event: any) => {
+                {Input({
+                    type: 'email',
+                    autocomplete: 'email',
+                    placeholder: 'Ваш email',
+                    maxlength: 40,
+                    autofocus: true,
+                    onInput: (event: any) => {
                         setEmail(event.target.value);
-                    }}
-                    error={emailError}
-                />
+                    },
+                    error: emailError,
+                    setError: setEmailError,
+                })}
                 {Input({
                     type: 'password',
                     autocomplete: 'password',
@@ -94,6 +73,7 @@ export const LoginForm = () => {
                         setPassword(event.target.value);
                     },
                     error: passwordError,
+                    setError: setPasswordError,
                 })}
                 <Button
                     label="Продолжить"

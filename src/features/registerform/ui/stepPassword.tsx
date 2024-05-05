@@ -1,5 +1,5 @@
 import { Button, Input } from '../../../shared/ui';
-import { IStep, validateInput, updateInputError } from '../../../shared/lib';
+import { IStep, validateInput, updateFormError } from '../../../shared/lib';
 import { clsx } from '../../../clsx';
 import { useState, useEffect } from '../../../reactor';
 interface TPasswordStep extends IStep {
@@ -15,32 +15,26 @@ const StepPassword = ({
 }: TPasswordStep) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [touchedPassword, setTouchedPassword] = useState(false);
-    const [validatedPassword, setValidatedPassword] = useState(false);
+
     const [stepError, setStepError] = useState('');
     useEffect(() => {
-        updateInputError({
-            inputType: 'password',
-            inputValue: currentPassword,
-            isTouched: touchedPassword,
-            setTouched: setTouchedPassword,
-            isValidated: validatedPassword,
-            errorMessageEmpty: 'Поле не может быть пустым',
-            errorMessageInvalid: 'Некорректный пароль',
-            setErrorMessage: setPasswordError,
-            helpMessage: 'password should be cooler',
-            setHelpMessage: setStepError,
+        updateFormError({
+            type: 'password',
+            value: currentPassword,
+            error: passwordError,
+            setError: setStepError,
+            errorMessage:
+                'Пароль должен быть длиной от 8 до 32 символов. Разрешенны стандартные спец. символы',
         });
 
         return () => {};
-    }, [currentPassword, validatedPassword]);
+    }, [passwordError]);
     const allowContinue = (event: any) => {
         const passwordValid = validateInput('password', currentPassword);
         if (passwordValid) {
             if (onNavigateForward) onNavigateForward(event);
             return;
         }
-        setValidatedPassword(true);
     };
     return (
         <div className={clsx('form__step', !display && 'any--none')}>
@@ -60,7 +54,7 @@ const StepPassword = ({
                 {Input({
                     type: 'password',
                     autocomplete: 'new-password',
-                    placeholder: 'Ваш password',
+                    placeholder: 'Ваш пароль',
                     maxlength: 32,
                     autofocus: true,
                     onInput: (event: any) => {
@@ -71,6 +65,8 @@ const StepPassword = ({
                     },
                     value: password,
                     error: passwordError,
+                    setError: setPasswordError,
+                    validate: true,
                 })}
                 <Button
                     label="Завершить"

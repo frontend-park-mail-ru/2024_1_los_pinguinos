@@ -36,6 +36,7 @@
   --color__dark--primary: #000000;
   --color__dark--secondary: #5d5d5d;
   --color__danger--primary: #EA5B5B;
+  --color__danger--secondary: rgb(200, 62, 62);
   --color__success--primary: #7DE85A;
   --color__success--secondary: #1ED760;
   --color__success--outline: #169C46;
@@ -70,12 +71,6 @@ body {
 
 .flex {
   display: flex;
-}
-
-.header__menu {
-  padding: 10px;
-  color: white;
-  text-decoration: none;
 }
 
 #root {
