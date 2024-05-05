@@ -123,7 +123,6 @@ export const updateFormError = ({
         );
     } else {
         if (error) {
-            console.log('error present');
             setError((currentError: string) => {
                 if (!currentError.includes(errorMessage))
                     currentError += errorMessage + '\n';

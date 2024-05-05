@@ -59,7 +59,6 @@ export const Input = ({
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
         setPasswordVisible((passwordVisible) => {
-            console.log(!passwordVisible);
             return !passwordVisible;
         });
     };

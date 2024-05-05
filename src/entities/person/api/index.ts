@@ -1,4 +1,4 @@
-import { sendRequest } from '../../../shared/api';
+import { sendRequest } from '../../../shared/api/index';
 import { PersonDTO } from './types';
 import { Person } from '../model';
 import { normalizePerson } from '../lib/normalizePerson';
@@ -9,12 +9,12 @@ export const getCards = async (): Promise<Person[]> => {
     return cards.map(normalizePerson);
 };
 
-export const getMatches = async (): Promise<Person[]> => {
+export const getMatches = async (name: string): Promise<Person[]> => {
     const matches = await sendRequest<PersonDTO[]>(
         AUTH_URL,
         `/matches`,
-        'GET',
-        { name: '' },
+        'POST',
+        { name: name },
     );
     return matches.map(normalizePerson);
 };

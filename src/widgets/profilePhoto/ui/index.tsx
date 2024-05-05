@@ -13,7 +13,7 @@ const ProfilePhotoWidget = () => {
             cells[index][0][1](async () => {
                 try {
                     const response = await uploadImage(file, `${index}`);
-                    return response;
+                    cells[index][0][1](response);
                 } catch {
                     cells[index][0][1](null);
                 }
@@ -22,23 +22,19 @@ const ProfilePhotoWidget = () => {
     };
     const processLoad = (index: number) => {
         return () => {
-            console.log('loaded picture');
             cells[index][1][1](false);
-            console.log('trying to process next');
             processEnableNext();
         };
     };
     const processDelete = (index: number) => {
         return () => {
             const response = deleteImage(`${index}`);
-            console.log('deleted picture');
             cells[index][0][1](null);
         };
     };
     const processEnableNext = () => {
         for (let index = 0; index < cells.length; index++) {
             if (!cells[index][0][0]) {
-                console.log(cells[index]);
                 setEnabledCell(index);
                 return;
             }
