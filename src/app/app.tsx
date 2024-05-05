@@ -16,7 +16,7 @@ const App = () => {
             <Route path="/register" component={Register} />
             <Route path="/chats" component={ChatPage} isSecure={true} />
             <Route path="/matches" component={MatchesPage} isSecure={true} />
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile" component={Profile} isSecure={true} />
         </Router>
     );
 };

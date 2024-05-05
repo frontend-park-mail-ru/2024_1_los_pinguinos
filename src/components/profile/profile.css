@@ -8,11 +8,6 @@
 .profile__wrapper {
     display: flex;
     flex-direction: row;
-    width: 70dvw;
-    height: 80dvh;
-    background-color: rgba(255,255,255,0.23);
-    border-radius: 40px;
-    overflow: auto;
 }
 
 .profile__content-wrapper {
@@ -29,6 +24,7 @@
     background-color: rgba(255,255,255,0.23);
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 16px;
     width: 100%;
     height: auto;
@@ -37,9 +33,18 @@
     transition: all 0.2s ease-in-out;
 }
 
+.content--success {
+    background-color: var(--color__success--secondary);
+}
+
+.content--danger {
+    background-color: var(--color__danger--secondary);
+}
+
 .profile__block-group {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 20px;
     transition: opacity 0.2s ease-in-out;
 }
@@ -197,28 +202,18 @@
 
 
 @media only screen and (max-width: 896px) {
-    .profile__wrapper {
-        width: 100dvw;
-        height: 100dvh;
-        border-radius: 0;
-        flex-direction: column;
-    }
     .profile__content-block {
-        min-width: 250px;
+        min-width: 200px;
     }
     .profile__content-wrapper {
         width: 100%;
         padding: 15px;
-        padding-bottom: 120px;
     }
     .profile__navbar-wrapper {
-        width: 100dvw;
-        padding-top: 60px;
     }
     .profile__navbar-content {
-        position: absolute;
         border-radius: 0;
-        background-color: #1a1a1a;
+        background-color: transparent;
         bottom: 0;
         flex-direction: row;
         width: 100%;
