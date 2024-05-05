@@ -6,3 +6,4 @@ export { ButtonLink } from './button/buttonLink';
 export * from './input/input';
 export { InputPhoto } from './input/inputPhoto';
 export { InputCheckbox } from './input/inputCheckbox';
+export { TextArea } from './input/textArea';

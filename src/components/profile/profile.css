@@ -6,8 +6,12 @@
     --action-bgr--failure: rgba(255, 0, 0, 0.3);
 }
 .profile__wrapper {
+    position: relative;
     display: flex;
     flex-direction: row;
+    height: 100%;
+    overflow: auto;
+    justify-content: flex-end;
 }
 
 .profile__content-wrapper {
@@ -42,6 +46,7 @@
 }
 
 .profile__block-group {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -55,10 +60,11 @@
     gap: 10px;
 }
 
-.profile__label--text {
+.profile__label-text {
     color: white;
     font-size: 1.5rem;
     word-wrap: break-word;
+    text-align: start;
 }
 
 .profile__content-block--text {
@@ -106,6 +112,7 @@
 }
 
 .profile__navbar-wrapper {
+    position: relative;
     width: 40%;
     display: flex;
     flex-direction: column;
@@ -140,11 +147,13 @@
     color: white;
     white-space-collapse: preserve-breaks;
     word-break: break-all !important;
+    text-align: start;
 }
 
 .profile__text--title {
     font-weight: 500;
     transition: opacity 0.2s ease-in-out;
+    word-break: auto-phrase !important;
 }
 
 .profile__settings--row {
@@ -200,6 +209,14 @@
     backdrop-filter: blur(10px);
 }
 
+.navbar__text {
+    display: none;
+}
+
+.profile__title {
+    display: block;
+}
+
 
 @media only screen and (max-width: 896px) {
     .profile__content-block {
@@ -209,19 +226,46 @@
         width: 100%;
         padding: 15px;
     }
+    .profile__wrapper {
+        flex-direction: column-reverse;
+    }
     .profile__navbar-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        gap: 10px;
+        padding: 10px 40px;
     }
     .profile__navbar-content {
         border-radius: 0;
+        padding: 0;
         background-color: transparent;
-        bottom: 0;
+        justify-content: center;
         flex-direction: row;
-        width: 100%;
+        width: fit-content;
     }
     .profile__settings--row {
         gap: 10px;
     }
     .profile__icon--navbar {
         display: block;
+    }
+    .navbar__text {
+        display: block;
+    }
+    .profile__title {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .profile__text--title {
+        font-size: large;
+    }
+}
+
+@media only screen and (max-width: 348px) {
+    .profile__navbar-wrapper {
+        flex-direction: column-reverse;
     }
 }

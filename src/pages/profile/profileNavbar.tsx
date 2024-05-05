@@ -1,8 +1,18 @@
 import { Button } from '../../shared/ui/index';
 
-export const ProfileNavbar = ({ state, setState }: any) => {
+export const ProfileNavbar = ({
+    state,
+    setState,
+    title,
+    setTitle,
+    setActive,
+    setCallback,
+}: any) => {
     return (
         <div className="profile__navbar-wrapper">
+            <h1 className="profile__text profile__text--title navbar__text">
+                {title}
+            </h1>
             <div className="profile__navbar-content">
                 <Button
                     label="Профиль"
@@ -13,6 +23,7 @@ export const ProfileNavbar = ({ state, setState }: any) => {
                     navbar
                     onClick={() => {
                         setState(0);
+                        setTitle('Профиль');
                     }}
                 />
                 <Button
@@ -24,6 +35,7 @@ export const ProfileNavbar = ({ state, setState }: any) => {
                     navbar
                     onClick={() => {
                         setState(1);
+                        setTitle('Безопасность');
                     }}
                 />
                 <Button
@@ -33,6 +45,10 @@ export const ProfileNavbar = ({ state, setState }: any) => {
                     fontSize="l1"
                     size="max-width"
                     navbar
+                    onClick={() => {
+                        setActive(true);
+                        setCallback();
+                    }}
                 />
             </div>
         </div>

@@ -41,6 +41,10 @@
     background-color: var(--color__danger--primary);
 }
 
+.button--danger:hover {
+    background-color: var(--color__danger--secondary);
+}
+
 .button--info:hover {
     color: var(--color__dark--primary);
     background-color: var(--color__success--primary);

@@ -1,7 +1,7 @@
-import MatchesList from '../../widgets/matchesList';
+import MatchesList from '../../widgets/matchesList/index';
 
 const MatchesPage = () => {
-    return <MatchesList />;
+    return <div>{MatchesList()}</div>;
 };
 
 export default MatchesPage;

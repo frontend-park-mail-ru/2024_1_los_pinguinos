@@ -5,7 +5,6 @@ import { Register } from '../pages/register/register';
 import MainPage from '../pages/main/main';
 import ChatPage from '../pages/chats/chats';
 import MatchesPage from '../pages/matches/matches';
-
 import { Profile } from '../pages/profile/profile';
 const App = () => {
     return (

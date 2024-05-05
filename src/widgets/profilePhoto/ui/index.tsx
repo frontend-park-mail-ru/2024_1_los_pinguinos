@@ -1,5 +1,6 @@
 import { InputPhoto } from '../../../shared/ui/input/inputPhoto';
 import { useState } from '../../../reactor/index';
+import { uploadImage, deleteImage } from '../../../features/image/api';
 
 const ProfilePhotoWidget = () => {
     const cells: any = Array.from({ length: 5 }, (index) => {
@@ -8,25 +9,28 @@ const ProfilePhotoWidget = () => {
     const [enabledCellId, setEnabledCell] = useState(0);
     const processUpload = (index: number) => {
         return (file: any) => {
-            console.log(file);
             cells[index][1][1](true);
-            cells[index][0][1](
-                'https://www.dictionary.com/e/wp-content/uploads/2018/05/pfp.png',
-            );
+            cells[index][0][1](async () => {
+                try {
+                    const response = await uploadImage(file, `${index}`);
+                    return response;
+                } catch {
+                    cells[index][0][1](null);
+                }
+            });
         };
     };
     const processLoad = (index: number) => {
         return () => {
-            setTimeout(() => {
-                console.log('loaded picture');
-                cells[index][1][1](false);
-                console.log('trying to process next');
-                processEnableNext();
-            }, 500);
+            console.log('loaded picture');
+            cells[index][1][1](false);
+            console.log('trying to process next');
+            processEnableNext();
         };
     };
     const processDelete = (index: number) => {
         return () => {
+            const response = deleteImage(`${index}`);
             console.log('deleted picture');
             cells[index][0][1](null);
         };

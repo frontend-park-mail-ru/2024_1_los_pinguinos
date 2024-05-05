@@ -35,15 +35,15 @@
 .dialog {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    align-items: center;
+    gap: 30px;
+    width: clamp(200px,350px,400px)
 }
 
 .dialog__title {
     color: var(--color__light--primary);
     font-size: xx-large;
     word-break: auto-phrase;
-    text-align: center;
+    text-align: start;
 }
 
 .dialog__list-wrap {
@@ -55,4 +55,11 @@
 .dialog__button-wrap {
     display: flex;
     gap: 10px;
+}
+
+.dialog__info {
+    color: var(--color__light--secondary);
+    text-align: start;
+    font-size: medium;
+    word-break: auto-phrase;
 }

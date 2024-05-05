@@ -1,4 +1,4 @@
-const Match = ({person}) => {
+const Match = ({ person }: any) => {
     return (
         <div className="match">
             <button className="mail">

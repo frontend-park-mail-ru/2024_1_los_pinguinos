@@ -1,13 +1,37 @@
 import { Modal, Button, Input } from '../../../shared/ui';
-import { useState } from '../../../reactor';
+import { useState, useEffect } from '../../../reactor';
+import { updateFormError, validateInput } from '../../../shared/lib';
+import { updateName } from '../../../entities/session/api';
 
 const NameEdit = () => {
     const [active, setActive] = useState(false);
-    const [name, setName] = useState('Имя');
+    const [currentName, setCurrentName] = useState('test');
+    const [nameError, setNameError] = useState('');
+    const [name, setName] = useState(currentName);
+    const [dialogError, setDialogError] = useState('');
 
-    const handleSave = () => {
-        setActive(false);
-    };
+    useEffect(() => {
+        updateFormError({
+            type: 'text',
+            value: currentName,
+            error: nameError,
+            setError: setDialogError,
+            errorMessage: 'Введите полные Имя (Фамилию)',
+        });
+        return () => {};
+    }, [nameError]);
+
+    async function handleSave() {
+        if (!nameError) {
+            try {
+                const response = await updateName(currentName);
+                setDialogError('');
+                setActive(false);
+            } catch {
+                setDialogError('Что-то пошло не так');
+            }
+        }
+    }
 
     return (
         <div className="profile__settings--row">
@@ -28,7 +52,24 @@ const NameEdit = () => {
             <Modal active={active} setActive={setActive}>
                 <div className="dialog">
                     <span className="dialog__title">Изменить имя</span>
-                    <Input type="text" placeholder="Введите новое имя" />
+                    <span className="dialog__info">Введите новое имя</span>
+                    {Input({
+                        label: 'Ваше имя',
+                        type: 'text',
+                        value: name,
+                        placeholder: currentName,
+                        onInput: (event) => {
+                            setCurrentName(event.target.value);
+                        },
+                        onChange: (event) => {
+                            if (validateInput('text', event.target.value))
+                                setName(event.target.value);
+                        },
+                        autocomplete: 'off',
+                        error: nameError,
+                        setError: setNameError,
+                        validate: true,
+                    })}
                     <div className="dialog__button-wrap">
                         <Button
                             label="Отмена"
@@ -47,6 +88,7 @@ const NameEdit = () => {
                             onClick={handleSave}
                         />
                     </div>
+                    <span className="form__error">{dialogError}</span>
                 </div>
             </Modal>
         </div>

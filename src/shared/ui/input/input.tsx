@@ -1,6 +1,7 @@
 import { TSize, getClassBySize } from '../types';
 import { clsx } from '../../../clsx/index';
-import { useState } from '../../../reactor/index';
+import { useState, useEffect } from '../../../reactor/index';
+import { validateInput } from '../../lib/index';
 
 export type TInput = {
     autofocus?: boolean;
@@ -18,7 +19,10 @@ export type TInput = {
     maxlength?: number;
     min?: string;
     max?: string;
+    validate?: boolean;
+    empty?: boolean;
     error?: string;
+    setError?: (event: any) => void;
 };
 
 export type TInputType =
@@ -47,12 +51,32 @@ export const Input = ({
     maxlength,
     min,
     max,
+    validate,
+    empty,
     error,
+    setError,
 }: TInput) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
-        setPasswordVisible((passwordVisible) => !passwordVisible);
+        setPasswordVisible((passwordVisible) => {
+            console.log(!passwordVisible);
+            return !passwordVisible;
+        });
     };
+    const [isDirty, setDirty] = useState(false);
+    const [currentValue, setCurrentValue] = useState(value);
+    useEffect(() => {
+        if (setError) {
+            const isValid = validateInput(type, currentValue);
+            if (!currentValue && isDirty && !empty) {
+                setError('Поле не может быть пустым');
+            } else if (validate && isDirty && !isValid) {
+                setError('Поле некорректно');
+            } else {
+                setError('');
+            }
+        }
+    }, [currentValue, isDirty]);
     return (
         <div className={clsx('input-container', disabled && 'any--disabled')}>
             {type === 'password' && (
@@ -82,7 +106,11 @@ export const Input = ({
                 autoFocus={autofocus}
                 autoComplete={autocomplete}
                 disabled={disabled}
-                onInput={onInput}
+                onInput={(event: any) => {
+                    if (onInput) onInput(event);
+                    setDirty(true);
+                    setCurrentValue(event.target.value);
+                }}
                 onChange={onChange}
                 value={value}
                 minLength={minlength}

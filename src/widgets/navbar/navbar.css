@@ -121,7 +121,7 @@
     margin: 1px 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 896px) {
     .navbar {
         display: none;
     }

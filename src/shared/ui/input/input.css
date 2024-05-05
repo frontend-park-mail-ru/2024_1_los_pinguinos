@@ -38,6 +38,7 @@
     color: var(--color__light--primary);
     margin-left: 20px;
     margin-bottom: 10px;
+    text-align: start;
 }
 
 .input__label--m {
@@ -176,6 +177,18 @@
     position: absolute;
     width: 100%;
     height: 100%;
+  }
+  .textarea {
+    width: 100%;
+    resize: none;
+    height: 200px;
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .textarea:focus {
+    outline: solid medium;
+    outline-color: var(--color__success--primary);
   }
 
   @media only screen and (max-width: 300px) {

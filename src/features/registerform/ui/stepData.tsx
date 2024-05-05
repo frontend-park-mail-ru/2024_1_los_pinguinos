@@ -4,6 +4,7 @@ import {
     validateInput,
     IStep,
     updateInputError,
+    updateFormError,
 } from '../../../shared/lib/index';
 import { clsx } from '../../../clsx';
 interface TDataStep extends IStep {
@@ -27,50 +28,37 @@ const StepData = ({
     display,
 }: TDataStep) => {
     const [currentName, setCurrentName] = useState('');
-    const [touchedName, setTouchedName] = useState(false);
-    const [validatedName, setValidatedName] = useState(false);
     const [nameError, setNameError] = useState('');
 
     const [currentDate, setCurrentDate] = useState('');
-    const [touchedDate, setTouchedDate] = useState(false);
-    const [validatedDate, setValidatedDate] = useState(false);
     const [dateError, setDateError] = useState('');
 
     const [stepError, setStepError] = useState('');
     useEffect(() => {
-        updateInputError({
-            inputType: 'text',
-            inputValue: currentName,
-            isTouched: touchedName,
-            setTouched: setTouchedName,
-            isValidated: validatedName,
-            errorMessageEmpty: 'Поле не может быть пустым',
-            errorMessageInvalid: 'invalid name',
-            setErrorMessage: setNameError,
-            helpMessage: 'help name',
-            setHelpMessage: setStepError,
+        updateFormError({
+            type: 'text',
+            value: currentName,
+            error: nameError,
+            setError: setStepError,
+            errorMessage: 'Введите полные Имя (Фамилию).',
         });
+        console.log(nameError);
         return () => {};
-    }, [currentName, validatedName]);
+    }, [nameError]);
     useEffect(() => {
-        updateInputError({
-            inputType: 'date',
-            inputValue: currentDate,
-            isTouched: touchedDate,
-            setTouched: setTouchedDate,
-            isValidated: validatedDate,
-            errorMessageEmpty: 'Поле не может быть пустым',
-            errorMessageInvalid: 'invalid date',
-            setErrorMessage: setDateError,
-            helpMessage: 'help date',
-            setHelpMessage: setStepError,
+        updateFormError({
+            type: 'date',
+            value: currentDate,
+            error: dateError,
+            setError: setStepError,
+            errorMessage: 'Введите дату рождения (с 1950 по 2009)',
         });
         return () => {};
-    }, [currentDate, validatedDate]);
+    }, [dateError]);
     useEffect(() => {
         if (gender)
             setStepError((currentError: string) =>
-                currentError.replace('gender err' + '\n', ''),
+                currentError.replace('Выберите пол' + '\n', ''),
             );
     }, [gender]);
     const allowContinue = () => {
@@ -82,13 +70,11 @@ const StepData = ({
         }
         if (!gender) {
             setStepError((currentError: string) => {
-                if (!currentError.includes('gender err'))
-                    currentError += 'gender err' + '\n';
+                if (!currentError.includes('Выберите пол'))
+                    currentError += 'Выберите пол' + '\n';
                 return currentError;
             });
         }
-        setValidatedName(true);
-        setValidatedDate(true);
     };
     return (
         <div className={clsx('form__step', !display && 'any--none')}>
@@ -106,37 +92,42 @@ const StepData = ({
                 лучше
             </span>
             <div className="form__input-container">
-                <Input
-                    type="text"
-                    autocomplete="name"
-                    label="Ваше имя"
-                    maxlength={32}
-                    autofocus
-                    onInput={(event: any) => {
+                {Input({
+                    type: 'text',
+                    autocomplete: 'name',
+                    label: 'Ваше имя',
+                    placeholder: 'Ваше имя',
+                    maxlength: 32,
+                    autofocus: true,
+                    onInput: (event: any) => {
                         setCurrentName(event.target.value);
-                    }}
-                    onChange={(event: any) => {
+                    },
+                    onChange: (event: any) => {
                         setName(event.target.value);
-                    }}
-                    value={name}
-                    error={nameError}
-                />
+                    },
+                    value: name,
+                    error: nameError,
+                    setError: setNameError,
+                    validate: true,
+                })}
                 <div className="form__side-block">
-                    <Input
-                        type="date"
-                        autocomplete="bday"
-                        label="Дата рождения"
-                        min="1950-01-01"
-                        max="2100-01-01"
-                        onInput={(event: any) => {
+                    {Input({
+                        type: 'date',
+                        autocomplete: 'bday',
+                        label: 'Дата рождения',
+                        min: '1950-01-01',
+                        max: '2100-01-01',
+                        onInput: (event: any) => {
                             setCurrentDate(event.target.value);
-                        }}
-                        onChange={(event: any) => {
+                        },
+                        onChange: (event: any) => {
                             setDate(event.target.value);
-                        }}
-                        value={date}
-                        error={dateError}
-                    />
+                        },
+                        value: date,
+                        error: dateError,
+                        setError: setDateError,
+                        validate: true,
+                    })}
                     <div class="form__checkbox-container">
                         <span class="input__label">Ваш пол</span>
                         <div class="form__input--row">
