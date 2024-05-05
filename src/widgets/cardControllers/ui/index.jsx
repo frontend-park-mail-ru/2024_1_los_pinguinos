@@ -1,17 +1,30 @@
 import { like, dislike } from '../../../features/like/api';
 
 const CardControllers = () => {
-    const getCurrent = () => {
-        const currentCard = document.querySelector('.card');
+    // useEffect(() => {
+    //     store.subscribe(() => {
+    //         console.log(store.getState().currentCard);
+    //     });
+    // }, [discard]);
 
-        return currentCard.getAttribute('id');
+    // const [discard, setDiscard] = useState(false);
+    // const currentCard = store.getState().currentCard;
+    const getCurrent = () => {
+        const cards = document.querySelectorAll('.card');
+        const currentCard = cards[cards.length - 1].id;
+
+        return currentCard;
     };
 
     const handleLike = () => {
-        like(getCurrent());
+        const currentCard = getCurrent();
+        console.log(currentCard);
+        like(currentCard);
     };
 
     const handleDislike = () => {
+        const currentCard = getCurrent();
+        console.log(currentCard);
         dislike(getCurrent());
     };
 

@@ -1,92 +1,138 @@
+import { useState, useEffect } from '../../../reactor';
+import { getMessages } from '../../../features/chat/api';
+
+function formatDate(date) {
+    const year = date.getFullYear().toString().padStart(4, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const timezoneOffset = date.getTimezoneOffset();
+    const timezoneHours = Math.abs(Math.floor(timezoneOffset / 60))
+        .toString()
+        .padStart(2, '0');
+    const timezoneMinutes = (Math.abs(timezoneOffset) % 60)
+        .toString()
+        .padStart(2, '0');
+    const timezoneSign = timezoneOffset < 0 ? '-' : '+';
+
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z${timezoneSign}${timezoneHours}:${timezoneMinutes}`;
+}
+
 const ChatMessages = () => {
+    const [messages, setMessages] = useState([]);
+
+    const [message, setMessage] = useState('');
+
+    const handleChange = (e) => {
+        setMessage(e.target.value);
+    };
+
+    useEffect(() => {
+        getMessages(2)
+            .then((data) => {
+                setMessages(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    const [ws, setWs] = useState<WebSocket | null>(null);
+
+    useEffect(() => {
+        const socket = new WebSocket(
+            'ws://localhost:8080/api/v1/openConnection?uid=1',
+        );
+
+        socket.onopen = () => {
+            console.log('Connected');
+            setWs(socket);
+        };
+
+        socket.onclose = () => {
+            console.log('Disconnected');
+        };
+
+        return () => {
+            socket.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (ws) {
+            ws.onmessage = (e) => {
+                console.log(e.data);
+                const newMessage = JSON.parse(e.data);
+                setMessages((prev) => [...prev, newMessage]);
+            };
+        }
+    }, [ws]);
+
+    const handleSubmit = () => {
+        if (ws) {
+            ws.send(
+                JSON.stringify({
+                    data: message,
+                    sender: 1,
+                    receiver: 2,
+                    time: new Date().getTime(),
+                }),
+            );
+            setMessage('');
+        }
+    };
+
     const userID = 1;
 
-    const messages = [
-        {
-            Data: 'Привет',
-            Sender: 1,
-            Receiver: 2,
-            Time: '12:00',
-        },
-        {
-            Data: 'Привет',
-            Sender: 2,
-            Receiver: 1,
-            Time: '12:00',
-        },
-        {
-            Data: 'Как дела?',
-            Sender: 1,
-            Receiver: 2,
-            Time: '12:00',
-        },
-        {
-            Data: 'Нормально',
-            Sender: 2,
-            Receiver: 1,
-            Time: '12:00',
-        },
-    ];
+    // const messages = [
+    //     {
+    //         Data: 'Привет',
+    //         Sender: 1,
+    //         Receiver: 2,
+    //         Time: '12:00',
+    //     },
+    //     {
+    //         Data: 'Привет',
+    //         Sender: 2,
+    //         Receiver: 1,
+    //         Time: '12:00',
+    //     },
+    //     {
+    //         Data: 'Как дела?',
+    //         Sender: 1,
+    //         Receiver: 2,
+    //         Time: '12:00',
+    //     },
+    //     {
+    //         Data: 'Нормально',
+    //         Sender: 2,
+    //         Receiver: 1,
+    //         Time: '12:00',
+    //     },
+    // ];
     return (
         <div className="chatMessages">
-            {/* <div className="chatMessages__header">
-                <div className="chatMessages__header__person">
-                    <p className="chatMessages__header__person__name">Иван</p>
-                    <img
-                        src="https://source.unsplash.com/random/150x150/?woman"
-                        alt="Profile Picture"
-                    />
-                </div>
-            </div> */}
-            {/* <div className="chatMessages__list">
-                <div className="chatMessages__list__item chatMessages__list__item--me">
-                    <div className="chatMessages__list__item__message">
-                        <p className="chatMessages__list__item__text">
-                            Привет! Как дела?
-                        </p>
-                    </div>
-                </div>
-                <div className="chatMessages__list__item chatMessages__list__item--other">
-                    <div className="chatMessages__list__item__message">
-                        <p className="chatMessages__list__item__text">
-                            Привет! Все хорошо, спасибо!
-                        </p>
-                    </div>
-                </div>
-                <div className="chatMessages__list__item chatMessages__list__item--me">
-                    <div className="chatMessages__list__item__message">
-                        <p className="chatMessages__list__item__text">
-                            Чем занимаешься?
-                        </p>
-                    </div>
-                </div>
-                <div className="chatMessages__list__item chatMessages__list__item--other">
-                    <div className="chatMessages__list__item__message">
-                        <p className="chatMessages__list__item__text">
-                            Смотрю фильм
-                        </p>
-                    </div>
-                </div>
-            </div> */}
             <div className="chatMessages__list">
                 {messages.map((message) => (
                     <div
                         className={`chatMessages__list__item ${
-                            message.Sender === userID
+                            message.sender === userID
                                 ? 'chatMessages__list__item--me'
                                 : 'chatMessages__list__item--other'
                         }`}
-                        key={message.id}
+                        // key={message.id}
                     >
                         <div
                             className={
-                                message.Sender === userID
+                                message.sender === userID
                                     ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
                                     : 'chatMessages__list__item__message'
                             }
                         >
                             <p className="chatMessages__list__item__text">
-                                {message.Data}
+                                {message.data}
                             </p>
                         </div>
                     </div>
@@ -98,9 +144,13 @@ const ChatMessages = () => {
                         type="text"
                         placeholder="Введите сообщение"
                         className="chatMessages__input__field"
+                        onInput={handleChange}
                     />
                 </div>
-                <button className="chatMessages__controllers__button">
+                <button
+                    onClick={handleSubmit}
+                    className="chatMessages__controllers__button"
+                >
                     <svg
                         style={{ height: '31px', marginLeft: '6px' }}
                         viewBox="0 0 25 25"

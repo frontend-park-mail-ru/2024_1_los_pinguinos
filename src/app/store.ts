@@ -17,6 +17,7 @@ export type InitialState = {
         description: string,
         photos: Photo[],
         interests: Interest[],
+        currentCard: number,
     }
 }
 
@@ -38,6 +39,7 @@ const initState: InitialState = {
         description: "",
         photos: [],
         interests: [],
+        currentCard: 0,
     }
 }
 

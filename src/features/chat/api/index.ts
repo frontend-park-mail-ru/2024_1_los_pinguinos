@@ -1,6 +1,10 @@
 import { sendRequest } from "../../../shared/api";
 import { API_URL } from "../../../shared/config";
 
-export const getMessages = async (chatId: string) => {
-    return sendRequest(API_URL, `/getChat`, 'GET', { Person: chatId });
+export const getChats = async () => {
+    return await sendRequest(API_URL, '/getAllChats', 'GET');
 };
+
+export const getMessages = async (person: number) => {
+    return await sendRequest(API_URL, `/getChat`, 'POST', { person: person });
+}

@@ -46,7 +46,7 @@
   } */
   
   .card__back {
-    background-color: darkgray;
+    /* background-color: darkgray; */
     /* transform: rotateY(180deg); */
   }
 
@@ -71,6 +71,9 @@
   .card__back-content {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
   
   .card__image {
@@ -81,6 +84,7 @@
       content: "";
       position: absolute;
       width: 100%;
+      left: 0;
       height: 100%;
       opacity: 1;
       background: linear-gradient(
@@ -229,7 +233,7 @@
     }
   }
   
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 868px) {
     .card__front, .card__back {
       position: absolute;
       width: 100%;

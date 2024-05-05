@@ -2,11 +2,73 @@ import { Person } from '../../model/index';
 // import styles from './index.css';
 import { getAge } from '../../../../shared/lib';
 import { useState } from '../../../../reactor';
+import { like, dislike } from '../../../../features/like/api';
+
+type StartPoint = {
+    x: number;
+    y: number;
+} | null;
 
 const Card = ({ person }: { person: Person }) => {
-    console.log(person);
-
     const [isFlipped, setIsFlipped] = useState(false);
+
+    const [startPoint, setStartPoint] = useState<StartPoint>(null);
+    const [offsetX, setOffsetX] = useState(0);
+    const [offsetY, setOffsetY] = useState(0);
+
+    const isTouchDevice = () => {
+        return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    };
+
+    const handleStart = (e) => {
+        const { clientX, clientY } = isTouchDevice() ? e.changedTouches[0] : e;
+        setStartPoint({ x: clientX, y: clientY });
+        console.log('start', clientX, clientY);
+        document.addEventListener(
+            isTouchDevice() ? 'touchmove' : 'mousemove',
+            handleMove,
+        );
+    };
+
+    const handleMove = (e) => {
+        const { clientX, clientY } = isTouchDevice() ? e.changedTouches[0] : e;
+        if (startPoint) {
+            setOffsetX(clientX - startPoint.x);
+            setOffsetY(clientY - startPoint.y);
+        }
+
+        const rotate = offsetX * 0.1;
+        e.target.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg)`;
+
+        if (Math.abs(offsetX) > e.target.offsetWidth * 0.4) {
+            dismiss(offsetX > 0 ? 1 : -1);
+        }
+    };
+
+    const dismiss = (direction: number) => {
+        setStartPoint(null);
+        document.removeEventListener(
+            isTouchDevice() ? 'touchmove' : 'mousemove',
+            handleMove,
+        );
+        const card = document.getElementById(`card-${person.id}`);
+        if (card) {
+            card.style.transition = 'transform 1s';
+            card.style.transform = `translate(${
+                direction * window.innerWidth
+            }px, ${offsetY}px) rotate(${direction * 30}deg)`;
+            card.classList.add('dissmissing');
+            setTimeout(() => {
+                card.remove();
+            }, 1000);
+        }
+
+        if (direction > 0) {
+            like(person.id);
+        } else {
+            dislike(person.id);
+        }
+    };
 
     return (
         <div
@@ -15,9 +77,12 @@ const Card = ({ person }: { person: Person }) => {
                 console.log(isFlipped);
                 console.log(person.id);
             }}
-            style={{ zIndex: person.id }}
+            // style={{ zIndex: person.id }}
             key={person.id}
+            id={`card-${person.id}`}
             className="card"
+            onMouseDown={handleStart}
+            onTouchStart={handleStart}
         >
             <div
                 className={`card__front ${isFlipped ? 'card__front-flip' : ''}`}

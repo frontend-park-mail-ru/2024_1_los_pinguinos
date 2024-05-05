@@ -5,8 +5,11 @@ import { Register } from '../pages/register/register';
 import MainPage from '../pages/main/main';
 import ChatPage from '../pages/chats/chats';
 import MatchesPage from '../pages/matches/matches';
+import { createStore } from './store';
+import { userReducer } from '../entities/person/model/reducer';
 
 import { Profile } from '../pages/profile/profile';
+export const store = createStore(userReducer);
 const App = () => {
     return (
         <Router>

@@ -1,4 +1,3 @@
-
 export async function sendRequest<T>(
     baseUrl: string,
     url: string,
@@ -10,7 +9,8 @@ export async function sendRequest<T>(
         method,
         headers: {
             'Content-Type': 'application/json',
-            Csrft: localStorage.getItem('Csrft') || 'null',
+            'Csrft': localStorage.getItem('Csrft') || 'null',
+            
         },
         body: JSON.stringify(body),
     });

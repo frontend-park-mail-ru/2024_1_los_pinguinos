@@ -1,52 +1,54 @@
-import { useState } from '../../../reactor';
+import { useEffect, useState } from '../../../reactor';
 import { Link } from '../../../shared/routing/link';
 import { ChatItem } from './chatitem';
+import { getChats } from '../../../features/chat/api';
 
 const ChatList = () => {
     const [search, setSearch] = useState('');
+    const [chats, setChats] = useState([]);
+    const [ws, setWs] = useState<WebSocket | null>(null);
 
-    const chats = [
-        {
-            id: 1,
-            name: 'Иван',
-            lastMessage: 'Привет',
-            lastMessageTime: '12:00',
-            unreadMessages: 2,
-            image: 'https://source.unsplash.com/random/150x150/?woman',
-        },
-        {
-            id: 2,
-            name: 'Мария',
-            lastMessage: 'Привет',
-            lastMessageTime: '12:00',
-            unreadMessages: 1,
-            image: 'https://source.unsplash.com/random/150x150/?woman',
-        },
-        {
-            id: 3,
-            name: 'Алексей',
-            lastMessage: 'Привет',
-            lastMessageTime: '12:00',
-            unreadMessages: 0,
-            image: 'https://source.unsplash.com/random/150x150/?woman',
-        },
-        {
-            id: 4,
-            name: 'Анна',
-            lastMessage: 'Привет',
-            lastMessageTime: '12:00',
-            unreadMessages: 0,
-            image: 'https://source.unsplash.com/random/150x150/?woman',
-        },
-        {
-            id: 5,
-            name: 'Ольга',
-            lastMessage: 'Привет',
-            lastMessageTime: '12:00',
-            unreadMessages: 0,
-            image: 'https://source.unsplash.com/random/150x150/?woman',
-        },
-    ];
+    useEffect(() => {
+        const socket = new WebSocket(
+            'ws://localhost:8080/api/v1/openConnection?uid=1',
+        );
+
+        socket.onopen = () => {
+            console.log('Connected');
+            setWs(socket);
+        };
+
+        socket.onclose = () => {
+            console.log('Disconnected');
+        };
+
+        return () => {
+            socket.close();
+        };
+    }, []);
+
+    // useEffect(() => {
+    //     if (ws) {
+    //         ws.onmessage = (e) => {
+    //             console.log(e.data);
+    //             const newMessage = JSON.parse(e.data);
+                
+    //         };
+    //     }
+    // }, [ws]);
+        
+
+    useEffect(() => {
+        getChats()
+            .then((data) => {
+                console.log(data);
+                setChats(data.chats);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
     const [activeChat, setActiveChat] = useState(null);
 
     return (
@@ -92,10 +94,6 @@ const ChatList = () => {
                     />
                 </div>
                 <div className="navbar__menu__items">
-                    {/* <ChatItem chat={chats[0]} /> */}
-                    {/* {chats.map((chat) => (
-                        <ChatItem chat={chat} />
-                    ))} */}
                     {chats
                         .filter((chat) => {
                             return chat.name
