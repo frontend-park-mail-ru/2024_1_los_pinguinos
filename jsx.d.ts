@@ -20,5 +20,6 @@ declare namespace JSX {
         input: any;
         label: any;
         form: any;
+        h1: any;
     }
 }

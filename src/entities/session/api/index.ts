@@ -14,15 +14,18 @@ export const register = async (
     email: string,
     password: string,
     name: string,
-    age: number,
+    gender: string,
+    birthday: string,
     interests: string[],
 ): Promise<SessionResponse> => {
-    return sendRequest('/register', 'POST', {
+    console.log(email, password, gender, name, birthday, interests);
+    return sendRequest('/registration', 'POST', {
         email,
-        name,
-        age,
-        interests,
         password,
+        name,
+        gender,
+        birthday,
+        interests,
     });
 };
 

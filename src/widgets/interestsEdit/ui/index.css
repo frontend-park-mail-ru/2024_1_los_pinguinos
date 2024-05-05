@@ -1,0 +1,5 @@
+.interest {
+    padding: 10px;
+    border-radius: 20px;
+    background-color: var(--color__light--primary);
+}

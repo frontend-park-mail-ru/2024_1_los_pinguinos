@@ -29,3 +29,13 @@ export const Router = ({ children: routes }: any) => {
     const Component = currentRoute.props.component;
     return Component ? <Component /> : null;
 };
+
+export const navigateTo = (url: string) => {
+    history.pushState(null, '', url);
+    window.dispatchEvent(new Event('popstate'));
+};
+
+export const redirectTo = (url: string) => {
+    history.replaceState(null, '', url);
+    window.dispatchEvent(new Event('popstate'));
+};

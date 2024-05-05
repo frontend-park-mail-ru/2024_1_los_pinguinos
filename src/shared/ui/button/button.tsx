@@ -10,9 +10,17 @@ export type TButton = {
     fontSize?: TSize;
     onClick?: (event: any) => void;
     disabled?: boolean;
+    navbar?: boolean;
 };
 export type TButtonType = 'button' | 'submit' | 'reset';
-export type TSeverity = 'danger' | 'success' | 'info' | 'link';
+export type TSeverity =
+    | 'danger'
+    | 'success'
+    | 'info'
+    | 'link'
+    | 'contrast'
+    | 'edit'
+    | 'cancel';
 
 export const Button = ({
     label,
@@ -23,6 +31,7 @@ export const Button = ({
     size,
     fontSize,
     disabled,
+    navbar,
 }: TButton) => {
     const getClassBySeverity = (sev: TSeverity) => {
         switch (sev) {
@@ -34,6 +43,12 @@ export const Button = ({
                 return 'button--info';
             case 'link':
                 return 'button--link';
+            case 'contrast':
+                return 'button--contrast';
+            case 'cancel':
+                return 'button--cancel';
+            case 'edit':
+                return 'button--edit';
         }
     };
     return (
@@ -43,6 +58,7 @@ export const Button = ({
             className={clsx(
                 'button',
                 getClassBySeverity(severity),
+                navbar && 'navbar__button',
                 getClassBySize('button', size),
                 disabled && 'any--disabled',
             )}
@@ -50,6 +66,7 @@ export const Button = ({
             <span
                 className={clsx(
                     'button__label',
+                    navbar && 'navbar__icon',
                     getClassBySize('button__label', fontSize),
                     icon,
                     !icon && 'any--none',
@@ -58,6 +75,7 @@ export const Button = ({
             <span
                 className={clsx(
                     'button__label',
+                    navbar && 'navbar__label',
                     getClassBySize('button__label', fontSize),
                 )}
             >

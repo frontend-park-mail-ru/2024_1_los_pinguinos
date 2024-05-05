@@ -1,70 +1,66 @@
 import { useEffect, useState } from '../../../reactor/index';
 import { login } from '../../../entities/session/api/index';
 import { Link } from '../../../shared/routing/link';
-import { validateInput } from '../../../shared/lib/index';
-import { Input } from '../../../shared/ui/input/input';
-import { ButtonLink } from '../../../shared/ui/button/buttonLink';
-import { Button } from '../../../shared/ui/button/button';
+import { validateInput, updateInputError } from '../../../shared/lib/index';
+import { Input, Button, ButtonLink } from '../../../shared/ui/index';
+import { redirectTo } from '../../../app/Router';
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [emailEmpty, setEmailEmpty] = useState('');
-    const [passwordEmpty, setPasswordEmpty] = useState('');
     const [touchedEmail, setTouchedEmail] = useState(false);
+    const [emailError, setEmailError] = useState('');
+
+    const [password, setPassword] = useState('');
     const [touchedPassword, setTouchedPassword] = useState(false);
+    const [passwordError, setPasswordError] = useState('');
+
     const [formError, setFormError] = useState('');
     const emptyErrorText = 'Поле не может быть пустым';
     const formErrorText = 'Неверный логин или пароль';
     useEffect(() => {
-        if (!email && touchedEmail) {
-            setEmailEmpty(emptyErrorText);
-        } else {
-            setEmailEmpty('');
-        }
-        if (!touchedEmail) {
-            setTouchedEmail(true);
-        }
-        return () => {};
+        updateInputError({
+            inputType: 'email',
+            inputValue: email,
+            isTouched: touchedEmail,
+            setTouched: setTouchedEmail,
+            errorMessageEmpty: emptyErrorText,
+            setErrorMessage: setEmailError,
+        });
     }, [email]);
     useEffect(() => {
-        if (!password && touchedPassword) {
-            setPasswordEmpty(emptyErrorText);
-        } else {
-            setPasswordEmpty('');
-        }
-        if (!touchedPassword) {
-            setTouchedPassword(true);
-        }
+        updateInputError({
+            inputType: 'password',
+            inputValue: password,
+            isTouched: touchedPassword,
+            setTouched: setTouchedPassword,
+            errorMessageEmpty: emptyErrorText,
+            setErrorMessage: setPasswordError,
+        });
         return () => {};
     }, [password]);
     async function submitLogin(event: any) {
         event.preventDefault();
         setFormError('');
-        if (!password || !email) {
-            if (!password) {
-                setPasswordEmpty(emptyErrorText);
-            }
-            if (!email) {
-                setEmailEmpty(emptyErrorText);
-            }
+        if (!email || !password) {
+            if (!password) setPasswordError(emptyErrorText);
+            if (!email) setEmailError(emptyErrorText);
             return;
         }
-        if (!passwordEmpty && !emailEmpty) {
-            const emailValid = validateInput('email', email);
-            const passwordValid = validateInput('password', password);
-            if (emailValid && passwordValid) {
-                try {
-                    const response = await login(email, password);
-                    localStorage.setItem('Csrft', response.csrft); // store properly in redux
-                    return;
-                } catch (error) {
-                    setFormError(formErrorText);
-                    return;
-                }
-            }
+
+        const emailValid = validateInput('email', email);
+        const passwordValid = validateInput('password', password);
+        if (!emailValid || !passwordValid) {
+            setFormError(formErrorText);
+            return;
+        }
+        try {
+            const response = await login(email, password);
+            redirectTo('/profile');
+            localStorage.setItem('Csrft', response.csrft); // store in redux!!!!
+        } catch (error) {
             setFormError(formErrorText);
         }
     }
+
     return (
         <form className="form" onSubmit={submitLogin}>
             <div className="form__header">
@@ -81,39 +77,24 @@ export const LoginForm = () => {
                     type="email"
                     autocomplete="email"
                     placeholder="Ваш email"
-                    maxlength={320}
+                    maxlength={40}
                     autofocus
-                    value={email}
                     onInput={(event: any) => {
                         setEmail(event.target.value);
                     }}
-                    error={emailEmpty}
+                    error={emailError}
                 />
-                {/* {Input({
-                    type: 'email',
-                    autocomplete: 'email',
-                    placeholder: 'Ваш email',
-                    maxlength: 320,
-                    autofocus: true,
-                    value: email,
+                {Input({
+                    type: 'password',
+                    autocomplete: 'password',
+                    placeholder: 'Ваш пароль',
+                    minlength: 8,
+                    maxlength: 32,
                     onInput: (event: any) => {
-                        setEmail(event.target.value);
-                    },
-                    error: emailEmpty,
-                })} */}
-
-                <Input
-                    type="password"
-                    autocomplete="password"
-                    placeholder="Ваш пароль"
-                    minlength={8}
-                    maxlength={32}
-                    value={password}
-                    onInput={(event: any) => {
                         setPassword(event.target.value);
-                    }}
-                    error={passwordEmpty}
-                />
+                    },
+                    error: passwordError,
+                })}
                 <Button
                     label="Продолжить"
                     type="submit"

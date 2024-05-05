@@ -1,5 +1,5 @@
-import { Modal } from "../../../shared/ui";
-import { useState } from "../../../reactor";
+import { Modal, Button } from '../../../shared/ui';
+import { useState } from '../../../reactor';
 
 const DescriptionEdit = () => {
     const [active, setActive] = useState(false);
@@ -7,29 +7,49 @@ const DescriptionEdit = () => {
 
     const handleSave = () => {
         setActive(false);
-    }
+    };
 
     return (
-        <div className="descriptionEdit">
-            <img src="https://via.placeholder.com/15" alt="avatar" />
-            <div className="descriptionEdit__info">
-                <p>Ваше описание</p>
-                <h3>{description}</h3>
+        <div className="profile__content-block">
+            <div class="profile__label--row">
+                <span class="profile__label--text">Ваше био</span>
+                <Button
+                    icon="icon-pencil-square"
+                    fontSize="l1"
+                    severity="edit"
+                    onClick={() => setActive(true)}
+                />
             </div>
-            <button onClick={() => setActive(true)}>Изменить описание</button>
+            <p className="profile__text">{description}</p>
             <Modal active={active} setActive={setActive}>
-                <div className="descriptionEdit__content">
-                    <h2>Изменить описание</h2>
-                    <input 
-                    onChange={(e) => setDescription(e.target.value)}
-                    type="text" placeholder="Введите новое описание" />
-                    <button
-                    onClick={handleSave}
-                    >Сохранить</button>
+                <div className="dialog">
+                    <span className="dialog__title">Изменить описание</span>
+                    <textarea
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Введите новое описание"
+                    ></textarea>
+                    <div className="dialog__button-wrap">
+                        <Button
+                            label="Отмена"
+                            size="m"
+                            fontSize="m"
+                            severity="cancel"
+                            onClick={() => {
+                                setActive(false);
+                            }}
+                        />
+                        <Button
+                            label="Сохранить"
+                            size="m"
+                            fontSize="m"
+                            severity="success"
+                            onClick={handleSave}
+                        />
+                    </div>
                 </div>
             </Modal>
         </div>
-    )
+    );
 };
 
 export default DescriptionEdit;

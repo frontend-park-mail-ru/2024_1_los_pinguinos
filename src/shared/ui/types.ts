@@ -1,4 +1,13 @@
-export type TSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'max-width';
+export type TSize =
+    | 'xxs'
+    | 'xs'
+    | 's'
+    | 'm'
+    | 'l'
+    | 'l1'
+    | 'xl'
+    | 'xxl'
+    | 'max-width';
 
 export const getClassBySize = (basicClass: string, size: TSize) => {
     switch (size) {
@@ -12,6 +21,8 @@ export const getClassBySize = (basicClass: string, size: TSize) => {
             return `${basicClass}--m`;
         case 'l':
             return `${basicClass}--l`;
+        case 'l1':
+            return `${basicClass}--l1`;
         case 'xl':
             return `${basicClass}--xl`;
         case 'xxl':

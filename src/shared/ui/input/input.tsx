@@ -11,10 +11,13 @@ export type TInput = {
     name?: string;
     disabled?: boolean;
     onInput?: (event: any) => void;
+    onChange?: (event: any) => void;
     value?: string;
     size?: TSize;
     minlength?: number;
     maxlength?: number;
+    min?: string;
+    max?: string;
     error?: string;
 };
 
@@ -37,10 +40,13 @@ export const Input = ({
     name,
     disabled,
     onInput,
+    onChange,
     value,
     size,
     minlength,
     maxlength,
+    min,
+    max,
     error,
 }: TInput) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -77,9 +83,12 @@ export const Input = ({
                 autoComplete={autocomplete}
                 disabled={disabled}
                 onInput={onInput}
+                onChange={onChange}
                 value={value}
                 minLength={minlength}
                 maxLength={maxlength}
+                min={min}
+                max={max}
                 className={clsx(
                     'input',
                     getClassBySize('input', size),
