@@ -5,13 +5,10 @@ import Header from '../../widgets/header/index';
 
 const Mainpage = () => {
     return (
-        <div>
-            <Header />
-            <div className="main">
-                <div className="content">
-                    <CardsList />
-                    <CardControllers />
-                </div>
+        <div className="main">
+            <div className="content">
+                <CardsList />
+                <CardControllers />
             </div>
         </div>
     );

@@ -1,0 +1,11 @@
+.card-controllers {
+    display: flex;
+    gap: 10px;
+}
+
+@media screen and (max-width: 500px) {
+    .card-controllers {
+        display: none;
+    }
+    
+}

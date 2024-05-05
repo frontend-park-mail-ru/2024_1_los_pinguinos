@@ -1,8 +1,10 @@
 import { useEffect, useState } from '../reactor/index';
+import  Layout from '../pages/layout/layout';
 
 export interface IRoute {
     path: string;
     component: any;
+    isSecure?: boolean;
     props?: any;
 }
 
@@ -27,5 +29,16 @@ export const Router = ({ children: routes }: any) => {
         return route.props.path === currentPath;
     });
     const Component = currentRoute.props.component;
-    return Component ? <Component /> : null;
+    console.log('currentRoute', currentRoute);
+    const isSecure = currentRoute.props.isSecure;
+    console.log('isSecure', isSecure);
+    return Component ? (
+        isSecure ? (
+            <Layout>
+                <Component />
+            </Layout>
+        ) : (
+            <Component />
+        )
+    ) : null;
 };

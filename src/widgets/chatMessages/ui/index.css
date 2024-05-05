@@ -1,0 +1,110 @@
+.chatMessages {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 20px;
+    /* background: rgba(255, 255, 255, 0.23); */
+}
+
+.chatMessages__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.chatMessages__list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.chatMessages__list__item {
+    display: flex;
+    gap: 10px;
+}
+
+.chatMessages__list__item--me {
+    justify-content: flex-end;
+}
+
+.chatMessages__list__item--other {
+    justify-content: flex-start;
+}
+
+.chatMessages__list__item__message {
+    padding: 10px;
+    border-radius: 10px;
+    background: #D9D9D9;
+}
+
+.chatMessages__list__item__message--me {
+    background: #7DE85A;
+}
+
+.chatMessages__list__item__message--other {
+    background: var(--color__light--secondary);
+    color: var(--color__dark--secondary);
+}
+
+.chatMessages__list__item__message__text {
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.chatMessages__list__item__message__time {
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: right;
+}
+
+.chatMessages__controllers {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    height: 90px;
+}
+
+.chatMessages__controllers__input {
+    background: black;
+    border: none;
+    border-radius: 38px;
+    padding: 5px 10px;
+    width: 100%;
+    display: flex;
+    /* align-content: center; */
+    align-items: center;
+    height: 100%;
+}
+
+.chatMessages__input__field {
+    width: 100%;
+    border: none;
+    height: 100%;
+    background: black;
+    outline: none;
+    color: white;
+    border-radius: 38px;
+    padding-left: 5px;
+    font-size: 20px;
+}
+
+.chatMessages__controllers__button {
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    /* padding: 5px 10px; */
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

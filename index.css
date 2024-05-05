@@ -15,6 +15,11 @@
 @import url("src/pages/matches/matches.scss");
 @import url('/src/shared/ui/modal/index.css');
 @import url(/src/assets/fonts/MailSans/stylesheet.css);
+@import url("/src/widgets/cardControllers/ui/index.css");
+@import url("/src/widgets/chatMessages/ui/index.css");
+@import url("/src/pages/chats/index.css");
+@import url("/src/widgets/footer/ui/index.css");
+@import url("/src/pages/layout/index.css");
 
 :root {
   --background--landing: url(./src/assets/background/background-landing.webp);

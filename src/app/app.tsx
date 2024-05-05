@@ -3,14 +3,18 @@ import { Landing } from '../pages/landing/landing';
 import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
 import MainPage from '../pages/main/main';
+import ChatPage from '../pages/chats/chats';
+import MatchesPage from '../pages/matches/matches';
 
 const App = () => {
     return (
         <Router>
             <Route path="/" component={Landing} />
-            <Route path="/main" component={MainPage} />
+            <Route path="/main" component={MainPage} isSecure={true} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/chats" component={ChatPage} isSecure={true} />
+            <Route path="/matches" component={MatchesPage} isSecure={true} />
         </Router>
     );
 };

@@ -12,7 +12,8 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    width: 908px;
+    width: 100%;
+    min-width: 320px;
     background: inherit;
     border-radius: 13px;
     height: 100%;
@@ -20,7 +21,8 @@
   }
   
   #swiper {
-    width: 788px;
+    width: 70%;
+    min-width: 300px;
     height: 582px;
     border-radius: 13px;
     perspective-origin: center 50%;
@@ -54,4 +56,17 @@
     color: #7DE85A;
     cursor: pointer;
 }
-  
+
+@media screen and (max-width: 500px) {
+    .content {
+        width: 95%;
+    }
+
+    #swiper {
+        width: 95%;
+    }
+
+    .main {
+        margin: 0;
+    }
+}
