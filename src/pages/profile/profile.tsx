@@ -16,6 +16,7 @@ export const Profile = () => {
     const [title, setTitle] = useState('Профиль');
     const [active, setActive] = useState(false);
     const [callback, setCallback] = useState(() => {});
+    const [popupTitle, setPopupTitle] = useState('');
     return (
         <div className="profile__wrapper">
             <div className="profile__content-wrapper">
@@ -58,6 +59,7 @@ export const Profile = () => {
                         severity="contrast"
                         onClick={() => {
                             setActive(true);
+                            setPopupTitle('Удалить аккаунт?');
                             setCallback((callback) => {
                                 return () => {
                                     console.log('hehe');
@@ -74,6 +76,7 @@ export const Profile = () => {
                 setTitle={setTitle}
                 setActive={setActive}
                 setCallback={() => {
+                    setPopupTitle('Выйти?');
                     setCallback((callback) => {
                         return () => {
                             console.log('hihi');
@@ -83,7 +86,7 @@ export const Profile = () => {
             />
             <Modal active={active} setActive={setActive}>
                 <div className="dialog">
-                    <span className="dialog__title">Вы уверены?</span>
+                    <span className="dialog__title">{popupTitle}</span>
                     <div className="dialog__button-wrap">
                         <Button
                             label="Отмена"

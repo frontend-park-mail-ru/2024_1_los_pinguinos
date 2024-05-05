@@ -19,12 +19,12 @@ const Match = ({ person }: any) => {
                 </svg>
             </button>
             <div className="profile-pic profile-pic1">
-                <img src={person.image} alt={person.name} />
+                <img src={person.photo} alt={person.name} />
             </div>
             <div className="data">
                 <div className="data__content">
                     <span className="name">
-                        {person.name}, {person.age}
+                        {person.name}, {person.birthday}
                     </span>
                     <span className="about-me">{person.description}</span>
                 </div>

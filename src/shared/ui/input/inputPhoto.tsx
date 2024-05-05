@@ -39,7 +39,6 @@ export const InputPhoto = ({
             target.value = null;
         }
     };
-
     const defaultImage = `data:image/svg+xml,${imageCreate}`;
     return (
         <div
