@@ -15,11 +15,11 @@
 }
 
 .button:focus {
-    outline: medium solid;
+    outline: none;
 }
 
 .button--success {
-    color: var(--color__dark--primary);
+    color: var(--color__dark--primary) !important;
     background-color: var(--color__success--primary);
 }
 
@@ -50,6 +50,14 @@
     outline-color: var(--color__success--outline);
 }
 
+.button--cancel {
+    color: var(--color__light--primary);
+}
+
+.button--cancel:hover {
+    background-color: var(--color__danger--primary);
+}
+
 .button--link {
     padding: 0;
     color: var(--color__light--secondary);
@@ -57,6 +65,42 @@
 
 .button--link:hover {
     opacity: 0.6;
+}
+
+.navbar__button {
+    color: var(--color__light--primary);
+}
+
+.navbar__button:hover {
+    color: var(--color__dark--primary);
+    background-color: var(--color__success--secondary);
+}
+
+.button--edit {
+    padding: 0;
+    height: auto;
+    color: var(--color__light--primary);
+}
+
+.button--edit:hover {
+    opacity: 0.6;
+}
+
+.button--edit:focus {
+    outline-color: transparent !important;
+}
+.button--edit:active {
+    outline-color: transparent !important;
+}
+
+
+.button--contrast {
+    color: var(--color__light--primary) !important;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.button--contrast:hover {
+    background-color: var(--color__danger--primary);
 }
 
 .button--max-width {
@@ -70,28 +114,20 @@
     opacity: 0.6;
     user-select: none;
 } /* move to basic */
-/* .button--disabled:focus {
-    outline-color: var(--color__dark--primary);
-} */
-
-/* .button--m {
-    font-size: medium;
-    font-weight: 600;
-} */
-
-/* .button--l {
-    font-size: large;
-    font-weight: 700;
-} */
 
 .button__label--m {
     font-size: medium;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .button__label--l {
     font-size: large;
-    font-weight: 700;
+    font-weight: 600;
+}
+
+.button__label--l1 {
+    font-size: large;
+    font-weight: 500;
 }
 
 .button__label--xl {
@@ -100,15 +136,32 @@
 }
 
 .button--xl {
-    /* font-size: x-large;
-    font-weight: 700; */
     padding: 0 40px;
     height: 70px;
 }
 
+.navbar__label {
+    display: block;
+}
+.navbar__icon {
+    display: none;
+}
+
+@media only screen and (max-width: 896px) {
+    .navbar__label {
+        display: none;
+    }
+    .navbar__icon {
+        display: block;
+    }
+    .navbar__button {
+        width: 50px;
+        border-radius: 50%;
+    }
+}
+
 @media only screen and (max-width: 350px) {
     .button--xl {
-        /* font-size: large; */
         height: 50px;
         padding: 0 20px;
     }

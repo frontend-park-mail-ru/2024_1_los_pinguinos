@@ -1,43 +1,42 @@
 import { useState, useEffect } from '../../../reactor/index';
-import { Input } from '../../../shared/ui/input/input';
-import { Button } from '../../../shared/ui/button/button';
-import { ButtonLink } from '../../../shared/ui/button/buttonLink';
+import { Button, ButtonLink, Input } from '../../../shared/ui';
 import { Link } from '../../../shared/routing/link';
-import { validateInput } from '../../../shared/lib/index';
-export type TStep = {
-    onNavigateBack?: (event: any) => void;
-    onNavigateForward?: Function;
-};
-interface TEmailStep extends TStep {
+import {
+    validateInput,
+    IStep,
+    updateInputError,
+} from '../../../shared/lib/index';
+import { clsx } from '../../../clsx';
+
+interface TEmailStep extends IStep {
     setEmail: (event: any) => void;
     email: string;
 }
-const StepEmail = ({ onNavigateForward, setEmail, email }: TEmailStep) => {
+const StepEmail = ({
+    onNavigateForward,
+    setEmail,
+    email,
+    display,
+}: TEmailStep) => {
     const [currentEmail, setCurrentEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [touchedEmail, setTouchedEmail] = useState(false);
     const [validatedEmail, setValidatedEmail] = useState(false);
-    if (email) {
-        setCurrentEmail(email);
-    }
+    const [stepError, setStepError] = useState('');
     useEffect(() => {
-        console.log(currentEmail);
-        if (!currentEmail && touchedEmail) {
-            setEmailError('пустое мыло');
-        } else {
-            if (
-                !validateInput('email', currentEmail) &&
-                touchedEmail &&
-                validatedEmail
-            ) {
-                setEmailError('невалидное мыло.');
-            } else {
-                setEmailError('');
-            }
-        }
-        if (!touchedEmail) {
-            setTouchedEmail(true);
-        }
+        updateInputError({
+            inputType: 'email',
+            inputValue: currentEmail,
+            isTouched: touchedEmail,
+            setTouched: setTouchedEmail,
+            isValidated: validatedEmail,
+            errorMessageEmpty: 'Поле не может быть пустым',
+            errorMessageInvalid: 'Некорректный email',
+            setErrorMessage: setEmailError,
+            helpMessage: 'email should be cooler',
+            setHelpMessage: setStepError,
+        });
+
         return () => {};
     }, [currentEmail, validatedEmail]);
     const allowContinue = () => {
@@ -49,7 +48,7 @@ const StepEmail = ({ onNavigateForward, setEmail, email }: TEmailStep) => {
         setValidatedEmail(true);
     };
     return (
-        <div className="form__step">
+        <div className={clsx('form__step', !display && 'any--none')}>
             <div className="form__header">
                 <ButtonLink
                     icon="icon-chevron-left"
@@ -68,9 +67,11 @@ const StepEmail = ({ onNavigateForward, setEmail, email }: TEmailStep) => {
                     autofocus
                     onInput={(event: any) => {
                         setCurrentEmail(event.target.value);
+                    }}
+                    onChange={(event: any) => {
                         setEmail(event.target.value);
                     }}
-                    value={currentEmail}
+                    value={email}
                     error={emailError}
                 />
                 <Button
@@ -87,7 +88,7 @@ const StepEmail = ({ onNavigateForward, setEmail, email }: TEmailStep) => {
                     Войти
                 </Link>
             </span>
-            <span className="form__error">{'formError'}</span>
+            <span className="form__error">{stepError}</span>
         </div>
     );
 };

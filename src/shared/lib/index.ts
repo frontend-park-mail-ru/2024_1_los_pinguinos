@@ -54,3 +54,57 @@ export const togglePassword = (event: any) => {
     const input = event.target.closest('div').querySelector('input');
     input.type = input.type === 'text' ? 'password' : 'text';
 };
+
+export interface IStep {
+    display: boolean;
+    onNavigateBack?: (event: any) => void;
+    onNavigateForward?: Function;
+}
+import { TInputType } from '../ui/index';
+export interface IInputError {
+    inputType: TInputType;
+    inputValue: string;
+    isTouched: boolean;
+    setTouched: (event: any) => void;
+    isValidated?: boolean;
+    errorMessageEmpty: string;
+    errorMessageInvalid?: string;
+    setErrorMessage: (event: any) => void;
+    helpMessage?: string;
+    setHelpMessage?: (event: any) => void;
+}
+export const updateInputError = ({
+    inputType,
+    inputValue,
+    isTouched,
+    setTouched,
+    isValidated,
+    errorMessageEmpty,
+    errorMessageInvalid,
+    setErrorMessage,
+    helpMessage,
+    setHelpMessage,
+}: IInputError) => {
+    if (!inputValue && isTouched) {
+        setErrorMessage(errorMessageEmpty);
+    } else {
+        if (!validateInput(inputType, inputValue) && isTouched && isValidated) {
+            setErrorMessage(errorMessageInvalid);
+            if (setHelpMessage)
+                setHelpMessage((currentError: string) => {
+                    if (!currentError.includes(helpMessage))
+                        currentError += helpMessage + '\n';
+                    return currentError;
+                });
+        } else {
+            setErrorMessage('');
+            if (setHelpMessage)
+                setHelpMessage((currentError: string) =>
+                    currentError.replace(helpMessage + '\n', ''),
+                );
+        }
+    }
+    if (!isTouched) {
+        setTouched(true);
+    }
+};

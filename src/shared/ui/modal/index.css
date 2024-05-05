@@ -10,17 +10,17 @@
     align-items: center;
     opacity: 0;
     pointer-events: none;
-    transition: 0.5s;
+    transition: opacity 0.2s ease-in-out;
 }
 
 .modal__content {
-    background-color: white;
+    background-color: var(--color__dark--primary);
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transform: scale(0.5);
-    transition: 0.4s all;
-    width: 50vw;
+    transition: all 0.2s ease-in-out;
+    width: fit-content;
 }
 
 .modal__content.active {
@@ -30,4 +30,29 @@
 .modal.active {
     opacity: 1;
     pointer-events: all;
+}
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.dialog__title {
+    color: var(--color__light--primary);
+    font-size: xx-large;
+    word-break: auto-phrase;
+    text-align: center;
+}
+
+.dialog__list-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dialog__button-wrap {
+    display: flex;
+    gap: 10px;
 }

@@ -1,5 +1,5 @@
-import { Modal } from "../../../shared/ui";
-import { useState } from "../../../reactor";
+import { Modal, Button, Input } from '../../../shared/ui';
+import { useState } from '../../../reactor';
 
 const MailEdit = () => {
     const [active, setActive] = useState(false);
@@ -7,29 +7,54 @@ const MailEdit = () => {
 
     const handleSave = () => {
         setActive(false);
-    }
+    };
 
     return (
-        <div className="mailEdit">
-            <img src="https://via.placeholder.com/15" alt="avatar" />
-            <div className="mailEdit__info">
-                <p>Ваша почта</p>
-                <h3>{mail}</h3>
+        <div className="profile__settings--row">
+            <span
+                className="icon-cursor"
+                style="color: var(--color__light--primary); font-size: large; font-weight: 600;"
+            ></span>
+            <div className="profile__settings--column">
+                <span className="profile__text">Ваша почта</span>
+                <span className="profile__text">{mail}</span>
             </div>
-            <button onClick={() => setActive(true)}>Изменить почту</button>
+            <Button
+                icon="icon-pencil-square"
+                fontSize="l1"
+                severity="edit"
+                onClick={() => setActive(true)}
+            />
             <Modal active={active} setActive={setActive}>
-                <div className="mailEdit__content">
-                    <h2>Изменить почту</h2>
-                    <input 
-                    onChange={(e) => setMail(e.target.value)}
-                    type="text" placeholder="Введите новую почту" />
-                    <button
-                    onClick={handleSave}
-                    >Сохранить</button>
+                <div className="dialog">
+                    <span className="dialog__title">Изменить пароль</span>
+                    <Input type="email" placeholder="Введите новый email" />
+                    {Input({
+                        type: 'password',
+                        placeholder: 'Введите текущий пароль',
+                    })}
+                    <div className="dialog__button-wrap">
+                        <Button
+                            label="Отмена"
+                            size="m"
+                            fontSize="m"
+                            severity="cancel"
+                            onClick={() => {
+                                setActive(false);
+                            }}
+                        />
+                        <Button
+                            label="Сохранить"
+                            size="m"
+                            fontSize="m"
+                            severity="success"
+                            onClick={handleSave}
+                        />
+                    </div>
                 </div>
             </Modal>
         </div>
-    )
+    );
 };
 
 export default MailEdit;

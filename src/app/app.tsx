@@ -6,6 +6,7 @@ import MainPage from '../pages/main/main';
 import ChatPage from '../pages/chats/chats';
 import MatchesPage from '../pages/matches/matches';
 
+import { Profile } from '../pages/profile/profile';
 const App = () => {
     return (
         <Router>
@@ -15,6 +16,7 @@ const App = () => {
             <Route path="/register" component={Register} />
             <Route path="/chats" component={ChatPage} isSecure={true} />
             <Route path="/matches" component={MatchesPage} isSecure={true} />
+            <Route path="/profile" component={Profile} />
         </Router>
     );
 };

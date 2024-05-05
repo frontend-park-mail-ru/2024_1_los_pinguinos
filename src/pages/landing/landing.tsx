@@ -1,6 +1,6 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
-import { ButtonLink } from '../../shared/ui/button/buttonLink';
+import { ButtonLink } from '../../shared/ui/index';
 
 export const Landing = () => {
     return (

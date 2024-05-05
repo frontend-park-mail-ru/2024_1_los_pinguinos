@@ -37,6 +37,27 @@
     align-items: center;
 }
 
+.form__input--row {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.form__checkbox-container {
+    width: fit-content;
+    display: flex;
+    flex-flow: column;
+}
+
+.form__interest-container {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
 .form__header {
     position: absolute;
     top: 17px;
@@ -49,11 +70,25 @@
 }
 
 .form__title {
+    text-align: center;
     color: var(--color__light--primary);
     font-size: xx-large;
     font-weight: 700;
     word-break: auto-phrase;
 }
+
+.form__description {
+    text-align: center;
+    color: var(--color__light--secondary);
+    word-break: auto-phrase;
+}
+
+.form__side-block {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+  }
 
 .form__footer {
     text-align: center;
@@ -70,6 +105,7 @@
 .form__error {
     text-align: center;
     word-break: auto-phrase;
+    white-space: pre-wrap !important;
     color: var(--color__danger--primary);
 }
 
@@ -83,8 +119,20 @@
     }
 }
 
+@media only screen and (max-width: 450px) {
+    .form__side-block {
+        flex-direction: column;
+        gap: 30px;
+    }
+}
+
 @media only screen and (max-width: 400px) {
     .form__footer {
         flex-direction: column;
+    }
+}
+@media only screen and (max-width: 300px) {
+    .form__input-container {
+        gap: 60px;
     }
 }
