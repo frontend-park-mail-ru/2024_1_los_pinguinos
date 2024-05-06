@@ -1,6 +1,6 @@
 import { Action } from '../../../app/store';
 const initialState = {
-    id: '0',
+    id: '1',
     name: '',
     email: '',
     birthday: '',
@@ -8,6 +8,7 @@ const initialState = {
     photos: [],
     interests: [],
     currentCard: 0,
+    currentChat: null,
 };
 
 /**
@@ -38,7 +39,7 @@ export const userReducer = (state = initialState, action: Action) => {
         case 'UPDATE_CURRENT_CHAT':
             return {
                 ...state,
-                currentChat: value,
+                currentChat: action.payload,
             };
         case 'LOGOUT':
             return {};

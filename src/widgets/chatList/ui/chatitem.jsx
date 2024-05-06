@@ -1,4 +1,6 @@
 import { useState } from '../../../reactor';
+import { store } from '../../../app/app';
+import { navigateTo } from '../../../app/Router';
 
 export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
     console.log(chat);
@@ -14,7 +16,12 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                         : ''
                 }`}
                 onClick={() => {
+                    console.log('sender', chat.lastMessage.sender);
+                    console.log('receiver', chat.lastMessage.receiver);
+                    console.log('id', store.getState().id);
                     setActiveChat(chat.lastMessage.id);
+                    store.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: chat.lastMessage.sender == 1 ? chat.lastMessage.receiver : chat.lastMessage.sender});
+                    navigateTo('/chats');
                 }}
             >
                 <img

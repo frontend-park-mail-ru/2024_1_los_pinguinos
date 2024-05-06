@@ -11,21 +11,40 @@ const ChatMessages = () => {
         setMessage(e.target.value);
     };
 
+    const [userID, setUserID] = useState(1);
+    console.log('user', store.getState());
+    const [currentChat, setCurrentChat] = useState(
+        store.getState().currentChat,
+    );
+
     useEffect(() => {
-        getMessages(2)
+        store.subscribe(() => {
+            const state = store.getState();
+            console.log(state);
+            setCurrentChat(state.currentChat);
+        });
+    }, []);
+
+    useEffect(() => {
+        console.log('currentChat', currentChat);
+        if (!currentChat) {
+            return;
+        }
+        getMessages(currentChat)
             .then((data) => {
+                console.log(data);
                 setMessages(data);
             })
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
+    }, [currentChat]);
 
     const [ws, setWs] = useState<WebSocket | null>(null);
 
     useEffect(() => {
         const socket = new WebSocket(
-            'ws://localhost:8080/api/v1/openConnection?uid=1',
+            `ws://localhost:8080/api/v1/openConnection?uid=${userID}`,
         );
 
         socket.onopen = () => {
@@ -47,7 +66,16 @@ const ChatMessages = () => {
             ws.onmessage = (e) => {
                 console.log(e.data);
                 const newMessage = JSON.parse(e.data);
-                setMessages((prev) => [...prev, newMessage]);
+                console.log(newMessage);
+                console.log(userID, currentChat);
+                if (
+                    (newMessage.sender === userID &&
+                        newMessage.receiver === store.getState().currentChat) ||
+                    (newMessage.sender === store.getState().currentChat &&
+                        newMessage.receiver === userID)
+                ) {
+                    setMessages((prev) => [...prev, newMessage]);
+                }
             };
         }
     }, [ws]);
@@ -58,26 +86,19 @@ const ChatMessages = () => {
                 JSON.stringify({
                     data: message,
                     sender: 1,
-                    receiver: 2,
+                    receiver: currentChat,
                     time: new Date().getTime(),
                 }),
             );
             setMessage('');
+            const input = document.querySelector(
+                '.chatMessages__input__field',
+            ) as HTMLInputElement;
+            if (input) {
+                input.value = '';
+            }
         }
     };
-
-    const [userID, setUserID] = useState(0);
-
-    useEffect(() => {
-        store.subscribe(() => {
-            const state = store.getState();
-            console.log(state);
-            setUserID(state.id);
-        });
-    }, []);
-
-    console.log(userID);
-
 
     return (
         <div className="chatMessages">

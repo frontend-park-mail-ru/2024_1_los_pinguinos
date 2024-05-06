@@ -67,9 +67,9 @@ const ChatList = () => {
             <div className="navbar__header">
                 <Link to="/chats">
                     <div className="navbar__header__person">
-                        <p className="navbar__header__person__name">Иван</p>
+                        <p className="navbar__header__person__name">{user.name}</p>
                         <img
-                            src="https://source.unsplash.com/random/150x150/?man"
+                            src={user.photos[0] ? user.photos[0].url : 'https://via.placeholder.com/150'}
                             alt="Profile Picture"
                             className="navbar__header__person__image"
                         />

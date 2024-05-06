@@ -18,7 +18,6 @@ const CardControllers = () => {
 
     const handleLike = () => {
         const currentCard = getCurrent();
-        console.log(currentCard);
         like(currentCard);
     };
 
