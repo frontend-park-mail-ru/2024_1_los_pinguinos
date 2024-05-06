@@ -8,9 +8,12 @@ import {
 } from '../../../entities/session/api/index';
 
 const InterestsEdit = () => {
-    const userInterests = Array.from(store.getState().interests, (interest) => {
-        return interest.name ? interest.name : interest;
-    });
+    const userInterests = Array.from(
+        store.getState().interests ? store.getState().interests : [],
+        (interest) => {
+            return interest.name ? interest.name : interest;
+        },
+    );
     const [active, setActive] = useState(false);
     const emptyError = 'Выберите хотя-бы один интерес';
     const [currentInterests, setCurrentInterests] = useState(userInterests);

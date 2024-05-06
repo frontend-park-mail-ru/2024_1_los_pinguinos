@@ -30,7 +30,11 @@ export const register = async (
 };
 
 export const logout = async () => {
-    return sendRequest(AUTH_URL, '/logout', 'POST');
+    return sendRequest(AUTH_URL, '/logout', 'GET');
+};
+
+export const deleteProfile = async () => {
+    return sendRequest(AUTH_URL, '/profile', 'DELETE');
 };
 
 export const updateName = async (name: string) => {

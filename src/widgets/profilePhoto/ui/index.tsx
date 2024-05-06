@@ -7,7 +7,13 @@ const ProfilePhotoWidget = () => {
     const userPhotos = store.getState().photos;
     const cells: any = Array.from({ length: 5 }, (_, index: number) => {
         return [
-            useState(userPhotos.length > index ? userPhotos[index].url : null),
+            useState(
+                userPhotos
+                    ? userPhotos.length > index
+                        ? userPhotos[index].url
+                        : null
+                    : null,
+            ),
             useState(false),
         ];
     });
