@@ -35,8 +35,9 @@
 }
 
 .navbar__menu {
-    padding: 20px 22px;
-    gap: 15px;
+    height: 90%;
+    overflow: scroll;
+    padding: 0px 22px;
 }
 
 .navbar__menu__search {

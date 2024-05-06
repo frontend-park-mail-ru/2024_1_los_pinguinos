@@ -21,7 +21,7 @@ const Navabar = () => {
 
     useEffect(() => {
         const socket = new WebSocket(
-            'ws://localhost:8080/api/v1/openConnection?uid=1',
+            'wss://api.jimder.ru/api/v1/openConnection?uid=1',
         );
 
         socket.onopen = () => {
