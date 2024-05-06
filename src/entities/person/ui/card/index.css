@@ -34,6 +34,7 @@
     justify-content: center;
     width: 582px;
     align-items: center;
+    max-width: 42%;
   }
 
   .card__front-flip {
@@ -48,6 +49,7 @@
   .card__back {
     /* background-color: darkgray; */
     /* transform: rotateY(180deg); */
+    padding: 5px;
   }
 
   .card__back-flip {
@@ -80,6 +82,7 @@
     width: 100%;
     height: 571px;
     position: relative;
+    overflow: hidden;
     &::before {
       content: "";
       position: absolute;
@@ -96,7 +99,7 @@
     }
   }
   
-  .card__image-content {
+  .card__img-content {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -237,6 +240,7 @@
     .card__front, .card__back {
       position: absolute;
       width: 100%;
+      max-width: none;
     }
     .card__back {
       transform: rotateY(180deg);

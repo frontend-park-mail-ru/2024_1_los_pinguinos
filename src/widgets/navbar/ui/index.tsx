@@ -21,7 +21,7 @@ const Navabar = () => {
 
     useEffect(() => {
         const socket = new WebSocket(
-            'wss://api.jimder.ru/api/v1/openConnection?uid=1',
+            `wss://api.jimder.ru/api/v1/openConnection?uid=${user.id}`,
         );
 
         socket.onopen = () => {
@@ -69,7 +69,7 @@ const Navabar = () => {
                     <div className="navbar__header__person">
                         <p className="navbar__header__person__name">{user.name}</p>
                         <img
-                            src={user.photos[0] ? user.photos[0].url : 'https://via.placeholder.com/150'}
+                            src={user.photos[0] &&  user.photos[0].url != ''  ? user.photos[0].url :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'}
                             alt="Profile Picture"
                             className="navbar__header__person__image"
                         />

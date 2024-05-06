@@ -22,7 +22,7 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
             >
                 <img
                     onError={() => setError(true)}
-                    src={error ? "" : chat.photo}
+                    src={chat.photo &&  chat.photo != ''  ? chat.photo :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'}
                     className="navbar__item__icon"
                     alt="Profile Picture"
                 />

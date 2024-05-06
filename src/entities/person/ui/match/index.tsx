@@ -32,7 +32,7 @@ const Match = ({ person }: any) => {
                 </svg>
             </button>
             <div className="profile-pic profile-pic1">
-                <img src={person.photos[0] ? person.photos[0].url :  "https://via.placeholder.com/150"} alt={person.name} />
+                <img src={person.photos[0] &&  person.photos[0].url != ''  ? person.photos[0].url :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'} alt={person.name} />
             </div>
             <div className="data">
                 <div className="data__content">
