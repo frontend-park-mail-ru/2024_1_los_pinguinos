@@ -6,8 +6,8 @@ const Mainpage = () => {
     return (
         <div className="main">
             <div className="content">
-                <CardsList />
-                <CardControllers />
+                {CardsList()}
+                {CardControllers()}
             </div>
         </div>
     );
