@@ -1,5 +1,6 @@
 import { store } from '../../../../app/app';
 import { navigateTo } from '../../../../app/Router';
+import { getAge } from '../../../../shared/lib';
 
 const Match = ({ person }: any) => {
     return (
@@ -31,12 +32,12 @@ const Match = ({ person }: any) => {
                 </svg>
             </button>
             <div className="profile-pic profile-pic1">
-                <img src={person.photo} alt={person.name} />
+                <img src={person.photos[0] ? person.photos[0].url :  "https://via.placeholder.com/150"} alt={person.name} />
             </div>
             <div className="data">
                 <div className="data__content">
                     <span className="name">
-                        {person.name}, {person.birthday}
+                        {person.name}, {getAge(person.birthday)}
                     </span>
                     <span className="about-me">{person.description}</span>
                 </div>

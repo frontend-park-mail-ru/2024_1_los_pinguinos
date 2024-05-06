@@ -12,7 +12,7 @@ const ChatMessages = () => {
         setMessage(e.target.value);
     };
 
-    const [userID, setUserID] = useState(1);
+    const [userID, setUserID] = useState(store.getState().id);
     console.log('user', store.getState());
 
     const [currentChat, setCurrentChat] = useState(
@@ -87,14 +87,14 @@ const ChatMessages = () => {
             ws.send(
                 JSON.stringify({
                     data: message,
-                    sender: 1,
+                    sender: store.getState().id,
                     receiver: currentChat,
                     time: new Date().getTime(),
                 }),
             );
             console.log({
                 data: message,
-                sender: 1,
+                sender: store.getState().id,
                 receiver: currentChat,
                 time: new Date().getTime(),
             });

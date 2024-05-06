@@ -35,8 +35,7 @@
 }
 
 .navbar__menu {
-    height: 90%;
-    overflow: scroll;
+    height: 86%;
     padding: 0px 22px;
 }
 
@@ -71,6 +70,9 @@
     display: flex;
     flex-direction: column;
     margin-top: 10px;
+    height: 91%;
+    scrollbar-width: none;
+    overflow: scroll;
 }
 
 .navbar__menu__item {

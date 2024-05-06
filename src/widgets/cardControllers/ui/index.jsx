@@ -30,7 +30,12 @@ const CardControllers = () => {
 
     const handleComplaint = () => {
         const currentCard = getCurrent();
-        complain({ reciever: currentCard.id });
+        complain({ reciever: currentCard });
+
+        const cards = document.querySelectorAll('.card');
+        const currentcard = cards[cards.length - 1];
+        currentcard.style.transition = 'transform 0.5s ease-in-out';
+        currentcard.remove();
     };
 
     const handleDislike = () => {
