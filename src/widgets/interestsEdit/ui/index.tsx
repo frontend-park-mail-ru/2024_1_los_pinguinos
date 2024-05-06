@@ -1,24 +1,26 @@
 import { Modal, Button } from '../../../shared/ui/index';
 import { useState, useEffect } from '../../../reactor';
 import InterestsInput from '../../interestsInput/ui';
+import { store } from '../../../app/app';
+import {
+    getInterests,
+    updateInterests,
+} from '../../../entities/session/api/index';
 
 const InterestsEdit = () => {
+    const userInterests = Array.from(store.getState().interests, (interest) => {
+        return interest.name ? interest.name : interest;
+    });
     const [active, setActive] = useState(false);
-    const [interests, setInterests] = useState([
-        'Интерес 1',
-        'Интерес 2',
-        'Интерес 3',
-        'Интерес 4',
-        'Интерес 5',
-        'Интерес 6',
-    ]);
     const emptyError = 'Выберите хотя-бы один интерес';
-    const [currentInterests, setCurrentInterests] = useState(['Интерес 1']);
+    const [currentInterests, setCurrentInterests] = useState(userInterests);
     const [selectedInterests, setSelectedInterests] =
         useState(currentInterests);
     const [interestsEmpty, setInterestsEmpty] = useState(
         selectedInterests.length === 0 ? emptyError : '',
     );
+    const [formError, setFormError] = useState('');
+
     useEffect(() => {
         if (selectedInterests.length === 0) {
             setInterestsEmpty(emptyError);
@@ -27,12 +29,22 @@ const InterestsEdit = () => {
         }
     }, [selectedInterests]);
 
-    const handleSave = () => {
+    async function handleSave() {
         if (!interestsEmpty) {
-            setActive(false);
-            setCurrentInterests(selectedInterests);
+            setFormError('');
+            try {
+                const response = await updateInterests(selectedInterests);
+                setActive(false);
+                setCurrentInterests(selectedInterests);
+                store.dispatch({
+                    type: 'UPDATE_SOMETHING',
+                    payload: { interests: selectedInterests },
+                });
+            } catch {
+                setFormError('Что-то пошло не так');
+            }
         }
-    };
+    }
 
     return (
         <div className="profile__content-block">
@@ -56,11 +68,10 @@ const InterestsEdit = () => {
                 <div className="dialog">
                     <span className="dialog__title">Изменить интересы</span>
                     <div className="dialog__list-wrap">
-                        <InterestsInput
-                            interests={interests}
-                            selectedInterests={selectedInterests}
-                            setSelectedInterests={setSelectedInterests}
-                        />
+                        {InterestsInput({
+                            selectedInterests: selectedInterests,
+                            setSelectedInterests: setSelectedInterests,
+                        })}
                     </div>
                     <div className="dialog__button-wrap">
                         <Button
@@ -80,7 +91,10 @@ const InterestsEdit = () => {
                             onClick={handleSave}
                         />
                     </div>
-                    <span className="form__error">{interestsEmpty}</span>
+                    <span className="form__error">
+                        {formError}
+                        {interestsEmpty}
+                    </span>
                 </div>
             </Modal>
         </div>

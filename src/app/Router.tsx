@@ -1,5 +1,5 @@
 import { useEffect, useState } from '../reactor/index';
-import  Layout from '../pages/layout/layout';
+import Layout from '../pages/layout/layout';
 
 export interface IRoute {
     path: string;
@@ -25,13 +25,11 @@ export const Router = ({ children: routes }: any) => {
         };
     }, []);
 
-    const currentRoute = routes.find((route: IRoute) => {
-        return route.props.path === currentPath;
+    let currentRoute = routes.find((route: IRoute) => {
+        return route.props.path === currentPath || route.props.path === '*';
     });
     const Component = currentRoute.props.component;
-    console.log('currentRoute', currentRoute);
     const isSecure = currentRoute.props.isSecure;
-    console.log('isSecure', isSecure);
     return Component ? (
         isSecure ? (
             <Layout>

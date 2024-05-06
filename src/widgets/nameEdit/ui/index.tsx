@@ -2,13 +2,16 @@ import { Modal, Button, Input } from '../../../shared/ui';
 import { useState, useEffect } from '../../../reactor';
 import { updateFormError, validateInput } from '../../../shared/lib';
 import { updateName } from '../../../entities/session/api';
+import { store } from '../../../app/app';
 
 const NameEdit = () => {
+    const userName = store.getState().name;
     const [active, setActive] = useState(false);
-    const [currentName, setCurrentName] = useState('test');
+    const [currentName, setCurrentName] = useState(userName);
     const [nameError, setNameError] = useState('');
     const [name, setName] = useState(currentName);
     const [dialogError, setDialogError] = useState('');
+    const [displayName, setDisplayName] = useState(currentName);
 
     useEffect(() => {
         updateFormError({
@@ -25,6 +28,11 @@ const NameEdit = () => {
         if (!nameError) {
             try {
                 const response = await updateName(currentName);
+                store.dispatch({
+                    type: 'UPDATE_SOMETHING',
+                    payload: { name: currentName },
+                });
+                setDisplayName(currentName);
                 setDialogError('');
                 setActive(false);
             } catch {
@@ -41,7 +49,7 @@ const NameEdit = () => {
             ></span>
             <div className="profile__settings--column">
                 <span className="profile__text">Ваше имя</span>
-                <span className="profile__text">{name}</span>
+                <span className="profile__text">{displayName}</span>
             </div>
             <Button
                 icon="icon-pencil-square"

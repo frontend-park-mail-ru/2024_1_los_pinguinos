@@ -5,6 +5,7 @@ import StepPassword from './stepPassword';
 import { useEffect, useState } from '../../../reactor/index';
 import { register } from '../../../entities/session/api/index';
 import { redirectTo } from '../../../app/Router';
+import { store } from '../../../app/app';
 
 const RegisterForm = () => {
     const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ const RegisterForm = () => {
     const [gender, setGender] = useState('');
     const [interests, setInterests] = useState([]);
     const [password, setPassword] = useState('');
+    const [formError, setFormError] = useState('');
 
     const [step, setStep] = useState(0);
     useEffect(() => {
@@ -24,13 +26,12 @@ const RegisterForm = () => {
         });
     };
     const navigateForward = () => {
-        // console.log('NAV FORWARD', step);
         setStep((step) => step + 1);
     };
 
     async function handleSubmit(event: any) {
         event.preventDefault();
-        console.log('SHOULD PROCESS NAVIGATE');
+        setFormError('');
         try {
             const response = await register(
                 email,
@@ -40,9 +41,12 @@ const RegisterForm = () => {
                 date,
                 interests,
             );
+            store.dispatch({ type: 'UPDATE_USER', payload: response });
             redirectTo('/profile');
         } catch {
-            console.log('error');
+            setFormError(
+                'Что-то пошло не так. Возможно ваш email уже зарегистрирован.',
+            );
         }
     }
 
@@ -79,6 +83,7 @@ const RegisterForm = () => {
                 password: password,
                 setPassword: setPassword,
             })}
+            <span className="form__error">{formError}</span>
         </form>
     );
 };

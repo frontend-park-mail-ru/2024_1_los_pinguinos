@@ -2,15 +2,18 @@ import { Modal, Button, Input } from '../../../shared/ui';
 import { useState, useEffect } from '../../../reactor';
 import { updateFormError, validateInput } from '../../../shared/lib';
 import { updateEmail } from '../../../entities/session/api';
+import { store } from '../../../app/app';
 
 const MailEdit = () => {
+    const userEmail = store.getState().email;
     const [active, setActive] = useState(false);
-    const [currentMail, setCurrentMail] = useState('test');
+    const [currentMail, setCurrentMail] = useState(userEmail);
     const [mailError, setMailError] = useState('');
-    const [mail, setMail] = useState(currentMail);
+    const [email, setMail] = useState(currentMail);
     const [dialogError, setDialogError] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [displayMail, setDisplayMail] = useState(currentMail);
 
     useEffect(() => {
         updateFormError({
@@ -24,8 +27,8 @@ const MailEdit = () => {
     }, [mailError]);
 
     async function handleSave() {
-        if (!mail || !password) {
-            if (!mail) {
+        if (!email || !password) {
+            if (!email) {
                 setMailError('Поле не может быть пустым.');
             }
             if (!password) {
@@ -40,7 +43,12 @@ const MailEdit = () => {
                 return;
             }
             try {
-                const response = await updateEmail(mail, password);
+                const response = await updateEmail(email, password);
+                store.dispatch({
+                    type: 'UPDATE_SOMETHING',
+                    payload: { email: currentMail },
+                });
+                setDisplayMail(email);
                 setDialogError('');
                 setActive(false);
             } catch {
@@ -57,7 +65,7 @@ const MailEdit = () => {
             ></span>
             <div className="profile__settings--column">
                 <span className="profile__text">Ваша почта</span>
-                <span className="profile__text">{mail}</span>
+                <span className="profile__text">{displayMail}</span>
             </div>
             <Button
                 icon="icon-pencil-square"
@@ -75,7 +83,7 @@ const MailEdit = () => {
                         type: 'email',
                         label: 'Новый email',
                         placeholder: 'Новый email',
-                        value: mail,
+                        value: email,
                         validate: true,
                         error: mailError,
                         setError: setMailError,
