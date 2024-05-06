@@ -1,7 +1,19 @@
+import { store } from '../../../../app/app';
+import { navigateTo } from '../../../../app/Router';
+
 const Match = ({ person }: any) => {
     return (
         <div className="match">
-            <button className="mail">
+            <button
+                onClick={() => {
+                    store.dispatch({
+                        type: 'UPDATE_CURRENT_CHAT',
+                        payload: person.id,
+                    });
+                    navigateTo('/chats');
+                }}
+                className="mail"
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

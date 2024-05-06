@@ -2,7 +2,7 @@ import { useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/Router';
 
-export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
+export const NavItem = ({ chat, activeChat, setActiveChat }) => {
 
     const [error, setError] = useState(false);
 
@@ -22,7 +22,7 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
             >
                 <img
                     onError={() => setError(true)}
-                    src={error ? "" : chat.photo}
+                    src={error ? 'https://via.placeholder.com/150' : chat.photo}
                     className="navbar__item__icon"
                     alt="Profile Picture"
                 />

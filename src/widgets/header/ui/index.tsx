@@ -3,7 +3,9 @@ import { useState } from '../../../reactor';
 // import { Link } from '../../../app/Router';
 
 const Header = () => {
-    const [selected, setSelected] = useState('cards');
+
+    const current = window.location.pathname.split('/')[1];
+    const [selected, setSelected] = useState(current);
 
     return (
         <div className="header">
@@ -11,11 +13,11 @@ const Header = () => {
                 <Link to="/main">
                     <button
                         className={
-                            selected === 'cards'
+                            selected === 'main'
                                 ? 'header__menu__item__active'
                                 : 'header__menu__item'
                         }
-                        onClick={() => setSelected('cards')}
+                        onClick={() => setSelected('main')}
                     >
                         Карточки
                     </button>
@@ -35,11 +37,11 @@ const Header = () => {
                 <Link to="/profile">
                     <button
                         className={
-                            selected === 'settings'
+                            selected === 'profile'
                                 ? 'header__menu__item__active'
                                 : 'header__menu__item'
                         }
-                        onClick={() => setSelected('settings')}
+                        onClick={() => setSelected('profile')}
                     >
                         Настройки
                     </button>

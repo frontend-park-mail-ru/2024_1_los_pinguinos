@@ -1,6 +1,7 @@
 import { useState, useEffect } from '../../../reactor';
 import { getMessages } from '../../../features/chat/api';
 import { store } from '../../../app/app';
+import { Button } from '../../../shared/ui';
 
 const ChatMessages = () => {
     const [messages, setMessages] = useState([]);
@@ -13,6 +14,7 @@ const ChatMessages = () => {
 
     const [userID, setUserID] = useState(1);
     console.log('user', store.getState());
+
     const [currentChat, setCurrentChat] = useState(
         store.getState().currentChat,
     );
@@ -90,6 +92,12 @@ const ChatMessages = () => {
                     time: new Date().getTime(),
                 }),
             );
+            console.log({
+                data: message,
+                sender: 1,
+                receiver: currentChat,
+                time: new Date().getTime(),
+            });
             setMessage('');
             const input = document.querySelector(
                 '.chatMessages__input__field',
@@ -101,30 +109,59 @@ const ChatMessages = () => {
     };
 
     return (
-        <div className="chatMessages">
+        <div
+            style={{ display: currentChat ? 'flex' : 'none' }}
+            className="chatMessages"
+        >
+            <div className="chatMessages__header">
+                <button
+                    onClick={() => {
+                        console.log('click');
+                        store.dispatch({
+                            type: 'UPDATE_CURRENT_CHAT',
+                            payload: null,
+                        });
+                    }}
+                    className="chatMessages__header__button"
+                >
+                    Назад
+                </button>
+            </div>
             <div className="chatMessages__list">
-                {messages.map((message) => (
-                    <div
-                        className={`chatMessages__list__item ${
-                            message.sender === userID
-                                ? 'chatMessages__list__item--me'
-                                : 'chatMessages__list__item--other'
-                        }`}
-                        // key={message.id}
-                    >
+                {messages ? (
+                    messages.map((message) => (
                         <div
-                            className={
+                            className={`chatMessages__list__item ${
                                 message.sender === userID
-                                    ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
-                                    : 'chatMessages__list__item__message'
-                            }
+                                    ? 'chatMessages__list__item--me'
+                                    : 'chatMessages__list__item--other'
+                            }`}
+                            // key={message.id}
                         >
-                            <p className="chatMessages__list__item__text">
-                                {message.data}
-                            </p>
+                            <div
+                                className={
+                                    message.sender === userID
+                                        ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
+                                        : 'chatMessages__list__item__message'
+                                }
+                            >
+                                <p className="chatMessages__list__item__text">
+                                    {message.data}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    <p
+                        style={{
+                            fontSize: 'large',
+                            fontWeight: '800',
+                            color: 'white',
+                        }}
+                    >
+                        Напишите первым!
+                    </p>
+                )}
             </div>
             <div className="chatMessages__controllers">
                 <div className="chatMessages__controllers__input">

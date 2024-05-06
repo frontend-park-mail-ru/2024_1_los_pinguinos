@@ -10,6 +10,7 @@ export async function sendRequest<T>(
         method,
         headers: {
             'X-Csrf-Token': localStorage.getItem('X-CSRF-TOKEN') || 'null',
+            'Csrft': localStorage.getItem('X-CSRF-TOKEN') || 'null',
         },
         body: file ? body : JSON.stringify(body),
     });

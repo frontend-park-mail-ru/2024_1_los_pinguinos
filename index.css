@@ -20,6 +20,7 @@
 @import url("/src/pages/chats/index.css");
 @import url("/src/widgets/footer/ui/index.css");
 @import url("/src/pages/layout/index.css");
+@import url("/src/widgets/chatList/ui/index.css");
 
 :root {
   --background--landing: url(./src/assets/background/background-landing.webp);

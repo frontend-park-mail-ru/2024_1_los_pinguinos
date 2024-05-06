@@ -1,11 +1,15 @@
 import ChatMessages from '../../widgets/chatMessages';
+import ChatList from '../../widgets/chatList';
 import Layout from '../layout/layout';
 
 const ChatPage = () => {
     return (
-        // <Layout>
+        <div
+        style={{with: '100%', height: '100%'}}
+        >
+            <ChatList />
             <ChatMessages />
-        // </Layout> 
+        </div>
     );
 };
 

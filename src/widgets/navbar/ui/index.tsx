@@ -1,47 +1,14 @@
 import { useEffect, useState } from '../../../reactor';
 import { Link } from '../../../shared/routing/link';
-import { ChatItem } from './chatitem';
+import { NavItem } from './navitem';
 import { getChats } from '../../../features/chat/api';
 import { store } from '../../../app/app';
 
-const ChatList = () => {
+const Navabar = () => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
     const [ws, setWs] = useState<WebSocket | null>(null);
     const user = store.getState();
-
-    const [width, setWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setWidth(window.innerWidth);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    const [currentChat, setCurrentChat] = useState(
-        store.getState().currentChat,
-    );
-
-    useEffect(() => {
-        store.subscribe(() => {
-            const state = store.getState();
-            console.log(state);
-            setCurrentChat(state.currentChat);
-        });
-    }, []);
-
-    useEffect(() => {
-        console.log('currentChat', currentChat);
-        if (!currentChat) {
-            return;
-        }
-    }, [currentChat]);
 
     useEffect(() => {
         store.subscribe(() => {
@@ -96,26 +63,21 @@ const ChatList = () => {
     const [activeChat, setActiveChat] = useState(null);
 
     return (
-        <div 
-        style={{
-            display: currentChat ? 'none' : width > 896 ? 'none' : 'block',
-        }}
-
-        className="chatlist">
-            <div className="chatlist__header">
+        <div className="navbar">
+            <div className="navbar__header">
                 <Link to="/chats">
-                    <div className="chatlist__header__person">
-                        <p className="chatlist__header__person__name">{user.name}</p>
+                    <div className="navbar__header__person">
+                        <p className="navbar__header__person__name">{user.name}</p>
                         <img
                             src={user.photos[0] ? user.photos[0].url : 'https://via.placeholder.com/150'}
                             alt="Profile Picture"
-                            className="chatlist__header__person__image"
+                            className="navbar__header__person__image"
                         />
                     </div>
                 </Link>
             </div>
-            <div className="chatlist__menu">
-                <div className="chatlist__menu__search">
+            <div className="navbar__menu">
+                <div className="navbar__menu__search">
                     <svg
                         version="1.1"
                         width="18px"
@@ -136,13 +98,13 @@ const ChatList = () => {
                     <input
                         type="text"
                         placeholder="Поиск"
-                        className="chatlist__menu__search__input"
+                        className="navbar__menu__search__input"
                         onChange={(e) => {
                             setSearch(e.target.value);
                         }}
                     />
                 </div>
-                <div className="chatlist__menu__items">
+                <div className="navbar__menu__items">
                     {chats
                         .filter((chat) => {
                             return chat.name
@@ -150,7 +112,7 @@ const ChatList = () => {
                                 .includes(search.toLowerCase());
                         })
                         .map((chat) => (
-                            <ChatItem
+                            <NavItem
                                 chat={chat}
                                 activeChat={activeChat}
                                 setActiveChat={setActiveChat}
@@ -162,4 +124,4 @@ const ChatList = () => {
     );
 };
 
-export default ChatList;
+export default Navabar;

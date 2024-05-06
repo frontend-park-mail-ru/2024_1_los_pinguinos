@@ -1,0 +1,128 @@
+.chatlist {
+    background: rgba(255, 255, 255, 0.23);
+    border-radius: 13px;
+    height: 100%;
+    display: none;
+}
+
+.chatlist__header {
+    background: #0b0c0c;
+    border-radius: 13px 13px 0px 0px;
+    padding: 20px 22px;
+    gap: 15px;
+}
+
+.chatlist__header__person {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.chatlist__header__person__name {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #ffffff;
+}
+
+.chatlist__header__person__image {
+    width: 70px;
+    height: 70px;
+    border-radius: 100px;
+}
+
+.chatlist__menu {
+    padding: 20px 22px;
+    gap: 15px;
+}
+
+.chatlist__menu__search {
+    height: 34px;
+    padding: 1px 5px;
+    border-radius: 10px;
+    background: inherit;
+    display: flex;
+    align-items: center;
+    border: 1px solid #dcdcdc;
+}
+
+.chatlist__menu__search__input {
+    background: inherit;
+    border: none;
+    border-radius: 10px;
+    padding: 2px 0 0 5px;
+    width: 100%;
+    height: 100%;
+    text-align: justify;
+    color: white;
+    outline: none;
+}
+
+.chatlist__menu__search__input::placeholder {
+    color: #dcdcdc;
+}
+
+.chatlist__menu__items {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.chatlist__menu__item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 10px;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 10px;
+    color: white;
+}
+
+.chatlist__menu__item--active {
+    background: rgba(125, 232, 90, 1);
+    color: #0b0c0c;
+}
+
+.chatlist__item__icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 100px;
+}
+
+.chatlist__item__info {
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+.chatlist__item__info__name {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+}
+
+.chatlist__item__info__message {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 14px;
+}
+
+.chatlist__menu__divider {
+    background: #5d5d5d;
+    border: 1px solid #5d5d5d;
+    margin: 1px 0;
+}
+
+@media screen and (max-width: 896px) {
+    .chatlist {
+        display: block;
+    }
+}

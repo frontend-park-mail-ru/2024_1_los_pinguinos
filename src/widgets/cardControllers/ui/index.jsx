@@ -11,20 +11,29 @@ const CardControllers = () => {
     // const currentCard = store.getState().currentCard;
     const getCurrent = () => {
         const cards = document.querySelectorAll('.card');
-        const currentCard = cards[cards.length - 1].id;
+        const currentCard = cards[cards.length - 1].id.split('-')[1];
 
-        return currentCard;
+        return +currentCard;
     };
 
     const handleLike = () => {
         const currentCard = getCurrent();
         like(currentCard);
+
+        const cards = document.querySelectorAll('.card');
+        const currentcard = cards[cards.length - 1];
+        currentcard.style.transition = 'transform 0.5s ease-in-out';
+        currentcard.remove();
     };
 
     const handleDislike = () => {
         const currentCard = getCurrent();
-        console.log(currentCard);
-        dislike(getCurrent());
+        dislike(currentCard);
+
+        const cards = document.querySelectorAll('.card');
+        const currentcard = cards[cards.length - 1];
+        currentcard.style.transition = 'transform 0.5s ease-in-out';
+        currentcard.remove();
     };
 
     return (
