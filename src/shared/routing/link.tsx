@@ -1,11 +1,21 @@
+import { clsx } from '../../clsx/index';
+
 export interface ILink {
     to: string;
     children?: any;
     persistent?: boolean;
     back?: boolean;
     className?: string;
+    activeColor?: string;
 }
-export const Link = ({ to, children, persistent, back, className }: ILink) => {
+export const Link = ({
+    to,
+    children,
+    persistent,
+    back,
+    className,
+    activeColor,
+}: ILink) => {
     const handleClick = (event: any) => {
         event.preventDefault();
         if (back) {
@@ -19,7 +29,12 @@ export const Link = ({ to, children, persistent, back, className }: ILink) => {
     };
 
     return (
-        <a class="link" href={to} onClick={handleClick}>
+        <a
+            className={className ? className : 'link'}
+            href={to}
+            onClick={handleClick}
+            active-color={activeColor}
+        >
             {children}
         </a>
     );

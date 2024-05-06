@@ -1,4 +1,5 @@
 import { useState, useEffect } from '../../../reactor';
+import { Link } from '../../../shared/routing/link';
 
 const Footer = () => {
     const [activeItem, setActiveItem] = useState(null);
@@ -30,7 +31,8 @@ const Footer = () => {
                 setActiveItem(e.target);
                 handleIndicator(e.target);
             });
-            item.classList.contains('is-active') && handleIndicator(item);
+            item.getAttribute('href') === window.location.pathname &&
+                handleIndicator(item);
         });
 
         // Clean-up function
@@ -41,6 +43,10 @@ const Footer = () => {
         };
     }, []); // Run only once on component mount
 
+    useEffect(() => {
+        console.log(activeItem);
+    }, [activeItem]);
+
     return (
         <nav className="nav">
             {/* <a
@@ -49,15 +55,13 @@ const Footer = () => {
                 active-color="orange"
             > */}
             {/* {window.innerWidth > 520 ? ( */}
-                <a
-                    href="#"
-                    className={`nav-item ${
-                        activeItem === null ? 'is-active' : ''
-                    }`}
-                    active-color="orange"
-                >
-                    Карточки
-                </a>
+            <Link
+                to="/main"
+                className={`nav-item ${activeItem === null ? 'is-active' : ''}`}
+                activeColor="orange"
+            >
+                Карточки
+            </Link>
             {/* // ) : (
             //     <svg
             //         class={`nav-item ${activeItem === null ? 'is-active' : ''}`}
@@ -99,8 +103,8 @@ const Footer = () => {
             //     </svg>
             // )} */}
             {/* </a> */}
-            <a
-                href="#"
+            <Link
+                to="/matches"
                 className={`nav-item ${
                     activeItem === null
                         ? ''
@@ -108,12 +112,12 @@ const Footer = () => {
                         ? 'is-active'
                         : ''
                 }`}
-                active-color="green"
+                activeColor="green"
             >
                 Мэтчи
-            </a>
-            <a
-                href="#"
+            </Link>
+            <Link
+                to="/chats"
                 className={`nav-item ${
                     activeItem === null
                         ? ''
@@ -121,12 +125,12 @@ const Footer = () => {
                         ? 'is-active'
                         : ''
                 }`}
-                active-color="blue"
+                activeColor="blue"
             >
                 Чаты
-            </a>
-            <a
-                href="#"
+            </Link>
+            <Link
+                to="/profile"
                 className={`nav-item ${
                     activeItem === null
                         ? ''
@@ -134,10 +138,10 @@ const Footer = () => {
                         ? 'is-active'
                         : ''
                 }`}
-                active-color="red"
+                activeColor="red"
             >
                 Настройки
-            </a>
+            </Link>
             <span className="nav-indicator"></span>
         </nav>
     );
