@@ -1,4 +1,6 @@
+import { complain } from '../../../features/complain/api';
 import { like, dislike } from '../../../features/like/api';
+import { Button } from '../../../shared/ui';
 
 const CardControllers = () => {
     // useEffect(() => {
@@ -24,6 +26,11 @@ const CardControllers = () => {
         const currentcard = cards[cards.length - 1];
         currentcard.style.transition = 'transform 0.5s ease-in-out';
         currentcard.remove();
+    };
+
+    const handleComplaint = () => {
+        const currentCard = getCurrent();
+        complain({ reciever: currentCard.id });
     };
 
     const handleDislike = () => {
@@ -82,8 +89,12 @@ const CardControllers = () => {
                     ></path>{' '}
                 </g>
             </svg>
-
-            {/* <button onClick={handleDislike}>Dislike</button> */}
+            <Button
+                severity="danger"
+                icon="icon-ban"
+                fontSize="xl"
+                onClick={handleComplaint}
+            />
         </div>
     );
 };
