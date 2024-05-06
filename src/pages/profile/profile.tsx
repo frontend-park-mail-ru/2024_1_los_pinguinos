@@ -11,12 +11,16 @@ import {
 } from '../../widgets/index';
 import { ProfileNavbar } from './profileNavbar';
 import { clsx } from '../../clsx/index';
+import { deleteProfile, logout } from '../../entities/session/api/index';
+import { store } from '../../app/app';
+import { redirectTo } from '../../app/Router';
 export const Profile = () => {
     const [profileState, setState] = useState(0);
     const [title, setTitle] = useState('Профиль');
     const [active, setActive] = useState(false);
     const [callback, setCallback] = useState(() => {});
     const [popupTitle, setPopupTitle] = useState('');
+    const [popupError, setPopupError] = useState('');
     return (
         <div className="profile__wrapper">
             <div className="profile__content-wrapper">
@@ -61,8 +65,20 @@ export const Profile = () => {
                             setActive(true);
                             setPopupTitle('Удалить аккаунт?');
                             setCallback((callback) => {
-                                return () => {
-                                    console.log('hehe');
+                                setPopupError('');
+                                return async () => {
+                                    try {
+                                        setPopupError('');
+                                        const response = await deleteProfile();
+                                        setActive(false);
+                                        store.dispatch({
+                                            type: 'LOGOUT',
+                                            payload: {},
+                                        });
+                                        redirectTo('/');
+                                    } catch {
+                                        setPopupError('Что-то пошло не так');
+                                    }
                                 };
                             });
                         }}
@@ -78,8 +94,17 @@ export const Profile = () => {
                 setCallback={() => {
                     setPopupTitle('Выйти?');
                     setCallback((callback) => {
-                        return () => {
-                            console.log('hihi');
+                        setPopupError('');
+                        return async () => {
+                            try {
+                                setPopupError('');
+                                const response = await logout();
+                                setActive(false);
+                                store.dispatch({ type: 'LOGOUT', payload: {} });
+                                redirectTo('/');
+                            } catch {
+                                setPopupError('Что-то пошло не так');
+                            }
                         };
                     });
                 }}
@@ -105,6 +130,7 @@ export const Profile = () => {
                             onClick={callback}
                         />
                     </div>
+                    <span className="form__error">{popupError}</span>
                 </div>
             </Modal>
         </div>

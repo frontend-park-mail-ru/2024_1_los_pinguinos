@@ -44,11 +44,10 @@ const StepInterests = ({
             </span>
             <div className="form__input-container">
                 <div className="form__interest-container">
-                    <InterestsInput
-                        interests={['somelong interest', 'short one', 'okea']}
-                        selectedInterests={interests}
-                        setSelectedInterests={setInterests}
-                    />
+                    {InterestsInput({
+                        selectedInterests: interests,
+                        setSelectedInterests: setInterests,
+                    })}
                 </div>
                 <Button
                     label="Продолжить"

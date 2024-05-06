@@ -8,7 +8,11 @@ import MatchesPage from '../pages/matches/matches';
 import { createStore } from './store';
 import { userReducer } from '../entities/person/model/reducer';
 import { Profile } from '../pages/profile/profile';
+const PageNotFound = () => {
+    return <div>not found</div>;
+};
 export const store = createStore(userReducer);
+
 const App = () => {
     return (
         <Router>
@@ -19,6 +23,7 @@ const App = () => {
             <Route path="/chats" component={ChatPage} isSecure={true} />
             <Route path="/matches" component={MatchesPage} isSecure={true} />
             <Route path="/profile" component={Profile} isSecure={true} />
+            <Route path="*" component={PageNotFound} />
         </Router>
     );
 };

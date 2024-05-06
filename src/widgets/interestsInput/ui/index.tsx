@@ -1,10 +1,8 @@
-import { InputCheckbox } from '../../../shared/ui';
+import { InputCheckbox } from '../../../shared/ui/index';
+import { useState, useEffect } from '../../../reactor/index';
+import { getInterests } from '../../../entities/session/api';
 
-const InterestsInput = ({
-    interests,
-    selectedInterests,
-    setSelectedInterests,
-}) => {
+const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
     const toggleInterest = (event: any) => {
         const interest = event.target.value;
         setSelectedInterests((prevSelectedInterests) => {
@@ -17,6 +15,20 @@ const InterestsInput = ({
             }
         });
     };
+    const [gotInterests, setGotInterests] = useState([]);
+    const interests = gotInterests;
+    async function getAppInterests() {
+        let appInterests = (await getInterests()) as any;
+        appInterests = Array.from(appInterests, (interest: any) => {
+            return interest.name;
+        });
+        setGotInterests(appInterests);
+        return appInterests;
+    }
+    useEffect(() => {
+        if (gotInterests.length === 0) getAppInterests();
+        return () => {};
+    }, [gotInterests]);
 
     return interests.map((interest, index) => (
         <InputCheckbox

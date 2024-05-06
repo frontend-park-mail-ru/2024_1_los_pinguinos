@@ -30,7 +30,11 @@ export const register = async (
 };
 
 export const logout = async () => {
-    return sendRequest(AUTH_URL, '/logout', 'POST');
+    return sendRequest(AUTH_URL, '/logout', 'GET');
+};
+
+export const deleteProfile = async () => {
+    return sendRequest(AUTH_URL, '/profile', 'DELETE');
 };
 
 export const updateName = async (name: string) => {
@@ -41,7 +45,7 @@ export const updateDescription = async (description: string) => {
     return sendRequest(AUTH_URL, '/profile', 'POST', { description });
 };
 
-export const updateInterests = async (interests: Interest[]) => {
+export const updateInterests = async (interests: string[]) => {
     return sendRequest(AUTH_URL, '/profile', 'POST', { interests });
 };
 
@@ -55,4 +59,8 @@ export const updatePassword = async (password: string, oldPassword: string) => {
 
 export const checkAuth = async () => {
     return sendRequest(AUTH_URL, '/isAuth', 'GET');
+};
+
+export const getInterests = async () => {
+    return sendRequest(AUTH_URL, '/registration', 'GET');
 };

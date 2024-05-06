@@ -116,7 +116,7 @@
     position: absolute;
     top: 5%;
     right: 5%;
-    font-size: 4rem;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--color__danger--primary);
     transition: opacity 0.2s ease-in-out;
@@ -191,7 +191,7 @@
     outline-color: var(--color__success--primary);
   }
 
-  @media only screen and (max-width: 300px) {
+@media only screen and (max-width: 300px) {
     .input__error {
         bottom: -50px;
     }

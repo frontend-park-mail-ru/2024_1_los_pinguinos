@@ -1,16 +1,25 @@
 import { Modal, Button, TextArea } from '../../../shared/ui';
 import { useState } from '../../../reactor';
 import { updateDescription } from '../../../entities/session/api';
+import { store } from '../../../app/app';
 
 const DescriptionEdit = () => {
+    const userDescription = store.getState().description;
     const [active, setActive] = useState(false);
-    const [description, setDescription] = useState('Описание');
+    const [currentDescription, setCurrentDescription] =
+        useState(userDescription);
+    const [description, setDescription] = useState(currentDescription);
     const [dialogError, setDialogError] = useState('');
     async function handleSave() {
         try {
-            const response = await updateDescription(description);
-            setActive(false);
+            const response = await updateDescription(currentDescription);
+            setDescription(currentDescription);
+            store.dispatch({
+                type: 'UPDATE_SOMETHING',
+                payload: { description: currentDescription },
+            });
             setDialogError('');
+            setActive(false);
         } catch {
             setDialogError('Что-то пошло не так');
         }
@@ -36,7 +45,7 @@ const DescriptionEdit = () => {
                         maxlength={320}
                         value={description}
                         onChange={(event) => {
-                            setDescription(event.target.value);
+                            setCurrentDescription(event.target.value);
                         }}
                     />
                     <div className="dialog__button-wrap">
