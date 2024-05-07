@@ -10,6 +10,7 @@ type StartPoint = {
 } | null;
 
 const Card = ({ person }: { person: Person }) => {
+    console.log(person)
     const [isFlipped, setIsFlipped] = useState(false);
 
     // const [startPoint, setStartPoint] = useState<StartPoint>(null);

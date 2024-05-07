@@ -1,6 +1,7 @@
 import { complain } from '../../../features/complain/api';
 import { like, dislike } from '../../../features/like/api';
 import { Button } from '../../../shared/ui';
+import { store } from '../../../app/app';
 
 const CardControllers = () => {
     // useEffect(() => {
@@ -21,7 +22,7 @@ const CardControllers = () => {
     const handleLike = () => {
         const currentCard = getCurrent();
         like(currentCard);
-
+        store.dispatch({type: 'UPDATE_CURRENT_CARD', payload: currentCard});
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
         currentcard.style.transition = 'transform 0.5s ease-in-out';
@@ -31,7 +32,7 @@ const CardControllers = () => {
     const handleComplaint = () => {
         const currentCard = getCurrent();
         complain({ reciever: currentCard });
-
+        store.dispatch({type: 'UPDATE_CURRENT_CARD', payload: currentCard});
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
         currentcard.style.transition = 'transform 0.5s ease-in-out';
@@ -41,7 +42,7 @@ const CardControllers = () => {
     const handleDislike = () => {
         const currentCard = getCurrent();
         dislike(currentCard);
-
+        store.dispatch({type: 'UPDATE_CURRENT_CARD', payload: currentCard});
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
         currentcard.style.transition = 'transform 0.5s ease-in-out';

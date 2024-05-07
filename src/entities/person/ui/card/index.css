@@ -10,7 +10,7 @@
     cursor: pointer;
     user-select: none;
     transition: transform 0.5s;
-    background: #a39c9c;
+    background: inherit;
     perspective: 1000px;
     gap: 60px;
   }
@@ -30,7 +30,7 @@
   .card__front {
     background-color: black;
     border-radius: 20px;
-    /* overflow: hidden; */
+    overflow: hidden;
     justify-content: center;
     width: 582px;
     align-items: center;

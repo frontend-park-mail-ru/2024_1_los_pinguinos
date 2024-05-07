@@ -41,6 +41,11 @@ export const userReducer = (state = initialState, action: Action) => {
                 ...state,
                 currentChat: action.payload,
             };
+        case 'UPDATE_CURRENT_CARD':
+            return {
+                ...state,
+                currentCard: action.payload,
+            };
         case 'LOGOUT':
             return {};
         case 'UPDATE_AUTH':
