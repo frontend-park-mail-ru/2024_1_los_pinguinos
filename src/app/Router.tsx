@@ -22,20 +22,22 @@ export const Router = ({ children: routes }: any) => {
             setCurrentPath(window.location.pathname);
         };
         window.addEventListener('popstate', handlePopState);
+        window.dispatchEvent(new Event('popstate'));
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
     }, []);
+
     let currentRoute = routes.find((route: IRoute) => {
         return route.props.path === currentPath || route.props.path === '*';
     });
+
     const changeRouteIfNeeded = (
         shouldRedirect: boolean,
         targetPath: string,
     ) => {
         if (shouldRedirect) {
-            history.replaceState(null, '', targetPath);
-            setCurrentPath(targetPath);
+            redirectTo(targetPath);
             const foundRoute = routes.find(
                 (route: { props: { path: any } }) =>
                     route.props.path === targetPath,
