@@ -8,6 +8,7 @@ export type TTextArea = {
     name?: string;
     disabled?: boolean;
     onChange?: (event: any) => void;
+    onInput?: (event: any) => void;
     value?: string;
     maxlength?: number;
     size?: TSize;
@@ -21,6 +22,7 @@ export const TextArea = ({
     name,
     disabled,
     onChange,
+    onInput,
     value,
     maxlength,
     size,
@@ -44,6 +46,7 @@ export const TextArea = ({
                 autoFocus={autofocus}
                 disabled={disabled}
                 onChange={onChange}
+                onInput={onInput}
                 value={value}
                 maxLength={maxlength}
                 className={clsx(

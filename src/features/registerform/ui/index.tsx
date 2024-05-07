@@ -18,8 +18,13 @@ const RegisterForm = () => {
 
     const [step, setStep] = useState(0);
     useEffect(() => {
-        console.log(step);
-    }, [step]);
+        setEmail(email);
+        setName(name);
+        setDate(date);
+        setGender(gender);
+        setInterests(interests);
+        setPassword(password);
+    }, [email, name, date, gender, interests, password]);
     const navigateBack = () => {
         setStep((step) => {
             return step - 1 > 0 ? step - 1 : 0;

@@ -1,5 +1,5 @@
 import { Modal, Button, TextArea } from '../../../shared/ui';
-import { useState } from '../../../reactor';
+import { useEffect, useState } from '../../../reactor';
 import { updateDescription } from '../../../entities/session/api';
 import { store } from '../../../app/app';
 
@@ -10,6 +10,9 @@ const DescriptionEdit = () => {
         useState(userDescription);
     const [description, setDescription] = useState(currentDescription);
     const [dialogError, setDialogError] = useState('');
+    useEffect(() => {
+        setCurrentDescription(currentDescription);
+    }, [currentDescription]);
     async function handleSave() {
         try {
             const response = await updateDescription(currentDescription);
@@ -45,6 +48,9 @@ const DescriptionEdit = () => {
                         maxlength={320}
                         value={description}
                         onChange={(event) => {
+                            setCurrentDescription(event.target.value);
+                        }}
+                        onInput={(event) => {
                             setCurrentDescription(event.target.value);
                         }}
                     />
