@@ -108,7 +108,9 @@ const Navbar = () => {
                     />
                 </div>
                 <div className="navbar__menu__items">
-                    {chats
+                {
+                    chats.length != 0 ?
+                    chats
                         .filter((chat) => {
                             return chat.name
                                 .toLowerCase()
@@ -120,7 +122,16 @@ const Navbar = () => {
                                 activeChat={activeChat}
                                 setActiveChat={setActiveChat}
                             />
-                        ))}
+                        ))
+                        : 
+                        <p
+                        style={{
+                            fontSize: '25px',
+                            fontWeight: '800',
+                            color: 'white',
+                        }}
+                        >Нет чатов</p>
+                    }
                 </div>
             </div>
         </div>

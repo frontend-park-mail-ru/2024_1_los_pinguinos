@@ -33,9 +33,21 @@ const MatchesList = () => {
                     placeholder="Поиск"
                 />
             </div>
-            <div id="matches__content">
-                {matches.map((match, index) => Match({ person: match }))}
-            </div>
+            {matches.length != 0 ? (
+                <div id="matches__content">
+                    {matches.map((match, index) => Match({ person: match }))}
+                </div>
+            ) : (
+                <p
+                    style={{
+                        fontSize: 'large',
+                        fontWeight: '800',
+                        color: 'white',
+                    }}
+                >
+                    Нет мэтчей
+                </p>
+            )}
         </div>
     );
 };

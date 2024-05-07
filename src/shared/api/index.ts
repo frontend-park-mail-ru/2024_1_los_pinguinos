@@ -16,7 +16,7 @@ export async function sendRequest<T>(
         body: file ? body : JSON.stringify(body),
     });
 
-    if (!response.ok) {
+    if (response.status == 401) {
         store.dispatch({ type: 'UPDATE_AUTH', payload: false });
         throw new Error(`Failed to fetch ${url}`);
     }

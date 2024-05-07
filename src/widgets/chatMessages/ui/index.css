@@ -21,12 +21,13 @@
     padding: 5px 10px;
     cursor: pointer;
     font-size: larger;
+    margin-left: 5px;
 }
 
 
 .chatMessages__list {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 10px;
     padding: 10px;
     overflow-y: scroll;

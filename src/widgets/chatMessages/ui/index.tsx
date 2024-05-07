@@ -35,6 +35,12 @@ const ChatMessages = () => {
             .then((data) => {
                 console.log(data);
                 setMessages(data);
+                setTimeout(() => {
+                    const chat = document.querySelector('.chatMessages__list');
+                    if (chat) {
+                        chat.scrollTop = chat.scrollHeight;
+                    }
+                }, 100);
             })
             .catch((error) => {
                 console.error(error);
@@ -75,8 +81,15 @@ const ChatMessages = () => {
                     (newMessage.sender === store.getState().currentChat &&
                         newMessage.receiver === userID)
                 ) {
-                    setMessages((prev) => [...prev, newMessage]);
+                    setMessages((prev) => [newMessage, ...prev ]);
                 }
+
+                setTimeout(() => {
+                    const chat = document.querySelector('.chatMessages__list');
+                    if (chat) {
+                        chat.scrollTop = chat.scrollHeight;
+                    }
+                }, 100);
             };
         }
     }, [ws]);

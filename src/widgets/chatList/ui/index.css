@@ -2,7 +2,7 @@
     background: rgba(255, 255, 255, 0.23);
     border-radius: 13px;
     height: 100%;
-    overflow: scroll;
+    /* overflow: scroll; */
     scrollbar-width: none;
     display: none;
 }
