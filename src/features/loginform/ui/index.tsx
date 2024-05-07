@@ -16,10 +16,19 @@ export const LoginForm = () => {
     const [formError, setFormError] = useState('');
     const emptyErrorText = 'Поле не может быть пустым';
     const formErrorText = 'Неверный логин или пароль';
+
+    useEffect(() => {
+        setEmail(email);
+        setPassword(password);
+    }, [email, password]); // protected router fix
+
     async function submitLogin(event: any) {
+        console.log(email);
+        console.log(password);
         event.preventDefault();
         setFormError('');
         if (!email || !password) {
+            console.log('это форма шалит');
             if (!password) setPasswordError(emptyErrorText);
             if (!email) setEmailError(emptyErrorText);
             return;
