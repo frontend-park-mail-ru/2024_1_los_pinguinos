@@ -50,8 +50,6 @@ const ChatList = () => {
         });
     }, []);
 
-    console.log('user', user);
-
     useEffect(() => {
         const socket = new WebSocket(
             `wss://api.jimder.ru/api/v1/openConnection?uid=${user.id}`,
@@ -76,11 +74,10 @@ const ChatList = () => {
     //         ws.onmessage = (e) => {
     //             console.log(e.data);
     //             const newMessage = JSON.parse(e.data);
-                
+
     //         };
     //     }
     // }, [ws]);
-        
 
     useEffect(() => {
         getChats()
@@ -96,18 +93,24 @@ const ChatList = () => {
     const [activeChat, setActiveChat] = useState(null);
 
     return (
-        <div 
-        style={{
-            display: currentChat ? 'none' : width > 896 ? 'none' : 'block',
-        }}
-
-        className="chatlist">
+        <div
+            style={{
+                display: currentChat ? 'none' : width > 896 ? 'none' : 'block',
+            }}
+            className="chatlist"
+        >
             <div className="chatlist__header">
                 <Link to="/chats">
                     <div className="chatlist__header__person">
-                        <p className="chatlist__header__person__name">{user.name}</p>
+                        <p className="chatlist__header__person__name">
+                            {user.name}
+                        </p>
                         <img
-                            src={user.photos[0] &&  user.photos[0].url != ''  ? user.photos[0].url :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'}
+                            src={
+                                user.photos[0] && user.photos[0].url != ''
+                                    ? user.photos[0].url
+                                    : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                            }
                             alt="Profile Picture"
                             className="chatlist__header__person__image"
                         />

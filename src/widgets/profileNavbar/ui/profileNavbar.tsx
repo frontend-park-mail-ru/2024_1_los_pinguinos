@@ -1,13 +1,25 @@
-import { Button } from '../../shared/ui/index';
+import { useState } from '../../../reactor/index';
+import { Button } from '../../../shared/ui/index';
+import { ConfirmationPopup } from '../../index';
+import { store } from '../../../app/app';
+import { redirectTo } from '../../../app/Router';
+import { logout } from '../../../entities/session/api/index';
 
-export const ProfileNavbar = ({
-    state,
-    setState,
-    title,
-    setTitle,
-    setActive,
-    setCallback,
-}: any) => {
+const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
+    const [active, setActive] = useState(false);
+    const [popupError, setPopupError] = useState('');
+    async function handleLogout() {
+        try {
+            setPopupError('');
+            const response = await logout();
+            setActive(false);
+            store.dispatch({ type: 'LOGOUT', payload: {} });
+            store.dispatch({ type: 'UPDATE_AUTH', payload: false });
+            redirectTo('/');
+        } catch {
+            setPopupError('Что-то пошло не так');
+        }
+    }
     return (
         <div className="profile__navbar-wrapper">
             <h1 className="profile__text profile__text--title navbar__text">
@@ -41,16 +53,24 @@ export const ProfileNavbar = ({
                 <Button
                     label="Выход"
                     icon="icon-box-arrow-right"
-                    severity="contrast"
+                    severity="critical"
                     fontSize="l1"
                     size="max-width"
                     navbar
                     onClick={() => {
                         setActive(true);
-                        setCallback();
                     }}
                 />
             </div>
+            {ConfirmationPopup({
+                active: active,
+                setActive: setActive,
+                popupError: popupError,
+                popupTitle: 'Выйти?',
+                callback: handleLogout,
+            })}
         </div>
     );
 };
+
+export default ProfileNavbar;

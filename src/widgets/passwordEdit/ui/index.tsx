@@ -1,7 +1,7 @@
-import { Modal, Button, Input } from '../../../shared/ui';
-import { useState, useEffect } from '../../../reactor';
-import { updateFormError, validateInput } from '../../../shared/lib';
-import { updatePassword } from '../../../entities/session/api';
+import { Modal, Button, Input } from '../../../shared/ui/index';
+import { useState, useEffect } from '../../../reactor/index';
+import { updateFormError, validateInput } from '../../../shared/lib/index';
+import { updatePassword } from '../../../entities/session/api/index';
 
 const PasswordEdit = () => {
     const [active, setActive] = useState(false);

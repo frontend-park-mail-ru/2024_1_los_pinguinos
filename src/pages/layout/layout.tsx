@@ -1,8 +1,8 @@
-import Navbar from '../../widgets/navbar';
-import Footer from '../../widgets/footer';
-import Header from '../../widgets/header';
+import Navbar from '../../widgets/navbar/index';
+import Footer from '../../widgets/footer/index';
+import Header from '../../widgets/header/index';
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: any) => {
     return (
         <div className="layout">
             <Navbar />

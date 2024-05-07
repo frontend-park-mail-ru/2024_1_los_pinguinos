@@ -4,7 +4,7 @@ import { NavItem } from './navitem';
 import { getChats } from '../../../features/chat/api';
 import { store } from '../../../app/app';
 
-const Navabar = () => {
+const Navbar = () => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
     const [ws, setWs] = useState<WebSocket | null>(null);
@@ -16,8 +16,6 @@ const Navabar = () => {
             console.log(state);
         });
     }, []);
-
-    console.log('user', user);
 
     useEffect(() => {
         const socket = new WebSocket(
@@ -43,11 +41,10 @@ const Navabar = () => {
     //         ws.onmessage = (e) => {
     //             console.log(e.data);
     //             const newMessage = JSON.parse(e.data);
-                
+
     //         };
     //     }
     // }, [ws]);
-        
 
     useEffect(() => {
         getChats()
@@ -67,9 +64,15 @@ const Navabar = () => {
             <div className="navbar__header">
                 <Link to="/chats">
                     <div className="navbar__header__person">
-                        <p className="navbar__header__person__name">{user.name}</p>
+                        <p className="navbar__header__person__name">
+                            {user.name}
+                        </p>
                         <img
-                            src={user.photos[0] &&  user.photos[0].url != ''  ? user.photos[0].url :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'}
+                            src={
+                                user.photos[0] && user.photos[0].url != ''
+                                    ? user.photos[0].url
+                                    : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                            }
                             alt="Profile Picture"
                             className="navbar__header__person__image"
                         />
@@ -124,4 +127,4 @@ const Navabar = () => {
     );
 };
 
-export default Navabar;
+export default Navbar;

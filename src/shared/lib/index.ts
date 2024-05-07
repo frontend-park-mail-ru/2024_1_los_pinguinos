@@ -31,9 +31,9 @@ export const validateInput = (type: string, input: string): boolean => {
     const expressions = {
         password: /^.{8,32}$/,
         email: /^(?=.{1,320}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        text: /^(?=.{2,32}$)[\p{L}]+$/u,
+        text: /^[\p{L}]+(?:[-'\s][\p{L}]+)*$/u,
         emoji: /^[\x20-\x7E]+$/,
-    };
+    } as any;
     const regexExpression = expressions[type];
     const regexEmoji = expressions['emoji'];
     if (type === 'text') {
@@ -46,13 +46,6 @@ export const validateInput = (type: string, input: string): boolean => {
     }
 
     return regexExpression.test(input) && regexEmoji.test(input);
-};
-
-export const togglePassword = (event: any) => {
-    event.target.classList.toggle('eye--inv');
-    event.target.classList.toggle('eye--vis');
-    const input = event.target.closest('div').querySelector('input');
-    input.type = input.type === 'text' ? 'password' : 'text';
 };
 
 export interface IStep {

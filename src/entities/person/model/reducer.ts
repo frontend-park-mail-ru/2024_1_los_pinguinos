@@ -43,6 +43,11 @@ export const userReducer = (state = initialState, action: Action) => {
             };
         case 'LOGOUT':
             return {};
+        case 'UPDATE_AUTH':
+            return {
+                ...state,
+                authStatus: action.payload,
+            };
         default:
             return state;
     }

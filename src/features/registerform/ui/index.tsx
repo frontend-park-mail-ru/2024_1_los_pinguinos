@@ -42,6 +42,7 @@ const RegisterForm = () => {
                 interests,
             );
             store.dispatch({ type: 'UPDATE_USER', payload: response });
+            store.dispatch({ type: 'UPDATE_AUTH', payload: true });
             redirectTo('/profile');
         } catch {
             setFormError(

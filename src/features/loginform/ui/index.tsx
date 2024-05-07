@@ -7,7 +7,6 @@ import { redirectTo } from '../../../app/Router';
 import { store } from '../../../app/app';
 
 export const LoginForm = () => {
-
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
 
@@ -33,8 +32,9 @@ export const LoginForm = () => {
             return;
         }
         try {
-            const response = await login(email, password)
+            const response = await login(email, password);
             store.dispatch({ type: 'UPDATE_USER', payload: response });
+            store.dispatch({ type: 'UPDATE_AUTH', payload: true });
             redirectTo('/profile');
             localStorage.setItem('X-CSRF-TOKEN', response.csrft); // store in redux!!!!
         } catch (error) {

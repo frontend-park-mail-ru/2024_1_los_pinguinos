@@ -1,6 +1,6 @@
 .modal {
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
     background-color: rgba(0, 0, 0, 0.4);
     position: fixed;
     top: 0;
@@ -11,11 +11,12 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease-in-out;
+    padding: 20px;
 }
 
 .modal__content {
     background-color: var(--color__dark--primary);
-    padding: 20px;
+    padding: 10px 30px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transform: scale(0.5);
@@ -36,7 +37,6 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    width: clamp(200px,350px,400px)
 }
 
 .dialog__title {
@@ -50,6 +50,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    width: clamp(150px, 200px, 200px);
 }
 
 .dialog__button-wrap {

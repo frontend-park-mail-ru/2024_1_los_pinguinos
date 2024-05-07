@@ -134,6 +134,7 @@
     margin: 0 auto;
     text-align: center;
     color: var(--color__danger--primary);
+    width: 120%;
   }
 
 
@@ -191,8 +192,3 @@
     outline-color: var(--color__success--primary);
   }
 
-@media only screen and (max-width: 300px) {
-    .input__error {
-        bottom: -50px;
-    }
-}

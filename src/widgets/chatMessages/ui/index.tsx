@@ -13,7 +13,6 @@ const ChatMessages = () => {
     };
 
     const [userID, setUserID] = useState(store.getState().id);
-    console.log('user', store.getState());
 
     const [currentChat, setCurrentChat] = useState(
         store.getState().currentChat,

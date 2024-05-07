@@ -99,13 +99,22 @@
 }
 
 
-.button--contrast {
+.button--critical {
     color: var(--color__light--primary) !important;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.button--contrast:hover {
+.button--critical:hover {
     background-color: var(--color__danger--primary);
+}
+
+.button--contrast {
+    color: var(--color__light--primary);
+    background-color: var(--color__dark--primary);
+}
+
+.button--contrast:hover {
+    filter: invert(100%);
 }
 
 .button--max-width {
@@ -162,6 +171,9 @@
     .navbar__button {
         width: 50px;
         border-radius: 50%;
+    }
+    .button--m {
+        padding: 0 20px;
     }
 }
 

@@ -1,5 +1,3 @@
-import Header from '../../widgets/header/ui/index';
-import { Button, Modal } from '../../shared/ui/index';
 import { useState } from '../../reactor/index';
 import {
     ProfilePhotoWidget,
@@ -8,19 +6,13 @@ import {
     NameEdit,
     PasswordEdit,
     MailEdit,
+    ProfileNavbar,
+    ProfileDelete,
 } from '../../widgets/index';
-import { ProfileNavbar } from './profileNavbar';
 import { clsx } from '../../clsx/index';
-import { deleteProfile, logout } from '../../entities/session/api/index';
-import { store } from '../../app/app';
-import { redirectTo } from '../../app/Router';
 export const Profile = () => {
     const [profileState, setState] = useState(0);
     const [title, setTitle] = useState('Профиль');
-    const [active, setActive] = useState(false);
-    const [callback, setCallback] = useState(() => {});
-    const [popupTitle, setPopupTitle] = useState('');
-    const [popupError, setPopupError] = useState('');
     return (
         <div className="profile__wrapper">
             <div className="profile__content-wrapper">
@@ -56,83 +48,15 @@ export const Profile = () => {
                             {PasswordEdit()}
                         </div>
                     </div>
-                    <Button
-                        label="Удалить аккаунт"
-                        size="l"
-                        fontSize="l1"
-                        severity="contrast"
-                        onClick={() => {
-                            setActive(true);
-                            setPopupTitle('Удалить аккаунт?');
-                            setCallback((callback) => {
-                                setPopupError('');
-                                return async () => {
-                                    try {
-                                        setPopupError('');
-                                        const response = await deleteProfile();
-                                        setActive(false);
-                                        store.dispatch({
-                                            type: 'LOGOUT',
-                                            payload: {},
-                                        });
-                                        redirectTo('/');
-                                    } catch {
-                                        setPopupError('Что-то пошло не так');
-                                    }
-                                };
-                            });
-                        }}
-                    />
+                    {ProfileDelete()}
                 </div>
             </div>
-            <ProfileNavbar
-                state={profileState}
-                title={title}
-                setState={setState}
-                setTitle={setTitle}
-                setActive={setActive}
-                setCallback={() => {
-                    setPopupTitle('Выйти?');
-                    setCallback((callback) => {
-                        setPopupError('');
-                        return async () => {
-                            try {
-                                setPopupError('');
-                                const response = await logout();
-                                setActive(false);
-                                store.dispatch({ type: 'LOGOUT', payload: {} });
-                                redirectTo('/');
-                            } catch {
-                                setPopupError('Что-то пошло не так');
-                            }
-                        };
-                    });
-                }}
-            />
-            <Modal active={active} setActive={setActive}>
-                <div className="dialog">
-                    <span className="dialog__title">{popupTitle}</span>
-                    <div className="dialog__button-wrap">
-                        <Button
-                            label="Отмена"
-                            size="m"
-                            fontSize="m"
-                            severity="success"
-                            onClick={() => {
-                                setActive(false);
-                            }}
-                        />
-                        <Button
-                            label="Продолжить"
-                            size="m"
-                            fontSize="m"
-                            severity="danger"
-                            onClick={callback}
-                        />
-                    </div>
-                    <span className="form__error">{popupError}</span>
-                </div>
-            </Modal>
+            {ProfileNavbar({
+                state: profileState,
+                title: title,
+                setState: setState,
+                setTitle: setTitle,
+            })}
         </div>
     );
 };

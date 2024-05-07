@@ -18,9 +18,10 @@ export type TSeverity =
     | 'success'
     | 'info'
     | 'link'
-    | 'contrast'
+    | 'critical'
     | 'edit'
-    | 'cancel';
+    | 'cancel'
+    | 'contrast';
 
 export const Button = ({
     label,
@@ -43,6 +44,8 @@ export const Button = ({
                 return 'button--info';
             case 'link':
                 return 'button--link';
+            case 'critical':
+                return 'button--critical';
             case 'contrast':
                 return 'button--contrast';
             case 'cancel':

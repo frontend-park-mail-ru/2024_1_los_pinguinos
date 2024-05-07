@@ -130,9 +130,7 @@
     .form__footer {
         flex-direction: column;
     }
-}
-@media only screen and (max-width: 300px) {
-    .form__input-container {
-        gap: 60px;
+    .form__header {
+        padding: 0 5px;
     }
 }

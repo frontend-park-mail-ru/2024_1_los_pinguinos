@@ -1,3 +1,4 @@
+import { store } from '../../app/app';
 export async function sendRequest<T>(
     baseUrl: string,
     url: string,
@@ -10,12 +11,13 @@ export async function sendRequest<T>(
         method,
         headers: {
             'X-Csrf-Token': localStorage.getItem('X-CSRF-TOKEN') || 'null',
-            'Csrft': localStorage.getItem('X-CSRF-TOKEN') || 'null',
+            Csrft: localStorage.getItem('X-CSRF-TOKEN') || 'null',
         },
         body: file ? body : JSON.stringify(body),
     });
 
     if (!response.ok) {
+        store.dispatch({ type: 'UPDATE_AUTH', payload: false });
         throw new Error(`Failed to fetch ${url}`);
     }
 

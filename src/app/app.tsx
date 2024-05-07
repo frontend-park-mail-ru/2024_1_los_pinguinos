@@ -2,15 +2,13 @@ import { Router, Route } from './Router';
 import { Landing } from '../pages/landing/landing';
 import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
+import { PageNotFound } from '../pages/notFound/notFound';
 import MainPage from '../pages/main/main';
 import ChatPage from '../pages/chats/chats';
 import MatchesPage from '../pages/matches/matches';
 import { createStore } from './store';
 import { userReducer } from '../entities/person/model/reducer';
 import { Profile } from '../pages/profile/profile';
-const PageNotFound = () => {
-    return <div>not found</div>;
-};
 export const store = createStore(userReducer);
 
 const App = () => {

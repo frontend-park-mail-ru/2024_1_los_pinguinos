@@ -65,7 +65,7 @@ const NameEdit = () => {
                         label: 'Ваше имя',
                         type: 'text',
                         value: name,
-                        placeholder: currentName,
+                        placeholder: name,
                         onInput: (event) => {
                             setCurrentName(event.target.value);
                         },

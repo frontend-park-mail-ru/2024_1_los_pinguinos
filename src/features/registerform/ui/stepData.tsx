@@ -3,7 +3,6 @@ import { Button, Input, InputCheckbox } from '../../../shared/ui';
 import {
     validateInput,
     IStep,
-    updateInputError,
     updateFormError,
 } from '../../../shared/lib/index';
 import { clsx } from '../../../clsx';
@@ -51,7 +50,7 @@ const StepData = ({
             value: currentDate,
             error: dateError,
             setError: setStepError,
-            errorMessage: 'Введите дату рождения (с 1950 по 2009)',
+            errorMessage: 'Введите дату рождения (с 1970 по 2009)',
         });
         return () => {};
     }, [dateError]);
@@ -115,7 +114,7 @@ const StepData = ({
                         type: 'date',
                         autocomplete: 'bday',
                         label: 'Дата рождения',
-                        min: '1950-01-01',
+                        min: '1970-01-01',
                         max: '2100-01-01',
                         onInput: (event: any) => {
                             setCurrentDate(event.target.value);

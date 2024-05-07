@@ -1,4 +1,4 @@
-import { Interest, Photo } from '../entities/person/model';
+import { Interest, Photo } from '../entities/person/model/index';
 
 export type Action = {
     type: string;
@@ -14,6 +14,7 @@ export type InitialState = {
     interests: Interest[];
     currentCard: number;
     currentChat: number;
+    authStatus: boolean;
 };
 
 export type Store = {
@@ -31,6 +32,7 @@ const initState: InitialState = {
     interests: [],
     currentCard: 0,
     currentChat: 0,
+    authStatus: false,
 };
 
 /**
