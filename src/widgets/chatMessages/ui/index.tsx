@@ -139,8 +139,12 @@ const ChatMessages = () => {
                     Назад
                 </button>
             </div>
-            <div className="chatMessages__list">
-                {messages ? (
+            <div 
+            // style={{
+            //     display: messages.length == 0 ? "none" : "flex",
+            // }}
+            className="chatMessages__list">
+                {
                     messages.map((message) => (
                         <div
                             className={`chatMessages__list__item ${
@@ -157,24 +161,25 @@ const ChatMessages = () => {
                                         : 'chatMessages__list__item__message'
                                 }
                             >
-                                <p className="chatMessages__list__item__text">
+                                <p className="chatMessages__list__item__message__text">
                                     {message.data}
                                 </p>
                             </div>
                         </div>
-                    ))
-                ) : (
-                    <p
+                    ))}
+                    {/* <p
                         style={{
+                            display: messages.length == 0 ? "block" : "none",
                             fontSize: 'large',
                             fontWeight: '800',
                             color: 'white',
                         }}
                     >
                         Напишите первым!
-                    </p>
-                )}
+                    </p> */}
+    
             </div>
+
             <div className="chatMessages__controllers">
                 <div className="chatMessages__controllers__input">
                     <input
@@ -182,6 +187,7 @@ const ChatMessages = () => {
                         placeholder="Введите сообщение"
                         className="chatMessages__input__field"
                         onInput={handleChange}
+                        onSubmit={handleSubmit}
                     />
                 </div>
                 <button

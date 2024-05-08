@@ -147,7 +147,11 @@ const ChatList = () => {
                         }}
                     />
                 </div>
-                <div className="chatlist__menu__items">
+                <div 
+                style={{
+                    display: chats.length == 0 ? "none" : "flex",
+                }}
+                className="chatlist__menu__items">
                     {chats
                         .filter((chat) => {
                             return chat.name
@@ -163,6 +167,7 @@ const ChatList = () => {
                         ))}
                     <p
                         style={{
+                            display: chats.length == 0 ? "block" : "none",
                             fontSize: '25px',
                             fontWeight: '800',
                             color: 'white',
