@@ -21,10 +21,14 @@ const CardControllers = () => {
         return +currentCard;
     };
 
-    const handleLike = () => {
+    const handleLike = async () => {
         const currentCard = getCurrent();
         if (!currentCard) return;
-        like(currentCard);
+        try {
+            await like(currentCard);
+        } catch {
+            return;
+        }
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
@@ -32,10 +36,14 @@ const CardControllers = () => {
         currentcard.remove();
     };
 
-    const handleComplaint = () => {
+    const handleComplaint = async () => {
         const currentCard = getCurrent();
         if (!currentCard) return;
-        complain({ reciever: currentCard });
+        try {
+            await complain({ reciever: currentCard });
+        } catch {
+            return;
+        }
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
@@ -43,10 +51,14 @@ const CardControllers = () => {
         currentcard.remove();
     };
 
-    const handleDislike = () => {
+    const handleDislike = async () => {
         const currentCard = getCurrent();
         if (!currentCard) return;
-        dislike(currentCard);
+        try {
+            await dislike(currentCard);
+        } catch {
+            return;
+        }
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
