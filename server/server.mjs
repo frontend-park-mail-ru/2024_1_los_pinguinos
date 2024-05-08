@@ -14,7 +14,7 @@ app.get(/^(?!.*\.(css|js|img|png|webp|webm|svg)).*$/, (req, res) => {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
-const port = 3000;
+const port = 4000;
 
 app.listen(port, () => {
     console.info(`Сервер запущен на порту ${port}`);

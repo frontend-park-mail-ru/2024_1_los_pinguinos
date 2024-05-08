@@ -7,7 +7,7 @@ import { store } from '../../../app/app';
 const Navbar = () => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
-    const [ws, setWs] = useState<WebSocket | null>(null);
+    // const [ws, setWs] = useState<WebSocket | null>(null);
     const user = store.getState();
 
     useEffect(() => {
@@ -17,24 +17,24 @@ const Navbar = () => {
         });
     }, []);
 
-    useEffect(() => {
-        const socket = new WebSocket(
-            `wss://api.jimder.ru/api/v1/openConnection?uid=${user.id}`,
-        );
+    // useEffect(() => {
+    //     const socket = new WebSocket(
+    //         `wss://api.jimder.ru/api/v1/openConnection?uid=${user.id}`,
+    //     );
 
-        socket.onopen = () => {
-            console.log('Connected');
-            setWs(socket);
-        };
+    //     socket.onopen = () => {
+    //         console.log('Connected');
+    //         setWs(socket);
+    //     };
 
-        socket.onclose = () => {
-            console.log('Disconnected');
-        };
+    //     socket.onclose = () => {
+    //         console.log('Disconnected');
+    //     };
 
-        return () => {
-            socket.close();
-        };
-    }, []);
+    //     return () => {
+    //         socket.close();
+    //     };
+    // }, []);
 
     // useEffect(() => {
     //     if (ws) {
