@@ -51,6 +51,7 @@ const MailEdit = () => {
                 setDisplayMail(email);
                 setDialogError('');
                 setActive(false);
+                setPassword('');
             } catch {
                 setDialogError('Что-то пошло не так');
             }
@@ -100,6 +101,7 @@ const MailEdit = () => {
                         placeholder: 'Введите текущий пароль',
                         autocomplete: 'current-password',
                         error: passwordError,
+                        value: password,
                         setError: setPasswordError,
                         onInput: (event) => {
                             setPassword(event.target.value);

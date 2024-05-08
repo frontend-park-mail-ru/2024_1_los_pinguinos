@@ -20,18 +20,18 @@
 }
 
 .navbar__header__person__name {
-    font-size: 32px;
+    font-size: x-large;
+    word-break: auto-phrase;
     font-weight: 600;
-    line-height: 32px;
-    letter-spacing: 0em;
     text-align: left;
-    color: #ffffff;
+    color: var(--color__light--primary);
 }
 
 .navbar__header__person__image {
     width: 70px;
-    height: 70px;
-    border-radius: 100px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .navbar__menu {

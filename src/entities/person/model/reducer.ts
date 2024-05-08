@@ -53,6 +53,11 @@ export const userReducer = (state = initialState, action: Action) => {
                 ...state,
                 authStatus: action.payload,
             };
+        case 'SET_CSRFT':
+            return {
+                ...state,
+                csrft: action.payload,
+            };
         default:
             return state;
     }

@@ -16,13 +16,22 @@ export const Route = ({ path, component }: IRoute) => {
 export const Router = ({ children: routes }: any) => {
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
     const authStatus = store.getState().authStatus;
+    const defaultSecurePath = '/profile';
+    const defaultInsecurePath = '/login';
 
     useEffect(() => {
         const handlePopState = () => {
             setCurrentPath(window.location.pathname);
         };
+        if (!isSecure && authStatus && path != '*') {
+            setCurrentPath(defaultSecurePath);
+            history.replaceState(null, '', defaultSecurePath);
+        }
+        if (isSecure && !authStatus && path != '*') {
+            setCurrentPath(defaultInsecurePath);
+            history.replaceState(null, '', defaultInsecurePath);
+        }
         window.addEventListener('popstate', handlePopState);
-        window.dispatchEvent(new Event('popstate'));
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
@@ -32,41 +41,7 @@ export const Router = ({ children: routes }: any) => {
         return route.props.path === currentPath || route.props.path === '*';
     });
 
-    const changeRouteIfNeeded = (
-        shouldRedirect: boolean,
-        targetPath: string,
-    ) => {
-        if (shouldRedirect) {
-            redirectTo(targetPath);
-            const foundRoute = routes.find(
-                (route: { props: { path: any } }) =>
-                    route.props.path === targetPath,
-            );
-            return foundRoute ? foundRoute.props : {};
-        }
-        return null;
-    };
-
     let { component: Component, isSecure, path } = currentRoute.props;
-
-    const noAuthRedirect = changeRouteIfNeeded(
-        isSecure && !authStatus && path !== '*',
-        '/login',
-    );
-    const authRedirect = changeRouteIfNeeded(
-        !isSecure && authStatus && path !== '*',
-        '/profile',
-    );
-
-    if (noAuthRedirect) {
-        Component = noAuthRedirect.component;
-        isSecure = !isSecure;
-    }
-
-    if (authRedirect) {
-        Component = authRedirect.component;
-        isSecure = !isSecure;
-    }
 
     return Component ? (
         isSecure ? (

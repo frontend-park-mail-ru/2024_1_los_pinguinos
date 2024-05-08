@@ -38,6 +38,7 @@
     flex-direction: column;
     gap: 30px;
     min-width: 250px;
+    max-width: 300px;
 }
 
 .dialog__title {
@@ -51,7 +52,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    width: clamp(150px, 200px, 200px);
+    width: clamp(150px,100%, 300px);
 }
 
 .dialog__button-wrap {

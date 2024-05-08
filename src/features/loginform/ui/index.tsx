@@ -44,8 +44,8 @@ export const LoginForm = () => {
             const response = await login(email, password);
             store.dispatch({ type: 'UPDATE_USER', payload: response });
             store.dispatch({ type: 'UPDATE_AUTH', payload: true });
+            store.dispatch({ type: 'SET_CSRFT', payload: response.csrft });
             redirectTo('/profile');
-            localStorage.setItem('X-CSRF-TOKEN', response.csrft); // store in redux!!!!
         } catch (error) {
             setFormError(formErrorText);
         }

@@ -10,7 +10,7 @@ type StartPoint = {
 } | null;
 
 const Card = ({ person }: { person: Person }) => {
-    console.log(person)
+    console.log(person);
     const [isFlipped, setIsFlipped] = useState(false);
 
     // const [startPoint, setStartPoint] = useState<StartPoint>(null);
@@ -90,7 +90,13 @@ const Card = ({ person }: { person: Person }) => {
             >
                 <div className="card__image">
                     <img
-                        src={person.photos[0] &&  person.photos[0].url != ''  ? person.photos[0].url :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'}
+                        src={
+                            person.photos &&
+                            person.photos[0] &&
+                            person.photos[0].url != ''
+                                ? person.photos[0].url
+                                : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                        }
                         alt={person.name}
                         className="card__img-content"
                     />

@@ -2,6 +2,7 @@ import { complain } from '../../../features/complain/api';
 import { like, dislike } from '../../../features/like/api';
 import { Button } from '../../../shared/ui';
 import { store } from '../../../app/app';
+import { useState } from '../../../reactor';
 
 const CardControllers = () => {
     // useEffect(() => {
@@ -14,6 +15,7 @@ const CardControllers = () => {
     // const currentCard = store.getState().currentCard;
     const getCurrent = () => {
         const cards = document.querySelectorAll('.card');
+        if (cards.length === 0) return null;
         const currentCard = cards[cards.length - 1].id.split('-')[1];
 
         return +currentCard;
@@ -21,8 +23,9 @@ const CardControllers = () => {
 
     const handleLike = () => {
         const currentCard = getCurrent();
+        if (!currentCard) return;
         like(currentCard);
-        store.dispatch({type: 'UPDATE_CURRENT_CARD', payload: currentCard});
+        store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
         currentcard.style.transition = 'transform 0.5s ease-in-out';
@@ -31,8 +34,9 @@ const CardControllers = () => {
 
     const handleComplaint = () => {
         const currentCard = getCurrent();
+        if (!currentCard) return;
         complain({ reciever: currentCard });
-        store.dispatch({type: 'UPDATE_CURRENT_CARD', payload: currentCard});
+        store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
         currentcard.style.transition = 'transform 0.5s ease-in-out';
@@ -41,8 +45,9 @@ const CardControllers = () => {
 
     const handleDislike = () => {
         const currentCard = getCurrent();
+        if (!currentCard) return;
         dislike(currentCard);
-        store.dispatch({type: 'UPDATE_CURRENT_CARD', payload: currentCard});
+        store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const cards = document.querySelectorAll('.card');
         const currentcard = cards[cards.length - 1];
         currentcard.style.transition = 'transform 0.5s ease-in-out';

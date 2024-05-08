@@ -107,7 +107,9 @@ const ChatList = () => {
                         </p>
                         <img
                             src={
-                                user.photos[0] && user.photos[0].url != ''
+                                user.photos &&
+                                user.photos[0] &&
+                                user.photos[0].url != ''
                                     ? user.photos[0].url
                                     : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
                             }
@@ -146,9 +148,7 @@ const ChatList = () => {
                     />
                 </div>
                 <div className="chatlist__menu__items">
-                {
-                    chats.length !=0 ?
-                    chats
+                    {chats
                         .filter((chat) => {
                             return chat.name
                                 .toLowerCase()
@@ -160,16 +160,16 @@ const ChatList = () => {
                                 activeChat={activeChat}
                                 setActiveChat={setActiveChat}
                             />
-                        ))
-                        : 
-                        <p
+                        ))}
+                    <p
                         style={{
                             fontSize: '25px',
                             fontWeight: '800',
                             color: 'white',
                         }}
-                        >Нет чатов</p>
-                    }
+                    >
+                        Нет чатов
+                    </p>
                 </div>
             </div>
         </div>

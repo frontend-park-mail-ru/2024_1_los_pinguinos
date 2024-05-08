@@ -1,6 +1,6 @@
 import { store } from '../../../../app/app';
 import { navigateTo } from '../../../../app/Router';
-import { getAge } from '../../../../shared/lib';
+import { getAge } from '../../../../shared/lib/index';
 
 const Match = ({ person }: any) => {
     return (
@@ -32,7 +32,16 @@ const Match = ({ person }: any) => {
                 </svg>
             </button>
             <div className="profile-pic profile-pic1">
-                <img src={person.photos[0] &&  person.photos[0].url != ''  ? person.photos[0].url :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'} alt={person.name} />
+                <img
+                    src={
+                        person.photos &&
+                        person.photos[0] &&
+                        person.photos[0].url != ''
+                            ? person.photos[0].url
+                            : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                    }
+                    alt={person.name}
+                />
             </div>
             <div className="data">
                 <div className="data__content">

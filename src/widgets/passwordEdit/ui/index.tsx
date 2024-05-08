@@ -44,6 +44,8 @@ const PasswordEdit = () => {
                 const response = await updatePassword(password, oldPassword);
                 setDialogError('');
                 setActive(false);
+                setPassword('');
+                setOldPassword('');
             } catch {
                 setDialogError('Что-то пошло не так');
             }

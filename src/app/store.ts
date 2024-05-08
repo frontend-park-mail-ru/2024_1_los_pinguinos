@@ -15,6 +15,7 @@ export type InitialState = {
     currentCard: number;
     currentChat: number;
     authStatus: boolean;
+    csrft: string;
 };
 
 export type Store = {
@@ -33,6 +34,7 @@ const initState: InitialState = {
     currentCard: 0,
     currentChat: 0,
     authStatus: false,
+    csrft: '',
 };
 
 /**

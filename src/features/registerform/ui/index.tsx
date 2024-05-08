@@ -48,6 +48,7 @@ const RegisterForm = () => {
             );
             store.dispatch({ type: 'UPDATE_USER', payload: response });
             store.dispatch({ type: 'UPDATE_AUTH', payload: true });
+            store.dispatch({ type: 'SET_CSRFT', payload: response.csrft });
             redirectTo('/profile');
         } catch {
             setFormError(
