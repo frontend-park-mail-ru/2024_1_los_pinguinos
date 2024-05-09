@@ -4,6 +4,7 @@
     font-size: 4rem;
     color: var(--color__light--primary);
     word-break: auto-phrase;
+    text-align: center;
 }
 
 .notfound__wrapper {

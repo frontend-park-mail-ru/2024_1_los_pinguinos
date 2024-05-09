@@ -30,7 +30,7 @@ export const ButtonLink = ({
         window.dispatchEvent(new Event('popstate'));
     };
     const onClickLink = (event: any) => {
-        onClick(event);
+        if (onClick) onClick(event);
         handleClick(event);
     };
     return Button({

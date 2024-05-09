@@ -7,7 +7,7 @@
 }
 
 .nav__item {
-    color: var(--color__light--secondary);
+    color: var(--color__light--primary);
     text-decoration: none;
     transition: all 0.2s ease-in-out;
     position: relative;
