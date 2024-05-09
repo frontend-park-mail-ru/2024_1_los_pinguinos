@@ -55,7 +55,7 @@ const PasswordEdit = () => {
     return (
         <div className="profile__settings--row">
             <span
-                className="icon-eye-slash"
+                className="icon-key"
                 style="color: var(--color__light--primary); font-size: large; font-weight: 600;"
             ></span>
             <div className="profile__settings--column">

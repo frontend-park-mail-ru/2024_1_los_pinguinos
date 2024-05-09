@@ -29,12 +29,15 @@ export const ButtonLink = ({
         }
         window.dispatchEvent(new Event('popstate'));
     };
-    onClick = handleClick;
+    const onClickLink = (event: any) => {
+        onClick(event);
+        handleClick(event);
+    };
     return Button({
         label,
         icon,
         type,
-        onClick,
+        onClick: onClickLink,
         severity,
         size,
         fontSize,

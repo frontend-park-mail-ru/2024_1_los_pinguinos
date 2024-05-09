@@ -1,10 +1,3 @@
-* {
-    word-break: auto-phrase;
-}
-:root {
-    --action-bgr--success: rgba(30, 255, 0, 0.3);
-    --action-bgr--failure: rgba(255, 0, 0, 0.3);
-}
 .profile__wrapper {
     position: relative;
     display: flex;
@@ -144,10 +137,12 @@
 
 .profile__text {
     font-weight: 200;
-    color: white;
+    color: var(--color__light--primary);
     white-space-collapse: preserve-breaks;
-    word-break: break-all !important;
+    text-wrap: balance;
+    word-wrap: break-word;
     text-align: start;
+    max-width: 100%;
 }
 
 .profile__text--title {

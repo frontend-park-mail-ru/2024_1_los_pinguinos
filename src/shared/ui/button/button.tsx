@@ -21,7 +21,9 @@ export type TSeverity =
     | 'critical'
     | 'edit'
     | 'cancel'
-    | 'contrast';
+    | 'contrast'
+    | 'fill'
+    | 'outline';
 
 export const Button = ({
     label,
@@ -52,6 +54,10 @@ export const Button = ({
                 return 'button--cancel';
             case 'edit':
                 return 'button--edit';
+            case 'fill':
+                return 'button--fill';
+            case 'outline':
+                return 'button--outline';
         }
     };
     return (

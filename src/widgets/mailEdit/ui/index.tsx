@@ -61,7 +61,7 @@ const MailEdit = () => {
     return (
         <div className="profile__settings--row">
             <span
-                className="icon-cursor"
+                className="icon-envelope-at"
                 style="color: var(--color__light--primary); font-size: large; font-weight: 600;"
             ></span>
             <div className="profile__settings--column">

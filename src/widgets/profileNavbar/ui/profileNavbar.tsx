@@ -28,7 +28,7 @@ const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
             <div className="profile__navbar-content">
                 <Button
                     label="Профиль"
-                    icon="icon-person"
+                    icon="icon-person-gear"
                     severity={state === 0 ? 'success' : undefined}
                     fontSize="l1"
                     size="max-width"
@@ -40,7 +40,7 @@ const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
                 />
                 <Button
                     label="Настройки"
-                    icon="icon-gear"
+                    icon="icon-person-lock"
                     severity={state === 1 ? 'success' : undefined}
                     fontSize="l1"
                     size="max-width"

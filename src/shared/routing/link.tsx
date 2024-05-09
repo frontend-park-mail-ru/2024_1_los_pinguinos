@@ -6,16 +6,8 @@ export interface ILink {
     persistent?: boolean;
     back?: boolean;
     className?: string;
-    activeColor?: string;
 }
-export const Link = ({
-    to,
-    children,
-    persistent,
-    back,
-    className,
-    activeColor,
-}: ILink) => {
+export const Link = ({ to, children, persistent, back, className }: ILink) => {
     const handleClick = (event: any) => {
         event.preventDefault();
         if (back) {
@@ -31,9 +23,9 @@ export const Link = ({
     return (
         <a
             className={className ? className : 'link'}
+            style="display: flex; align-items:center; gap: 10px"
             href={to}
             onClick={handleClick}
-            active-color={activeColor}
         >
             {children}
         </a>

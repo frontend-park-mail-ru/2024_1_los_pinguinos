@@ -5,7 +5,7 @@
     justify-content: center;
     gap: 5px;
     background: transparent;
-    border: transparent;
+    border: 2px solid transparent;
     cursor: pointer;
     height: 50px;
     width: fit-content;
@@ -111,6 +111,25 @@
 .button--contrast {
     color: var(--color__light--primary);
     background-color: var(--color__dark--primary);
+}
+
+.button--contrast:hover {
+    filter: invert(100%);
+}
+
+.button--outline {
+    color: var(--color__light--secondary);
+    border: 2px solid;
+    border-color: var(--color__light--primary);
+    padding: 0 20px;
+    height: 40px;
+}
+
+.button--fill {
+    color: var(--color__dark--primary);
+    background-color: var(--color__light--primary);
+    padding: 0 20px;
+    height: 40px;
 }
 
 .button--contrast:hover {

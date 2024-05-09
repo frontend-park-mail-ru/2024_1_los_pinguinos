@@ -1,73 +1,45 @@
-@import url('https://fonts.googleapis.com/css?family=DM+Sans:500,700&display=swap');
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    text-align: center;
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/debut_light.png');
-}
-
 .nav {
     display: none;
     position: relative;
     overflow: hidden;
     height: 10%;
     max-width: 100%;
-    /* background-color: #fff; */
-    padding: 0 20px;
-    border-radius: 40px;
-    /* box-shadow: 0 10px 40px rgba(159, 162, 177, 0.8); */
 }
 
-.nav-item {
-    color: #83818c;
-    padding: 20px;
+.nav__item {
+    color: var(--color__light--secondary);
     text-decoration: none;
-    transition: 0.3s;
-    margin: 0 6px;
-    z-index: 1;
-    font-weight: 500;
+    transition: all 0.2s ease-in-out;
     position: relative;
-
-    &:before {
-        content: '';
-        position: absolute;
-        bottom: -6px;
-        left: 0;
-        width: 100%;
-        height: 5px;
-        background-color: #dfe2ea;
-        border-radius: 8px 8px 0 0;
-        opacity: 0;
-        transition: 0.3s;
-    }
 }
 
-.nav-item:not(.is-active):hover:before {
-    opacity: 1;
-    bottom: 0;
+.nav__item.is-active {
+    color: var(--color__success--primary);
 }
 
-.nav-item:not(.is-active):hover {
-    color: #333333;
-}
-
-.nav-indicator {
+.nav__item::before {
+    content: "";
     position: absolute;
+    width: 100%; /* Start with no underline visible */
+    height: 3px; /* Thickness of the underline */
+    bottom: -10px; /* Distance of the underline from the text */
     left: 0;
-    bottom: 0;
-    height: 4px;
-    transition: 0.4s;
-    height: 5px;
-    z-index: 1;
-    border-radius: 8px 8px 0 0;
+    background-color: var(--color__light--primary); /* Color of the underline */
+    transform: scale(0);
+    transition: transform 0.2s ease; /* Smooth transition for the appearing effect */
+}
+
+.nav__item:not(.is-active):hover:before {
+    transform: scale(1);
+}
+
+.nav__item.is-active:before {
+    background-color: var(--color__success--primary);
+    transform: scale(1);
+}
+
+.nav__item:not(.is-active):hover {
+    color: var(--color__light--primary);
 }
 
 @media screen and (max-width: 896px) {
@@ -75,18 +47,13 @@ body {
         display: inline-flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        gap: 30px;
     }
 }
 
-@media (max-width: 580px) {
-    .nav-item {
-        padding: 10px;
+@media screen and (max-width: 540px) {
+    .nav__text {
+        display: none;
     }
-}
-
-@media screen and (max-width: 400px) {
-    .nav-item {
-        padding: 0px;
-    }
-    
 }

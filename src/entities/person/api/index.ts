@@ -1,8 +1,8 @@
 import { sendRequest } from '../../../shared/api/index';
 import { PersonDTO } from './types';
-import { Person } from '../model';
+import { Person } from '../model/index';
 import { normalizePerson } from '../lib/normalizePerson';
-import { AUTH_URL, API_URL } from '../../../shared/config';
+import { AUTH_URL, API_URL } from '../../../shared/config/index';
 
 export const getCards = async (): Promise<Person[]> => {
     const cards = await sendRequest<PersonDTO[]>(API_URL, '/cards', 'GET');

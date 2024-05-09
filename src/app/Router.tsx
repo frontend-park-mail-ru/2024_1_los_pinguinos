@@ -45,9 +45,7 @@ export const Router = ({ children: routes }: any) => {
 
     return Component ? (
         isSecure ? (
-            <Layout>
-                <Component />
-            </Layout>
+            Layout({ children: <Component /> })
         ) : (
             <Component />
         )

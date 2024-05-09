@@ -44,7 +44,7 @@ const NameEdit = () => {
     return (
         <div className="profile__settings--row">
             <span
-                className="icon-person"
+                className="icon-at"
                 style="color: var(--color__light--primary); font-size: large; font-weight: 600;"
             ></span>
             <div className="profile__settings--column">

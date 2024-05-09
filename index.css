@@ -1,6 +1,6 @@
 @import url(./src/pages/notFound/notFound.css);
 @import url(./src/components/profile/profile.css);
-@import url(./src/shared/ui/icons/style.css);
+@import url(./src/shared/ui/icons/index.css);
 @import url(./src/shared/ui/button/button.css);
 @import url(./src/shared/ui/input/input.css);
 @import url(./src/widgets/profilePhoto/ui/photoWidget.css);
@@ -57,13 +57,16 @@ html {
   /* Firefox */
 }
 
-html,
-body {
+html {
   overflow: clip;
   display: flow-root;
 }
 
 body {
+  width: 100dvw;
+  height: 100dvh;
+  overflow: clip;
+  display: flow-root;
   background-image: var(--background--landing);
   background-size: 100% 100%;
   transition: background-image 0.2s ease-in-out;

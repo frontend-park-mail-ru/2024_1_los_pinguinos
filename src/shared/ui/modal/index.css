@@ -38,7 +38,7 @@
     flex-direction: column;
     gap: 30px;
     min-width: 250px;
-    max-width: 300px;
+    max-width: 250px;
 }
 
 .dialog__title {
