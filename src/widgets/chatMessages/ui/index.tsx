@@ -21,19 +21,19 @@ const ChatMessages = () => {
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            console.log(state);
+            // console.log(state);
             setCurrentChat(state.currentChat);
         });
     }, []);
 
     useEffect(() => {
-        console.log('currentChat', currentChat);
+        // console.log('currentChat', currentChat);
         if (!currentChat) {
             return;
         }
         getMessages(currentChat)
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 setMessages(data);
                 setTimeout(() => {
                     const chat = document.querySelector('.chatMessages__list');
@@ -55,12 +55,12 @@ const ChatMessages = () => {
         );
 
         socket.onopen = () => {
-            console.log('Connected');
+            // console.log('Connected');
             setWs(socket);
         };
 
         socket.onclose = () => {
-            console.log('Disconnected');
+            // console.log('Disconnected');
         };
 
         return () => {
@@ -71,17 +71,17 @@ const ChatMessages = () => {
     useEffect(() => {
         if (ws) {
             ws.onmessage = (e) => {
-                console.log(e.data);
+                // console.log(e.data);
                 const newMessage = JSON.parse(e.data);
-                console.log(newMessage);
-                console.log(userID, currentChat);
+                // console.log(newMessage);
+                // console.log(userID, currentChat);
                 if (
                     (newMessage.sender === userID &&
                         newMessage.receiver === store.getState().currentChat) ||
                     (newMessage.sender === store.getState().currentChat &&
                         newMessage.receiver === userID)
                 ) {
-                    setMessages((prev) => [newMessage, ...prev ]);
+                    setMessages((prev) => [newMessage, ...prev]);
                 }
 
                 setTimeout(() => {
@@ -104,12 +104,12 @@ const ChatMessages = () => {
                     time: new Date().getTime(),
                 }),
             );
-            console.log({
-                data: message,
-                sender: store.getState().id,
-                receiver: currentChat,
-                time: new Date().getTime(),
-            });
+            // console.log({
+            //     data: message,
+            //     sender: store.getState().id,
+            //     receiver: currentChat,
+            //     time: new Date().getTime(),
+            // });
             setMessage('');
             const input = document.querySelector(
                 '.chatMessages__input__field',
@@ -128,7 +128,7 @@ const ChatMessages = () => {
             <div className="chatMessages__header">
                 <button
                     onClick={() => {
-                        console.log('click');
+                        // console.log('click');
                         store.dispatch({
                             type: 'UPDATE_CURRENT_CHAT',
                             payload: null,

@@ -1,0 +1,10 @@
+export { Profile } from './profile/profile';
+export { Landing } from './landing/landing';
+export { Login } from './login/login';
+export { Register } from './register/register';
+export { default as ChatPage } from './chats/chats';
+export { default as MainPage } from './main/main';
+export { default as MatchPage } from './matches/matches';
+export { PageNotFound } from './notFound/notFound';
+export { PageOffline } from './offline/offline';
+export { default as Layout } from './layout/layout';

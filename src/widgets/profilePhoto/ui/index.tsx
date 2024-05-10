@@ -24,7 +24,7 @@ const ProfilePhotoWidget = () => {
             cells[index][0][1](async () => {
                 try {
                     const response = await uploadImage(file, `${index}`);
-                    console.log(response);
+                    // console.log(response);
                     cells[index][0][1](response);
                     userPhotos[index].url = response;
                     // console.log(userPhotos);

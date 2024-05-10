@@ -47,6 +47,7 @@ const StepPassword = ({
                     severity="link"
                     onClick={onNavigateBack}
                 />
+                <span className="form__description step__counter">3/3</span>
             </div>
             <span className="form__title">Почти закончили</span>
             <span className="form__description">

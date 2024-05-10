@@ -31,13 +31,13 @@ const ChatList = () => {
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            console.log(state);
+            // console.log(state);
             setCurrentChat(state.currentChat);
         });
     }, []);
 
     useEffect(() => {
-        console.log('currentChat', currentChat);
+        // console.log('currentChat', currentChat);
         if (!currentChat) {
             return;
         }
@@ -46,7 +46,7 @@ const ChatList = () => {
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            console.log(state);
+            // console.log(state);
         });
     }, []);
 
@@ -56,12 +56,12 @@ const ChatList = () => {
         );
 
         socket.onopen = () => {
-            console.log('Connected');
+            // console.log('Connected');
             setWs(socket);
         };
 
         socket.onclose = () => {
-            console.log('Disconnected');
+            // console.log('Disconnected');
         };
 
         return () => {

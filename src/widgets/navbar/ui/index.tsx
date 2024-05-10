@@ -13,7 +13,7 @@ const Navbar = () => {
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            console.log(state);
+            // console.log(state);
         });
     }, []);
 
@@ -23,12 +23,12 @@ const Navbar = () => {
         );
 
         socket.onopen = () => {
-            console.log('Connected');
+            // console.log('Connected');
             setWs(socket);
         };
 
         socket.onclose = () => {
-            console.log('Disconnected');
+            // console.log('Disconnected');
         };
 
         return () => {
@@ -49,7 +49,7 @@ const Navbar = () => {
     useEffect(() => {
         getChats()
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 setChats(data.chats);
             })
             .catch((error) => {

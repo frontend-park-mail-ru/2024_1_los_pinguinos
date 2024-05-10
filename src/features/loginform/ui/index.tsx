@@ -24,12 +24,12 @@ export const LoginForm = () => {
     }, [email, password]); // protected router fix
 
     async function submitLogin(event: any) {
-        console.log(email);
-        console.log(password);
+        // console.log(email);
+        // console.log(password);
         event.preventDefault();
         setFormError('');
         if (!email || !password) {
-            console.log('это форма шалит');
+            // console.log('это форма шалит');
             if (!password) setPasswordError(emptyErrorText);
             if (!email) setEmailError(emptyErrorText);
             return;

@@ -36,7 +36,7 @@ const StepInterests = ({
                     severity="link"
                     onClick={onNavigateBack}
                 />
-                {/* <span className='step'>2/3</span> */}
+                <span className="form__description step__counter">2/3</span>
             </div>
             <span className="form__title">Чем будем заниматься?</span>
             <span className="form__description">

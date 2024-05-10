@@ -1,17 +1,17 @@
 const CACHE = 'jimder-cache-v1';
-const PRECACHE_URLS = [
-    '/offline',
-    '/176c4714b229b0ae6633.webp',
-];
+const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
 const channel = new BroadcastChannel('sw-messages');
 
-self.addEventListener('install', function(event){
-    event.waitUntil(caches.open(CACHE).then((cache) => {
-       return cache.addAll(PRECACHE_URLS);
-    }));
+self.addEventListener('install', function (event) {
+    event.waitUntil(
+        caches.open(CACHE).then((cache) => {
+            return cache.addAll(PRECACHE_URLS);
+        }),
+    );
+    event.waitUntil(self.skipWaiting());
 });
 
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys().then((cacheKeys) => {
             return Promise.all(
@@ -23,44 +23,40 @@ self.addEventListener('activate', function(event) {
             );
         }),
     );
+    event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', async (event) => {
-    if(!event.request.url.startsWith('http')){ // our domain here (contains - not starts)
+    if (!event.request.url.startsWith('http')) {
+        // our domain here (contains - not starts)
         return;
     }
-    event.respondWith(caches.open(CACHE).then((cache) => {
-        return cache.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                if (!(event.request.url.includes('/api/v1/isAuth') ||
-                    event.request.url.includes('/api/v1/cards') ||
-                    event.request.url.includes('/api/v1/matches'))) {
-                    return cachedResponse;
-                }
-            }
-
-            return fetch(event.request).then((response) => {
-                if (event.request.method === 'GET') {
-                    cache.put(event.request, response.clone());
-                }
-
-                return response;
-            }).catch((error) => {
+    event.respondWith(
+        caches.open(CACHE).then(async (cache) => {
+            return cache.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
                     return cachedResponse;
                 }
-                channel.postMessage({offline: true});
 
-                return new Response(`${error}`, {status: 408, statusText: 'offline'});
+                return fetch(event.request)
+                    .then((response) => {
+                        if (event.request.method === 'GET') {
+                            cache.put(event.request, response.clone());
+                        }
+
+                        return response;
+                    })
+                    .catch(() => {
+                        channel.postMessage({ offline: true });
+                    });
             });
-        });
-    }));
+        }),
+    );
 });
 
 channel.addEventListener('message', (event) => {
-    console.log(event.data);
     if (event.data.type === 'ERROR_OCCURRED') {
-        channel.postMessage({cacheRevaluation: true});
+        channel.postMessage({ cacheRevaluation: true });
         caches.open(CACHE).then((cache) => {
             cache.delete(event.data.filename);
         });

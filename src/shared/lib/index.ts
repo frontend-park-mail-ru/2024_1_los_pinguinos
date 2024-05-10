@@ -124,3 +124,29 @@ export const updateFormError = ({
         }
     }
 };
+
+const getBackground = (path: string) => {
+    switch (path) {
+        case '/':
+            return 'var(--background--landing)';
+        case '/login':
+            return 'var(--background--login)';
+        case '/register':
+            return 'var(--background--register)';
+        case '/profile':
+            return 'var(--background--profile)';
+        case '/main':
+            return 'var(--background--main)';
+        case '/matches':
+            return 'var(--background--matches)';
+        case '/chats':
+            return 'var(--background--chats)';
+        default:
+            return 'var(--background--404)';
+    }
+};
+
+export const updateBackground = (path: string) => {
+    const body = document.body;
+    body.style.backgroundImage = getBackground(path);
+};

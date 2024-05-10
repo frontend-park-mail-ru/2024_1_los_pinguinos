@@ -1,7 +1,7 @@
 import { useEffect, useState } from '../reactor/index';
 import Layout from '../pages/layout/layout';
 import { store } from './app';
-
+import { updateBackground } from '../shared/lib/index';
 export interface IRoute {
     path: string;
     component: any;
@@ -14,6 +14,7 @@ export const Route = ({ path, component }: IRoute) => {
 };
 
 export const Router = ({ children: routes }: any) => {
+    console.log('RERENDER');
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
     const authStatus = store.getState().authStatus;
     const defaultSecurePath = '/profile';
@@ -23,11 +24,11 @@ export const Router = ({ children: routes }: any) => {
         const handlePopState = () => {
             setCurrentPath(window.location.pathname);
         };
-        if (!isSecure && authStatus && path != '*') {
+        if (!isSecure && authStatus && path !== '*' && path !== '/offline') {
             setCurrentPath(defaultSecurePath);
             history.replaceState(null, '', defaultSecurePath);
         }
-        if (isSecure && !authStatus && path != '*') {
+        if (isSecure && !authStatus && path !== '*' && path !== '/offline') {
             setCurrentPath(defaultInsecurePath);
             history.replaceState(null, '', defaultInsecurePath);
         }
@@ -37,6 +38,10 @@ export const Router = ({ children: routes }: any) => {
         };
     }, []);
 
+    useEffect(() => {
+        updateBackground(currentPath);
+    }, [currentPath]);
+
     let currentRoute = routes.find((route: IRoute) => {
         return route.props.path === currentPath || route.props.path === '*';
     });
@@ -45,9 +50,7 @@ export const Router = ({ children: routes }: any) => {
 
     return Component ? (
         isSecure ? (
-            <Layout>
-                <Component />
-            </Layout>
+            Layout({ children: <Component /> })
         ) : (
             <Component />
         )

@@ -41,7 +41,7 @@ const StepData = ({
             setError: setStepError,
             errorMessage: 'Введите полные Имя (Фамилию).',
         });
-        console.log(nameError);
+        // console.log(nameError);
         return () => {};
     }, [nameError]);
     useEffect(() => {
@@ -86,6 +86,7 @@ const StepData = ({
                     severity="link"
                     onClick={onNavigateBack}
                 />
+                <span className="form__description step__counter">1/3</span>
             </div>
             <span className="form__title">Давайте знакомиться</span>
             <span className="form__description">
