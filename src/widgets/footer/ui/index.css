@@ -11,6 +11,10 @@
     text-decoration: none;
     transition: all 0.2s ease-in-out;
     position: relative;
+    display: flex; 
+    align-items:center; 
+    gap: 10px; 
+    cursor: pointer;
 }
 
 .nav__item.is-active {
@@ -26,7 +30,7 @@
     left: 0;
     background-color: var(--color__light--primary); /* Color of the underline */
     transform: scale(0);
-    transition: transform 0.2s ease; /* Smooth transition for the appearing effect */
+    transition: all 0.2s ease; /* Smooth transition for the appearing effect */
 }
 
 .nav__item:not(.is-active):hover:before {
@@ -42,6 +46,14 @@
     color: var(--color__light--primary);
 }
 
+.nav__item--critical.is-active {
+    color: var(--color__danger--primary);
+}
+
+.nav__item--critical.is-active:before {
+    background-color: var(--color__danger--primary) !important;
+}
+
 @media screen and (max-width: 896px) {
     .nav {
         display: inline-flex;
@@ -49,6 +61,9 @@
         align-items: center;
         width: 100%;
         gap: 30px;
+    }
+    .nav__text--side {
+        display: none;
     }
 }
 

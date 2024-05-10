@@ -63,6 +63,8 @@ const StepData = ({
     const allowContinue = () => {
         const nameValid = validateInput('text', name);
         const dateValid = validateInput('date', date);
+        if (!name && !nameError) setNameError('Поле не может быть пустым');
+        if (!date && !dateError) setDateError('Поле не может быть пустым');
         if (nameValid && dateValid && gender) {
             if (onNavigateForward) onNavigateForward();
             return;
@@ -161,7 +163,9 @@ const StepData = ({
                     onClick={allowContinue}
                 />
             </div>
-            <span className="form__error">{stepError}</span>
+            <span className={clsx(!stepError && 'any--none', 'form__error')}>
+                {stepError}
+            </span>
         </div>
     );
 };

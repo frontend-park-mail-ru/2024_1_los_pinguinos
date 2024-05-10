@@ -114,16 +114,22 @@
   .photo__cross {
     cursor: pointer;
     position: absolute;
-    top: 5%;
-    right: 5%;
-    font-size: 2rem;
-    font-weight: 700;
+    top: 8%;
+    right: 8%;
+    font-size: 1.5rem;
     color: var(--color__danger--primary);
-    transition: opacity 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+    background-color: var(--color__dark--primary);
+    padding: 5px;
+    border-radius: 20%;
+  }
+
+  .grid__item--other > .input-container__photo > .photo__cross {
+    font-size: 1rem;
   }
 
   .photo__cross:hover {
-    opacity: 0.6;
+    color: var(--color__warning--primary);
   }
 
   .input__error {

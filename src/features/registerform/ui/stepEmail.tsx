@@ -87,7 +87,9 @@ const StepEmail = ({
                     Войти
                 </Link>
             </span>
-            <span className="form__error">{stepError}</span>
+            <span className={clsx(!stepError && 'any--none', 'form__error')}>
+                {stepError}
+            </span>
         </div>
     );
 };

@@ -57,7 +57,9 @@ const StepInterests = ({
                     onClick={allowContinue}
                 />
             </div>
-            <span className="form__error">{stepError}</span>
+            <span className={clsx(!stepError && 'any--none', 'form__error')}>
+                {stepError}
+            </span>
         </div>
     );
 };

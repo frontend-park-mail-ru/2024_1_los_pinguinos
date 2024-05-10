@@ -4,6 +4,7 @@ import { ConfirmationPopup } from '../../index';
 import { store } from '../../../app/app';
 import { redirectTo } from '../../../app/Router';
 import { logout } from '../../../entities/session/api/index';
+import { clsx } from '../../../clsx/index';
 
 const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
     const [active, setActive] = useState(false);
@@ -26,41 +27,48 @@ const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
                 {title}
             </h1>
             <div className="profile__navbar-content">
-                <Button
-                    label="Профиль"
-                    icon="icon-person-gear"
-                    severity={state === 0 ? 'success' : undefined}
-                    fontSize="l1"
-                    size="max-width"
-                    navbar
+                <div
+                    className={clsx('nav__item', state === 0 && 'is-active')}
                     onClick={() => {
                         setState(0);
                         setTitle('Профиль');
                     }}
-                />
-                <Button
-                    label="Настройки"
-                    icon="icon-person-lock"
-                    severity={state === 1 ? 'success' : undefined}
-                    fontSize="l1"
-                    size="max-width"
-                    navbar
+                >
+                    <span
+                        style="font-size: x-large"
+                        className="icon-person-gear"
+                    ></span>
+                    <span className="nav__text nav__text--side">Профиль</span>
+                </div>
+                <div
+                    className={clsx('nav__item', state === 1 && 'is-active')}
                     onClick={() => {
                         setState(1);
                         setTitle('Безопасность');
                     }}
-                />
-                <Button
-                    label="Выход"
-                    icon="icon-box-arrow-right"
-                    severity="critical"
-                    fontSize="l1"
-                    size="max-width"
-                    navbar
-                    onClick={() => {
-                        setActive(true);
-                    }}
-                />
+                >
+                    <span
+                        style="font-size: x-large"
+                        className="icon-person-lock"
+                    ></span>
+                    <span className="nav__text nav__text--side">
+                        Безопасность
+                    </span>
+                </div>
+                <div
+                    className={clsx(
+                        'nav__item',
+                        'nav__item--critical',
+                        active && 'is-active',
+                    )}
+                    onClick={() => setActive(true)}
+                >
+                    <span
+                        style="font-size: x-large"
+                        className="icon-box-arrow-right"
+                    ></span>
+                    <span className="nav__text nav__text--side">Выход</span>
+                </div>
             </div>
             {ConfirmationPopup({
                 active: active,

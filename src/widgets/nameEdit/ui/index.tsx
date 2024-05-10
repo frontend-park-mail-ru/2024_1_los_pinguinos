@@ -3,6 +3,7 @@ import { useState, useEffect } from '../../../reactor';
 import { updateFormError, validateInput } from '../../../shared/lib';
 import { updateName } from '../../../entities/session/api';
 import { store } from '../../../app/app';
+import { clsx } from '../../../clsx';
 
 const NameEdit = () => {
     const userName = store.getState().name;
@@ -96,7 +97,14 @@ const NameEdit = () => {
                             onClick={handleSave}
                         />
                     </div>
-                    <span className="form__error">{dialogError}</span>
+                    <span
+                        className={clsx(
+                            !dialogError && 'any--none',
+                            'dialog__error',
+                        )}
+                    >
+                        {dialogError}
+                    </span>
                 </div>
             </Modal>
         </div>

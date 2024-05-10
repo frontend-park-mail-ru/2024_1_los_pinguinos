@@ -5,6 +5,7 @@ import { validateInput, updateInputError } from '../../../shared/lib/index';
 import { Input, Button, ButtonLink } from '../../../shared/ui/index';
 import { redirectTo } from '../../../app/Router';
 import { store } from '../../../app/app';
+import { clsx } from '../../../clsx/index';
 
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -101,7 +102,9 @@ export const LoginForm = () => {
                     Регистрация
                 </Link>
             </span>
-            <span className="form__error">{formError}</span>
+            <span className={clsx(!formError && 'any--none', 'form__error')}>
+                {formError}
+            </span>
         </form>
     );
 };

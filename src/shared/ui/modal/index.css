@@ -11,13 +11,13 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease-in-out;
-    padding: 20px;
+    z-index: 1;
 }
 
 .modal__content {
     background-color: var(--color__dark--primary);
-    padding: 10px 30px;
-    border-radius: 12px;
+    padding: 30px;
+    border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transform: scale(0.5);
     transition: all 0.2s ease-in-out;
@@ -37,8 +37,8 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    min-width: 250px;
-    max-width: 250px;
+    padding-bottom: 80px;
+    position: relative;
 }
 
 .dialog__title {
@@ -52,12 +52,13 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    width: clamp(150px,100%, 300px);
+    width: clamp(150px,100%, 600px);
 }
 
 .dialog__button-wrap {
     display: flex;
     gap: 10px;
+    justify-content: flex-end;
 }
 
 .dialog__info {
@@ -65,4 +66,14 @@
     text-align: start;
     font-size: medium;
     word-break: auto-phrase;
+}
+
+.dialog__error {
+    text-align: center;
+    word-break: auto-phrase;
+    white-space: pre-wrap !important;
+    color: var(--color__warning--primary);
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
 }

@@ -2,6 +2,7 @@ import { Modal, Button, TextArea } from '../../../shared/ui';
 import { useEffect, useState } from '../../../reactor';
 import { updateDescription } from '../../../entities/session/api';
 import { store } from '../../../app/app';
+import { clsx } from '../../../clsx';
 
 const DescriptionEdit = () => {
     const userDescription = store.getState().description;
@@ -72,7 +73,14 @@ const DescriptionEdit = () => {
                             onClick={handleSave}
                         />
                     </div>
-                    <span className="form__error">{dialogError}</span>
+                    <span
+                        className={clsx(
+                            !dialogError && 'any--none',
+                            'dialog__error',
+                        )}
+                    >
+                        {dialogError}
+                    </span>
                 </div>
             </Modal>
         </div>

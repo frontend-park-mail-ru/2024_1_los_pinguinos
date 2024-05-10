@@ -53,7 +53,7 @@ export const InputPhoto = ({
             ></div>
             <span
                 className={clsx(
-                    'icon-x',
+                    'icon-trash3',
                     'photo__cross',
                     (!currentImage || loading) && 'any--none',
                 )}

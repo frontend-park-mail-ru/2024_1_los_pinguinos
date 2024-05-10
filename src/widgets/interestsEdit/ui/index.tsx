@@ -6,6 +6,7 @@ import {
     getInterests,
     updateInterests,
 } from '../../../entities/session/api/index';
+import { clsx } from '../../../clsx';
 
 const InterestsEdit = () => {
     const userInterests = Array.from(
@@ -84,6 +85,9 @@ const InterestsEdit = () => {
                             severity="cancel"
                             onClick={() => {
                                 setActive(false);
+                                setCurrentInterests(userInterests);
+                                setSelectedInterests(userInterests);
+                                setFormError('');
                             }}
                         />
                         <Button
@@ -94,7 +98,12 @@ const InterestsEdit = () => {
                             onClick={handleSave}
                         />
                     </div>
-                    <span className="form__error">
+                    <span
+                        className={clsx(
+                            !(formError || interestsEmpty) && 'any--none',
+                            'dialog__error',
+                        )}
+                    >
                         {formError}
                         {interestsEmpty}
                     </span>

@@ -3,7 +3,7 @@ import { useState, useEffect } from '../../../reactor';
 import { updateFormError, validateInput } from '../../../shared/lib';
 import { updateEmail } from '../../../entities/session/api';
 import { store } from '../../../app/app';
-
+import { clsx } from '../../../clsx';
 const MailEdit = () => {
     const userEmail = store.getState().email;
     const [active, setActive] = useState(false);
@@ -125,7 +125,14 @@ const MailEdit = () => {
                             onClick={handleSave}
                         />
                     </div>
-                    <span className="form__error">{dialogError}</span>
+                    <span
+                        className={clsx(
+                            !dialogError && 'any--none',
+                            'dialog__error',
+                        )}
+                    >
+                        {dialogError}
+                    </span>
                 </div>
             </Modal>
         </div>

@@ -31,6 +31,8 @@ const StepPassword = ({
     }, [passwordError]);
     const allowContinue = (event: any) => {
         const passwordValid = validateInput('password', currentPassword);
+        if (!password && !passwordError)
+            setPasswordError('Поле не может быть пустым');
         if (passwordValid) {
             if (onNavigateForward) onNavigateForward(event);
             return;
@@ -76,7 +78,9 @@ const StepPassword = ({
                     onClick={allowContinue}
                 />
             </div>
-            <span className="form__error">{stepError}</span>
+            <span className={clsx(!stepError && 'any--none', 'form__error')}>
+                {stepError}
+            </span>
         </div>
     );
 };

@@ -6,6 +6,7 @@ import { useEffect, useState } from '../../../reactor/index';
 import { register } from '../../../entities/session/api/index';
 import { redirectTo } from '../../../app/Router';
 import { store } from '../../../app/app';
+import { clsx } from '../../../clsx';
 
 const RegisterForm = () => {
     const [email, setEmail] = useState('');
@@ -90,7 +91,9 @@ const RegisterForm = () => {
                 password: password,
                 setPassword: setPassword,
             })}
-            <span className="form__error">{formError}</span>
+            <span className={clsx(!formError && 'any--none', 'form__error')}>
+                {formError}
+            </span>
         </form>
     );
 };

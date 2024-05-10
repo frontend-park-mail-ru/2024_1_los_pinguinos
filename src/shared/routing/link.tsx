@@ -23,7 +23,6 @@ export const Link = ({ to, children, persistent, back, className }: ILink) => {
     return (
         <a
             className={className ? className : 'link'}
-            style="display: flex; align-items:center; gap: 10px"
             href={to}
             onClick={handleClick}
         >

@@ -118,7 +118,7 @@
 }
 
 .button--outline {
-    color: var(--color__light--secondary);
+    color: var(--color__light--primary);
     border: 2px solid;
     border-color: var(--color__light--primary);
     padding: 0 20px;

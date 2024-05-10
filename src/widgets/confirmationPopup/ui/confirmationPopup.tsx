@@ -1,4 +1,5 @@
 import { Modal, Button } from '../../../shared/ui/index';
+import { clsx } from '../../../clsx/index';
 
 export interface IConfirmationPopup {
     active: boolean;
@@ -37,7 +38,14 @@ const ConfirmationPopup = ({
                         onClick={callback}
                     />
                 </div>
-                <span className="form__error">{popupError}</span>
+                <span
+                    className={clsx(
+                        !popupError && 'any--none',
+                        'dialog__error',
+                    )}
+                >
+                    {popupError}
+                </span>
             </div>
         </Modal>
     );

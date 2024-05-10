@@ -18,7 +18,7 @@
 }
 
 .profile__content-block {
-    background-color: rgba(255,255,255,0.23);
+    background-color: #727476;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -117,9 +117,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(255,255,255,0.23);
+    background-color: #727476;
     width: 80%;
-    gap: 10px;
+    gap: 20px;
     height: auto;
     border-radius: 20px;
     padding: 20px 30px;
@@ -189,21 +189,6 @@
 /* set button(top and bottom of the scrollbar) */
 ::-webkit-scrollbar-button {display:none}
 
-/* .profile__dialog */
-
-.profile__dialog {
-    margin: auto;
-    border: none;
-    background: none;
-    transition: all 0.2s ease-in-out;
-    /* height: auto; */
-}
-
-.profile__dialog::backdrop {
-    background: rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
-}
-
 .navbar__text {
     display: none;
 }
@@ -228,7 +213,7 @@
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
-        gap: 10px;
+        gap: 20px;
         padding: 10px 40px;
     }
     .profile__navbar-content {
@@ -257,11 +242,8 @@
     .profile__text--title {
         font-size: large;
     }
-}
-
-@media only screen and (max-width: 500px) {
     .profile__navbar-wrapper {
-        padding: 10px 20px;
+        padding: 20px;
     }
 }
 

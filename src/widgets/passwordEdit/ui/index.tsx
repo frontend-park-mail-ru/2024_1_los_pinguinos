@@ -2,6 +2,7 @@ import { Modal, Button, Input } from '../../../shared/ui/index';
 import { useState, useEffect } from '../../../reactor/index';
 import { updateFormError, validateInput } from '../../../shared/lib/index';
 import { updatePassword } from '../../../entities/session/api/index';
+import { clsx } from '../../../clsx/index';
 
 const PasswordEdit = () => {
     const [active, setActive] = useState(false);
@@ -117,7 +118,14 @@ const PasswordEdit = () => {
                             onClick={handleSave}
                         />
                     </div>
-                    <span className="form__error">{dialogError}</span>
+                    <span
+                        className={clsx(
+                            'dialog__error',
+                            !dialogError && 'any--none',
+                        )}
+                    >
+                        {dialogError}
+                    </span>
                 </div>
             </Modal>
         </div>
