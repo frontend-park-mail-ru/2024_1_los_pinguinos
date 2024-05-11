@@ -14,7 +14,6 @@ export const Route = ({ path, component }: IRoute) => {
 };
 
 export const Router = ({ children: routes }: any) => {
-    console.log('RERENDER');
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
     const authStatus = store.getState().authStatus;
     const defaultSecurePath = '/profile';

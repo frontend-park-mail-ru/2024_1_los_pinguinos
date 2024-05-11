@@ -77,6 +77,13 @@ body {
   transition: background-image 0.2s ease-in-out;
 }
 
+.page-wrap {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .flex {
   display: flex;
 }

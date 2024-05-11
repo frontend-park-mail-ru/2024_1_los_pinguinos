@@ -1,4 +1,4 @@
-import { Router, Route, redirectTo } from './Router';
+import { Router, Route, redirectTo, navigateTo } from './Router';
 import {
     Landing,
     Login,
@@ -19,17 +19,15 @@ export const store = createStore(userReducer);
 const App = () => {
     const [active, setActive] = useState(false);
     const [reloadCallback, setCallback] = useState(() => {});
-    let channel: BroadcastChannel | null = null;
-    const showRefreshUI = (
-        registration: ServiceWorkerRegistration,
-        channel: BroadcastChannel,
-    ) => {
+    const showRefreshUI = (registration: ServiceWorkerRegistration) => {
         setCallback(() => {
             return () => {
                 if (!registration.waiting) {
                     return;
                 }
-                channel.postMessage({ type: 'SKIP_WAITING' });
+                registration.waiting.postMessage({
+                    type: 'SKIP_WAITING',
+                });
             };
         });
         setActive(true);
@@ -63,7 +61,6 @@ const App = () => {
     };
 
     if (typeof navigator.serviceWorker !== 'undefined') {
-        channel = new BroadcastChannel('sw-messages');
         window.addEventListener('load', function () {
             let refreshing: boolean;
             navigator.serviceWorker.addEventListener(
@@ -77,33 +74,42 @@ const App = () => {
 
             navigator.serviceWorker
                 .register('/sw.js')
-                .then(function (registration) {
+                .then((registration) => {
                     if (!navigator.serviceWorker.controller) {
                         return;
                     }
                     registration.update();
 
                     onNewServiceWorker(registration, () => {
-                        showRefreshUI(registration, channel);
+                        showRefreshUI(registration);
                     });
+                })
+                .catch((error) => {
+                    error;
+                    return;
                 });
         });
-        channel.addEventListener('message', (event) => {
+        navigator.serviceWorker.addEventListener('message', (event) => {
             if (event.data.offline && !navigator.onLine) {
                 redirectTo('/offline');
             }
         });
-        window.addEventListener('error', (event) => {
-            channel.postMessage({
+    }
+    window.addEventListener('error', (event) => {
+        if (
+            'serviceWorker' in navigator &&
+            navigator.serviceWorker.controller
+        ) {
+            navigator.serviceWorker.controller.postMessage({
                 type: 'ERROR_OCCURRED',
                 message: event.message,
                 filename: event.filename,
                 lineno: event.lineno,
             });
-        });
-    }
+        }
+    });
     return (
-        <div>
+        <div className="page-wrap">
             <Router>
                 <Route path="/" component={Landing} />
                 <Route path="/main" component={MainPage} isSecure={true} />
@@ -115,15 +121,15 @@ const App = () => {
                 <Route path="/offline" component={PageOffline} />
                 <Route path="*" component={PageNotFound} />
             </Router>
-            <ConfirmationPopup
-                active={active}
-                setActive={setActive}
-                popupTitle="Вышло обновление"
-                popupDescription="Пожалуйста, обновите страницу"
-                callback={reloadCallback}
-                acceptLabel="Обновить"
-                forced
-            />
+            {ConfirmationPopup({
+                active: active,
+                setActive: setActive,
+                popupTitle: 'Вышло обновление',
+                popupDescription: 'Пожалуйста, обновите страницу',
+                callback: reloadCallback,
+                acceptLabel: 'Обновить',
+                forced: true,
+            })}
         </div>
     );
 };

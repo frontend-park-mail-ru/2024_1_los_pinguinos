@@ -1,6 +1,5 @@
-const CACHE = 'jimder-cache-v1';
+const CACHE = 'jimder-cache-v5';
 const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
-const channel = new BroadcastChannel('sw-messages');
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
@@ -47,16 +46,27 @@ self.addEventListener('fetch', async (event) => {
                         return response;
                     })
                     .catch((error) => {
-                        channel.postMessage({ offline: true, error: error });
+                        self.clients.matchAll().then((clients) => {
+                            clients.forEach((client) => {
+                                client.postMessage({
+                                    offline: true,
+                                    error: error,
+                                });
+                            });
+                        });
                     });
             });
         }),
     );
 });
 
-channel.addEventListener('message', (event) => {
+self.addEventListener('message', (event) => {
     if (event.data.type === 'ERROR_OCCURRED') {
-        channel.postMessage({ cacheRevaluation: true });
+        self.clients.matchAll().then((clients) => {
+            clients.forEach((client) => {
+                client.postMessage({ cacheRevalidation: true });
+            });
+        });
         caches.open(CACHE).then((cache) => {
             cache.delete(event.data.filename);
         });

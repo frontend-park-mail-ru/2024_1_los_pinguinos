@@ -15,6 +15,7 @@
     align-items:center; 
     gap: 10px; 
     cursor: pointer;
+    width: -webkit-fill-available;
 }
 
 .nav__item.is-active {
@@ -64,6 +65,9 @@
     }
     .nav__text--side {
         display: none;
+    }
+    .nav__item {
+        width: fit-content;
     }
 }
 

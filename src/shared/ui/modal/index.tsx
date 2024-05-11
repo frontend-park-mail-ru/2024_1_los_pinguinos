@@ -1,12 +1,12 @@
-const Modal = ({ active, setActive, children }) => {
+const Modal = ({ active, setActive, forced, children }: any) => {
     return (
         <div
             className={active ? 'modal active' : 'modal'}
-            onClick={() => setActive(false)}
+            onClick={forced ? () => {} : () => setActive(false)}
         >
             <div
                 className={active ? 'modal__content active' : 'modal__content'}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: any) => e.stopPropagation()}
             >
                 {children}
             </div>

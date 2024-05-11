@@ -25,7 +25,7 @@ const ConfirmationPopup = ({
     forced,
 }: IConfirmationPopup) => {
     return (
-        <Modal active={active} setActive={setActive}>
+        <Modal active={active} setActive={setActive} forced={forced}>
             <div className="dialog">
                 <span className="dialog__title">{popupTitle}</span>
                 <span className="dialog__info">{popupDescription}</span>
