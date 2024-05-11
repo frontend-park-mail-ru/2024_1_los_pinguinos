@@ -1,4 +1,4 @@
-const CACHE = 'jimder-cache-v5';
+const CACHE = 'jimder-cache-v0';
 const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
 
 self.addEventListener('install', function (event) {
