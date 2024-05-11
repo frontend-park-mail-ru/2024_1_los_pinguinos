@@ -6,7 +6,11 @@ export interface IConfirmationPopup {
     setActive: (event: any) => void;
     callback: (event: any) => void;
     popupTitle: string;
-    popupError: string;
+    popupError?: string;
+    popupDescription?: string;
+    cancelLabel?: string;
+    acceptLabel?: string;
+    forced?: boolean;
 }
 
 const ConfirmationPopup = ({
@@ -15,26 +19,33 @@ const ConfirmationPopup = ({
     callback,
     popupTitle,
     popupError,
+    popupDescription,
+    cancelLabel = 'Отмена',
+    acceptLabel = 'Продолжить',
+    forced,
 }: IConfirmationPopup) => {
     return (
         <Modal active={active} setActive={setActive}>
             <div className="dialog">
                 <span className="dialog__title">{popupTitle}</span>
+                <span className="dialog__info">{popupDescription}</span>
                 <div className="dialog__button-wrap">
+                    <div className={forced ? 'any--none' : ''}>
+                        <Button
+                            label={cancelLabel}
+                            size="m"
+                            fontSize="m"
+                            severity="success"
+                            onClick={() => {
+                                setActive(false);
+                            }}
+                        />
+                    </div>
                     <Button
-                        label="Отмена"
-                        size="m"
+                        label={acceptLabel}
+                        size={forced ? 'max-width' : 'm'}
                         fontSize="m"
-                        severity="success"
-                        onClick={() => {
-                            setActive(false);
-                        }}
-                    />
-                    <Button
-                        label="Продолжить"
-                        size="m"
-                        fontSize="m"
-                        severity="danger"
+                        severity={forced ? 'success' : 'danger'}
                         onClick={callback}
                     />
                 </div>

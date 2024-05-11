@@ -8,7 +8,6 @@ self.addEventListener('install', function (event) {
             return cache.addAll(PRECACHE_URLS);
         }),
     );
-    event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', function (event) {
@@ -23,7 +22,6 @@ self.addEventListener('activate', function (event) {
             );
         }),
     );
-    event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', async (event) => {
@@ -35,7 +33,9 @@ self.addEventListener('fetch', async (event) => {
         caches.open(CACHE).then(async (cache) => {
             return cache.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
-                    return cachedResponse;
+                    if (!event.request.url.includes('/isAuth')) {
+                        return cachedResponse;
+                    }
                 }
 
                 return fetch(event.request)
@@ -46,8 +46,8 @@ self.addEventListener('fetch', async (event) => {
 
                         return response;
                     })
-                    .catch(() => {
-                        channel.postMessage({ offline: true });
+                    .catch((error) => {
+                        channel.postMessage({ offline: true, error: error });
                     });
             });
         }),
@@ -60,5 +60,8 @@ channel.addEventListener('message', (event) => {
         caches.open(CACHE).then((cache) => {
             cache.delete(event.data.filename);
         });
+    }
+    if (event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
     }
 });

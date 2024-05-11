@@ -18,12 +18,16 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
     const [gotInterests, setGotInterests] = useState([]);
     const interests = gotInterests;
     async function getAppInterests() {
-        let appInterests = (await getInterests()) as any;
-        appInterests = Array.from(appInterests, (interest: any) => {
-            return interest.name;
-        });
-        setGotInterests(appInterests);
-        return appInterests;
+        try {
+            let appInterests = (await getInterests()) as any;
+            appInterests = Array.from(appInterests, (interest: any) => {
+                return interest.name;
+            });
+            setGotInterests(appInterests);
+            return appInterests;
+        } catch {
+            return [];
+        }
     }
     useEffect(() => {
         if (gotInterests.length === 0) getAppInterests();

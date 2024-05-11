@@ -80,7 +80,7 @@ module.exports = {
         compress: true, // Enable gzip compression
         hot: true, // Enable webpack's Hot Module Replacement feature
     },
-    mode: 'development',
+    mode: 'production',
     optimization: {
         usedExports: true,
         minimize: true,
