@@ -2,9 +2,8 @@ import { useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/Router';
 
-export const NavItem = ({ chat, activeChat, setActiveChat }) => {
-
-    const [error, setError] = useState(false);
+export const NavItem = ({ chat, activeChat, setActiveChat }: any) => {
+    // const [error, setError] = useState(false);
 
     return (
         <div>
@@ -16,13 +15,20 @@ export const NavItem = ({ chat, activeChat, setActiveChat }) => {
                 }`}
                 onClick={() => {
                     setActiveChat(chat.personID);
-                    store.dispatch({ type: 'UPDATE_CURRENT_CHAT', payload: chat.personID});
+                    store.dispatch({
+                        type: 'UPDATE_CURRENT_CHAT',
+                        payload: chat.personID,
+                    });
                     navigateTo('/chats');
                 }}
             >
                 <img
-                    onError={() => setError(true)}
-                    src={chat.photo &&  chat.photo != ''  ? chat.photo :  'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'}
+                    // onError={() => setError(true)}
+                    src={
+                        chat.photo && chat.photo != ''
+                            ? chat.photo
+                            : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                    }
                     className="navbar__item__icon"
                     alt="Profile Picture"
                 />

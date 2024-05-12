@@ -75,7 +75,12 @@ const MailEdit = () => {
                 onClick={() => setActive(true)}
             />
             <Modal active={active} setActive={setActive}>
-                <div className="dialog">
+                <form
+                    className="dialog"
+                    onSubmit={(event: any) => {
+                        event.preventDefault();
+                    }}
+                >
                     <span className="dialog__title">Изменить почту</span>
                     <span className="dialog__info">
                         Введите новую почту и пароль
@@ -94,6 +99,8 @@ const MailEdit = () => {
                         onChange: (event) => {
                             setMail(event.target.value);
                         },
+                        maxlength: 320,
+                        autocomplete: 'email',
                     })}
                     {Input({
                         label: 'Текущий пароль',
@@ -133,7 +140,7 @@ const MailEdit = () => {
                     >
                         {dialogError}
                     </span>
-                </div>
+                </form>
             </Modal>
         </div>
     );

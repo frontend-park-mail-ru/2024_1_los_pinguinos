@@ -166,6 +166,7 @@ const ChatList = () => {
                             fontSize: '25px',
                             fontWeight: '800',
                             color: 'white',
+                            display: chats.length === 0 ? 'block' : 'none',
                         }}
                     >
                         Нет чатов

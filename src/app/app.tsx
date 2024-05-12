@@ -9,6 +9,7 @@ import {
     MatchPage,
     Profile,
     PageOffline,
+    RedirectHack,
 } from '../pages/index';
 import { ConfirmationPopup } from '../widgets/index';
 import { createStore } from './store';
@@ -119,17 +120,18 @@ const App = () => {
                 <Route path="/matches" component={MatchPage} isSecure={true} />
                 <Route path="/profile" component={Profile} isSecure={true} />
                 <Route path="/offline" component={PageOffline} />
+                <Route path="/rhack" component={RedirectHack} isSecure={true} />
                 <Route path="*" component={PageNotFound} />
             </Router>
-            {ConfirmationPopup({
-                active: active,
-                setActive: setActive,
-                popupTitle: 'Вышло обновление',
-                popupDescription: 'Пожалуйста, обновите страницу',
-                callback: reloadCallback,
-                acceptLabel: 'Обновить',
-                forced: true,
-            })}
+            <ConfirmationPopup
+                active={active}
+                setActive={setActive}
+                popupTitle="Вышло обновление"
+                popupDescription="Пожалуйста, обновите страницу"
+                callback={reloadCallback}
+                acceptLabel="Обновить"
+                forced={true}
+            />
         </div>
     );
 };

@@ -22,16 +22,18 @@ const MatchesList = () => {
             clearTimeout(id);
         };
     }, [searchName]);
-
+    function remapMatches(event: any) {
+        setSearchName(event.target.value);
+    }
     return (
         <div className="matches">
             <h1 className="matches__header">Ваши мэтчи</h1>
             <div>
-                <Input
-                    type="text"
-                    onInput={(event) => setSearchName(event.target.value)}
-                    placeholder="Поиск"
-                />
+                {Input({
+                    type: 'text',
+                    onInput: remapMatches,
+                    placeholder: 'Поиск',
+                })}
             </div>
             <div
                 id="matches__content"

@@ -70,11 +70,21 @@ const PasswordEdit = () => {
                 onClick={() => setActive(true)}
             />
             <Modal active={active} setActive={setActive}>
-                <div className="dialog">
+                <form
+                    className="dialog"
+                    onSubmit={(event: any) => {
+                        event.preventDefault();
+                    }}
+                >
                     <span className="dialog__title">Изменить пароль</span>
                     <span className="dialog__info">
                         Введите старый и новый пароли
                     </span>
+                    {Input({
+                        type: 'email',
+                        autocomplete: 'email',
+                        hidden: true,
+                    })}
                     {Input({
                         label: 'Новый пароль',
                         type: 'password',
@@ -87,6 +97,8 @@ const PasswordEdit = () => {
                         },
                         error: passwordError,
                         setError: setPasswordError,
+                        maxlength: 32,
+                        minlength: 8,
                     })}
                     {Input({
                         label: 'Текущий пароль',
@@ -99,6 +111,8 @@ const PasswordEdit = () => {
                         },
                         error: oldPasswordError,
                         setError: setOldPasswordError,
+                        maxlength: 32,
+                        minlength: 8,
                     })}
                     <div className="dialog__button-wrap">
                         <Button
@@ -126,7 +140,7 @@ const PasswordEdit = () => {
                     >
                         {dialogError}
                     </span>
-                </div>
+                </form>
             </Modal>
         </div>
     );

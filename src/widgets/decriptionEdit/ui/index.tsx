@@ -42,7 +42,12 @@ const DescriptionEdit = () => {
             </div>
             <p className="profile__text">{description}</p>
             <Modal active={active} setActive={setActive}>
-                <div className="dialog">
+                <form
+                    className="dialog"
+                    onSubmit={(event: any) => {
+                        event.preventDefault();
+                    }}
+                >
                     <span className="dialog__title">Изменить описание</span>
                     <TextArea
                         label="Ваше био"
@@ -81,7 +86,7 @@ const DescriptionEdit = () => {
                     >
                         {dialogError}
                     </span>
-                </div>
+                </form>
             </Modal>
         </div>
     );

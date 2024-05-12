@@ -7,7 +7,8 @@
 }
 
 .layout__content {
-    width: 100%;
+    width: -webkit-fill-available;
+    max-width: 69%;
     height: 100%;
     background: rgba(255, 255, 255, 0.23);
     border-radius: 20px;
@@ -21,6 +22,9 @@
     .layout {
         position: fixed;
         padding: 5px;
+    }
+    .layout__content {
+        max-width: 100%;
     }
     
 }

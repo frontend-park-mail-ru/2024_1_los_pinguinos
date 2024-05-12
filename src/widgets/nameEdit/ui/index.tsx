@@ -1,9 +1,9 @@
-import { Modal, Button, Input } from '../../../shared/ui';
-import { useState, useEffect } from '../../../reactor';
-import { updateFormError, validateInput } from '../../../shared/lib';
-import { updateName } from '../../../entities/session/api';
+import { Modal, Button, Input } from '../../../shared/ui/index';
+import { useState, useEffect } from '../../../reactor/index';
+import { updateFormError, validateInput } from '../../../shared/lib/index';
+import { updateName } from '../../../entities/session/api/index';
 import { store } from '../../../app/app';
-import { clsx } from '../../../clsx';
+import { clsx } from '../../../clsx/index';
 
 const NameEdit = () => {
     const userName = store.getState().name;
@@ -59,7 +59,12 @@ const NameEdit = () => {
                 onClick={() => setActive(true)}
             />
             <Modal active={active} setActive={setActive}>
-                <div className="dialog">
+                <form
+                    className="dialog"
+                    onSubmit={(event: any) => {
+                        event.preventDefault();
+                    }}
+                >
                     <span className="dialog__title">Изменить имя</span>
                     <span className="dialog__info">Введите новое имя</span>
                     {Input({
@@ -78,6 +83,8 @@ const NameEdit = () => {
                         error: nameError,
                         setError: setNameError,
                         validate: true,
+                        maxlength: 32,
+                        minlength: 2,
                     })}
                     <div className="dialog__button-wrap">
                         <Button
@@ -105,7 +112,7 @@ const NameEdit = () => {
                     >
                         {dialogError}
                     </span>
-                </div>
+                </form>
             </Modal>
         </div>
     );

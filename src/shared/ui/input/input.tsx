@@ -1,7 +1,7 @@
 import { TSize, getClassBySize } from '../types';
 import { clsx } from '../../../clsx/index';
 import { useState, useEffect } from '../../../reactor/index';
-import { validateInput } from '../../lib/index';
+import { genId, validateInput } from '../../lib/index';
 
 export type TInput = {
     autofocus?: boolean;
@@ -23,6 +23,11 @@ export type TInput = {
     empty?: boolean;
     error?: string;
     setError?: (event: any) => void;
+    id?: string | number;
+    readonly?: boolean;
+    onFocus?: (event: any) => void;
+    hidden?: boolean;
+    search?: boolean;
 };
 
 export type TInputType =
@@ -55,6 +60,11 @@ export const Input = ({
     empty,
     error,
     setError,
+    id = genId(),
+    readonly,
+    onFocus,
+    hidden,
+    search,
 }: TInput) => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
@@ -77,7 +87,13 @@ export const Input = ({
         }
     }, [currentValue, isDirty]);
     return (
-        <div className={clsx('input-container', disabled && 'any--disabled')}>
+        <div
+            className={clsx(
+                'input-container',
+                disabled && 'any--disabled',
+                hidden && 'any--none',
+            )}
+        >
             {type === 'password' && (
                 <span
                     className={clsx(
@@ -94,7 +110,7 @@ export const Input = ({
                     getClassBySize('input__label', size),
                     !label && 'any--none',
                 )}
-                htmlFor={name}
+                htmlFor={name || id}
             >
                 {label}
             </label>
@@ -118,10 +134,14 @@ export const Input = ({
                 max={max}
                 className={clsx(
                     'input',
+                    search && 'input--search',
                     getClassBySize('input', size),
                     type === 'password' && 'input--password',
                     error && 'input--invalid',
                 )}
+                id={id}
+                readonly={readonly}
+                onFocus={onFocus}
             />
             <span className={clsx('input__error', !error && 'any--none')}>
                 {error}

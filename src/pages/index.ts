@@ -8,3 +8,4 @@ export { default as MatchPage } from './matches/matches';
 export { PageNotFound } from './notFound/notFound';
 export { PageOffline } from './offline/offline';
 export { default as Layout } from './layout/layout';
+export { RedirectHack } from './redirectHack/redirectHack';

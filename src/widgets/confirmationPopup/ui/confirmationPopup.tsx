@@ -26,7 +26,12 @@ const ConfirmationPopup = ({
 }: IConfirmationPopup) => {
     return (
         <Modal active={active} setActive={setActive} forced={forced}>
-            <div className="dialog">
+            <form
+                className="dialog"
+                onSubmit={(event: any) => {
+                    event.preventDefault();
+                }}
+            >
                 <span className="dialog__title">{popupTitle}</span>
                 <span className="dialog__info">{popupDescription}</span>
                 <div className="dialog__button-wrap">
@@ -57,7 +62,7 @@ const ConfirmationPopup = ({
                 >
                     {popupError}
                 </span>
-            </div>
+            </form>
         </Modal>
     );
 };

@@ -20,7 +20,7 @@ export type InitialState = {
 
 export type Store = {
     dispatch: (action: Action) => void;
-    subscribe: (callback: Function) => void;
+    subscribe: (callback: Function, props?: string[]) => Function;
     getState: () => InitialState;
 };
 
@@ -49,17 +49,33 @@ export const createStore = (
 ): Store => {
     const stateInLS = localStorage.getItem('state');
     let state = stateInLS ? JSON.parse(stateInLS) : initialState;
-    const subscribers: Function[] = [];
+    let subscribers: { callback: Function; props?: string[] }[] = [];
 
     return {
         dispatch(action: Action) {
+            const prevState = state;
             state = reducer(state, action);
-            subscribers.forEach((subscriber) => subscriber(state));
+            subscribers.forEach(({ callback, props }) => {
+                if (props && props.length > 0)
+                    for (const prop of props) {
+                        if (state[prop] !== prevState[prop]) {
+                            callback(state[prop]);
+                        }
+                    }
+                else {
+                    return callback(state);
+                }
+            });
             // положить в  localStorage
             localStorage.setItem('state', JSON.stringify(state));
         },
-        subscribe(callback: Function) {
-            subscribers.push(callback);
+        subscribe(callback: Function, props?: string[]): Function {
+            const subscriber = { callback, props };
+            subscribers.push(subscriber);
+            const unsubscribe = () => {
+                subscribers = subscribers.filter((sub) => sub !== subscriber);
+            };
+            return unsubscribe;
         },
         getState() {
             return state;

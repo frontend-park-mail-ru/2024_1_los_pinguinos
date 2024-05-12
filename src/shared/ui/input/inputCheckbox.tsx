@@ -1,5 +1,6 @@
 import { TSize, getClassBySize } from '../types';
 import { clsx } from '../../../clsx/index';
+import { genId } from '../../lib/index';
 
 export type TInputCheckbox = {
     key?: number;
@@ -12,6 +13,7 @@ export type TInputCheckbox = {
     size?: TSize;
     round?: boolean;
     checked?: boolean;
+    id?: string | number;
 };
 
 export const InputCheckbox = ({
@@ -24,6 +26,7 @@ export const InputCheckbox = ({
     size,
     round,
     checked,
+    id = genId(),
 }: TInputCheckbox) => {
     return (
         <div
@@ -40,7 +43,7 @@ export const InputCheckbox = ({
                     getClassBySize('input__label', size),
                     !label && 'any--none',
                 )}
-                htmlFor={name}
+                htmlFor={name || id}
             >
                 {label}
             </label>
@@ -53,6 +56,7 @@ export const InputCheckbox = ({
                 value={value}
                 className={clsx(getClassBySize('input', size), 'checkbox')}
                 checked={checked}
+                id={id}
             />
         </div>
     );

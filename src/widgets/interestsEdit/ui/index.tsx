@@ -69,7 +69,12 @@ const InterestsEdit = () => {
                 ))}
             </div>
             <Modal active={active} setActive={setActive}>
-                <div className="dialog">
+                <form
+                    className="dialog"
+                    onSubmit={(event: any) => {
+                        event.preventDefault();
+                    }}
+                >
                     <span className="dialog__title">Изменить интересы</span>
                     <div className="dialog__list-wrap">
                         {InterestsInput({
@@ -107,7 +112,7 @@ const InterestsEdit = () => {
                         {formError}
                         {interestsEmpty}
                     </span>
-                </div>
+                </form>
             </Modal>
         </div>
     );

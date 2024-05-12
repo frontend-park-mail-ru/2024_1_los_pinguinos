@@ -1,5 +1,6 @@
 import { TSize, getClassBySize } from '../types';
 import { clsx } from '../../../clsx/index';
+import { genId } from '../../lib/index';
 
 export type TTextArea = {
     autofocus?: boolean;
@@ -13,6 +14,7 @@ export type TTextArea = {
     maxlength?: number;
     size?: TSize;
     error?: string;
+    id?: string | number;
 };
 
 export const TextArea = ({
@@ -27,6 +29,7 @@ export const TextArea = ({
     maxlength,
     size,
     error,
+    id = genId(),
 }: TTextArea) => {
     return (
         <div className={clsx('input-container', disabled && 'any--disabled')}>
@@ -36,7 +39,7 @@ export const TextArea = ({
                     getClassBySize('input__label', size),
                     !label && 'any--none',
                 )}
-                htmlFor={name}
+                htmlFor={name || id}
             >
                 {label}
             </label>
@@ -54,6 +57,7 @@ export const TextArea = ({
                     getClassBySize('input', size),
                     error && 'input--invalid',
                 )}
+                id={id}
             />
             <span className={clsx('input__error', !error && 'any--none')}>
                 {error}

@@ -1,5 +1,5 @@
-import { PersonDTO } from "../api/types";
-import { Person } from "../model";
+import { PersonDTO } from '../api/types';
+import { Person } from '../model';
 
 export const normalizePerson = (person: PersonDTO): Person => ({
     id: person.id,
@@ -8,8 +8,8 @@ export const normalizePerson = (person: PersonDTO): Person => ({
     birthday: person.birthday,
     description: person.description,
     interests: person.interests,
-    photos: person.photos.map(photo => ({
-        ceil: photo.ceil,
+    photos: person.photos.map((photo) => ({
+        cell: photo.cell,
         url: photo.url,
     })),
-})
+});

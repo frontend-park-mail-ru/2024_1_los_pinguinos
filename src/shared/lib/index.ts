@@ -1,8 +1,3 @@
-export function getAuthorizationToken() {
-    const csrfToken = localStorage.getItem('csrfToken');
-    return csrfToken;
-}
-
 /**
  * Возвращает возраст по дате рождения
  * @param {string} dateString - дата рождения в формате 'YYYY-MM-DD'
@@ -141,6 +136,8 @@ const getBackground = (path: string) => {
             return 'var(--background--matches)';
         case '/chats':
             return 'var(--background--chats)';
+        case '/rhack':
+            return 'var(--background--profile)';
         default:
             return 'var(--background--404)';
     }
@@ -149,4 +146,9 @@ const getBackground = (path: string) => {
 export const updateBackground = (path: string) => {
     const body = document.body;
     body.style.backgroundImage = getBackground(path);
+};
+
+let id = 0;
+export const genId = () => {
+    return id++;
 };

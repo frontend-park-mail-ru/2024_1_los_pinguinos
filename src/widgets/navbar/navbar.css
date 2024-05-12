@@ -1,13 +1,14 @@
 .navbar {
     background: rgba(255, 255, 255, 0.23);
-    border-radius: 13px;
+    border-radius: 20px;
     height: 100%;
-    width: 30%;
+    max-width: 29%;
+    width: -webkit-fill-available;
 }
 
 .navbar__header {
     background: #0b0c0c;
-    border-radius: 13px 13px 0px 0px;
+    border-radius: 20px 20px 0px 0px;
     padding: 20px 22px;
     gap: 15px;
 }
@@ -17,14 +18,17 @@
     align-items: center;
     gap: 15px;
     justify-content: space-between;
+    width: 100%;
 }
 
 .navbar__header__person__name {
     font-size: x-large;
-    word-break: auto-phrase;
+    word-wrap: break-word;
+    text-wrap: balance;
     font-weight: 600;
     text-align: left;
     color: var(--color__light--primary);
+    max-width: 50%;
 }
 
 .navbar__header__person__image {
@@ -35,7 +39,7 @@
 }
 
 .navbar__menu {
-    height: 86%;
+    max-height: 80%;
     padding: 5px 22px;
 }
 

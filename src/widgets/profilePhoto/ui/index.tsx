@@ -24,13 +24,12 @@ const ProfilePhotoWidget = () => {
             cells[index][0][1](async () => {
                 try {
                     const response = await uploadImage(file, `${index}`);
-                    // console.log(response);
                     cells[index][0][1](response);
-                    userPhotos[index].url = response;
-                    // console.log(userPhotos);
+                    const newPhotos = Array.from(userPhotos);
+                    newPhotos[index].url = response;
                     store.dispatch({
                         type: 'UPDATE_SOMETHING',
-                        payload: { photos: userPhotos },
+                        payload: { photos: newPhotos },
                     });
                     return response;
                 } catch {
@@ -53,10 +52,11 @@ const ProfilePhotoWidget = () => {
                 const response = await deleteImage(`${index}`);
                 cells[index][1][1](false);
                 cells[index][0][1](null);
-                userPhotos[index].url = null;
+                const newPhotos = Array.from(userPhotos);
+                newPhotos[index].url = null;
                 store.dispatch({
                     type: 'UPDATE_SOMETHING',
-                    payload: userPhotos,
+                    payload: { photos: newPhotos },
                 });
             } catch {
                 cells[index][1][1](false);

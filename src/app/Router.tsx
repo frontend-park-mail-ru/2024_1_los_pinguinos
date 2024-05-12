@@ -23,6 +23,11 @@ export const Router = ({ children: routes }: any) => {
         const handlePopState = () => {
             setCurrentPath(window.location.pathname);
         };
+        const handleLoad = () => {
+            const currentPathReplica = currentPath;
+            navigateTo('/rhack');
+            setTimeout(() => redirectTo(currentPathReplica), 500);
+        };
         if (!isSecure && authStatus && path !== '*' && path !== '/offline') {
             setCurrentPath(defaultSecurePath);
             history.replaceState(null, '', defaultSecurePath);
@@ -32,8 +37,10 @@ export const Router = ({ children: routes }: any) => {
             history.replaceState(null, '', defaultInsecurePath);
         }
         window.addEventListener('popstate', handlePopState);
+        window.addEventListener('load', handleLoad);
         return () => {
             window.removeEventListener('popstate', handlePopState);
+            window.removeEventListener('load', handleLoad);
         };
     }, []);
 
@@ -47,13 +54,13 @@ export const Router = ({ children: routes }: any) => {
 
     let { component: Component, isSecure, path } = currentRoute.props;
 
-    return Component ? (
-        isSecure ? (
-            Layout({ children: <Component /> })
-        ) : (
-            <Component />
-        )
-    ) : null;
+    const renderData = <Component />;
+
+    return renderData
+        ? isSecure
+            ? Layout({ children: <Component /> })
+            : renderData
+        : null;
 };
 
 export const navigateTo = (url: string) => {
