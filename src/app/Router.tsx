@@ -18,23 +18,10 @@ export const Router = ({ children: routes }: any) => {
     const authStatus = store.getState().authStatus;
     const defaultSecurePath = '/profile';
     const defaultInsecurePath = '/login';
-    console.log('ROUTER RERENDER');
 
     useEffect(() => {
         const handlePopState = () => {
             setCurrentPath(window.location.pathname);
-        };
-        const handleLoad = () => {
-            const currentPathReplica = currentPath;
-            const secure = routes.find((route: IRoute) => {
-                return (
-                    route.props.path === currentPath || route.props.path === '*'
-                );
-            }).isSecure;
-            if (secure && authStatus) {
-                navigateTo('/rhack');
-                setTimeout(() => redirectTo(currentPathReplica), 500);
-            }
         };
         if (!isSecure && authStatus && path !== '*' && path !== '/offline') {
             setCurrentPath(defaultSecurePath);
@@ -45,10 +32,8 @@ export const Router = ({ children: routes }: any) => {
             history.replaceState(null, '', defaultInsecurePath);
         }
         window.addEventListener('popstate', handlePopState);
-        // window.addEventListener('load', handleLoad);
         return () => {
             window.removeEventListener('popstate', handlePopState);
-            // window.removeEventListener('load', handleLoad);
         };
     }, []);
 

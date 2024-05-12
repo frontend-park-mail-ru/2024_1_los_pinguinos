@@ -1,4 +1,4 @@
-const CACHE = 'jimder-cache-v0';
+const CACHE = 'jimder-cache-v2';
 const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
 
 self.addEventListener('install', function (event) {
@@ -39,7 +39,7 @@ self.addEventListener('fetch', async (event) => {
 
                 return fetch(event.request)
                     .then((response) => {
-                        if (event.request.method === 'GET') {
+                        if (event.request.method === 'GET' && response.ok) {
                             cache.put(event.request, response.clone());
                         }
 

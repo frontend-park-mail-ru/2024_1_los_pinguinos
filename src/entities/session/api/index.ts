@@ -45,7 +45,7 @@ export const updateDescription = async (description: string) => {
     return sendRequest(AUTH_URL, '/profile', 'POST', { description });
 };
 
-export const updateInterests = async (interests: string[]) => {
+export const updateInterests = async (interests: (string | Interest)[]) => {
     return sendRequest(AUTH_URL, '/profile', 'POST', { interests });
 };
 

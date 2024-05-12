@@ -2,10 +2,7 @@ import { Modal, Button } from '../../../shared/ui/index';
 import { useState, useEffect } from '../../../reactor';
 import InterestsInput from '../../interestsInput/ui';
 import { store } from '../../../app/app';
-import {
-    getInterests,
-    updateInterests,
-} from '../../../entities/session/api/index';
+import { updateInterests } from '../../../entities/session/api/index';
 import { clsx } from '../../../clsx';
 
 const InterestsEdit = () => {
@@ -18,8 +15,7 @@ const InterestsEdit = () => {
     const [active, setActive] = useState(false);
     const emptyError = 'Выберите хотя-бы один интерес';
     const [currentInterests, setCurrentInterests] = useState(userInterests);
-    const [selectedInterests, setSelectedInterests] =
-        useState(currentInterests);
+    const [selectedInterests, setSelectedInterests] = useState(userInterests);
     const [interestsEmpty, setInterestsEmpty] = useState(
         selectedInterests.length === 0 ? emptyError : '',
     );
