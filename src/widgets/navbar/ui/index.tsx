@@ -3,8 +3,9 @@ import { Link } from '../../../shared/routing/link';
 import { NavItem } from './navitem';
 import { getChats } from '../../../features/chat/api';
 import { store } from '../../../app/app';
+import withWebSocket from '../../../app/socket';
 
-const Navbar = () => {
+const Navbar = ({ socket }) => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
     // const [ws, setWs] = useState<WebSocket | null>(null);
@@ -16,6 +17,122 @@ const Navbar = () => {
             console.log(state);
         });
     }, []);
+
+
+
+    useEffect(() => {
+        getChats()
+            .then((data) => {
+                const chats = data.chats.map((chat) => {
+                    return {
+                        ...chat,
+                        lastMessage: {
+                            ...chat.lastMessage,
+                            time: new Date(chat.lastMessage.time).getTime(),
+                        },
+                        isNewMessage: false,
+                    };
+                });
+                console.log('chats', chats);
+                setChats(chats);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    useEffect(() => {
+        console.log(socket);
+        if (socket) {
+            socket.addEventListener('message', handleMessage);
+        }
+        return () => {
+            if (socket) {
+                socket.removeEventListener('message', handleMessage);
+            }
+        };
+    }, [socket]);
+
+    const handleMessage = (event) => {
+        console.log('Received message in Navbar:', event.data);
+        const newMessage = JSON.parse(event.data);
+        // newMessageInChats(newMessage);
+        setChats((prev) => {
+            const newChats = prev.map((chat) => {
+                if (
+                    (newMessage.sender === user.id &&
+                        newMessage.receiver === chat.personID) ||
+                    (newMessage.sender === chat.personID &&
+                        newMessage.receiver === user.id)
+                ) {
+                    return {
+                        ...chat,
+                        lastMessage: newMessage,
+                        isNewMessage: true,
+                    };
+                }
+                return chat;
+            });
+            console.log('newChats', newChats);
+            return newChats;
+        });
+    };
+
+    // const [currentChat, setCurrentChat] = useState(
+    //     store.getState().currentChat,
+    // );
+
+    // useEffect(() => {
+    //     store.subscribe(() => {
+    //         const state = store.getState();
+    //         console.log(state);
+    //         setCurrentChat(state.currentChat);
+    //     });
+    // }, []);
+
+    // useEffect(() => {
+    //     console.log('currentChat', currentChat);
+    //     const newChats = chats.map((chat) => {
+    //         if (chat.personID === currentChat) {
+    //             return {
+    //                 ...chat,
+    //                 isNewMessage: false,
+    //             };
+    //         }
+    //         return chat;
+    //     });
+    //     if (!currentChat) {
+    //         return;
+    //     }
+    // }, [currentChat]);
+
+    // useEffect(() => {
+    //     store.subscribe(() => {
+    //         const state = store.getState();
+    //         console.log(state);
+    //     });
+    // }, []);
+    // const newMessageInChats = (newMessage) => {
+    //     console.log('newMessageInChats', newMessage);
+
+    //     const newChats = chats.map((chat) => {
+    //         if (
+    //             (newMessage.sender === user.id &&
+    //                 newMessage.receiver === chat.id) ||
+    //             (newMessage.sender === chat.id &&
+    //                 newMessage.receiver === user.id)
+    //         ) {
+    //             return {
+    //                 ...chat,
+    //                 lastMessage: newMessage,
+    //                 isNewMessage: true,
+    //             };
+    //         }
+    //         return chat;
+    //     });
+    //     console.log('newChats', newChats);
+    //     // setChats(newChats);
+    // };
 
     // useEffect(() => {
     //     const socket = new WebSocket(
@@ -46,16 +163,18 @@ const Navbar = () => {
     //     }
     // }, [ws]);
 
-    useEffect(() => {
-        getChats()
-            .then((data) => {
-                console.log(data);
-                setChats(data.chats);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     console.log(socket);
+    //     if (socket) {
+    //         console.log('in Navbar');
+    //         console.log(socket.onmessage);
+    //         socket.onmessage = (e) => {
+    //             console.log('new Mesage in Navbar');
+    //             const newMessage = JSON.parse(e.data);
+    //             console.log('new Message', newMessage);
+    //         };
+    //     }
+    // }, [socket]); // Обновляться при изменении socket
 
     const [activeChat, setActiveChat] = useState(null);
 
@@ -109,40 +228,52 @@ const Navbar = () => {
                         }}
                     />
                 </div>
-                <div 
-                style={{
-                    display: chats.length == 0 ? "none" : "flex",
-                }}
-                className="navbar__menu__items">
-                    {
-                        chats
-                            .filter((chat) => {
-                                return chat.name
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase());
-                            })
-                            .map((chat) => (
-                                <NavItem
-                                    chat={chat}
-                                    activeChat={activeChat}
-                                    setActiveChat={setActiveChat}
-                                />
-                            )
-                        )}
-                        <p
-                            style={{
-                                display: chats.length == 0 ? "block" : "none",
-                                fontSize: '25px',
-                                fontWeight: '800',
-                                color: 'white',
-                            }}
-                        >
-                            Нет чатов
-                        </p>
+                <div
+                    style={{
+                        display: chats.length == 0 ? 'none' : 'flex',
+                    }}
+                    className="navbar__menu__items"
+                >
+                    {chats
+                        .filter((chat) => {
+                            return chat.name
+                                .toLowerCase()
+                                .includes(search.toLowerCase());
+                        })
+                        .sort((a, b) => {
+
+                            if (a.lastMessage.time > b.lastMessage.time) {
+                                return -1;
+                            }
+                            if (a.lastMessage.time < b.lastMessage.time) {
+                                return 1;
+                            }
+                            return 0;
+                        })
+                        .map((chat) => (
+                            <NavItem
+                                chat={chat}
+                                activeChat={activeChat}
+                                setActiveChat={setActiveChat}
+                            />
+                        ))}
+                    <p
+                        style={{
+                            display: chats.length == 0 ? 'block' : 'none',
+                            fontSize: '25px',
+                            fontWeight: '800',
+                            color: 'white',
+                        }}
+                    >
+                        Нет чатов
+                    </p>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Navbar;
+export default withWebSocket(
+    Navbar,
+    'wss://api.jimder.ru/api/v1/openConnection',
+);

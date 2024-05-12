@@ -82,7 +82,7 @@ const ChatList = () => {
     useEffect(() => {
         getChats()
             .then((data) => {
-                console.log(data);
+                console.log(data.chats);
                 setChats(data.chats);
             })
             .catch((error) => {
