@@ -7,7 +7,7 @@ import { Input } from '../../../shared/ui';
 const Navbar = () => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
-    const [currentChats, setCurrentChats] = useState(chats);
+    const [currentChats, setCurrentChats] = useState([]);
     const [activeChat, setActiveChat] = useState(null);
     const user = store.getState();
     const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
@@ -19,6 +19,16 @@ const Navbar = () => {
     const [userName, setUserName] = useState(user.name);
 
     useEffect(() => {
+        const fetchChats = async () => {
+            try {
+                const chatsData: any = await getChats();
+                setCurrentChats(chatsData.chats);
+                setChats(chatsData.chats);
+            } catch {
+                return;
+            }
+        };
+        fetchChats();
         const unsubscribePhoto = store.subscribe(
             (photos: any) => {
                 setUserPhoto(
@@ -35,14 +45,7 @@ const Navbar = () => {
             },
             ['name'],
         );
-        getChats()
-            .then((data: any) => {
-                setChats(data.chats);
-                setCurrentChats(data.chats);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+
         return () => {
             unsubscribePhoto();
             unsubscribeName();
@@ -87,13 +90,13 @@ const Navbar = () => {
                     onFocus: resetReadOnly,
                 })}
                 <div className="navbar__menu__items">
-                    {currentChats.map((chat, index) =>
-                        NavItem({
-                            chat: chat,
-                            activeChat: activeChat,
-                            setActiveChat: setActiveChat,
-                        }),
-                    )}
+                    {currentChats.map((chat, index) => (
+                        <NavItem
+                            chat={chat}
+                            activeChat={activeChat}
+                            setActiveChat={setActiveChat}
+                        />
+                    ))}
                     <p
                         style={{
                             display:

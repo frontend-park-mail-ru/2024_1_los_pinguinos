@@ -18,6 +18,7 @@ export const Router = ({ children: routes }: any) => {
     const authStatus = store.getState().authStatus;
     const defaultSecurePath = '/profile';
     const defaultInsecurePath = '/login';
+    console.log('ROUTER RERENDER');
 
     useEffect(() => {
         const handlePopState = () => {
@@ -25,8 +26,15 @@ export const Router = ({ children: routes }: any) => {
         };
         const handleLoad = () => {
             const currentPathReplica = currentPath;
-            navigateTo('/rhack');
-            setTimeout(() => redirectTo(currentPathReplica), 500);
+            const secure = routes.find((route: IRoute) => {
+                return (
+                    route.props.path === currentPath || route.props.path === '*'
+                );
+            }).isSecure;
+            if (secure && authStatus) {
+                navigateTo('/rhack');
+                setTimeout(() => redirectTo(currentPathReplica), 500);
+            }
         };
         if (!isSecure && authStatus && path !== '*' && path !== '/offline') {
             setCurrentPath(defaultSecurePath);
@@ -37,10 +45,10 @@ export const Router = ({ children: routes }: any) => {
             history.replaceState(null, '', defaultInsecurePath);
         }
         window.addEventListener('popstate', handlePopState);
-        window.addEventListener('load', handleLoad);
+        // window.addEventListener('load', handleLoad);
         return () => {
             window.removeEventListener('popstate', handlePopState);
-            window.removeEventListener('load', handleLoad);
+            // window.removeEventListener('load', handleLoad);
         };
     }, []);
 
@@ -56,11 +64,15 @@ export const Router = ({ children: routes }: any) => {
 
     const renderData = <Component />;
 
-    return renderData
-        ? isSecure
-            ? Layout({ children: <Component /> })
-            : renderData
-        : null;
+    return renderData ? (
+        isSecure ? (
+            <Layout>
+                <Component />
+            </Layout>
+        ) : (
+            renderData
+        )
+    ) : null;
 };
 
 export const navigateTo = (url: string) => {
