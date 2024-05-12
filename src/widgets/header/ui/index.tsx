@@ -3,6 +3,7 @@ import { ButtonLink } from '../../../shared/ui/index';
 
 const Header = () => {
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
+    
     useEffect(() => {
         const trackPath = () => {
             setCurrentPath(window.location.pathname);
@@ -12,6 +13,7 @@ const Header = () => {
             window.removeEventListener('popstate', trackPath);
         };
     }, []);
+    
     return (
         <div className="header">
             <div className="header__menu">
