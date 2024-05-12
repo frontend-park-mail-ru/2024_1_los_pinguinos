@@ -1,5 +1,17 @@
-const CACHE = 'jimder-cache-v2';
+const CACHE = 'jimder-cache-v1';
 const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
+
+const NETWORK_ONLY = ['isAuth', 'cards', 'getAllChats'];
+
+const checkNetOnly = (path) => {
+    for (const p of NETWORK_ONLY) {
+        if (path.toLowerCase().includes(p.toLowerCase())) {
+            return true;
+        }
+    }
+
+    return false;
+};
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
@@ -32,7 +44,7 @@ self.addEventListener('fetch', async (event) => {
         caches.open(CACHE).then(async (cache) => {
             return cache.match(event.request).then((cachedResponse) => {
                 if (cachedResponse) {
-                    if (!event.request.url.includes('/isAuth')) {
+                    if (!checkNetOnly(event.request.url)) {
                         return cachedResponse;
                     }
                 }
@@ -46,6 +58,7 @@ self.addEventListener('fetch', async (event) => {
                         return response;
                     })
                     .catch((error) => {
+                        if (cachedResponse) return cachedResponse;
                         self.clients.matchAll().then((clients) => {
                             clients.forEach((client) => {
                                 client.postMessage({

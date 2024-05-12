@@ -1,5 +1,5 @@
 import { clsx } from '../../../clsx/index';
-import { TSize, getClassBySize } from '../types';
+import { TSize, getClassBySize, getClassByColor, TColor } from '../types';
 
 export type TButton = {
     severity?: TSeverity;
@@ -10,11 +10,13 @@ export type TButton = {
     fontSize?: TSize;
     onClick?: (event: any) => void;
     disabled?: boolean;
-    navbar?: boolean;
+    round?: boolean;
+    fontColor?: TColor;
 };
 export type TButtonType = 'button' | 'submit' | 'reset';
 export type TSeverity =
     | 'danger'
+    | 'warning'
     | 'success'
     | 'info'
     | 'link'
@@ -34,12 +36,15 @@ export const Button = ({
     size,
     fontSize,
     disabled,
-    navbar,
+    round,
+    fontColor,
 }: TButton) => {
     const getClassBySeverity = (sev: TSeverity) => {
         switch (sev) {
             case 'danger':
                 return 'button--danger';
+            case 'warning':
+                return 'button--warning';
             case 'success':
                 return 'button--success';
             case 'info':
@@ -67,16 +72,16 @@ export const Button = ({
             className={clsx(
                 'button',
                 getClassBySeverity(severity),
-                navbar && 'navbar__button',
                 getClassBySize('button', size),
+                round && 'button--round',
                 disabled && 'any--disabled',
             )}
         >
             <span
                 className={clsx(
                     'button__label',
-                    navbar && 'navbar__icon',
                     getClassBySize('button__label', fontSize),
+                    getClassByColor('button__label', fontColor),
                     icon,
                     !icon && 'any--none',
                 )}
@@ -84,8 +89,9 @@ export const Button = ({
             <span
                 className={clsx(
                     'button__label',
-                    navbar && 'navbar__label',
                     getClassBySize('button__label', fontSize),
+                    !label && 'any--none',
+                    getClassByColor('button__label', fontColor),
                 )}
             >
                 {label}

@@ -7,8 +7,11 @@ type Complaint = {
 const ComplaintPopup = ({ callback, active, setActive }: Complaint) => {
     return (
         <Modal active={active} setActive={setActive}>
-            <div className="dialog">test</div>
-            <button onClick={setActive(false)}>close</button>
+            <div className="dialog">
+                <span className="dialog__title">Пожаловаться</span>
+                <span className="dialog__info">Выберите причину жалобы</span>
+            </div>
+            <button onClick={() => setActive(false)}>close</button>
         </Modal>
     );
 };

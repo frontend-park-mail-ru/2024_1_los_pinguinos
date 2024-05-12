@@ -9,6 +9,12 @@ export type TSize =
     | 'xxl'
     | 'max-width';
 
+export type TColor =
+    | 'light-primary'
+    | 'dark-primary'
+    | 'light-secondary'
+    | 'dark-secondary';
+
 export const getClassBySize = (basicClass: string, size: TSize) => {
     switch (size) {
         case 'xxs':
@@ -29,5 +35,18 @@ export const getClassBySize = (basicClass: string, size: TSize) => {
             return `${basicClass}--xxl`;
         case 'max-width':
             return `${basicClass}--max-width`;
+    }
+};
+
+export const getClassByColor = (basicClass: string, color: TColor) => {
+    switch (color) {
+        case 'light-primary':
+            return `${basicClass}--light-primary`;
+        case 'dark-primary':
+            return `${basicClass}--dark-primary`;
+        case 'light-secondary':
+            return `${basicClass}--light-secondary`;
+        case 'dark-secondary':
+            return `${basicClass}--dark-secondary`;
     }
 };
