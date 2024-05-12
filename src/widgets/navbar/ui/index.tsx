@@ -3,14 +3,17 @@ import { NavItem } from './navitem';
 import { getChats } from '../../../features/chat/api';
 import { store } from '../../../app/app';
 import { Input } from '../../../shared/ui';
+import withWebSocket from '../../../app/socket';
 
-const Navbar = () => {
+const Navbar = ({ socket }) => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
     const [currentChats, setCurrentChats] = useState([]);
     const [activeChat, setActiveChat] = useState(null);
+
     const user = store.getState();
     const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
+
     const [userPhoto, setUserPhoto] = useState(
         user.photos && user.photos[0] && user.photos[0].url
             ? user.photos[0].url
@@ -22,13 +25,27 @@ const Navbar = () => {
         const fetchChats = async () => {
             try {
                 const chatsData: any = await getChats();
-                setCurrentChats(chatsData.chats);
-                setChats(chatsData.chats);
+
+                const chats = chatsData.chats.map((chat) => {
+                    return {
+                        ...chat,
+                        lastMessage: {
+                            ...chat.lastMessage,
+                            time: new Date(chat.lastMessage.time).getTime(),
+                        },
+                        isNewMessage: false,
+                    };
+                });
+
+                setCurrentChats(chats);
+                setChats(chats);
             } catch {
                 return;
             }
         };
+
         fetchChats();
+
         const unsubscribePhoto = store.subscribe(
             (photos: any) => {
                 setUserPhoto(
@@ -39,6 +56,7 @@ const Navbar = () => {
             },
             ['photos'],
         );
+
         const unsubscribeName = store.subscribe(
             (name: string) => {
                 setUserName(name);
@@ -53,12 +71,62 @@ const Navbar = () => {
     }, []);
 
     useEffect(() => {
+        console.log(socket);
+        if (socket) {
+            socket.addEventListener('message', handleMessage);
+        }
+        return () => {
+            if (socket) {
+                socket.removeEventListener('message', handleMessage);
+            }
+        };
+    }, [socket]);
+
+    useEffect(() => {
         setCurrentChats(
-            chats.filter((chat: any) => {
-                return chat.name.includes(search) || search === '';
-            }),
+            chats
+            .filter((chat: any) => {
+                return chat.name
+                .toLowerCase()
+                .includes(search.toLowerCase()) || search === '';
+            })
+            .sort((a, b) => {
+
+                if (a.lastMessage.time > b.lastMessage.time) {
+                    return -1;
+                }
+                if (a.lastMessage.time < b.lastMessage.time) {
+                    return 1;
+                }
+                return 0;
+            })
         );
     }, [search]);
+
+    const handleMessage = (event) => {
+        console.log('Received message in Navbar:', event.data);
+        const newMessage = JSON.parse(event.data);
+        // newMessageInChats(newMessage);
+        setChats((prev) => {
+            const newChats = prev.map((chat) => {
+                if (
+                    (newMessage.sender === user.id &&
+                        newMessage.receiver === chat.personID) ||
+                    (newMessage.sender === chat.personID &&
+                        newMessage.receiver === user.id)
+                ) {
+                    return {
+                        ...chat,
+                        lastMessage: newMessage,
+                        isNewMessage: true,
+                    };
+                }
+                return chat;
+            });
+            console.log('newChats', newChats);
+            return newChats;
+        });
+    };
 
     function remapChats(event: any) {
         console.log('REMAP CHATS');

@@ -7,7 +7,7 @@ import { store } from '../../../app/app';
 const ChatList = () => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
-    const [ws, setWs] = useState<WebSocket | null>(null);
+    // const [ws, setWs] = useState<WebSocket | null>(null);
     const user = store.getState();
 
     const [width, setWidth] = useState(window.innerWidth);
@@ -50,10 +50,10 @@ const ChatList = () => {
         });
     }, []);
 
-    useEffect(() => {
-        const socket = new WebSocket(
-            `wss://api.jimder.ru/api/v1/openConnection?uid=${user.id}`,
-        );
+    // useEffect(() => {
+    //     const socket = new WebSocket(
+    //         `wss://api.jimder.ru/api/v1/openConnection?uid=${user.id}`,
+    //     );
 
         socket.onopen = () => {
             // console.log('Connected');
@@ -64,10 +64,10 @@ const ChatList = () => {
             // console.log('Disconnected');
         };
 
-        return () => {
-            socket.close();
-        };
-    }, []);
+    //     return () => {
+    //         socket.close();
+    //     };
+    // }, []);
 
     // useEffect(() => {
     //     if (ws) {
@@ -82,7 +82,7 @@ const ChatList = () => {
     useEffect(() => {
         getChats()
             .then((data) => {
-                console.log(data);
+                console.log(data.chats);
                 setChats(data.chats);
             })
             .catch((error) => {
@@ -147,7 +147,11 @@ const ChatList = () => {
                         }}
                     />
                 </div>
-                <div className="chatlist__menu__items">
+                <div 
+                style={{
+                    display: chats.length == 0 ? "none" : "flex",
+                }}
+                className="chatlist__menu__items">
                     {chats
                         .filter((chat) => {
                             return chat.name
@@ -163,6 +167,7 @@ const ChatList = () => {
                         ))}
                     <p
                         style={{
+                            display: chats.length == 0 ? "block" : "none",
                             fontSize: '25px',
                             fontWeight: '800',
                             color: 'white',

@@ -1,19 +1,13 @@
-import { useState, useEffect } from '../../../reactor';
+import { useEffect, useState } from '../../../reactor';
+import withWebSocket from '../../../app/socket';
 import { getMessages } from '../../../features/chat/api';
 import { store } from '../../../app/app';
 import { Button } from '../../../shared/ui';
 
-const ChatMessages = () => {
+const ChatMessages = ({ socket }) => {
     const [messages, setMessages] = useState([]);
-
     const [message, setMessage] = useState('');
-
-    const handleChange = (e) => {
-        setMessage(e.target.value);
-    };
-
     const [userID, setUserID] = useState(store.getState().id);
-
     const [currentChat, setCurrentChat] = useState(
         store.getState().currentChat,
     );
@@ -21,7 +15,7 @@ const ChatMessages = () => {
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            // console.log(state);
+            console.log(state);
             setCurrentChat(state.currentChat);
         });
     }, []);
@@ -33,7 +27,7 @@ const ChatMessages = () => {
         }
         getMessages(currentChat)
             .then((data) => {
-                // console.log(data);
+                console.log(data);
                 setMessages(data);
                 setTimeout(() => {
                     const chat = document.querySelector('.chatMessages__list');
@@ -47,34 +41,13 @@ const ChatMessages = () => {
             });
     }, [currentChat]);
 
-    const [ws, setWs] = useState<WebSocket | null>(null);
-
     useEffect(() => {
-        const socket = new WebSocket(
-            `wss://api.jimder.ru/api/v1/openConnection?uid=${userID}`,
-        );
-
-        socket.onopen = () => {
-            // console.log('Connected');
-            setWs(socket);
-        };
-
-        socket.onclose = () => {
-            // console.log('Disconnected');
-        };
-
-        return () => {
-            socket.close();
-        };
-    }, []);
-
-    useEffect(() => {
-        if (ws) {
-            ws.onmessage = (e) => {
-                // console.log(e.data);
+        if (socket) {
+            console.log('in Socket');
+            console.log(socket.onmessage);
+            socket.onmessage = (e) => {
+                console.log('new Mesage in ChatMessages');
                 const newMessage = JSON.parse(e.data);
-                // console.log(newMessage);
-                // console.log(userID, currentChat);
                 if (
                     (newMessage.sender === userID &&
                         newMessage.receiver === store.getState().currentChat) ||
@@ -92,11 +65,15 @@ const ChatMessages = () => {
                 }, 100);
             };
         }
-    }, [ws]);
+    }, [socket]);
+
+    const handleChange = (e) => {
+        setMessage(e.target.value);
+    };
 
     const handleSubmit = () => {
-        if (ws) {
-            ws.send(
+        if (socket) {
+            socket.send(
                 JSON.stringify({
                     data: message,
                     sender: store.getState().id,
@@ -111,9 +88,7 @@ const ChatMessages = () => {
             //     time: new Date().getTime(),
             // });
             setMessage('');
-            const input = document.querySelector(
-                '.chatMessages__input__field',
-            ) as HTMLInputElement;
+            const input = document.querySelector('.chatMessages__input__field');
             if (input) {
                 input.value = '';
             }
@@ -128,7 +103,6 @@ const ChatMessages = () => {
             <div className="chatMessages__header">
                 <button
                     onClick={() => {
-                        // console.log('click');
                         store.dispatch({
                             type: 'UPDATE_CURRENT_CHAT',
                             payload: null,
@@ -140,41 +114,30 @@ const ChatMessages = () => {
                 </button>
             </div>
             <div className="chatMessages__list">
-                {messages ? (
-                    messages.map((message) => (
-                        <div
-                            className={`chatMessages__list__item ${
-                                message.sender === userID
-                                    ? 'chatMessages__list__item--me'
-                                    : 'chatMessages__list__item--other'
-                            }`}
-                            // key={message.id}
-                        >
-                            <div
-                                className={
-                                    message.sender === userID
-                                        ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
-                                        : 'chatMessages__list__item__message'
-                                }
-                            >
-                                <p className="chatMessages__list__item__text">
-                                    {message.data}
-                                </p>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p
-                        style={{
-                            fontSize: 'large',
-                            fontWeight: '800',
-                            color: 'white',
-                        }}
+                {messages.map((message) => (
+                    <div
+                        className={`chatMessages__list__item ${
+                            message.sender === userID
+                                ? 'chatMessages__list__item--me'
+                                : 'chatMessages__list__item--other'
+                        }`}
+                        key={message.id}
                     >
-                        Напишите первым!
-                    </p>
-                )}
+                        <div
+                            className={
+                                message.sender === userID
+                                    ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
+                                    : 'chatMessages__list__item__message'
+                            }
+                        >
+                            <p className="chatMessages__list__item__message__text">
+                                {message.data}
+                            </p>
+                        </div>
+                    </div>
+                ))}
             </div>
+
             <div className="chatMessages__controllers">
                 <div className="chatMessages__controllers__input">
                     <input
@@ -182,6 +145,7 @@ const ChatMessages = () => {
                         placeholder="Введите сообщение"
                         className="chatMessages__input__field"
                         onInput={handleChange}
+                        onSubmit={handleSubmit}
                     />
                 </div>
                 <button
@@ -212,4 +176,7 @@ const ChatMessages = () => {
     );
 };
 
-export default ChatMessages;
+export default withWebSocket(
+    ChatMessages,
+    'wss://api.jimder.ru/api/v1/openConnection',
+);
