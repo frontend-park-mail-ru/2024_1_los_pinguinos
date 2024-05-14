@@ -5,11 +5,12 @@ import Header from '../../widgets/header/index';
 const Layout = ({ children }: any) => {
     return (
         <div className="layout">
-        <Navbar/>
+            {/* <Navbar /> */}
+            {Navbar()}
             <div className="layout__content">
                 <Header />
                 <div className="layout__content__body">{children}</div>
-                <Footer />    
+                <Footer />
             </div>
         </div>
     );

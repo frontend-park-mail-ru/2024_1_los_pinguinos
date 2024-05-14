@@ -10,80 +10,87 @@ type StartPoint = {
 } | null;
 
 const Card = ({ person }: { person: Person }) => {
-    // console.log(person);
     const [isFlipped, setIsFlipped] = useState(false);
+    const [startPoint, setStartPoint] = useState<StartPoint>(null);
+    const [movePoint, setMovePoint] = useState<StartPoint>(null);
 
-    // const [startPoint, setStartPoint] = useState<StartPoint>(null);
-    // const [offsetX, setOffsetX] = useState(0);
-    // const [offsetY, setOffsetY] = useState(0);
+    function onPointerDown({ clientX, clientY }: any) {
+        setStartPoint({ x: clientX, y: clientY });
 
-    // const isTouchDevice = () => {
-    //     return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    // };
+        const card = document.getElementById(`card-${person.id}`);
+        card?.addEventListener('pointermove', onPointerMove);
+        card?.addEventListener('pointerup', onPointerUp);
+        card?.addEventListener('pointerleave', onPointerUp);
+    }
 
-    // const handleStart = (e) => {
-    //     const { clientX, clientY } = isTouchDevice() ? e.changedTouches[0] : e;
-    //     setStartPoint({ x: clientX, y: clientY });
-    //     console.log('start', clientX, clientY);
-    //     document.addEventListener(
-    //         isTouchDevice() ? 'touchmove' : 'mousemove',
-    //         handleMove,
-    //     );
-    // };
+    function onPointerMove({ clientX, clientY }: any) {
+        if (!startPoint) {
+            return;
+        }
 
-    // const handleMove = (e) => {
-    //     const { clientX, clientY } = isTouchDevice() ? e.changedTouches[0] : e;
-    //     if (startPoint) {
-    //         setOffsetX(clientX - startPoint.x);
-    //         setOffsetY(clientY - startPoint.y);
-    //     }
+        setMovePoint({ x: clientX - startPoint.x, y: clientY - startPoint.y });
+        setTransform(movePoint?.x, movePoint?.y, movePoint?.x / innerWidth * 50);
+    }
 
-    //     const rotate = offsetX * 0.1;
-    //     e.target.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg)`;
+    function setTransform(x: number, y: number, rotate: number, duration: number = 0) {
+        const card = document.getElementById(`card-${person.id}`);
+        card.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg)`;
 
-    //     if (Math.abs(offsetX) > e.target.offsetWidth * 0.4) {
-    //         dismiss(offsetX > 0 ? 1 : -1);
-    //     }
-    // };
+        if(duration > 0) {
+            card.style.transition = `transform ${duration}ms ease-in-out`;
+        }
+    }
 
-    // const dismiss = (direction: number) => {
-    //     setStartPoint(null);
-    //     document.removeEventListener(
-    //         isTouchDevice() ? 'touchmove' : 'mousemove',
-    //         handleMove,
-    //     );
-    //     const card = document.getElementById(`card-${person.id}`);
-    //     if (card) {
-    //         card.style.transition = 'transform 1s';
-    //         card.style.transform = `translate(${
-    //             direction * window.innerWidth
-    //         }px, ${offsetY}px) rotate(${direction * 30}deg)`;
-    //         card.classList.add('dissmissing');
-    //         setTimeout(() => {
-    //             card.remove();
-    //         }, 1000);
-    //     }
+    function onPointerUp() {
+        if (!startPoint) {
+            return;
+        }
 
-    //     if (direction > 0) {
-    //         like(person.id);
-    //     } else {
-    //         dislike(person.id);
-    //     }
-    // };
+        const swiper = document.getElementById(`swiper`);
+        const currentCard = document.getElementById(`card-${person.id}`);
+        currentCard?.removeEventListener('pointermove', onPointerMove);
+        currentCard?.removeEventListener('pointerup', onPointerUp);
+        currentCard?.removeEventListener('pointerleave', onPointerUp);
+
+        if ( Math.abs(movePoint!.x) > swiper?.clientWidth / 2) {
+            currentCard?.removeEventListener('pointerdown', onPointerDown);
+            like(person.id);
+            complete();
+        } else{
+            dislike(person.id);
+            cancel();
+        }
+    }
+
+    function complete() {
+        const flyX = (Math.abs(movePoint!.x) / movePoint!.x) * innerWidth * 1.3;
+        const flyY = (movePoint!.y / movePoint!.x) * flyX;
+        setTransform(flyX, flyY, flyX / innerWidth * 50, innerWidth);
+
+        setTimeout(() => {
+            const card = document.getElementById(`card-${person.id}`);
+            card?.remove();
+        }, innerWidth);
+
+    }
+
+    function cancel() {
+        setTransform(0, 0, 0, 100);
+        const card = document.getElementById(`card-${person.id}`);
+        setTimeout(() => {
+            card.style.transition = ``;
+        }, 100);
+    }
 
     return (
         <div
             onClick={() => {
                 setIsFlipped(!isFlipped);
-                // console.log(isFlipped);
-                // console.log(person.id);
             }}
-            // style={{ zIndex: person.id }}
+            onPointerDown={onPointerDown}
             key={person.id}
             id={`card-${person.id}`}
             className="card"
-            // onMouseDown={handleStart}
-            // onTouchStart={handleStart}
         >
             <div
                 className={`card__front ${isFlipped ? 'card__front-flip' : ''}`}

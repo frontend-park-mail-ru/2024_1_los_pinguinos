@@ -32,12 +32,13 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
         useEffect(() => {
             const handleMessage  = (event: MessageEvent) => {
                 const message: Message = JSON.parse(event.data);
+                console.log(props);
                 
                 if (props.handleMessage ) {
                     props.onMessage(message);
                 }
             };
-
+            console.log(props);
             if (socket) {
                 socket.addEventListener('message', handleMessage );
             }
@@ -48,9 +49,17 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
                 }
             };
 
-        }, [socket, props.onMessage]);
+        }, [socket]);
 
-        return WrappedComponent({ ...props, socket, sendMessage });
+        console.log(typeof WrappedComponent);
+
+        if (typeof WrappedComponent === 'function') {
+            // Передаем пропсы напрямую
+            return WrappedComponent({ ...props, socket, sendMessage });
+        } else {
+            // Возвращаем JSX с компонентом
+            return <WrappedComponent {...props} socket={socket} sendMessage={sendMessage}  />;
+        }
     };
 };
 
