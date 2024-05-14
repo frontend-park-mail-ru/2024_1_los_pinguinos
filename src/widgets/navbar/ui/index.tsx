@@ -8,8 +8,15 @@ import withWebSocket from '../../../app/socket';
 const Navbar = ({ socket }) => {
     const [search, setSearch] = useState('');
     const [chats, setChats] = useState([]);
-    // const [ws, setWs] = useState<WebSocket | null>(null);
+    const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const user = store.getState();
+    const [userPhoto, setUserPhoto] = useState(
+        user.photos && user.photos[0] && user.photos[0].url
+            ? user.photos[0].url
+            : defaultPhoto,
+    );
+    // const [ws, setWs] = useState<WebSocket | null>(null);
+    const [userName, setUserName] = useState(user.name);
 
     useEffect(() => {
         store.subscribe(() => {
@@ -71,6 +78,30 @@ const Navbar = ({ socket }) => {
     }, []);
 
     useEffect(() => {
+        const unsubscribePhoto = store.subscribe(
+            (photos: any) => {
+                setUserPhoto(
+                    photos && photos[0] && photos[0].url
+                        ? photos[0].url
+                        : defaultPhoto,
+                );
+            },
+            ['photos'],
+        );
+        const unsubscribeName = store.subscribe(
+            (name: string) => {
+                setUserName(name);
+            },
+            ['name'],
+        );
+
+        return () => {
+            unsubscribePhoto();
+            unsubscribeName();
+        };
+    }, []);
+
+    useEffect(() => {
         console.log(socket);
         if (socket) {
             socket.addEventListener('message', handleMessage);
@@ -112,24 +143,14 @@ const Navbar = ({ socket }) => {
     return (
         <div className="navbar">
             <div className="navbar__header">
-                <Link to="/chats">
-                    <div className="navbar__header__person">
-                        <p className="navbar__header__person__name">
-                            {user.name}
-                        </p>
-                        <img
-                            src={
-                                user.photos &&
-                                user.photos[0] &&
-                                user.photos[0].url != ''
-                                    ? user.photos[0].url
-                                    : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
-                            }
-                            alt="Profile Picture"
-                            className="navbar__header__person__image"
-                        />
-                    </div>
-                </Link>
+                <div className="navbar__header__person">
+                    <p className="navbar__header__person__name">{userName}</p>
+                    <img
+                        src={userPhoto}
+                        alt="Profile Picture"
+                        className="navbar__header__person__image"
+                    />
+                </div>
             </div>
             <div className="navbar__menu">
                 {/* <div className="navbar__menu__search">
@@ -165,15 +186,13 @@ const Navbar = ({ socket }) => {
                     }}
                     className="navbar__menu__items"
                 >
-                    {
-                    chats
+                    {chats
                         .filter((chat) => {
                             return chat.name
                                 .toLowerCase()
                                 .includes(search.toLowerCase());
                         })
                         .sort((a, b) => {
-
                             if (a.lastMessage.time > b.lastMessage.time) {
                                 return -1;
                             }
