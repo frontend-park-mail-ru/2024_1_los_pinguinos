@@ -29,6 +29,9 @@ const CardControllers = () => {
 
         return +currentCard;
     };
+    useEffect(() => {
+        setTimeout(() => getCurrent(), 1500);
+    }, []);
 
     const handleLike = async () => {
         const currentCard = getCurrent();
@@ -54,12 +57,17 @@ const CardControllers = () => {
         }, innerWidth);
     };
 
-    const handleComplaint = async () => {
+    const [popupError, setPopupError] = useState('');
+    const handleComplaint = async (complaintId = 1) => {
+        setPopupError('');
         const currentCard = getCurrent();
         if (!currentCard) return;
         try {
-            await complain({ reciever: currentCard });
+            await complain({ id: complaintId, reciever: currentCard });
+            setActive(false);
         } catch {
+            setPopupError('Что-то пошло не так');
+
             return;
         }
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
@@ -113,7 +121,8 @@ const CardControllers = () => {
                 icon="icon-ban"
                 fontSize="xl"
                 onClick={() => {
-                    setActive(true);
+                    const condition = getCurrent();
+                    if (condition) setActive(true);
                 }}
                 round
                 disabled={disabled}
@@ -132,8 +141,16 @@ const CardControllers = () => {
             <ComplaintPopup
                 active={active}
                 setActive={setActive}
-                callback={() => {}}
-            ></ComplaintPopup>
+                callback={(complaintId) => {
+                    if (!complaintId) {
+                        setPopupError('Что-то пошло не так');
+
+                        return;
+                    }
+                    handleComplaint(complaintId);
+                }}
+                popupError={popupError}
+            />
         </div>
     );
 };
