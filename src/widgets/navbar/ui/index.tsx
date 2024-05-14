@@ -132,7 +132,7 @@ const Navbar = ({ socket }) => {
                 </Link>
             </div>
             <div className="navbar__menu">
-                <div className="navbar__menu__search">
+                {/* <div className="navbar__menu__search">
                     <svg
                         version="1.1"
                         width="18px"
@@ -158,7 +158,7 @@ const Navbar = ({ socket }) => {
                             setSearch(e.target.value);
                         }}
                     />
-                </div>
+                </div> */}
                 <div
                     style={{
                         display: chats.length == 0 ? 'none' : 'flex',
