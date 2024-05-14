@@ -1,4 +1,4 @@
-import { complain, getComplaintTypes } from '../../../features/complain/api';
+import { complain } from '../../../features/complain/api';
 import { like, dislike } from '../../../features/like/api';
 import { Button } from '../../../shared/ui';
 import { store } from '../../../app/app';
@@ -24,7 +24,7 @@ const CardControllers = () => {
         return +currentCard;
     };
     useEffect(() => {
-        getCurrent();
+        setTimeout(() => getCurrent(), 1500);
     }, []);
 
     const handleLike = async () => {
@@ -77,17 +77,6 @@ const CardControllers = () => {
         currentcard.remove();
     };
 
-    const [complaintTypes, setComplaintTypes] = useState([]);
-    const getTypes = async () => {
-        try {
-            const response = await getComplaintTypes();
-            setComplaintTypes(response);
-        } catch {
-            setComplaintTypes([]);
-        }
-    };
-    if (!complaintTypes.length) getTypes();
-
     return (
         <div className="card-controllers">
             <Button
@@ -135,7 +124,6 @@ const CardControllers = () => {
                     handleComplaint(complaintId);
                 }}
                 popupError={popupError}
-                complaintTypes={complaintTypes}
             />
         </div>
     );
