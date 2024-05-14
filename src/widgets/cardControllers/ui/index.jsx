@@ -10,9 +10,7 @@ const CardControllers = () => {
     // const currentCard = store.getState().currentCard;
     const [active, setActive] = useState(false);
     const [disabled, setDisabled] = useState(false);
-    useEffect(() => {
-        console.log('ACTIVE SET');
-    }, [disabled]);
+
     const getCurrent = () => {
         const cards = document.querySelectorAll('.card');
         if (cards.length === 0) {
@@ -41,12 +39,17 @@ const CardControllers = () => {
         currentcard.remove();
     };
 
-    const handleComplaint = async () => {
+    const [popupError, setPopupError] = useState('');
+    const handleComplaint = async (complaintId = 1) => {
+        setPopupError('');
         const currentCard = getCurrent();
         if (!currentCard) return;
         try {
-            await complain({ reciever: currentCard });
+            await complain({ id: complaintId, reciever: currentCard });
+            setActive(false);
         } catch {
+            setPopupError('Что-то пошло не так');
+
             return;
         }
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
@@ -105,11 +108,19 @@ const CardControllers = () => {
                 fontColor="light-primary"
                 disabled={disabled}
             />
-            <ComplaintPopup
-                active={active}
-                setActive={setActive}
-                callback={() => {}}
-            ></ComplaintPopup>
+            {ComplaintPopup({
+                active: active,
+                setActive: setActive,
+                callback: (complaintId) => {
+                    if (!complaintId) {
+                        setPopupError('Что-то пошло не так');
+
+                        return;
+                    }
+                    handleComplaint(complaintId);
+                },
+                popupError: popupError,
+            })}
         </div>
     );
 };
