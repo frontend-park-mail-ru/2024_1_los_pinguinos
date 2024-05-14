@@ -1,4 +1,4 @@
-import { complain } from '../../../features/complain/api';
+import { complain, getComplaintTypes } from '../../../features/complain/api';
 import { like, dislike } from '../../../features/like/api';
 import { Button } from '../../../shared/ui';
 import { store } from '../../../app/app';
@@ -23,6 +23,9 @@ const CardControllers = () => {
 
         return +currentCard;
     };
+    useEffect(() => {
+        getCurrent();
+    }, []);
 
     const handleLike = async () => {
         const currentCard = getCurrent();
@@ -74,6 +77,17 @@ const CardControllers = () => {
         currentcard.remove();
     };
 
+    const [complaintTypes, setComplaintTypes] = useState([]);
+    const getTypes = async () => {
+        try {
+            const response = await getComplaintTypes();
+            setComplaintTypes(response);
+        } catch {
+            setComplaintTypes([]);
+        }
+    };
+    if (!complaintTypes.length) getTypes();
+
     return (
         <div className="card-controllers">
             <Button
@@ -92,7 +106,8 @@ const CardControllers = () => {
                 icon="icon-ban"
                 fontSize="xl"
                 onClick={() => {
-                    setActive(true);
+                    const condition = getCurrent();
+                    if (condition) setActive(true);
                 }}
                 round
                 disabled={disabled}
@@ -108,19 +123,20 @@ const CardControllers = () => {
                 fontColor="light-primary"
                 disabled={disabled}
             />
-            {ComplaintPopup({
-                active: active,
-                setActive: setActive,
-                callback: (complaintId) => {
+            <ComplaintPopup
+                active={active}
+                setActive={setActive}
+                callback={(complaintId) => {
                     if (!complaintId) {
                         setPopupError('Что-то пошло не так');
 
                         return;
                     }
                     handleComplaint(complaintId);
-                },
-                popupError: popupError,
-            })}
+                }}
+                popupError={popupError}
+                complaintTypes={complaintTypes}
+            />
         </div>
     );
 };

@@ -1,30 +1,21 @@
 import { Modal, Button, InputCheckbox } from '../../../shared/ui';
 import { clsx } from '../../../clsx';
 import { useEffect, useState } from '../../../reactor';
-import { getComplaintTypes } from '../../../features/complain/api';
 type Complaint = {
     callback: (event: any) => void;
     active: boolean;
     setActive: (event: any) => void;
     popupError?: string;
+    complaintTypes: any;
 };
 const ComplaintPopup = ({
     callback,
     active,
     setActive,
     popupError,
+    complaintTypes,
 }: Complaint) => {
     const [currentComplaint, setCurrentComplaint] = useState(null);
-    const [complaintTypes, setComplaintTypes] = useState<any>([]);
-    const getTypes = async () => {
-        try {
-            const response: any = await getComplaintTypes();
-            setComplaintTypes(response);
-        } catch {
-            setComplaintTypes([]);
-        }
-    };
-    if (!complaintTypes.length) getTypes();
     return (
         <Modal active={active} setActive={setActive}>
             <form
