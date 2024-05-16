@@ -50,8 +50,9 @@ const CardsList = () => {
         // console.log('Карточка текущая', user.currentCard);
 
         const cards1 = document.querySelectorAll('.card');
+        // console.log('Карточики видимые:', cards1.length);
         // console.log(remainCards);
-        if (cards1.length == 0) {
+        if (cards1.length == 1) {
             // console.log('Карточики пусты');
             // console.log('Не пиздеж', cards1.length);
             // console.log(remainCards[0]);

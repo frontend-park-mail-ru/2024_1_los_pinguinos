@@ -17,6 +17,7 @@ const CardControllers = () => {
     useEffect(() => {
         console.log('ACTIVE SET');
     }, [disabled]);
+
     const getCurrent = () => {
         const cards = document.querySelectorAll('.card');
         if (cards.length === 0) {
@@ -29,6 +30,7 @@ const CardControllers = () => {
 
         return +currentCard;
     };
+
     useEffect(() => {
         setTimeout(() => getCurrent(), 1500);
     }, []);
@@ -45,8 +47,7 @@ const CardControllers = () => {
 
         setMovePoint({ x: 1, y: 0 });
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
-        const cards = document.querySelectorAll('.card');
-        const currentcard = cards[cards.length - 1];
+        const currentcard = document.getElementById(`card-${currentCard}`);
 
         const flyX = (Math.abs(-1) / 1) * innerWidth * 1.3;
         const flyY = 0;
@@ -54,7 +55,7 @@ const CardControllers = () => {
         currentcard.style.transition = `transform ${innerWidth}ms ease-in-out`;
         setTimeout(() => {
             currentcard.remove();
-        }, innerWidth);
+        }, 500);
     };
 
     const [popupError, setPopupError] = useState('');
@@ -90,9 +91,8 @@ const CardControllers = () => {
         setMovePoint({ x: -1, y: 0 });
 
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
-        const cards = document.querySelectorAll('.card');
-        const currentcard = cards[cards.length - 1];
-        console.log(currentcard);
+        const currentcard = document.getElementById(`card-${currentCard}`);
+        // console.log(currentcard);
 
         const flyX = (Math.abs(-1) / -1) * innerWidth * 1.3;
         const flyY = 0;
@@ -100,7 +100,8 @@ const CardControllers = () => {
         currentcard.style.transition = 'transform ${innerWidth}ms ease-in-out';
         setTimeout(() => {
             currentcard.remove();
-        }, innerWidth);
+        }, 500);
+        // currentcard.remove();
     };
 
     return (

@@ -3,6 +3,7 @@ import { Person } from '../../model/index';
 import { getAge } from '../../../../shared/lib';
 import { useState } from '../../../../reactor';
 import { like, dislike } from '../../../../features/like/api';
+import { store } from '../../../../app/app';
 
 type StartPoint = {
     x: number;
@@ -13,7 +14,7 @@ const Card = ({ person }: { person: Person }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [startPoint, setStartPoint] = useState<StartPoint>(null);
     const [movePoint, setMovePoint] = useState<StartPoint>(null);
-
+    // console.log('person', person);
     function onPointerDown({ clientX, clientY }: any) {
         setStartPoint({ x: clientX, y: clientY });
 
@@ -53,6 +54,10 @@ const Card = ({ person }: { person: Person }) => {
         currentCard?.removeEventListener('pointerleave', onPointerUp);
 
         if ( Math.abs(movePoint!.x) > swiper?.clientWidth / 2) {
+            store.dispatch({
+                type: 'UPDATE_CURRENT_CARD',
+                payload: person.id,
+            });
             currentCard?.removeEventListener('pointerdown', onPointerDown);
             like(person.id);
             complete();
@@ -79,7 +84,7 @@ const Card = ({ person }: { person: Person }) => {
         const card = document.getElementById(`card-${person.id}`);
         setTimeout(() => {
             card.style.transition = ``;
-        }, 100);
+        }, 500);
     }
 
     return (
