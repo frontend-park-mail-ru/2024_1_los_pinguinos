@@ -10,9 +10,13 @@ const CardControllers = () => {
     // const currentCard = store.getState().currentCard;
     const [active, setActive] = useState(false);
     const [disabled, setDisabled] = useState(false);
+    const [counter, setCounter] = useState(0);
 
-    const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
-    const [movePoint, setMovePoint] = useState({ x: 0, y: 0 });
+    useEffect(() => {
+        const state = store.getState();
+        setCounter(state.currentCard);
+    }, [store.getState().currentCard]);
+
 
     useEffect(() => {
         console.log('ACTIVE SET');
@@ -33,7 +37,7 @@ const CardControllers = () => {
 
     useEffect(() => {
         setTimeout(() => getCurrent(), 1500);
-    }, []);
+    }, [counter]);
 
     const handleLike = async () => {
         const currentCard = getCurrent();
@@ -45,7 +49,6 @@ const CardControllers = () => {
             return;
         }
 
-        setMovePoint({ x: 1, y: 0 });
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const currentcard = document.getElementById(`card-${currentCard}`);
 
@@ -88,7 +91,6 @@ const CardControllers = () => {
             return;
         }
 
-        setMovePoint({ x: -1, y: 0 });
 
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const currentcard = document.getElementById(`card-${currentCard}`);

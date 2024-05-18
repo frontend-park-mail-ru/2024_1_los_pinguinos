@@ -4,6 +4,7 @@ import { getAge } from '../../../../shared/lib';
 import { useState } from '../../../../reactor';
 import { like, dislike } from '../../../../features/like/api';
 import { store } from '../../../../app/app';
+import { Carousel } from '../../../../shared/ui';
 
 type StartPoint = {
     x: number;
@@ -101,7 +102,8 @@ const Card = ({ person }: { person: Person }) => {
                 className={`card__front ${isFlipped ? 'card__front-flip' : ''}`}
             >
                 <div className="card__image">
-                    <img
+                    <Carousel person={person} />
+                    {/* <img
                         src={
                             person.photos &&
                             person.photos[0] &&
@@ -111,7 +113,7 @@ const Card = ({ person }: { person: Person }) => {
                         }
                         alt={person.name}
                         className="card__img-content"
-                    />
+                    /> */}
                 </div>
                 <div className="card__content">
                     <p className="card__name">

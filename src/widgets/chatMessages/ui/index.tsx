@@ -52,7 +52,7 @@ const ChatMessages = ({ socket }) => {
                     (newMessage.sender === userID &&
                         newMessage.receiver === store.getState().currentChat) ||
                     (newMessage.sender === store.getState().currentChat &&
-                        newMessage.receiver === userID)
+                        newMessage.receiver === userID) && newMessage.data != ''
                 ) {
                     setMessages((prev) => [newMessage, ...prev]);
                 }
@@ -72,7 +72,7 @@ const ChatMessages = ({ socket }) => {
     };
 
     const handleSubmit = () => {
-        if (socket) {
+        if (socket && message != '') {
             socket.send(
                 JSON.stringify({
                     data: message,

@@ -21,6 +21,7 @@
 @import url("/src/widgets/footer/ui/index.css");
 @import url("/src/pages/layout/index.css");
 @import url("/src/widgets/chatList/ui/index.css");
+@import url('src/shared/ui/carousel/index.css');
 
 :root {
   --background--landing: url(./src/assets/background/background-landing.webp);
@@ -81,7 +82,7 @@ body {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .flex {
@@ -94,6 +95,8 @@ body {
   flex-direction: column;
   height: 100dvh;
   width: 100dvw;
+  overflow: scroll;
+  scrollbar-width: none;
 }
 
 ion-icon {
