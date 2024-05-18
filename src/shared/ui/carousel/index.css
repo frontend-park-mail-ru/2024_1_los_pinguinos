@@ -47,6 +47,8 @@
     width: 100%;
     background-size: cover;
     height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
     &::before {
         content: "";
         position: absolute;

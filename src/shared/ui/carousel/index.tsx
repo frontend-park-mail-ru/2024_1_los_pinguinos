@@ -2,10 +2,16 @@ import { useState } from '../../../reactor';
 import { Person } from '../../../entities/person/model/index';
 
 const Carousel = ({ person }: { person: Person }) => {
+    const defaultImage = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const [current, setCurrent] = useState(0);
-    const images = person.photos.map((photo) => photo.url).filter((url) => url !== '');
+    const images = person.photos
+        .map((photo) => photo.url)
+        .filter((url) => url !== '').length > 0
+        ? person.photos.map((photo) => photo.url).filter((url) => url !== '')
+        : [defaultImage];
     const currentCard = document.getElementById(`card-${person.id}`);
     const imageSlides = currentCard?.getElementsByClassName('slide-image');
+
     console.log('images', images);
     console.log('imageSlides', imageSlides);
 
@@ -55,20 +61,21 @@ const Carousel = ({ person }: { person: Person }) => {
             <div className="gallery-track">
                 {images.map((image, index) => {
                     return (
-                        <div
+                        <img
                             className="slide-image"
+                            src={image}
                             style={
                                 index === 0
                                     ? {
-                                          backgroundImage: `url(${image})`,
+                                        //   backgroundImage: `url(${image})`,
                                           transform: 'translateX(0%)',
                                       }
                                     : {
-                                          backgroundImage: `url(${image})`,
+                                        //   backgroundImage: `url(${image})`,
                                           transform: 'translateX(100%)',
                                       }
                             }
-                        ></div>
+                        />
                     );
                 })}
             </div>
