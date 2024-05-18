@@ -4,13 +4,11 @@ import { Person } from '../../../entities/person/model/index';
 const Carousel = ({ person }: { person: Person }) => {
     const defaultImage = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const [current, setCurrent] = useState(0);
-    const images =
-        person.photos.map((photo) => photo.url).filter((url) => url !== '')
-            .length > 0
-            ? person.photos
-                  .map((photo) => photo.url)
-                  .filter((url) => url !== '')
-            : [defaultImage];
+    const images = person.photos
+        .map((photo) => photo.url)
+        .filter((url) => url !== '').length > 0
+        ? person.photos.map((photo) => photo.url).filter((url) => url !== '')
+        : [defaultImage];
     const currentCard = document.getElementById(`card-${person.id}`);
     const imageSlides = currentCard?.getElementsByClassName('slide-image');
 
@@ -63,23 +61,21 @@ const Carousel = ({ person }: { person: Person }) => {
             <div className="gallery-track">
                 {images.map((image, index) => {
                     return (
-                        <div className="slide-image" key={index}>
-                            <img
-                                className="slide__image-content"
-                                src={image}
-                                style={
-                                    index === 0
-                                        ? {
-                                              //   backgroundImage: `url(${image})`,
-                                              transform: 'translateX(0%)',
-                                          }
-                                        : {
-                                              //   backgroundImage: `url(${image})`,
-                                              transform: 'translateX(100%)',
-                                          }
-                                }
-                            />
-                        </div>
+                        <img
+                            className="slide-image"
+                            src={image}
+                            style={
+                                index === 0
+                                    ? {
+                                        //   backgroundImage: `url(${image})`,
+                                          transform: 'translateX(0%)',
+                                      }
+                                    : {
+                                        //   backgroundImage: `url(${image})`,
+                                          transform: 'translateX(100%)',
+                                      }
+                            }
+                        ></img>
                     );
                 })}
             </div>
