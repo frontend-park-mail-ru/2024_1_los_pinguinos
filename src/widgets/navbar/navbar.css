@@ -11,7 +11,7 @@
     border-radius: 20px 20px 0px 0px;
     padding: 20px 22px;
     height: 13%;
-    gap: 15px;
+    min-height: 105px;
 }
 
 .navbar__header__person {
@@ -19,7 +19,7 @@
     align-items: center;
     gap: 15px;
     justify-content: space-between;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .navbar__header__person__name {
