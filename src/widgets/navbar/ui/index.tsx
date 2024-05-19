@@ -128,7 +128,7 @@ const Navbar = ({ socket }) => {
                     return {
                         ...chat,
                         lastMessage: newMessage,
-                        isNewMessage: true,
+                        isNewMessage: newMessage.receiver === user.id ? true : false,
                     };
                 }
                 return chat;
