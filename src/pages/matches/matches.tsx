@@ -1,11 +1,7 @@
 import MatchesList from '../../widgets/matchesList/index';
 
 const MatchesPage = () => {
-    return <div
-    style={{
-        height: '100%',
-    }}
-    >{MatchesList()}</div>;
+    return <MatchesList />;
 };
 
 export default MatchesPage;

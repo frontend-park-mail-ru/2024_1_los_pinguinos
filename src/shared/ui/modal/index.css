@@ -12,6 +12,7 @@
     pointer-events: none;
     transition: opacity 0.2s ease-in-out;
     z-index: 1;
+    padding: 5px;
 }
 
 .modal__content {
@@ -47,6 +48,11 @@
     font-size: xx-large;
     word-break: auto-phrase;
     text-align: start;
+    white-space-collapse: preserve-breaks;
+    text-wrap: balance;
+    word-wrap: break-word;
+    text-align: start;
+    max-width: 100%;
 }
 
 .dialog__list-wrap {
@@ -56,10 +62,20 @@
     width: clamp(150px,100%, 600px);
 }
 
+.list-wrap--column {
+    flex-direction: column;
+}
+
 .dialog__button-wrap {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px){
+    .dialog__button-wrap {
+       flex-direction: column-reverse;
+    }
 }
 
 .dialog__info {
@@ -77,4 +93,32 @@
     position: absolute;
     bottom: 0px;
     width: 100%;
+}
+
+.dialog__profile-picture {
+    width: 70px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+    border: 3px solid var(--color__success--primary);
+}
+
+.dialog__header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dialog__text {
+    color: var(--color__light--primary);
+    white-space-collapse: preserve-breaks;
+    text-wrap: balance;
+    word-wrap: break-word;
+    text-align: start;
+    max-width: 100%;
+}
+
+.dialog--card {
+    max-width: 400px;
 }

@@ -17,7 +17,6 @@ const CardControllers = () => {
         setCounter(state.currentCard);
     }, [store.getState().currentCard]);
 
-
     useEffect(() => {
         console.log('ACTIVE SET');
     }, [disabled]);
@@ -54,7 +53,9 @@ const CardControllers = () => {
 
         const flyX = (Math.abs(-1) / 1) * innerWidth * 1.3;
         const flyY = 0;
-        currentcard.style.transform = `translate(${flyX}px, ${flyY}px) rotate(${flyX / innerWidth * 50}deg)`;
+        currentcard.style.transform = `translate(${flyX}px, ${flyY}px) rotate(${
+            (flyX / innerWidth) * 50
+        }deg)`;
         currentcard.style.transition = `transform ${innerWidth}ms ease-in-out`;
         setTimeout(() => {
             currentcard.remove();
@@ -91,14 +92,15 @@ const CardControllers = () => {
             return;
         }
 
-
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const currentcard = document.getElementById(`card-${currentCard}`);
         // console.log(currentcard);
 
         const flyX = (Math.abs(-1) / -1) * innerWidth * 1.3;
         const flyY = 0;
-        currentcard.style.transform = `translate(${flyX}px, ${flyY}px) rotate(${flyX / innerWidth * 50}deg)`;
+        currentcard.style.transform = `translate(${flyX}px, ${flyY}px) rotate(${
+            (flyX / innerWidth) * 50
+        }deg)`;
         currentcard.style.transition = 'transform ${innerWidth}ms ease-in-out';
         setTimeout(() => {
             currentcard.remove();
@@ -141,19 +143,17 @@ const CardControllers = () => {
                 fontColor="light-primary"
                 disabled={disabled}
             />
-            <ComplaintPopup
-                active={active}
-                setActive={setActive}
-                callback={(complaintId) => {
+            {ComplaintPopup({
+                active: active,
+                setActive: setActive,
+                callback: (complaintId) => {
                     if (!complaintId) {
                         setPopupError('Что-то пошло не так');
-
-                        return;
                     }
                     handleComplaint(complaintId);
-                }}
-                popupError={popupError}
-            />
+                },
+                popupError: popupError,
+            })}
         </div>
     );
 };
