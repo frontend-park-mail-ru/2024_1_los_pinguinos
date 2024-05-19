@@ -1,13 +1,11 @@
 import ChatMessages from '../../widgets/chatMessages';
-import ChatList from '../../widgets/chatList';
-import Layout from '../layout/layout';
+import ChatNavbar from '../../widgets/chatList'
 
 const ChatPage = () => {
+
     return (
-        <div
-        style={{with: '100%', height: '100%'}}
-        >
-            <ChatList />
+        <div style={{ with: '100%', height: '100%' }}>
+            <ChatNavbar />
             <ChatMessages />
         </div>
     );
