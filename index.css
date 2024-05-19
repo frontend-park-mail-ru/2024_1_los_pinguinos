@@ -1,11 +1,12 @@
 @import url(./src/pages/notFound/notFound.css);
-@import url(./src/components/profile/profile.css);
+@import url(./src/pages/profile/profile.css);
 @import url(./src/shared/ui/icons/index.css);
 @import url(./src/shared/ui/button/button.css);
 @import url(./src/shared/ui/input/input.css);
 @import url(./src/widgets/profilePhoto/ui/photoWidget.css);
 @import url(./src/features/loginform/ui/index.css);
 @import url(./src/widgets/interestsEdit/ui/index.css);
+@import url(./src/entities/person/ui/match/index.css);
 @import url("/src/pages/main/index.css");
 @import url("/src/widgets/navbar/navbar.css");
 @import url("/src/widgets/header/header.css");

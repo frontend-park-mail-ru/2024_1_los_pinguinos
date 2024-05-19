@@ -79,6 +79,12 @@ module.exports = {
         historyApiFallback: true, // This is the key config to redirect all server requests to /index.html
         compress: true, // Enable gzip compression
         hot: true, // Enable webpack's Hot Module Replacement feature
+        client: {
+            overlay: {
+                warnings: false,
+                errors: false,
+            },
+        },
     },
     mode: 'production',
     optimization: {

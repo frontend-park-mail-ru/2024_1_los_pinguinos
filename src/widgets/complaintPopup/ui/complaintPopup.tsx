@@ -24,6 +24,10 @@ const ComplaintPopup = ({
             setComplaintTypes([]);
         }
     };
+    useEffect(() => {
+        console.log(complaintTypes, 'types');
+    }, [complaintTypes]);
+    console.log('RENDER COMPLAINT');
     if (!complaintTypes.length) getTypes();
     return (
         <Modal active={active} setActive={setActive}>
@@ -35,7 +39,7 @@ const ComplaintPopup = ({
             >
                 <span className="dialog__title">Пожаловаться</span>
                 <span className="dialog__info">Выберите причину жалобы</span>
-                <div className="dialog__list-wrap">
+                <div className="dialog__list-wrap list-wrap--column">
                     {complaintTypes.map((complaint: any) => {
                         return (
                             <InputCheckbox
