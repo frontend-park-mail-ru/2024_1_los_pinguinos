@@ -62,6 +62,7 @@ const CardControllers = () => {
         }, 500);
     };
 
+    const [complete, setComplete] = useState(true);
     const [popupError, setPopupError] = useState('');
     const handleComplaint = async (complaintId = 1) => {
         setPopupError('');
@@ -69,7 +70,13 @@ const CardControllers = () => {
         if (!currentCard) return;
         try {
             await complain({ id: complaintId, reciever: currentCard });
-            setActive(false);
+            setComplete(true);
+            setTimeout(() => {
+                setActive(false);
+            }, 800);
+            setTimeout(() => {
+                setComplete(false);
+            }, 1000);
         } catch {
             setPopupError('Что-то пошло не так');
 
@@ -127,7 +134,10 @@ const CardControllers = () => {
                 fontSize="xl"
                 onClick={() => {
                     const condition = getCurrent();
-                    if (condition) setActive(true);
+                    if (condition) {
+                        setActive(true);
+                        setComplete(false);
+                    }
                 }}
                 round
                 disabled={disabled}
@@ -146,6 +156,7 @@ const CardControllers = () => {
             {ComplaintPopup({
                 active: active,
                 setActive: setActive,
+                complete: complete,
                 callback: (complaintId) => {
                     if (!complaintId) {
                         setPopupError('Что-то пошло не так');

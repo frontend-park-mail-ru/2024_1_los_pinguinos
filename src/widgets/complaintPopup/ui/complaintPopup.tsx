@@ -7,12 +7,14 @@ type Complaint = {
     active: boolean;
     setActive: (event: any) => void;
     popupError?: string;
+    complete: boolean;
 };
 const ComplaintPopup = ({
     callback,
     active,
     setActive,
     popupError,
+    complete,
 }: Complaint) => {
     const [currentComplaint, setCurrentComplaint] = useState(null);
     const [complaintTypes, setComplaintTypes] = useState<any>([]);
@@ -27,12 +29,11 @@ const ComplaintPopup = ({
     useEffect(() => {
         console.log(complaintTypes, 'types');
     }, [complaintTypes]);
-    console.log('RENDER COMPLAINT');
     if (!complaintTypes.length) getTypes();
     return (
         <Modal active={active} setActive={setActive}>
             <form
-                className="dialog"
+                className={clsx('dialog', complete && 'any--none')}
                 onSubmit={(event: any) => {
                     event.preventDefault();
                 }}
@@ -92,6 +93,9 @@ const ComplaintPopup = ({
                     {popupError}
                 </span>
             </form>
+            <span className={clsx('dialog__title', !complete && 'any--none')}>
+                Жалоба отправлена!
+            </span>
         </Modal>
     );
 };
