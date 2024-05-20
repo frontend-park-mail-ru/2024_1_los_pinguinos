@@ -83,7 +83,7 @@
 .navbar__menu__item {
     display: flex;
     align-items: center;
-    gap: 15px;
+    justify-content: space-between;
     padding: 15px 10px;
     font-size: 24px;
     font-weight: 500;
@@ -124,7 +124,7 @@
 }
 
 .navbar_item_notification {
-    background:  rgba(125, 232, 90, 1);
+    background: rgba(125, 232, 90, 1);
     color: white;
     border-radius: 100px;
     padding: 7px 7px;
@@ -133,10 +133,22 @@
     line-height: 12px;
 }
 
-.navbar__item__info__time {
+.navbar__item__time {
     font-size: 12px;
     font-weight: 300;
     line-height: 12px;
+}
+
+.navbar__item__person {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar__item__status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .navbar__menu__divider {

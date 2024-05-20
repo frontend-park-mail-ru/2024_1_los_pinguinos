@@ -49,36 +49,40 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                     navigateTo('/chats');
                 }}
             >
-                <img
-                    onError={() => setError(true)}
-                    src={
-                        chat.photo && chat.photo != ''
-                            ? chat.photo
-                            : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
-                    }
-                    className="navbar__item__icon"
-                    alt="Profile Picture"
-                />
-                <div className="navbar__item__info">
-                    <p className="navbar__item__info__name">{chat.name}</p>
-                    <p className="navbar__item__info__message">
-                        {chat.lastMessage.data}
-                    </p>
+                <div className="navbar__item__person">
+                    <img
+                        onError={() => setError(true)}
+                        src={
+                            chat.photo && chat.photo != ''
+                                ? chat.photo
+                                : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                        }
+                        className="navbar__item__icon"
+                        alt="Profile Picture"
+                    />
+                    <div className="navbar__item__info">
+                        <p className="navbar__item__info__name">{chat.name}</p>
+                        <p className="navbar__item__info__message">
+                            {chat.lastMessage.data}
+                        </p>
+                    </div>
                 </div>
-                <div className="navbar__item__info__time">
-                    <p>{timeAgo(chat.lastMessage.time)}</p>
+                <div className="navbar__item__status">
+                    <div className="navbar__item__time">
+                        <p>{timeAgo(chat.lastMessage.time)}</p>
+                    </div>
+                    <div
+                        style={{
+                            display: activeChat
+                                ? chat.isNewMessage &&
+                                  chat.personID !== activeChat.personID
+                                    ? 'block'
+                                    : 'none'
+                                : 'none',
+                        }}
+                        className="navbar_item_notification"
+                    ></div>
                 </div>
-                <div
-                    style={{
-                        display: activeChat
-                            ? chat.isNewMessage &&
-                              chat.personID !== activeChat.personID
-                                ? 'block'
-                                : 'none'
-                            : 'none',
-                    }}
-                    className="navbar_item_notification"
-                ></div>
             </div>
             <hr className="navbar__menu__divider" />
         </div>
