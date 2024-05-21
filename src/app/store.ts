@@ -14,6 +14,8 @@ export type InitialState = {
     interests: Interest[];
     currentCard: number;
     currentChat: number;
+    currentChatName: string;
+    currentChatPhoto: string;
     authStatus: boolean;
     csrft: string;
 };
@@ -33,6 +35,8 @@ const initState: InitialState = {
     interests: [],
     currentCard: 0,
     currentChat: 0,
+    currentChatPhoto: '',
+    currentChatName: '',
     authStatus: false,
     csrft: '',
 };

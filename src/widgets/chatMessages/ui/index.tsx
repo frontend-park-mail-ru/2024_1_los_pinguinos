@@ -7,9 +7,18 @@ import { Button } from '../../../shared/ui';
 const ChatMessages = ({ socket }) => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
+    const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const [userID, setUserID] = useState(store.getState().id);
     const [currentChat, setCurrentChat] = useState(
         store.getState().currentChat,
+    );
+    const [currentChatName, setCurrentChatName] = useState(
+        store.getState().currentChatName,
+    );
+    const [currentChatPhoto, setCurrentChatPhoto] = useState(
+        store.getState().currentChatPhoto == ''
+            ? defaultPhoto
+            : store.getState().currentChatPhoto,
     );
 
     useEffect(() => {
@@ -17,6 +26,12 @@ const ChatMessages = ({ socket }) => {
             const state = store.getState();
             console.log(state);
             setCurrentChat(state.currentChat);
+            setCurrentChatName(state.currentChatName);
+            setCurrentChatPhoto(
+                state.currentChatPhoto == ''
+                    ? defaultPhoto
+                    : store.getState().currentChatPhoto,
+            );
         });
     }, []);
 
@@ -43,16 +58,15 @@ const ChatMessages = ({ socket }) => {
 
     useEffect(() => {
         if (socket) {
-            console.log('in Socket');
             console.log(socket.onmessage);
             socket.onmessage = (e) => {
-                console.log('new Mesage in ChatMessages');
                 const newMessage = JSON.parse(e.data);
                 if (
                     (newMessage.sender === userID &&
                         newMessage.receiver === store.getState().currentChat) ||
                     (newMessage.sender === store.getState().currentChat &&
-                        newMessage.receiver === userID) && newMessage.data != ''
+                        newMessage.receiver === userID &&
+                        newMessage.data != '')
                 ) {
                     setMessages((prev) => [newMessage, ...prev]);
                 }
@@ -101,7 +115,17 @@ const ChatMessages = ({ socket }) => {
             className="chatMessages"
         >
             <div className="chatMessages__header">
-                <button
+                <div className="chatMessages__header__person">
+                    <img
+                        src={currentChatPhoto}
+                        className="chatMessages__header__person__icon"
+                        alt="Profile Picture"
+                    />
+                    <p className="chatMessages__header__person__name">
+                        {currentChatName}
+                    </p>
+                </div>
+                {/* <button
                     onClick={() => {
                         store.dispatch({
                             type: 'UPDATE_CURRENT_CHAT',
@@ -111,7 +135,7 @@ const ChatMessages = ({ socket }) => {
                     className="chatMessages__header__button"
                 >
                     Назад
-                </button>
+                </button> */}
             </div>
             <div className="chatMessages__list">
                 {messages.map((message) => (

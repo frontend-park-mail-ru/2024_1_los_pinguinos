@@ -13,6 +13,30 @@
     padding: 5px;
 }
 
+.chatMessages__header__person {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: white;
+    border: 1px solid white;
+    border-radius: 22px;
+    padding: 5px;
+}
+
+.chatMessages__header__person__icon {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    background: #D9D9D9;
+}
+
+.chatMessages__header__person__name {
+    font-size: 15px;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
 .chatMessages__header__button {
     background: #7DE85A;
     /* color: white; */

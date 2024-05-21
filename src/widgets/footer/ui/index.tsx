@@ -1,6 +1,7 @@
 import { useState, useEffect } from '../../../reactor/index';
 import { Link } from '../../../shared/routing/link';
 import { clsx } from '../../../clsx/index';
+import { store } from '../../../app/app';
 
 const Footer = () => {
     const [activePath, setActivePath] = useState(window.location.pathname);
@@ -46,12 +47,31 @@ const Footer = () => {
                     'nav__item',
                     activePath === '/chats' && 'is-active',
                 )}
+                // onClick={() => {
+                //     store.dispatch({
+                //         type: 'UPDATE_CURRENT_CHAT',
+                //         payload: null,
+                //     });
+                // }}
             >
                 <span
+                    onClick={() => {
+                        store.dispatch({
+                            type: 'UPDATE_CURRENT_CHAT',
+                            payload: null,
+                        });
+                    }}
                     style="font-size: x-large"
                     className="icon-chat-text"
                 ></span>
-                <span className="nav__text">Чаты</span>
+                <span 
+                onClick={() => {
+                    store.dispatch({
+                        type: 'UPDATE_CURRENT_CHAT',
+                        payload: null,
+                    });
+                }}
+                className="nav__text">Чаты</span>
             </Link>
             <Link
                 to="/profile"

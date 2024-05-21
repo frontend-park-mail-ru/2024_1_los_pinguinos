@@ -46,6 +46,14 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                         type: 'UPDATE_CURRENT_CHAT',
                         payload: chat.personID,
                     });
+                    store.dispatch({
+                        type: 'UPDATE_CURRENT_CHAT_NAME',
+                        payload: chat.name,
+                    });
+                    store.dispatch({
+                        type: 'UPDATE_CURRENT_CHAT_PHOTO',
+                        payload: chat.photo,
+                    });
                     navigateTo('/chats');
                 }}
             >
