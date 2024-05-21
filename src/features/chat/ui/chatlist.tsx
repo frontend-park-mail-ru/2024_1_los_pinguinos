@@ -12,7 +12,6 @@ const ChatList = ({ socket }) => {
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            console.log('state', state);
         });
     }, []);
 
@@ -79,8 +78,8 @@ const ChatList = ({ socket }) => {
     }, [socket]);
 
     const handleMessage = (event) => {
-        console.log('Received message in Navbar:', event.data);
         const newMessage = JSON.parse(event.data);
+        console.log("new message in ChatList", newMessage);
         // newMessageInChats(newMessage);
         setChats((prev) => {
             const newChats = prev.map((chat) => {
@@ -99,7 +98,6 @@ const ChatList = ({ socket }) => {
                 }
                 return chat;
             });
-            console.log('newChats', newChats);
             return newChats;
         });
     };

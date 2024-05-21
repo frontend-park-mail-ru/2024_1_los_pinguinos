@@ -4,7 +4,7 @@ import StepInterests from './stepInterests';
 import StepPassword from './stepPassword';
 import { useEffect, useState } from '../../../reactor/index';
 import { register } from '../../../entities/session/api/index';
-import { redirectTo } from '../../../app/Router';
+import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
 import { clsx } from '../../../clsx';
 

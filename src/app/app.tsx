@@ -1,4 +1,4 @@
-import { Router, Route, redirectTo, navigateTo } from './Router';
+import { Router, Route, redirectTo, navigateTo } from './router';
 import {
     Landing,
     Login,

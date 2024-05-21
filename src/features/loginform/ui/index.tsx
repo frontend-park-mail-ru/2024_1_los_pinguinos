@@ -3,7 +3,7 @@ import { login } from '../../../entities/session/api/index';
 import { Link } from '../../../shared/routing/link';
 import { validateInput, updateInputError } from '../../../shared/lib/index';
 import { Input, Button, ButtonLink } from '../../../shared/ui/index';
-import { redirectTo } from '../../../app/Router';
+import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
 import { clsx } from '../../../clsx/index';
 

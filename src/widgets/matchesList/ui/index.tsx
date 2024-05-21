@@ -5,7 +5,7 @@ import { Input, Modal, Button } from '../../../shared/ui/index';
 import { clsx } from '../../../clsx/index';
 import { getAge } from '../../../shared/lib/index';
 import { store } from '../../../app/app';
-import { navigateTo } from '../../../app/Router';
+import { navigateTo } from '../../../app/router';
 
 const MatchesList = () => {
     const [matches, setMatches] = useState([]);

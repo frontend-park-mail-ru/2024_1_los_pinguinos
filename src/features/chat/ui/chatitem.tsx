@@ -1,6 +1,6 @@
 import { useState } from '../../../reactor';
 import { store } from '../../../app/app';
-import { navigateTo } from '../../../app/Router';
+import { navigateTo } from '../../../app/router';
 
 function timeAgo(timestamp) {
     if (timestamp < 0) return '';

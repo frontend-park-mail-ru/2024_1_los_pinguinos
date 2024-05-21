@@ -2,7 +2,7 @@ import { useState } from '../../../reactor/index';
 import { Button } from '../../../shared/ui/index';
 import { ConfirmationPopup } from '../../index';
 import { store } from '../../../app/app';
-import { redirectTo } from '../../../app/Router';
+import { redirectTo } from '../../../app/router';
 import { logout } from '../../../entities/session/api/index';
 import { clsx } from '../../../clsx/index';
 

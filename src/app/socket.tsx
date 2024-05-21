@@ -16,10 +16,18 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
         useEffect(() => {
             if (!sharedSocket) {
                 sharedSocket = new WebSocket(url);
+                sharedSocket.onclose = () => {
+                    console.log('Socket closed, reopening...');
+                    sharedSocket = new WebSocket(url);
+                    setSocket(sharedSocket);
+                }
             }
             setSocket(sharedSocket);
 
             return () => {
+                if(sharedSocket) {
+                    sharedSocket.onclose = null;
+                }
             };
         }, [url]);
 
@@ -29,19 +37,26 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
             }
         }; 
 
+        const closeSocket = () => {
+            if (socket) {
+                socket.close();
+                sharedSocket = null;
+                setSocket(null);
+            }
+        }
+
         useEffect(() => {
             const handleMessage  = (event: MessageEvent) => {
                 const message: Message = JSON.parse(event.data);
-                console.log(props);
                 
                 if (props.handleMessage ) {
                     props.onMessage(message);
                 }
             };
-            console.log(props);
+
             if (socket) {
                 socket.addEventListener('message', handleMessage );
-            }
+            };
 
             return () => {
                 if (socket) {
@@ -55,10 +70,10 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
 
         if (typeof WrappedComponent === 'function') {
             // Передаем пропсы напрямую
-            return WrappedComponent({ ...props, socket, sendMessage });
+            return WrappedComponent({ ...props, socket, setSocket,  sendMessage, closeSocket });
         } else {
             // Возвращаем JSX с компонентом
-            return <WrappedComponent {...props} socket={socket} sendMessage={sendMessage}  />;
+            return <WrappedComponent {...props} socket={socket} setSocket={setSocket} sendMessage={sendMessage} closeSocket={closeSocket}  />;
         }
     };
 };

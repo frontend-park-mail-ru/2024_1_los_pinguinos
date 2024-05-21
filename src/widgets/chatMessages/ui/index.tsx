@@ -4,7 +4,7 @@ import { getMessages } from '../../../features/chat/api';
 import { store } from '../../../app/app';
 import { Button } from '../../../shared/ui';
 
-const ChatMessages = ({ socket }) => {
+const ChatMessages = ({ socket, setSocket }) => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
@@ -42,7 +42,6 @@ const ChatMessages = ({ socket }) => {
         }
         getMessages(currentChat)
             .then((data) => {
-                console.log(data);
                 setMessages(data);
                 setTimeout(() => {
                     const chat = document.querySelector('.chatMessages__list');
@@ -58,9 +57,17 @@ const ChatMessages = ({ socket }) => {
 
     useEffect(() => {
         if (socket) {
-            console.log(socket.onmessage);
             socket.onmessage = (e) => {
                 const newMessage = JSON.parse(e.data);
+                console.log('new message in Chat', newMessage);
+                console.log(
+                    '?',
+                    (newMessage.sender === userID &&
+                        newMessage.receiver === store.getState().currentChat) ||
+                        (newMessage.sender === store.getState().currentChat &&
+                            newMessage.receiver === userID &&
+                            newMessage.data != ''),
+                );
                 if (
                     (newMessage.sender === userID &&
                         newMessage.receiver === store.getState().currentChat) ||
@@ -68,7 +75,10 @@ const ChatMessages = ({ socket }) => {
                         newMessage.receiver === userID &&
                         newMessage.data != '')
                 ) {
-                    setMessages((prev) => [newMessage, ...prev]);
+                    setMessages((prev) => {
+                        console.log('set message', [newMessage, ...prev]);
+                        return [newMessage, ...prev];
+                    });
                 }
 
                 setTimeout(() => {
@@ -78,8 +88,25 @@ const ChatMessages = ({ socket }) => {
                     }
                 }, 100);
             };
+
+            socket.onclose = () => {
+                console.log('Socket closed, reopening...');
+                const newSocket = new WebSocket(
+                    'wss://api.jimder.ru/api/v1/openConnection',
+                );
+                setSocket(newSocket);
+            };
         }
-    }, [socket]);
+
+        return () => {
+            if (socket) {
+                socket.onmessage = null;
+                socket.close();
+            }
+        };
+    }, [socket, setSocket]);
+
+    useEffect(() => console.log(121313, messages), [messages]);
 
     const handleChange = (e) => {
         setMessage(e.target.value);
@@ -138,28 +165,32 @@ const ChatMessages = ({ socket }) => {
                 </button> */}
             </div>
             <div className="chatMessages__list">
-                {messages.map((message) => (
-                    <div
-                        className={`chatMessages__list__item ${
-                            message.sender === userID
-                                ? 'chatMessages__list__item--me'
-                                : 'chatMessages__list__item--other'
-                        }`}
-                        key={message.id}
-                    >
+                {messages.map((message) => {
+                    console.log(messages.length);
+
+                    return (
                         <div
-                            className={
+                            className={`chatMessages__list__item ${
                                 message.sender === userID
-                                    ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
-                                    : 'chatMessages__list__item__message'
-                            }
+                                    ? 'chatMessages__list__item--me'
+                                    : 'chatMessages__list__item--other'
+                            }`}
+                            key={message.time}
                         >
-                            <p className="chatMessages__list__item__message__text">
-                                {message.data}
-                            </p>
+                            <div
+                                className={
+                                    message.sender === userID
+                                        ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
+                                        : 'chatMessages__list__item__message'
+                                }
+                            >
+                                <p className="chatMessages__list__item__message__text">
+                                    {message.data}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
 
             <div className="chatMessages__controllers">

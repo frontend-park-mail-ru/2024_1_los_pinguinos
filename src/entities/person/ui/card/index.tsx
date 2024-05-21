@@ -13,8 +13,14 @@ type StartPoint = {
 
 const Card = ({ person }: { person: Person }) => {
     const [isFlipped, setIsFlipped] = useState(false);
-    const [startPoint, setStartPoint] = useState<StartPoint>(null);
-    const [movePoint, setMovePoint] = useState<StartPoint>(null);
+    const [startPoint, setStartPoint] = useState<StartPoint>({
+        x: 0,
+        y: 0,
+    });
+    const [movePoint, setMovePoint] = useState<StartPoint>({
+        x: 0,
+        y: 0,
+    });
     // console.log('person', person);
     function onPointerDown({ clientX, clientY }: any) {
         setStartPoint({ x: clientX, y: clientY });
@@ -31,14 +37,23 @@ const Card = ({ person }: { person: Person }) => {
         }
 
         setMovePoint({ x: clientX - startPoint.x, y: clientY - startPoint.y });
-        setTransform(movePoint?.x, movePoint?.y, movePoint?.x / innerWidth * 50);
+        setTransform(
+            movePoint?.x,
+            movePoint?.y,
+            (movePoint?.x / innerWidth) * 50,
+        );
     }
 
-    function setTransform(x: number, y: number, rotate: number, duration: number = 0) {
+    function setTransform(
+        x: number,
+        y: number,
+        rotate: number,
+        duration: number = 0,
+    ) {
         const card = document.getElementById(`card-${person.id}`);
         card.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg)`;
 
-        if(duration > 0) {
+        if (duration > 0) {
             card.style.transition = `transform ${duration}ms ease-in-out`;
         }
     }
@@ -54,7 +69,7 @@ const Card = ({ person }: { person: Person }) => {
         currentCard?.removeEventListener('pointerup', onPointerUp);
         currentCard?.removeEventListener('pointerleave', onPointerUp);
 
-        if ( Math.abs(movePoint!.x) > swiper?.clientWidth / 2) {
+        if (Math.abs(movePoint!.x) > swiper?.clientWidth / 2) {
             store.dispatch({
                 type: 'UPDATE_CURRENT_CARD',
                 payload: person.id,
@@ -62,7 +77,7 @@ const Card = ({ person }: { person: Person }) => {
             currentCard?.removeEventListener('pointerdown', onPointerDown);
             like(person.id);
             complete();
-        } else{
+        } else {
             dislike(person.id);
             cancel();
         }
@@ -71,13 +86,12 @@ const Card = ({ person }: { person: Person }) => {
     function complete() {
         const flyX = (Math.abs(movePoint!.x) / movePoint!.x) * innerWidth * 1.3;
         const flyY = (movePoint!.y / movePoint!.x) * flyX;
-        setTransform(flyX, flyY, flyX / innerWidth * 50, innerWidth);
+        setTransform(flyX, flyY, (flyX / innerWidth) * 50, innerWidth);
 
         setTimeout(() => {
             const card = document.getElementById(`card-${person.id}`);
             card?.remove();
         }, innerWidth);
-
     }
 
     function cancel() {
