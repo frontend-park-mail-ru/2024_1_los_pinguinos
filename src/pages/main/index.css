@@ -1,0 +1,84 @@
+.main {
+    display: flex;
+    gap: 12px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    min-width: 320px;
+    background: inherit;
+    border-radius: 13px;
+    height: 100%;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  #swiper {
+    width: 70%;
+    min-width: 300px;
+    height: 582px;
+    border-radius: 13px;
+    perspective-origin: center 50%;
+    transform-style: preserve-3d;
+    /* padding: 20px; */
+  }
+
+  .container {
+    display: flex;
+  }
+  
+  #swiper > :last-child {
+    display: flex;
+  }
+  
+  #swiper > :not(:last-child) {
+    display: none;
+  }
+
+  .end-of-swipes {
+    position: absolute;
+    z-index: -1000;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+.controllers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+#reject {
+    color: #D9D9D9;
+    cursor: pointer;
+}
+
+#accept {
+    color: #7DE85A;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+    .content {
+        width: 95%;
+    }
+
+    #swiper {
+        width: 95%;
+    }
+
+    .main {
+        margin: 0;
+    }
+}

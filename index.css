@@ -1,29 +1,59 @@
-@import url(./src/components/form/form.css);
-@import url(./src/pages/404/404.css);
-@import url(./src/components/profile/profile.css);
-@import url("/src/pages/main/main.css");
-@import url("/src/components/navbar/navbar.css");
-@import url("/src/components/header/header.css");
-@import url("/src/pages/main/components/card/card.css");
+@import url(./src/pages/notFound/notFound.css);
+@import url(./src/pages/profile/profile.css);
+@import url(./src/shared/ui/icons/index.css);
+@import url(./src/shared/ui/button/button.css);
+@import url(./src/shared/ui/input/input.css);
+@import url(./src/widgets/profilePhoto/ui/photoWidget.css);
+@import url(./src/features/loginform/ui/index.css);
+@import url(./src/widgets/interestsEdit/ui/index.css);
+@import url(./src/entities/person/ui/match/index.css);
+@import url("/src/pages/main/index.css");
+@import url("/src/widgets/navbar/ui/navbar.css");
+@import url("/src/widgets/header/ui/header.css");
+@import url("/src/entities/person/ui/card/index.css");
 @import url("/src/pages/landing/landing.css");
 @import url("/src/pages/matches/components/card.scss");
 @import url("src/pages/matches/matches.scss");
+@import url('/src/shared/ui/modal/index.css');
+@import url(/src/assets/fonts/MailSans/stylesheet.css);
+@import url("/src/widgets/cardControllers/ui/index.css");
+@import url("/src/widgets/chatMessages/ui/index.css");
+@import url("/src/pages/chats/index.css");
+@import url("/src/widgets/footer/ui/index.css");
+@import url("/src/pages/layout/index.css");
+@import url("/src/widgets/chatList/ui/index.css");
+@import url('src/shared/ui/carousel/index.css');
 
 :root {
-  --background--landing: url(./background-landing.webp);
-  --background--main: url(./background-main.webp);
-  --background--login: url(./background-auth.webp);
-  --background--register: url(./background-auth.webp);
-  --background--profile: url(./background-main.webp);
-  --background--404: url(./background-404.webp);
-  --background--offline: url(./background-404.webp);
-  --background--matches: url(./background-main.webp);
+  --background--landing: url(./src/assets/background/background-landing.webp);
+  --background--main: url(./src/assets/background/background-main.webp);
+  --background--login: url(./src/assets/background/background-auth.webp);
+  --background--register: url(./src/assets/background/background-auth.webp);
+  --background--profile: url(./src/assets/background/background-main.webp);
+  --background--404: url(./src/assets/background/background-404.webp);
+  --background--offline: url(./src/assets/background/background-404.webp);
+  --background--matches: url(./src/assets/background/background-main.webp);
+  --background--chats: url(./src/assets/background/background-main.webp);
+  --color__light--primary: #FFFFFF;
+  --color__light--secondary: #BBBBBB;
+  --color__dark--primary: #000000;
+  --color__dark--secondary: #5d5d5d;
+  --color__dark--transparent: rgba(0,0,0,0.6);
+  --color__danger--primary: #EA5B5B;
+  --color__danger--secondary: rgb(200, 62, 62);
+  --color__warning--primary: rgb(255, 175, 36);
+  --color__warning--secondary:rgb(220, 149, 27);
+  --color__success--primary: #7DE85A;
+  --color__success--secondary: #1ED760;
+  --color__success--outline: #169C46;
+  --transition--default: all 0.2s ease-in-out;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Mail Sans Roman';
 }
 
 html {
@@ -33,35 +63,65 @@ html {
   /* Firefox */
 }
 
-html,
-body {
+html {
   overflow: clip;
   display: flow-root;
 }
 
 body {
-  background-image: var(--background--landing);
-  background-size: 100% 100%;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: clip;
+  display: flow-root;
+  /* background-image: var(--background--landing); */
+  background-size: cover;
+  background-attachment: local;
   transition: background-image 0.2s ease-in-out;
+}
+
+.page-wrap {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .flex {
   display: flex;
 }
 
-.header__menu {
-  padding: 10px;
-  color: white;
-  text-decoration: none;
-}
-
 #root {
+  position: fixed;
   display: flex;
   flex-direction: column;
   height: 100dvh;
   width: 100dvw;
+  overflow: scroll;
+  scrollbar-width: none;
 }
 
 ion-icon {
   font-size: 80px;
+}
+
+.any--none {
+  display: none !important;
+}
+
+.any--hidden {
+  opacity: 0 !important;
+}
+
+.any:hover {
+  opacity: 0.6;
+}
+
+.link {
+    color: var(--color__light--secondary);
+    text-decoration: underline !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.link:hover {
+  opacity: 0.6;
 }

@@ -1,0 +1,25 @@
+.lost__title {
+    width: 100%;
+    font-weight: 800;
+    font-size: 4rem;
+    color: var(--color__light--primary);
+    word-break: auto-phrase;
+    text-align: center;
+}
+
+.notfound__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    width: 100dvw;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 896px){
+    .lost__title {
+        font-size: 2rem;
+    }
+}

@@ -1,5 +1,9 @@
 .matches {
     padding: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
 .matches__header {
@@ -11,8 +15,12 @@
 #matches__content {
     display: grid;
     gap: 10px;
+    height: 100%;
+    overflow: scroll;
     padding: 20px;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-items: center;
+    scrollbar-width: none;
 }
 
 .matches__empty {

@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    height: 10%;
+}
+
+.header__menu {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+@media screen and (max-width: 896px) {
+    .header {
+        display: none;
+    }
+}

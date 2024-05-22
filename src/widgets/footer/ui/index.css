@@ -1,0 +1,78 @@
+.nav {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    height: 10%;
+    max-width: 100%;
+}
+
+.nav__item {
+    color: var(--color__light--primary);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    display: flex; 
+    align-items:center; 
+    gap: 10px; 
+    cursor: pointer;
+    width: -webkit-fill-available;
+}
+
+.nav__item.is-active {
+    color: var(--color__success--primary);
+}
+
+.nav__item::before {
+    content: "";
+    position: absolute;
+    width: 100%; /* Start with no underline visible */
+    height: 3px; /* Thickness of the underline */
+    bottom: -10px; /* Distance of the underline from the text */
+    left: 0;
+    background-color: var(--color__light--primary); /* Color of the underline */
+    transform: scale(0);
+    transition: all 0.2s ease; /* Smooth transition for the appearing effect */
+}
+
+.nav__item:not(.is-active):hover:before {
+    transform: scale(1);
+}
+
+.nav__item.is-active:before {
+    background-color: var(--color__success--primary);
+    transform: scale(1);
+}
+
+.nav__item:not(.is-active):hover {
+    color: var(--color__light--primary);
+}
+
+.nav__item--critical.is-active {
+    color: var(--color__danger--primary);
+}
+
+.nav__item--critical.is-active:before {
+    background-color: var(--color__danger--primary) !important;
+}
+
+@media screen and (max-width: 896px) {
+    .nav {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: 30px;
+    }
+    .nav__text--side {
+        display: none;
+    }
+    .nav__item {
+        width: fit-content;
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .nav__text {
+        display: none;
+    }
+}

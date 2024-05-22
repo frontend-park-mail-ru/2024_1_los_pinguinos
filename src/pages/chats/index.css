@@ -1,0 +1,10 @@
+.chats {
+    display: flex;
+    margin: 2%;
+    gap: 20px;
+    height: 100%;
+}
+
+.chats__messages {
+    width: 100%;
+}

@@ -1,0 +1,256 @@
+.card {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    position: absolute;
+    border-radius: 20px;
+    overflow: hidden;
+    transform: translateZ(calc(-1px * var(--i)));
+    /* filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5)); */
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.5s;
+    background: inherit;
+    perspective: 1000px;
+    gap: 60px;
+  }
+  
+  .card__front,
+  .card__back {
+    /* position: absolute; */
+    display: flex;
+    flex-direction: column;
+    transition: 1s;
+    backface-visibility: hidden;
+    width: 100%;
+    height: 100%;
+    color: white;
+  }
+  
+  .card__front {
+    background-color: black;
+    border-radius: 20px;
+    overflow: hidden;
+    justify-content: center;
+    width: 582px;
+    align-items: center;
+    max-width: 42%;
+  }
+
+  .card__front-flip {
+    /* transform: rotateY(180deg); */
+  }
+  
+  /* .card__back {
+    background-color: inherit;
+    padding: 10px;
+  } */
+  
+  .card__back {
+    /* background-color: darkgray; */
+    /* transform: rotateY(180deg); */
+    padding: 5px;
+  }
+
+  .card__back-flip {
+    /* transform: rotateY(360deg); */
+  }
+  
+  /* .card:hover .card__front {
+    transform: rotateY(180deg);
+  }
+  
+  .card:hover .card__back {
+    transform: rotateY(360deg);
+  } */
+
+  .card__back-header {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .card__back-content {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .card__image {
+    width: 100%;
+    height: 571px;
+    position: relative;
+    overflow: hidden;
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      left: 0;
+      height: 100%;
+      opacity: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.4) 70%,
+        rgba(0, 0, 0, 1) 100%
+      );
+    }
+  }
+  
+  .card__img-content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+  .card__content {
+    height: 86px;
+    padding: 20px, 0px, 20px, 20px;
+    gap: 7px;
+    color: white;
+    font-size: 2.5vh;
+    font-weight: 700;
+    transition: transform 0.5s;
+    padding: 0 6px;
+    background: #000;
+  }
+  
+  .card__name {
+    font-size: 24px;
+    font-weight: 500;
+  
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    transition: transform 0.5s;
+  }
+  
+  .card__description {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0em;
+    text-align: left;
+    transition: transform 0.5s;
+    overflow-wrap: anywhere;
+    margin-bottom: 10px;
+  }
+  
+  .card__interests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0 6px;
+    transition: transform 0.5s;
+  }
+  
+  .card__interest {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 5px 10px;
+    border-radius: 13px;
+    color: white;
+    background-color: coral;
+    transition: transform 0.5s;
+  }
+  
+  .card__interest1 {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 5px 10px;
+    border-radius: 13px;
+    color: white;
+    background-color: blueviolet;
+    transition: transform 0.5s;
+  }
+  
+  .card__interest2 {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 5px 10px;
+    border-radius: 13px;
+    color: white;
+    background-color: chartreuse;
+    transition: transform 0.5s;
+  }
+  
+  #accept,
+  #reject {
+    /* font-size: 6vh;
+    border-radius: 50%;
+    padding: 20px;
+    position: relative;
+    z-index: 1; */
+    animation-name: before_like;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-play-state: paused;
+  }
+  
+  #accept.trigger,
+  #reject.trigger {
+    animation-name: after_like;
+  }
+  
+  #like {
+    color: red;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  #dislike {
+    color: #ccc;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  @keyframes before_like {
+    0%,
+    100% {
+      opacity: 1;
+    }
+  
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  @keyframes after_like {
+    0%,
+    100% {
+      opacity: 1;
+    }
+  
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+  @media screen and (max-width: 868px) {
+    .card__front, .card__back {
+      position: absolute;
+      width: 100%;
+      max-width: none;
+    }
+    .card__back {
+      transform: rotateY(180deg);
+    }
+
+    .card__front-flip {
+      transform: rotateY(180deg);
+    }
+
+    .card__back-flip {
+      transform: rotateY(360deg);
+    }
+  }

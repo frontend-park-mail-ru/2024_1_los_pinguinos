@@ -1,0 +1,213 @@
+.input-container {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    position: relative;
+}
+
+.input {
+    background-color: var(--color__light--secondary);
+    width: 100%;
+    height: 50px;
+    border-radius: 80px;
+    border: transparent;
+    padding-left: 30px;
+    padding-right: 30px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.input--password {
+    padding-right: 60px;
+}
+
+.input:focus {
+    outline: solid medium;
+    outline-color: var(--color__success--primary);
+    background-color: var(--color__light--primary);
+}
+
+.input:hover {
+    background-color: var(--color__light--primary);
+}
+
+.input--invalid:focus {
+    outline-color: var(--color__danger--primary) !important;
+}
+
+.input__label {
+    color: var(--color__light--primary);
+    margin-left: 20px;
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.input__label--m {
+    font-size: medium;
+    font-weight: 500;
+}
+
+.input--m {
+    font-size: medium;
+    font-weight: 500;
+}
+
+.input__label--l {
+    font-size: large;
+    font-weight: 500;
+}
+
+.input--l {
+    font-size: large;
+    font-weight: 500;
+}
+
+.input__icon {
+    position: absolute;
+    right: 25px;
+    bottom: 13px;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.input-container__photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+}
+
+.input__photo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.input__loader {
+    position: absolute;
+    width: 30%;
+    aspect-ratio: 1;
+    background: var(--color__success--secondary);
+    border-radius: 50%;
+    animation: l1 3s infinite linear;
+  }
+  @keyframes l1{
+    12.5% {border-radius: 37% 63% 70% 30% / 30% 62% 38% 70%}
+    25%   {border-radius: 50% 50% 70% 30% / 52% 62% 38% 48%}
+    37.5% {border-radius: 33% 67% 18% 82% / 52% 75% 25% 48%}
+    50%   {border-radius: 73% 27% 18% 82% / 52% 32% 68% 48%}
+    62.5% {border-radius: 73% 27% 74% 26% / 64% 32% 68% 36%}
+    75%   {border-radius: 84% 16% 15% 85% / 55% 79% 21% 45%}
+    87.5% {border-radius: 12% 88% 69% 31% / 10% 66% 34% 90%}
+  }
+
+  .profile__photo {
+    object-fit: cover;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 20%;
+  }
+
+  .photo__cross {
+    cursor: pointer;
+    position: absolute;
+    top: 8%;
+    right: 8%;
+    font-size: 1.5rem;
+    color: var(--color__danger--primary);
+    transition: color 0.2s ease-in-out;
+    background-color: var(--color__dark--primary);
+    padding: 5px;
+    border-radius: 20%;
+  }
+
+  .grid__item--other > .input-container__photo > .photo__cross {
+    font-size: 1rem;
+  }
+
+  .photo__cross:hover {
+    color: var(--color__warning--primary);
+  }
+
+  .input__error {
+    display: block;
+    align-self: center;
+    position: absolute;
+    bottom: -25px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--color__danger--primary);
+    width: 120%;
+  }
+
+
+  .checkbox-container {
+    background-color: var(--color__light--secondary);
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: grid;
+    transition: background-color 0.2s ease-in-out;
+    position: relative;
+  }
+
+  .checkbox--round {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  .checkbox__label {
+    margin: 0;
+    place-self: center;
+    color: var(--color__dark--primary);
+  }
+
+  .checkbox-container:hover {
+    background-color: var(--color__light--primary);
+  }
+
+  /* .checkbox__label:hover {
+    background-color: var(--color__success--secondary);
+  } */
+
+  .checkbox--checked {
+    background-color: var(--color__success--primary);
+  }
+
+  .checkbox {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .checkbox--checked:hover {
+    background-color: var(--color__success--secondary);
+  }
+
+  /* @keyframes select-item {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.5);
+    }
+  } */
+
+  .textarea {
+    width: 100%;
+    resize: none;
+    height: 200px;
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .textarea:focus {
+    outline: solid medium;
+    outline-color: var(--color__success--primary);
+  }

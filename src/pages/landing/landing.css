@@ -1,4 +1,3 @@
-@import url(../../components/button/button.css);
 @import url(./components/ticker/ticker.css);
 .landing-wrapper {
     display: flex;

@@ -1,0 +1,124 @@
+.modal {
+    height: 100dvh;
+    width: 100dvw;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 1;
+    padding: 5px;
+}
+
+.modal__content {
+    background-color: var(--color__dark--primary);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transform: scale(0.5);
+    transition: all 0.2s ease-in-out;
+    width: fit-content;
+}
+
+.modal__content.active {
+    transform: scale(1);
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-bottom: 80px;
+    position: relative;
+    max-width: 700px;
+}
+
+.dialog__title {
+    color: var(--color__light--primary);
+    font-size: xx-large;
+    word-break: auto-phrase;
+    text-align: start;
+    white-space-collapse: preserve-breaks;
+    text-wrap: balance;
+    word-wrap: break-word;
+    text-align: start;
+    max-width: 100%;
+}
+
+.dialog__list-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: clamp(150px,100%, 600px);
+}
+
+.list-wrap--column {
+    flex-direction: column;
+}
+
+.dialog__button-wrap {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px){
+    .dialog__button-wrap {
+       flex-direction: column-reverse;
+    }
+}
+
+.dialog__info {
+    color: var(--color__light--secondary);
+    text-align: start;
+    font-size: medium;
+    word-break: auto-phrase;
+}
+
+.dialog__error {
+    text-align: center;
+    word-break: auto-phrase;
+    white-space: pre-wrap !important;
+    color: var(--color__warning--primary);
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.dialog__profile-picture {
+    width: 70px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+    border: 3px solid var(--color__success--primary);
+}
+
+.dialog__header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dialog__text {
+    color: var(--color__light--primary);
+    white-space-collapse: preserve-breaks;
+    text-wrap: balance;
+    word-wrap: break-word;
+    text-align: start;
+    max-width: 100%;
+}
+
+.dialog--card {
+    max-width: 400px;
+}

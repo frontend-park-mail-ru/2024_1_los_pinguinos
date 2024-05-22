@@ -1,0 +1,204 @@
+.button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: transparent;
+    border: 2px solid transparent;
+    cursor: pointer;
+    height: 50px;
+    width: fit-content;
+    padding: 0 40px;
+    border-radius: 80px;
+    transition: var(--transition--default);
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button--success {
+    color: var(--color__dark--primary) !important;
+    background-color: var(--color__success--primary);
+}
+
+.button--success:hover {
+    background-color: var(--color__success--secondary);
+}
+
+.button--success:focus {
+    outline-color: var(--color__success--outline);
+}
+
+.button--info {
+    color: var(--color__dark--primary);
+    background-color: var(--color__light--primary);
+}
+
+.button--danger {
+    color: var(--color__light--primary);
+    background-color: var(--color__danger--primary);
+}
+
+.button--danger:hover {
+    background-color: var(--color__danger--secondary);
+}
+
+.button--info:hover {
+    color: var(--color__dark--primary);
+    background-color: var(--color__success--primary);
+}
+
+.button--info:focus {
+    outline-color: var(--color__success--outline);
+}
+
+.button--cancel {
+    color: var(--color__light--primary);
+}
+
+.button--cancel:hover {
+    background-color: var(--color__danger--primary);
+}
+
+.button--link {
+    padding: 0;
+    color: var(--color__light--secondary);
+}
+
+.button--link:hover {
+    opacity: 0.6;
+}
+
+.button--edit {
+    padding: 0;
+    height: auto;
+    color: var(--color__light--primary);
+}
+
+.button--edit:hover {
+    opacity: 0.6;
+}
+
+.button--edit:focus {
+    outline-color: transparent !important;
+}
+.button--edit:active {
+    outline-color: transparent !important;
+}
+
+.button--critical {
+    color: var(--color__light--primary) !important;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.button--critical:hover {
+    background-color: var(--color__danger--primary);
+}
+
+.button--contrast {
+    color: var(--color__light--primary);
+    background-color: var(--color__dark--primary);
+}
+
+.button--contrast:hover {
+    filter: invert(100%);
+}
+
+.button--outline {
+    color: var(--color__light--primary);
+    border: 2px solid;
+    border-color: var(--color__light--primary);
+    padding: 0 20px;
+    height: 40px;
+}
+
+.button--fill {
+    color: var(--color__dark--primary);
+    background-color: var(--color__light--primary);
+    padding: 0 20px;
+    height: 40px;
+}
+
+.button--contrast:hover {
+    filter: invert(100%);
+}
+
+.button--max-width {
+    width: 100%;
+    padding: 0;
+}
+
+.button--warning {
+    color: var(--color__light--primary);
+    background-color: var(--color__warning--primary);
+}
+
+.button--warning:hover {
+    background-color: var(--color__warning--secondary);
+}
+
+.button--round {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 20px;
+  }
+
+.any--disabled {
+    cursor:initial;
+    pointer-events: none;
+    opacity: 0.6;
+    user-select: none;
+} /* move to basic */
+
+.button__label--m {
+    font-size: medium;
+    font-weight: 500;
+}
+
+.button__label--l {
+    font-size: large;
+    font-weight: 600;
+}
+
+.button__label--l1 {
+    font-size: large;
+    font-weight: 500;
+}
+
+.button__label--xl {
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.button__label--xxl {
+    font-size: xx-large;
+    font-weight: 700;
+}
+
+.button--xl {
+    padding: 0 40px;
+    height: 70px;
+}
+
+.button__label--light-primary {
+    color: var(--color__light--primary);
+}
+
+@media only screen and (max-width: 896px) {
+    .button--m {
+        padding: 0 20px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .button--xl {
+        height: 50px;
+        padding: 0 20px;
+    }
+    .button__label--xl {
+        font-size: large;
+    }
+}

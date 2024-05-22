@@ -9,6 +9,7 @@ Tinder frontend repository created by los pinguinos me la van a mascar team
 | **Родион Толкачёв** | [deimos](https://github.com/DeDeimos) | [@tolkachev_r](https://t.me/tolkachev_r) |
 | **Фёдор Долматов** | [roflanpotsan](https://github.com/roflanpotsan) | [@roflanpotsan](https://t.me/roflanpotsan) |
 
-### [Ссылка на production](http://185.241.192.216:8081/)
+### [Ссылка на production](https://jimder.ru)
 ### [Ссылка на figma](https://www.figma.com/file/kCGIr19IeCDG4fVEpxtbjh/Untitled?type=design&node-id=0%3A1&mode=design&t=PmrgDz7tkoWxiQg0-1)
 ### [Ссылка на swagger](http://185.241.192.216:8085/swagger/index.html)
+### [Бэкэнд репозиторий](https://github.com/go-park-mail-ru/2024_1_Los_ping-inos)

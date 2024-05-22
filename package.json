@@ -1,50 +1,63 @@
 {
-  "name": "sport_bro",
-  "version": "1.0.0",
-  "description": "maybe?",
-  "main": "index.js",
-  "scripts": {
-    "test": "test",
-    "start": "npm run build && node server/server.mjs",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --report-unused-disable-directives --max-warnings 0 --fix",
-    "dev": "webpack serve --mode development && nodemon server/server.mjs",
-    "build": "webpack --mode production"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos/issues"
-  },
-  "homepage": "https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos#readme",
-  "dependencies": {
-    "css-minimizer-webpack-plugin": "^6.0.0",
-    "cssnano": "^6.0.1",
-    "daemon": "^1.1.0",
-    "eslint": "^8.57.0",
-    "express": "^4.18.2",
-    "handlebars": "^4.7.8",
-    "handlebars-loader": "^1.7.3",
-    "mini-css-extract-plugin": "^2.8.0",
-    "postcss-import": "^15.1.0",
-    "postcss-preset-env": "^9.4.0"
-  },
-  "devDependencies": {
-    "babel-loader": "^9.1.3",
-    "css-loader": "^6.10.0",
-    "html-loader": "^5.0.0",
-    "html-webpack-plugin": "^5.6.0",
-    "nodemon": "^3.1.0",
-    "sass": "^1.72.0",
-    "sass-loader": "^14.1.1",
-    "style-loader": "^3.3.4",
-    "svg-inline-loader": "^0.8.2",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.2"
-  }
+    "name": "jimder",
+    "version": "1.0.0",
+    "description": "maybe?",
+    "main": "index.ts",
+    "scripts": {
+        "test": "test",
+        "start": "npm run build && node server/server.mjs",
+        "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+        "lint:fix": "eslint . --report-unused-disable-directives --max-warnings 0 --fix",
+        "dev": "webpack serve --mode development && nodemon server/server.mjs",
+        "build": "webpack --mode production"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos/issues"
+    },
+    "homepage": "https://github.com/frontend-park-mail-ru/2024_1_los_pinguinos#readme",
+    "dependencies": {
+        "@babel/plugin-transform-react-jsx": "^7.23.4",
+        "@babel/preset-env": "^7.24.4",
+        "css-minimizer-webpack-plugin": "^6.0.0",
+        "cssnano": "^6.0.1",
+        "daemon": "^1.1.0",
+        "eslint": "^8.57.0",
+        "express": "^4.18.2",
+        "handlebars": "^4.7.8",
+        "handlebars-loader": "^1.7.3",
+        "mini-css-extract-plugin": "^2.8.0",
+        "postcss-import": "^15.1.0",
+        "postcss-preset-env": "^9.4.0"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.24.1",
+        "@babel/preset-typescript": "^7.24.1",
+        "babel-loader": "^9.1.3",
+        "css-loader": "^6.10.0",
+        "eslint-plugin-react": "^7.34.1",
+        "html-loader": "^5.0.0",
+        "html-webpack-plugin": "^5.6.0",
+        "nodemon": "^3.1.0",
+        "sass": "^1.72.0",
+        "sass-loader": "^14.1.1",
+        "style-loader": "^3.3.4",
+        "svg-inline-loader": "^0.8.2",
+        "terser-webpack-plugin": "^5.3.10",
+        "webpack": "^5.91.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.0.4"
+    },
+    "prettier": {
+        "trailingComma": "all",
+        "tabWidth": 4,
+        "semi": true,
+        "singleQuote": true,
+        "printWidth": 80
+    }
 }
