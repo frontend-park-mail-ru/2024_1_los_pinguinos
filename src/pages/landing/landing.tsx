@@ -2,6 +2,12 @@ import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const.js';
 import { ButtonLink } from '../../shared/ui/index';
 
+/**
+ * A Landing component that renders the landing page.
+ *
+ * @function Landing
+ * @returns {JSX.Element} The rendered Landing component.
+ */
 export const Landing = () => {
     return (
         <div className="landing-wrapper">

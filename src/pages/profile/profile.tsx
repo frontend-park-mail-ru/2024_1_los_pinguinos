@@ -10,6 +10,13 @@ import {
     ProfileDelete,
 } from '../../widgets/index';
 import { clsx } from '../../clsx/index';
+
+/**
+ * A Profile page component that renders the profile and settings sections.
+ *
+ * @function Profile
+ * @returns {JSX.Element} The rendered Profile component.
+ */
 export const Profile = () => {
     const [profileState, setState] = useState(0);
     const [title, setTitle] = useState('Профиль');
