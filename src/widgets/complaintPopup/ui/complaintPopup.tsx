@@ -26,9 +26,6 @@ const ComplaintPopup = ({
             setComplaintTypes([]);
         }
     };
-    useEffect(() => {
-        console.log(complaintTypes, 'types');
-    }, [complaintTypes]);
     if (!complaintTypes.length) getTypes();
     return (
         <Modal active={active} setActive={setActive}>

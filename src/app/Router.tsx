@@ -1,7 +1,17 @@
-import { useEffect, useState } from '../reactor/index';
+import { IFunctionalComponent, useEffect, useState } from '../reactor/index';
 import Layout from '../pages/layout/layout';
 import { store } from './app';
 import { updateBackground } from '../shared/lib/index';
+
+/**
+ * Interface representing a route in the application.
+ *
+ * @interface IRoute
+ * @property {string} path - The path of the route.
+ * @property {IFunctionalComponent<any>} component - The component to render for the route.
+ * @property {boolean} [isSecure] - Indicates if the route requires authentication.
+ * @property {any} [props] - Additional properties for the route.
+ */
 export interface IRoute {
     path: string;
     component: any;
@@ -9,10 +19,25 @@ export interface IRoute {
     props?: any;
 }
 
+/**
+ * Route component that renders the component associated with the path
+ * if it matches the current window location pathname.
+ *
+ * @function Route
+ * @param {IRoute} props - The properties of the route.
+ * @returns {JSX.Element | null} The component to render or null if the path does not match.
+ */
 export const Route = ({ path, component }: IRoute) => {
     return path === window.location.pathname ? component : null;
 };
 
+/**
+ * Router component that handles navigation and rendering of routes.
+ *
+ * @function Router
+ * @param {IFunctionalComponent<any>[]} routes - The routes passed to the Router component.
+ * @returns {JSX.Element | null} The rendered route component or null if no matching route is found.
+ */
 export const Router = ({ children: routes }: any) => {
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
     const authStatus = store.getState().authStatus;
@@ -60,11 +85,23 @@ export const Router = ({ children: routes }: any) => {
     ) : null;
 };
 
+/**
+ * Navigates to a new URL by pushing a new state to the history stack.
+ *
+ * @function navigateTo
+ * @param {string} url - The URL to navigate to.
+ */
 export const navigateTo = (url: string) => {
     history.pushState(null, '', url);
     window.dispatchEvent(new Event('popstate'));
 };
 
+/**
+ * Redirects to a new URL by replacing the current state in the history stack.
+ *
+ * @function redirectTo
+ * @param {string} url - The URL to redirect to.
+ */
 export const redirectTo = (url: string) => {
     history.replaceState(null, '', url);
     window.dispatchEvent(new Event('popstate'));

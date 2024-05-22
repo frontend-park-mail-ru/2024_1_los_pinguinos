@@ -22,7 +22,6 @@ const initialState = {
 export const userReducer = (state = initialState, action: Action) => {
     let key = '';
     let value = null;
-    // console.log(action.payload);
     if (action.payload) {
         key = Object.keys(action.payload)[0];
         value = action.payload[key];
