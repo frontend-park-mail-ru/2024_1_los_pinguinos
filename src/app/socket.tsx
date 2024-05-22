@@ -9,7 +9,19 @@ export type Message = {
 
 let sharedSocket: WebSocket | null = null;
 
+/**
+ * 
+ * @param { any } WrappedComponent - Компонент, к которому добавляется WebSocket
+ * @param { string } url - URL для WebSocket
+ * @returns { any } - Возвращает компонент с WebSocket
+ */
 const withWebSocket = (WrappedComponent: any, url: string) => {
+
+    /**
+     * { any } props - Пропсы компонента
+     * @returns { any } - Возвращает JSX с компонентом
+     */
+
     return function WithWebSocket(props: any) {
         const [socket, setSocket] = useState<WebSocket | null>(null);
 
@@ -31,12 +43,22 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
             };
         }, [url]);
 
+
+        /**
+         * Отправляет сообщение по веб-сокету
+         * @param { Message } message - Сообщение для отправки
+         * @returns { void } - Ничего не возвращает
+         */
         const sendMessage = (message: Message) => {
             if (socket) {
                 socket.send(JSON.stringify(message));
             }
         }; 
 
+        /**
+         * Закрывает сокет
+         * @returns { void } - Ничего не возвращает
+         */
         const closeSocket = () => {
             if (socket) {
                 socket.close();
@@ -46,6 +68,11 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
         }
 
         useEffect(() => {
+            /**
+             * Обработчик сообщений
+             * @param { MessageEvent } event - Событие сообщения
+             * @returns { void } - Ничего не возвращает
+             */
             const handleMessage  = (event: MessageEvent) => {
                 const message: Message = JSON.parse(event.data);
                 
@@ -66,7 +93,6 @@ const withWebSocket = (WrappedComponent: any, url: string) => {
 
         }, [socket]);
 
-        console.log(typeof WrappedComponent);
 
         if (typeof WrappedComponent === 'function') {
             // Передаем пропсы напрямую

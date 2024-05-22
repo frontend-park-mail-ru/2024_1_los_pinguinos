@@ -1,6 +1,10 @@
 import { useEffect, useState } from '../../../reactor/index';
 import { ButtonLink } from '../../../shared/ui/index';
 
+/**
+ * Компонент хедера
+ * @returns { JSX.Element } - Возвращает JSX-разметку хедера
+ */
 const Header = () => {
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
     

@@ -2,8 +2,13 @@ import { useEffect, useState } from '../../../reactor';
 import withWebSocket from '../../../app/socket';
 import { getMessages } from '../../../features/chat/api';
 import { store } from '../../../app/app';
-import { Button } from '../../../shared/ui';
 
+/**
+ * Компонент сообщений чата
+ * @param { WebSocket } socket - Сокет
+ * @param { Function } setSocket - Функция установки сокета
+ * @returns { JSX.Element } - Возвращает JSX-разметку сообщений чата
+ */
 const ChatMessages = ({ socket, setSocket }) => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
@@ -36,7 +41,6 @@ const ChatMessages = ({ socket, setSocket }) => {
     }, []);
 
     useEffect(() => {
-        // console.log('currentChat', currentChat);
         if (!currentChat) {
             return;
         }
@@ -122,12 +126,6 @@ const ChatMessages = ({ socket, setSocket }) => {
                     time: new Date().getTime(),
                 }),
             );
-            // console.log({
-            //     data: message,
-            //     sender: store.getState().id,
-            //     receiver: currentChat,
-            //     time: new Date().getTime(),
-            // });
             setMessage('');
             const input = document.querySelector('.chatMessages__input__field');
             if (input) {
@@ -152,17 +150,6 @@ const ChatMessages = ({ socket, setSocket }) => {
                         {currentChatName}
                     </p>
                 </div>
-                {/* <button
-                    onClick={() => {
-                        store.dispatch({
-                            type: 'UPDATE_CURRENT_CHAT',
-                            payload: null,
-                        });
-                    }}
-                    className="chatMessages__header__button"
-                >
-                    Назад
-                </button> */}
             </div>
             <div className="chatMessages__list">
                 {messages.map((message) => {

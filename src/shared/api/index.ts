@@ -1,4 +1,14 @@
 import { store } from '../../app/app';
+
+/**
+ * Шаблон для отправки запроса на сервер
+ * @param { string } baseUrl - Базовый URL
+ * @param { string } url - URL запроса
+ * @param { string } method - Метод запроса
+ * @param { any } body - Тело запроса
+ * @param { boolean } file - Файл
+ * @returns { Promise<T> } - Возвращает промис с ответом от сервера
+ */
 export async function sendRequest<T>(
     baseUrl: string,
     url: string,

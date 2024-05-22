@@ -5,9 +5,11 @@ import { store } from '../../../app/app';
 import { useState, useEffect } from '../../../reactor/index';
 import ComplaintPopup from '../../complaintPopup/ui/complaintPopup';
 
+/**
+ * Виджет управления карточками
+ * @returns {JSX.Element} Виджет управления карточками
+ */
 const CardControllers = () => {
-    // const [discard, setDiscard] = useState(false);
-    // const currentCard = store.getState().currentCard;
     const [active, setActive] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [counter, setCounter] = useState(0);
@@ -21,6 +23,11 @@ const CardControllers = () => {
         console.log('ACTIVE SET');
     }, [disabled]);
 
+    /**
+     * Получить текущую карточку
+     * @returns {number} Идентификатор текущей карточки
+     * @returns {null} null
+     */
     const getCurrent = () => {
         const cards = document.querySelectorAll('.card');
         if (cards.length === 0) {
@@ -38,6 +45,10 @@ const CardControllers = () => {
         setTimeout(() => getCurrent(), 1500);
     }, [counter]);
 
+    /**
+     * Обработчик нажатия кнопки "Лайк"
+     * @returns {void}
+     */
     const handleLike = async () => {
         const currentCard = getCurrent();
         if (!currentCard) return;
@@ -64,6 +75,11 @@ const CardControllers = () => {
 
     const [complete, setComplete] = useState(true);
     const [popupError, setPopupError] = useState('');
+    /**
+     * Обработчик кнопки "Пожаловаться"
+     * @param {number} complaintId - Идентификатор жалобы
+     * @returns {void}
+     */
     const handleComplaint = async (complaintId = 1) => {
         setPopupError('');
         const currentCard = getCurrent();
@@ -89,6 +105,10 @@ const CardControllers = () => {
         currentcard.remove();
     };
 
+    /**
+     * Обработчик кнопки "Дизлайк"
+     * @returns {void}
+     */
     const handleDislike = async () => {
         const currentCard = getCurrent();
         if (!currentCard) return;

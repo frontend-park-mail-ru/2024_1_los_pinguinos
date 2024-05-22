@@ -1,11 +1,13 @@
 import { useEffect, useState } from '../../../reactor';
-import { Link } from '../../../shared/routing/link';
-import { NavItem } from './navitem';
-import { getChats } from '../../../features/chat/api';
 import { store } from '../../../app/app';
 import withWebSocket from '../../../app/socket';
 import ChatList from '../../../features/chat/ui/chatlist';
 
+/**
+ * Компонент навбара для десктопной версии
+ * @param { Function } closeSocket - Функция закрытия сокета
+ * @returns { JSX.Element } - Возвращает JSX-разметку навбара
+ */
 const Navbar = ({ closeSocket }) => {
     const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const user = store.getState();

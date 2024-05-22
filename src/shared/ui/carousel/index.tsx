@@ -1,6 +1,11 @@
 import { useState } from '../../../reactor';
 import { Person } from '../../../entities/person/model/index';
 
+/**
+ * Компонент карусели для фотографий
+ * @param { Person } person - Данные пользователя
+ * @returns { JSX.Element } - Возвращает JSX-разметку карусели
+ */
 const Carousel = ({ person }: { person: Person }) => {
     const defaultImage = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const [current, setCurrent] = useState(0);
@@ -12,9 +17,11 @@ const Carousel = ({ person }: { person: Person }) => {
     const currentCard = document.getElementById(`card-${person.id}`);
     const imageSlides = currentCard?.getElementsByClassName('slide-image');
 
-    console.log('images', images);
-    console.log('imageSlides', imageSlides);
-
+    /**
+     * Переключение на следующее изображение
+     * @param { any } e - Событие клика
+     * @returns { void } - Ничего не возвращает
+     */
     const nextImage = (e: any) => {
         e.stopPropagation();
         console.log('nextImage');
@@ -24,6 +31,11 @@ const Carousel = ({ person }: { person: Person }) => {
         setCurrent(newIndex);
     };
 
+    /**
+     * Переключение на предыдущее изображение
+     * @param { any } e - Событие клика
+     * @returns { void } - Ничего не возвращает
+     */
     const prevImage = (e: any) => {
         e.stopPropagation();
         console.log('prevImage');
@@ -32,19 +44,6 @@ const Carousel = ({ person }: { person: Person }) => {
         imageSlides[newIndex].className = 'slide-image rightIn';
         setCurrent(newIndex);
     };
-
-    // const jumpImage = (e: any) => {
-    //     let jumpIndex = parseInt(e.target.id);
-    //     if (jumpIndex === current) return;
-    //     if (jumpIndex - current >= 0) {
-    //         imageSlides[current].className = 'slide-image leftOut';
-    //         imageSlides[jumpIndex].className = 'slide-image leftIn';
-    //     } else {
-    //         imageSlides[current].className = 'slide-image rightOut';
-    //         imageSlides[jumpIndex].className = 'slide-image rightIn';
-    //     }
-    //     setCurrent(jumpIndex);
-    // };
 
     return (
         <div className="gallery-container">
@@ -67,11 +66,9 @@ const Carousel = ({ person }: { person: Person }) => {
                             style={
                                 index === 0
                                     ? {
-                                        //   backgroundImage: `url(${image})`,
                                           transform: 'translateX(0%)',
                                       }
                                     : {
-                                        //   backgroundImage: `url(${image})`,
                                           transform: 'translateX(100%)',
                                       }
                             }

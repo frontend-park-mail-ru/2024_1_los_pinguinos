@@ -1,6 +1,10 @@
 import ChatMessages from '../../widgets/chatMessages';
 import ChatNavbar from '../../widgets/chatList'
 
+/**
+ * Компонент страницы чатов
+ * @return {JSX.Element} ChatPage component
+ */
 const ChatPage = () => {
 
     return (

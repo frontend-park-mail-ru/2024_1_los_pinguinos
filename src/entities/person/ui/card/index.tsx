@@ -11,6 +11,11 @@ type StartPoint = {
     y: number;
 } | null;
 
+/**
+ * Smart-компонент карточки
+ * @param { Person } person - Данные пользователя
+ * @returns { JSX.Element } - Возвращает JSX-разметку карточки
+ */
 const Card = ({ person }: { person: Person }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const [startPoint, setStartPoint] = useState<StartPoint>({
@@ -21,7 +26,11 @@ const Card = ({ person }: { person: Person }) => {
         x: 0,
         y: 0,
     });
-    // console.log('person', person);
+    /**
+     * Обработчик нажатия на карточку
+     * @param { any } event - Событие нажатия
+     * @returns { void } - Ничего не возвращает
+     */
     function onPointerDown({ clientX, clientY }: any) {
         setStartPoint({ x: clientX, y: clientY });
 
@@ -31,6 +40,11 @@ const Card = ({ person }: { person: Person }) => {
         card?.addEventListener('pointerleave', onPointerUp);
     }
 
+    /**
+     * Обработчик движения карточки
+     * @param { any } event - Событие движения
+     * @returns { void } - Ничего не возвращает
+     */
     function onPointerMove({ clientX, clientY }: any) {
         if (!startPoint) {
             return;
@@ -44,6 +58,14 @@ const Card = ({ person }: { person: Person }) => {
         );
     }
 
+    /**
+     * Обработчик изменения карточки
+     * @param { number } x - Координата x
+     * @param { number } y - Координата y
+     * @param { number } rotate - Угол поворота
+     * @param { number } duration - Длительность анимации
+     * @returns { void } - Ничего не возвращает
+     */
     function setTransform(
         x: number,
         y: number,
@@ -58,6 +80,10 @@ const Card = ({ person }: { person: Person }) => {
         }
     }
 
+    /**
+     * Обработчик поднятия нажатия с карточки
+     * @returns { void } - Ничего не возвращает
+     */
     function onPointerUp() {
         if (!startPoint) {
             return;
@@ -83,6 +109,10 @@ const Card = ({ person }: { person: Person }) => {
         }
     }
 
+    /**
+     * Обработчик завершения анимации
+     * @returns { void } - Ничего не возвращает
+     */
     function complete() {
         const flyX = (Math.abs(movePoint!.x) / movePoint!.x) * innerWidth * 1.3;
         const flyY = (movePoint!.y / movePoint!.x) * flyX;
@@ -94,6 +124,10 @@ const Card = ({ person }: { person: Person }) => {
         }, innerWidth);
     }
 
+    /**
+     * Обработчик отмены анимации
+     * @returns { void } - Ничего не возвращает
+     */
     function cancel() {
         setTransform(0, 0, 0, 100);
         const card = document.getElementById(`card-${person.id}`);

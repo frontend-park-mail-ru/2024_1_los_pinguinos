@@ -1,15 +1,11 @@
 import { useEffect, useState } from '../../../reactor';
-import { Link } from '../../../shared/routing/link';
-import { getChats } from '../../../features/chat/api';
 import { store } from '../../../app/app';
 import Chatlist from '../../../features/chat/ui/chatlist';
-
+/**
+ * Компонент навигации по чатам
+ * @returns { JSX.Element } - Возвращает JSX-разметку навигации по чатам
+ */
 const ChatNavbar = () => {
-    // const [search, setSearch] = useState('');
-    // const [chats, setChats] = useState([]);
-    // const [ws, setWs] = useState<WebSocket | null>(null);
-    // const user = store.getState();
-
     const [width, setWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -42,55 +38,6 @@ const ChatNavbar = () => {
             return;
         }
     }, [currentChat]);
-
-    // useEffect(() => {
-    //     store.subscribe(() => {
-    //         const state = store.getState();
-    //         console.log(state);
-    //     });
-    // }, []);
-
-    // useEffect(() => {
-    //     const socket = new WebSocket(
-    //         `wss://api.jimder.ru/api/v1/openConnection?uid=${user.id}`,
-    //     );
-
-    //     socket.onopen = () => {
-    //         console.log('Connected');
-    //         setWs(socket);
-    //     };
-
-    //     socket.onclose = () => {
-    //         console.log('Disconnected');
-    //     };
-
-    //     return () => {
-    //         socket.close();
-    //     };
-    // }, []);
-
-    // useEffect(() => {
-    //     if (ws) {
-    //         ws.onmessage = (e) => {
-    //             console.log(e.data);
-    //             const newMessage = JSON.parse(e.data);
-
-    //         };
-    //     }
-    // }, [ws]);
-
-    // useEffect(() => {
-    //     getChats()
-    //         .then((data) => {
-    //             console.log(data.chats);
-    //             setChats(data.chats);
-    //         })
-    //         .catch((error) => {
-    //             console.error(error);
-    //         });
-    // }, []);
-
-    // const [activeChat, setActiveChat] = useState(null);
 
     return (
         <div

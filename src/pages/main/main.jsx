@@ -2,6 +2,10 @@
 import CardControllers from '../../widgets/cardControllers';
 import CardsList from '../../widgets/cardsList/ui';
 
+/**
+ * Компонент главной страницы
+ * @returns {JSX.Element} Главная страница
+ */
 const Mainpage = () => {
     return (
         <div className="main">
