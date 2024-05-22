@@ -17,9 +17,24 @@ import { userReducer } from '../entities/person/model/reducer';
 import { useState } from '../reactor/index';
 export const store = createStore(userReducer);
 
+/**
+ * Main application component that handles service worker registration,
+ * updates, and routing.
+ *
+ * @function App
+ * @returns {JSX.Element} The main application component.
+ */
 const App = () => {
     const [active, setActive] = useState(false);
     const [reloadCallback, setCallback] = useState(() => {});
+
+    /**
+     * Shows the refresh UI by setting a callback to handle the service worker
+     * update.
+     *
+     * @function showRefreshUI
+     * @param {ServiceWorkerRegistration} registration - The service worker registration.
+     */
     const showRefreshUI = (registration: ServiceWorkerRegistration) => {
         setCallback(() => {
             return () => {
@@ -34,6 +49,14 @@ const App = () => {
         setActive(true);
     };
 
+    /**
+     * Handles new service worker state changes and invokes the provided callback
+     * when a new service worker is installed.
+     *
+     * @function onNewServiceWorker
+     * @param {ServiceWorkerRegistration} registration - The service worker registration.
+     * @param {Function} callback - The callback function to invoke when a new service worker is installed.
+     */
     const onNewServiceWorker = (
         registration: ServiceWorkerRegistration,
         callback: Function,

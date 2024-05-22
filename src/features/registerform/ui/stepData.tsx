@@ -41,7 +41,6 @@ const StepData = ({
             setError: setStepError,
             errorMessage: 'Введите полные Имя (Фамилию).',
         });
-        // console.log(nameError);
         return () => {};
     }, [nameError]);
     useEffect(() => {
