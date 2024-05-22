@@ -4,6 +4,11 @@ import { getChats } from '../api';
 import { store } from '../../../app/app';
 import withWebSocket from '../../../app/socket';
 
+/**
+ * Компонент списка чатов
+ * @param { WebSocket } socket - Сокет
+ * @returns { JSX.Element } - Возвращает JSX-разметку списка чатов
+ */
 const ChatList = ({ socket }) => {
     const [chats, setChats] = useState([]);
     const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
@@ -77,6 +82,11 @@ const ChatList = ({ socket }) => {
         };
     }, [socket]);
 
+    /**
+     * Обработчик нового сообщения
+     * @param { Event } event - Событие
+     * @returns { void }
+     */
     const handleMessage = (event) => {
         const newMessage = JSON.parse(event.data);
         console.log("new message in ChatList", newMessage);

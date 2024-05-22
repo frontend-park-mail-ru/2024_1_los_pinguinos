@@ -3,6 +3,13 @@ import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/router';
 import { timeAgo } from '../../../shared/lib';
 
+/**
+ * Компонент элемента чата
+ * @param { Object } chat - Чат
+ * @param { Object } activeChat - Активный чат
+ * @param { Function } setActiveChat - Функция установки активного чата
+ * @returns { JSX.Element } - Возвращает JSX-разметку элемента чата
+ */
 export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
     const [error, setError] = useState(false);
 
