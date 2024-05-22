@@ -1,17 +1,8 @@
-import { IFunctionalComponent, useEffect, useState } from '../reactor/index';
+import { useEffect, useState } from '../reactor/index';
 import Layout from '../pages/layout/layout';
 import { store } from './app';
 import { updateBackground } from '../shared/lib/index';
 
-/**
- * Interface representing a route in the application.
- *
- * @interface IRoute
- * @property {string} path - The path of the route.
- * @property {IFunctionalComponent<any>} component - The component to render for the route.
- * @property {boolean} [isSecure] - Indicates if the route requires authentication.
- * @property {any} [props] - Additional properties for the route.
- */
 export interface IRoute {
     path: string;
     component: any;
@@ -35,7 +26,7 @@ export const Route = ({ path, component }: IRoute) => {
  * Router component that handles navigation and rendering of routes.
  *
  * @function Router
- * @param {IFunctionalComponent<any>[]} routes - The routes passed to the Router component.
+ * @param {IRoute<any>[]} routes - The routes passed to the Router component.
  * @returns {JSX.Element | null} The rendered route component or null if no matching route is found.
  */
 export const Router = ({ children: routes }: any) => {
