@@ -12,6 +12,14 @@ interface TEmailStep extends IStep {
     setEmail: (event: any) => void;
     email: string;
 }
+
+/**
+ * A StepEmail component that renders the step for entering the user's email.
+ *
+ * @function StepEmail
+ * @param {TEmailStep} props - The properties of the step email component.
+ * @returns {JSX.Element} The rendered step email component.
+ */
 const StepEmail = ({
     onNavigateForward,
     setEmail,
@@ -44,6 +52,7 @@ const StepEmail = ({
             }
         }
     };
+
     return (
         <div className={clsx('form__step', !display && 'any--none')}>
             <div className="form__header">

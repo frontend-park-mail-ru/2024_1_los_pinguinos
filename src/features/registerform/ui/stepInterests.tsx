@@ -7,6 +7,14 @@ interface TInterestsStep extends IStep {
     setInterests: (event: any) => void;
     interests: string[];
 }
+
+/**
+ * A StepInterests component that renders the step for entering user interests.
+ *
+ * @function StepInterests
+ * @param {TInterestsStep} props - The properties of the step interests component.
+ * @returns {JSX.Element} The rendered step interests component.
+ */
 const StepInterests = ({
     display,
     onNavigateBack,
@@ -27,6 +35,7 @@ const StepInterests = ({
         }
         if (onNavigateForward) onNavigateForward();
     };
+
     return (
         <div className={clsx('form__step', !display && 'any--none')}>
             <div className="form__header">

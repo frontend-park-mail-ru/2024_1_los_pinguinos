@@ -7,6 +7,12 @@ import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
 import { clsx } from '../../../clsx/index';
 
+/**
+ * A LoginForm component that renders a login form.
+ *
+ * @function LoginForm
+ * @returns {JSX.Element} The rendered login form component.
+ */
 export const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');

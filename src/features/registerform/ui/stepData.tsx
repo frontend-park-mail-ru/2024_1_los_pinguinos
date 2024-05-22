@@ -15,6 +15,13 @@ interface TDataStep extends IStep {
     gender: string;
 }
 
+/**
+ * A StepData component that renders the step for entering user data.
+ *
+ * @function StepData
+ * @param {TDataStep} props - The properties of the step data component.
+ * @returns {JSX.Element} The rendered step data component.
+ */
 const StepData = ({
     onNavigateBack,
     onNavigateForward,
@@ -76,6 +83,7 @@ const StepData = ({
             });
         }
     };
+
     return (
         <div className={clsx('form__step', !display && 'any--none')}>
             <div className="form__header">

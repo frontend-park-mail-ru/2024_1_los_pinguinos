@@ -8,6 +8,12 @@ import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
 import { clsx } from '../../../clsx';
 
+/**
+ * A RegisterForm component that renders a registration form.
+ *
+ * @function RegisterForm
+ * @returns {JSX.Element} The rendered registration form component.
+ */
 const RegisterForm = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -35,6 +41,12 @@ const RegisterForm = () => {
         setStep((step) => step + 1);
     };
 
+    /**
+     * Handles the form submission for registration.
+     *
+     * @function handleSubmit
+     * @param {any} event - The form submission event.
+     */
     async function handleSubmit(event: any) {
         event.preventDefault();
         setFormError('');

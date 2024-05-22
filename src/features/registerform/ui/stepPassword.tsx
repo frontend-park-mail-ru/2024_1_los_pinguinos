@@ -6,6 +6,14 @@ interface TPasswordStep extends IStep {
     setPassword: (event: any) => void;
     password: string;
 }
+
+/**
+ * A StepPassword component that renders the step for entering the user's password.
+ *
+ * @function StepPassword
+ * @param {TPasswordStep} props - The properties of the step password component.
+ * @returns {JSX.Element} The rendered step password component.
+ */
 const StepPassword = ({
     onNavigateForward,
     onNavigateBack,
@@ -38,6 +46,7 @@ const StepPassword = ({
             return;
         }
     };
+
     return (
         <div className={clsx('form__step', !display && 'any--none')}>
             <div className="form__header">
