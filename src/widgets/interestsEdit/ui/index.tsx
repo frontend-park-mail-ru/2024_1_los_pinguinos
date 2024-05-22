@@ -5,6 +5,12 @@ import { store } from '../../../app/app';
 import { updateInterests } from '../../../entities/session/api/index';
 import { clsx } from '../../../clsx';
 
+/**
+ * A InterestsEdit component that renders a form for editing the user's interests.
+ *
+ * @function InterestsEdit
+ * @returns {JSX.Element} The rendered interests edit component.
+ */
 const InterestsEdit = () => {
     const userInterests = Array.from(
         store.getState().interests ? store.getState().interests : [],
@@ -29,6 +35,11 @@ const InterestsEdit = () => {
         }
     }, [selectedInterests]);
 
+    /**
+     * Handles the save action for updating the interests.
+     *
+     * @function handleSave
+     */
     async function handleSave() {
         if (!interestsEmpty) {
             setFormError('');

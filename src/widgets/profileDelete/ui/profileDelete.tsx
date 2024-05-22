@@ -5,9 +5,21 @@ import { ConfirmationPopup } from '../../index';
 import { store } from '../../../app/app';
 import { redirectTo } from '../../../app/router';
 
+/**
+ * A ProfileDelete component that renders a button to delete the user's profile.
+ *
+ * @function ProfileDelete
+ * @returns {JSX.Element} The rendered profile delete component.
+ */
 const ProfileDelete = () => {
     const [active, setActive] = useState(false);
     const [popupError, setPopupError] = useState('');
+
+    /**
+     * Handles the profile deletion process.
+     *
+     * @function handleDelete
+     */
     async function handleDelete() {
         try {
             setPopupError('');
@@ -20,6 +32,7 @@ const ProfileDelete = () => {
             setPopupError('Что-то пошло не так');
         }
     }
+
     return (
         <div>
             <Button

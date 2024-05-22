@@ -5,6 +5,12 @@ import { updateName } from '../../../entities/session/api/index';
 import { store } from '../../../app/app';
 import { clsx } from '../../../clsx/index';
 
+/**
+ * A NameEdit component that renders a form for editing the user's name.
+ *
+ * @function NameEdit
+ * @returns {JSX.Element} The rendered name edit component.
+ */
 const NameEdit = () => {
     const userName = store.getState().name;
     const [active, setActive] = useState(false);
@@ -25,6 +31,11 @@ const NameEdit = () => {
         return () => {};
     }, [nameError]);
 
+    /**
+     * Handles the save action for updating the name.
+     *
+     * @function handleSave
+     */
     async function handleSave() {
         if (!nameError) {
             try {

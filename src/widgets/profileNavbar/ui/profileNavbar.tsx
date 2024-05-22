@@ -6,9 +6,22 @@ import { redirectTo } from '../../../app/router';
 import { logout } from '../../../entities/session/api/index';
 import { clsx } from '../../../clsx/index';
 
+/**
+ * A ProfileNavbar component that renders the navigation bar for the profile page.
+ *
+ * @function ProfileNavbar
+ * @param {any} props - The properties of the profile navbar component.
+ * @returns {JSX.Element} The rendered profile navbar component.
+ */
 const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
     const [active, setActive] = useState(false);
     const [popupError, setPopupError] = useState('');
+
+    /**
+     * Handles the logout process.
+     *
+     * @function handleLogout
+     */
     async function handleLogout() {
         try {
             setPopupError('');
@@ -21,6 +34,7 @@ const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
             setPopupError('Что-то пошло не так');
         }
     }
+
     return (
         <div className="profile__navbar-wrapper">
             <h1 className="profile__text profile__text--title navbar__text">

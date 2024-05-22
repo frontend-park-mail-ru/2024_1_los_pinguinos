@@ -23,7 +23,7 @@ const MatchesList = () => {
     useEffect(() => {
         const id = setTimeout(() => {
             getMatch(searchName);
-        }, 200);
+        }, 500);
         return () => {
             clearTimeout(id);
         };

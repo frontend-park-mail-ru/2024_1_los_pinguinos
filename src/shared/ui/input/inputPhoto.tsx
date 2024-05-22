@@ -14,6 +14,13 @@ export type TInputPhoto = {
 
 export type TAccept = 'image/*';
 
+/**
+ * Renders an input component for uploading photos with various properties.
+ *
+ * @function InputPhoto
+ * @param {TInputPhoto} props - The properties of the photo input component.
+ * @returns {JSX.Element} The rendered photo input component.
+ */
 export const InputPhoto = ({
     accept,
     onUpload,

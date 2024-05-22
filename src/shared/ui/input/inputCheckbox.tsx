@@ -16,6 +16,13 @@ export type TInputCheckbox = {
     id?: string | number;
 };
 
+/**
+ * Renders a checkbox input component with various properties.
+ *
+ * @function InputCheckbox
+ * @param {TInputCheckbox} props - The properties of the checkbox component.
+ * @returns {JSX.Element} The rendered checkbox component.
+ */
 export const InputCheckbox = ({
     autofocus,
     label,

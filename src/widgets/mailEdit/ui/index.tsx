@@ -4,6 +4,13 @@ import { updateFormError, validateInput } from '../../../shared/lib';
 import { updateEmail } from '../../../entities/session/api';
 import { store } from '../../../app/app';
 import { clsx } from '../../../clsx';
+
+/**
+ * A MailEdit component that renders a form for editing the user's email.
+ *
+ * @function MailEdit
+ * @returns {JSX.Element} The rendered mail edit component.
+ */
 const MailEdit = () => {
     const userEmail = store.getState().email;
     const [active, setActive] = useState(false);
@@ -26,6 +33,11 @@ const MailEdit = () => {
         return () => {};
     }, [mailError]);
 
+    /**
+     * Handles the save action for updating the email.
+     *
+     * @function handleSave
+     */
     async function handleSave() {
         if (!email || !password) {
             if (!email) {

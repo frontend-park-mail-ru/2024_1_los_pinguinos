@@ -3,6 +3,12 @@ import { useState } from '../../../reactor/index';
 import { uploadImage, deleteImage } from '../../../features/image/api';
 import { store } from '../../../app/app';
 
+/**
+ * A ProfilePhotoWidget component that renders a widget for uploading and managing profile photos.
+ *
+ * @function ProfilePhotoWidget
+ * @returns {JSX.Element} The rendered profile photo widget.
+ */
 const ProfilePhotoWidget = () => {
     const userPhotos = store.getState().photos;
     const cells: any = Array.from({ length: 5 }, (_, index: number) => {
@@ -18,6 +24,14 @@ const ProfilePhotoWidget = () => {
         ];
     });
     const [enabledCellId, setEnabledCell] = useState(0);
+
+    /**
+     * Handles the upload of a photo.
+     *
+     * @function processUpload
+     * @param {number} index - The index of the photo cell.
+     * @returns {Function} The function to handle the file upload.
+     */
     const processUpload = (index: number) => {
         return (file: any) => {
             cells[index][1][1](true);
@@ -39,12 +53,28 @@ const ProfilePhotoWidget = () => {
             });
         };
     };
+
+    /**
+     * Handles the load event of a photo.
+     *
+     * @function processLoad
+     * @param {number} index - The index of the photo cell.
+     * @returns {Function} The function to handle the load event.
+     */
     const processLoad = (index: number) => {
         return () => {
             cells[index][1][1](false);
             processEnableNext();
         };
     };
+
+    /**
+     * Handles the deletion of a photo.
+     *
+     * @function processDelete
+     * @param {number} index - The index of the photo cell.
+     * @returns {Function} The function to handle the delete event.
+     */
     const processDelete = (index: number) => {
         return async () => {
             try {
@@ -64,6 +94,12 @@ const ProfilePhotoWidget = () => {
             }
         };
     };
+
+    /**
+     * Enables the next photo cell for upload.
+     *
+     * @function processEnableNext
+     */
     const processEnableNext = () => {
         for (let index = 0; index < cells.length; index++) {
             if (!cells[index][0][0]) {

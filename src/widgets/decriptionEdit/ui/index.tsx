@@ -4,6 +4,12 @@ import { updateDescription } from '../../../entities/session/api';
 import { store } from '../../../app/app';
 import { clsx } from '../../../clsx';
 
+/**
+ * A DescriptionEdit component that renders a form for editing the user's description.
+ *
+ * @function DescriptionEdit
+ * @returns {JSX.Element} The rendered description edit component.
+ */
 const DescriptionEdit = () => {
     const userDescription = store.getState().description;
     const [active, setActive] = useState(false);
@@ -14,6 +20,12 @@ const DescriptionEdit = () => {
     useEffect(() => {
         setCurrentDescription(currentDescription);
     }, [currentDescription]);
+
+    /**
+     * Handles the save action for updating the description.
+     *
+     * @function handleSave
+     */
     async function handleSave() {
         try {
             const response = await updateDescription(currentDescription);

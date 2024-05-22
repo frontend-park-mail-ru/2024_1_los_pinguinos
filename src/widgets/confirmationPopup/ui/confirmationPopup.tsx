@@ -13,6 +13,13 @@ export interface IConfirmationPopup {
     forced?: boolean;
 }
 
+/**
+ * A ConfirmationPopup component that renders a modal for confirming actions.
+ *
+ * @function ConfirmationPopup
+ * @param {IConfirmationPopup} props - The properties of the confirmation popup component.
+ * @returns {JSX.Element} The rendered confirmation popup component.
+ */
 const ConfirmationPopup = ({
     active,
     setActive,

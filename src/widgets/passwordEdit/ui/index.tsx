@@ -4,6 +4,12 @@ import { updateFormError, validateInput } from '../../../shared/lib/index';
 import { updatePassword } from '../../../entities/session/api/index';
 import { clsx } from '../../../clsx/index';
 
+/**
+ * A PasswordEdit component that renders a form for editing the user's password.
+ *
+ * @function PasswordEdit
+ * @returns {JSX.Element} The rendered password edit component.
+ */
 const PasswordEdit = () => {
     const [active, setActive] = useState(false);
     const [passwordError, setPasswordError] = useState('');
@@ -24,6 +30,11 @@ const PasswordEdit = () => {
         return () => {};
     }, [passwordError]);
 
+    /**
+     * Handles the save action for updating the password.
+     *
+     * @function handleSave
+     */
     async function handleSave() {
         if (!password || !oldPassword) {
             if (!password) {

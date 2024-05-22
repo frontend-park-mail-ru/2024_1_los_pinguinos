@@ -40,6 +40,13 @@ export type TInputType =
     | 'number'
     | 'hidden';
 
+/**
+ * Renders an input component with various properties.
+ *
+ * @function Input
+ * @param {TInput} props - The properties of the input component.
+ * @returns {JSX.Element} The rendered input component.
+ */
 export const Input = ({
     autofocus,
     autocomplete,

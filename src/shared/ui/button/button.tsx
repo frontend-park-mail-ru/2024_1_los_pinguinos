@@ -27,6 +27,13 @@ export type TSeverity =
     | 'fill'
     | 'outline';
 
+/**
+ * A Button component that renders a styled button with optional severity, size, font size, icon, and label.
+ *
+ * @function Button
+ * @param {TButton} props - The properties of the button component.
+ * @returns {JSX.Element} The rendered button component.
+ */
 export const Button = ({
     label,
     icon,

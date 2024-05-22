@@ -17,6 +17,13 @@ export type TTextArea = {
     id?: string | number;
 };
 
+/**
+ * Renders a textarea component with various properties.
+ *
+ * @function TextArea
+ * @param {TTextArea} props - The properties of the textarea component.
+ * @returns {JSX.Element} The rendered textarea component.
+ */
 export const TextArea = ({
     autofocus,
     placeholder,

@@ -2,7 +2,20 @@ import { InputCheckbox } from '../../../shared/ui/index';
 import { useState, useEffect } from '../../../reactor/index';
 import { getInterests } from '../../../entities/session/api';
 
+/**
+ * A InterestsInput component that renders checkboxes for selecting interests.
+ *
+ * @function InterestsInput
+ * @param {any} props - The properties of the interests input component.
+ * @returns {JSX.Element[]} The rendered interests input component.
+ */
 const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
+    /**
+     * Toggles the selected state of an interest.
+     *
+     * @function toggleInterest
+     * @param {any} event - The change event.
+     */
     const toggleInterest = (event: any) => {
         const interest = event.target.value;
         setSelectedInterests((prevSelectedInterests) => {
@@ -17,6 +30,13 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
     };
     const [gotInterests, setGotInterests] = useState([]);
     const interests = gotInterests;
+
+    /**
+     * Fetches the available interests and updates the state.
+     *
+     * @function getAppInterests
+     * @returns {Promise<string[]>} The fetched interests.
+     */
     async function getAppInterests() {
         try {
             let appInterests = (await getInterests()) as any;

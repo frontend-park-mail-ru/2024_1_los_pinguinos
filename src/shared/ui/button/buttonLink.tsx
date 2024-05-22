@@ -5,6 +5,13 @@ export interface TButtonLink extends TButton {
     back?: boolean;
 }
 
+/**
+ * A ButtonLink component that renders a button and handles navigation.
+ *
+ * @function ButtonLink
+ * @param {TButtonLink} props - The properties of the button link component.
+ * @returns {JSX.Element} The rendered button link component.
+ */
 export const ButtonLink = ({
     label,
     icon,
@@ -18,6 +25,12 @@ export const ButtonLink = ({
     persistent,
     back,
 }: TButtonLink) => {
+    /**
+     * Handles the click event and navigates accordingly.
+     *
+     * @function handleClick
+     * @param {any} event - The click event.
+     */
     const handleClick = (event: any) => {
         event.preventDefault();
         if (back) {
@@ -29,6 +42,13 @@ export const ButtonLink = ({
         }
         window.dispatchEvent(new Event('popstate'));
     };
+
+    /**
+     * Handles the click event and invokes the onClick handler if provided.
+     *
+     * @function onClickLink
+     * @param {any} event - The click event.
+     */
     const onClickLink = (event: any) => {
         if (onClick) onClick(event);
         handleClick(event);

@@ -1,6 +1,6 @@
 import { Modal, Button, InputCheckbox } from '../../../shared/ui';
 import { clsx } from '../../../clsx';
-import { useEffect, useState } from '../../../reactor';
+import { useState } from '../../../reactor';
 import { getComplaintTypes } from '../../../features/complain/api';
 type Complaint = {
     callback: (event: any) => void;
@@ -9,6 +9,14 @@ type Complaint = {
     popupError?: string;
     complete: boolean;
 };
+
+/**
+ * A ComplaintPopup component that renders a modal for submitting complaints.
+ *
+ * @function ComplaintPopup
+ * @param {Complaint} props - The properties of the complaint popup component.
+ * @returns {JSX.Element} The rendered complaint popup component.
+ */
 const ComplaintPopup = ({
     callback,
     active,
@@ -18,6 +26,12 @@ const ComplaintPopup = ({
 }: Complaint) => {
     const [currentComplaint, setCurrentComplaint] = useState(null);
     const [complaintTypes, setComplaintTypes] = useState<any>([]);
+
+    /**
+     * Fetches the complaint types and updates the state.
+     *
+     * @function getTypes
+     */
     const getTypes = async () => {
         try {
             const response: any = await getComplaintTypes();
@@ -27,6 +41,7 @@ const ComplaintPopup = ({
         }
     };
     if (!complaintTypes.length) getTypes();
+
     return (
         <Modal active={active} setActive={setActive}>
             <form
