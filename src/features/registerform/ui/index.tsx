@@ -6,7 +6,7 @@ import { useEffect, useState } from '../../../reactor/index';
 import { register } from '../../../entities/session/api/index';
 import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
-import { clsx } from '../../../clsx';
+import { clsx } from '../../../shared/lib/clsx';
 
 /**
  * A RegisterForm component that renders a registration form.

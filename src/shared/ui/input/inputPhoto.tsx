@@ -1,4 +1,4 @@
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../lib/clsx/index';
 import imageCreate from './assets/create.svg';
 
 export type TInputPhoto = {

@@ -1,4 +1,4 @@
-import { clsx } from '../../clsx/index';
+import { clsx } from '../../lib/clsx/index';
 
 export interface ILink {
     to: string;

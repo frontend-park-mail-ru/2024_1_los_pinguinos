@@ -8,9 +8,12 @@ const initialState = {
     photos: [],
     interests: [],
     currentCard: 0,
-    currentChat: null,
-    currentChatName: '',
-    currentChatPhoto: '',
+    currentChat: {
+        id: '',
+        name: '',
+        photo: '',
+    },
+
 };
 
 /**
@@ -22,6 +25,7 @@ const initialState = {
 export const userReducer = (state = initialState, action: Action) => {
     let key = '';
     let value = null;
+    console.log(action.payload);
     if (action.payload) {
         key = Object.keys(action.payload)[0];
         value = action.payload[key];
@@ -41,16 +45,6 @@ export const userReducer = (state = initialState, action: Action) => {
             return {
                 ...state,
                 currentChat: action.payload,
-            };
-        case 'UPDATE_CURRENT_CHAT_NAME':
-            return {
-                ...state,
-                currentChatName: action.payload,
-            };
-        case 'UPDATE_CURRENT_CHAT_PHOTO':
-            return {
-                ...state,
-                currentChatPhoto: action.payload,
             };
         case 'UPDATE_CURRENT_CARD':
             return {

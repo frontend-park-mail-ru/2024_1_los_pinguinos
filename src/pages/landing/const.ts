@@ -2,7 +2,9 @@ import competeImg from '../../assets/compete.svg';
 import runImg from '../../assets/run.svg';
 import workoutImg from '../../assets/workout.svg';
 import logoImg from '../../assets/logo.svg';
+
 export const defaultAvatar = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
+
 export const points = [
     {
         icon: `data:image/svg+xml,${encodeURIComponent(workoutImg)}`,
@@ -17,6 +19,7 @@ export const points = [
         text: 'Хочу соревноваться',
     },
 ];
+
 export const reviews = [
     {
         title: 'Иван Иванов',
@@ -41,4 +44,5 @@ export const reviews = [
         avatar: defaultAvatar,
     },
 ];
+
 export const logo = `data:image/svg+xml,${encodeURIComponent(logoImg)}`;

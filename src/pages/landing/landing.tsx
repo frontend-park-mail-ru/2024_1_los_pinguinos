@@ -1,5 +1,5 @@
 import { Ticker } from './components/ticker/ticker.jsx';
-import { logo, reviews, points } from './const.js';
+import { logo, reviews, points } from './const';
 import { ButtonLink } from '../../shared/ui/index';
 
 /**

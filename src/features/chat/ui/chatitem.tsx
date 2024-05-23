@@ -1,7 +1,7 @@
 import { useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/router';
-import { timeAgo } from '../../../shared/lib';
+import { timeAgo } from '../../../shared/lib/date';
 
 /**
  * Компонент элемента чата
@@ -30,15 +30,11 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                     });
                     store.dispatch({
                         type: 'UPDATE_CURRENT_CHAT',
-                        payload: chat.personID,
-                    });
-                    store.dispatch({
-                        type: 'UPDATE_CURRENT_CHAT_NAME',
-                        payload: chat.name,
-                    });
-                    store.dispatch({
-                        type: 'UPDATE_CURRENT_CHAT_PHOTO',
-                        payload: chat.photo,
+                        payload: {
+                            id: chat.personID,
+                            name: chat.name,
+                            photo: chat.photo,
+                        },
                     });
                     navigateTo('/chats');
                 }}

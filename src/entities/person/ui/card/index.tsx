@@ -1,6 +1,6 @@
 import { Person } from '../../model/index';
 // import styles from './index.css';
-import { getAge } from '../../../../shared/lib';
+import { getAge } from '../../../../shared/lib/date';
 import { useState } from '../../../../reactor';
 import { like, dislike } from '../../../../features/like/api';
 import { store } from '../../../../app/app';

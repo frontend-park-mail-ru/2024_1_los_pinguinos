@@ -9,7 +9,7 @@ import {
     ProfileNavbar,
     ProfileDelete,
 } from '../../widgets/index';
-import { clsx } from '../../clsx/index';
+import { clsx } from '../../shared/lib/clsx/index';
 
 /**
  * A Profile page component that renders the profile and settings sections.

@@ -11,23 +11,22 @@ import withWebSocket from '../../../app/socket';
  */
 const ChatList = ({ socket }) => {
     const [chats, setChats] = useState([]);
-    const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const user = store.getState();
 
-    useEffect(() => {
-        store.subscribe(() => {
-            const state = store.getState();
-        });
-    }, []);
+    // useEffect(() => {
+    //     store.subscribe(() => {
+    //         const state = store.getState();
+    //     });
+    // }, []);
 
     const [currentChat, setCurrentChat] = useState(
-        store.getState().currentChat,
+        store.getState().currentChat ? store.getState().currentChat.id : 0,
     );
 
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            setCurrentChat(state.currentChat);
+            setCurrentChat(state.currentChat ? state.currentChat.id : 0);
         });
     }, []);
 
@@ -35,7 +34,6 @@ const ChatList = ({ socket }) => {
         if (!currentChat) {
             return;
         }
-
         const newChats = chats.map((chat) => {
             if (chat.personID === currentChat) {
                 return {
@@ -110,44 +108,46 @@ const ChatList = ({ socket }) => {
         });
     };
 
-    const [activeChat, setActiveChat] = useState(null);
+    const [activeChat, setActiveChat] = useState(
+        store.getState().currentChat ? store.getState().currentChat.id : 0,
+    );
 
     return (
         // <div className="navbar__menu">
-            <div
+        <div
+            style={{
+                display: chats.length == 0 ? 'none' : 'flex',
+            }}
+            className="navbar__menu__items"
+        >
+            {chats
+                .sort((a, b) => {
+                    if (a.lastMessage.time > b.lastMessage.time) {
+                        return -1;
+                    }
+                    if (a.lastMessage.time < b.lastMessage.time) {
+                        return 1;
+                    }
+                    return 0;
+                })
+                .map((chat) => (
+                    <ChatItem
+                        chat={chat}
+                        activeChat={activeChat}
+                        setActiveChat={setActiveChat}
+                    />
+                ))}
+            <p
                 style={{
-                    display: chats.length == 0 ? 'none' : 'flex',
+                    display: chats.length == 0 ? 'block' : 'none',
+                    fontSize: '25px',
+                    fontWeight: '800',
+                    color: 'white',
                 }}
-                className="navbar__menu__items"
             >
-                {chats
-                    .sort((a, b) => {
-                        if (a.lastMessage.time > b.lastMessage.time) {
-                            return -1;
-                        }
-                        if (a.lastMessage.time < b.lastMessage.time) {
-                            return 1;
-                        }
-                        return 0;
-                    })
-                    .map((chat) => (
-                        <ChatItem
-                            chat={chat}
-                            activeChat={activeChat}
-                            setActiveChat={setActiveChat}
-                        />
-                    ))}
-                <p
-                    style={{
-                        display: chats.length == 0 ? 'block' : 'none',
-                        fontSize: '25px',
-                        fontWeight: '800',
-                        color: 'white',
-                    }}
-                >
-                    Нет чатов
-                </p>
-            </div>
+                Нет чатов
+            </p>
+        </div>
         // </div>
     );
 };

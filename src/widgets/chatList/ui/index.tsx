@@ -21,13 +21,15 @@ const ChatNavbar = () => {
     }, []);
 
     const [currentChat, setCurrentChat] = useState(
-        store.getState().currentChat,
+        store.getState().currentChat ? store.getState().currentChat.id : 0,
     );
 
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            setCurrentChat(state.currentChat);
+            setCurrentChat(
+                state.currentChat ? state.currentChat.id : 0,
+            );
         });
     }, []);
 

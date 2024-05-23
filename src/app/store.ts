@@ -13,9 +13,11 @@ export type InitialState = {
     photos: Photo[];
     interests: Interest[];
     currentCard: number;
-    currentChat: number;
-    currentChatName: string;
-    currentChatPhoto: string;
+    currentChat: {
+        id: number;
+        name: string;
+        photo: string;
+    };
     authStatus: boolean;
     csrft: string;
 };
@@ -34,9 +36,11 @@ const initState: InitialState = {
     photos: [],
     interests: [],
     currentCard: 0,
-    currentChat: 0,
-    currentChatPhoto: '',
-    currentChatName: '',
+    currentChat: {
+        id: 0,
+        name: '',
+        photo: '',
+    },
     authStatus: false,
     csrft: '',
 };

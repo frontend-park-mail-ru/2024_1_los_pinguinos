@@ -1,12 +1,11 @@
 import { useState, useEffect } from '../../../reactor/index';
 import { Button, ButtonLink, Input } from '../../../shared/ui';
-import { Link } from '../../../shared/routing/link';
+import { Link } from '../../../shared/ui/link';
 import {
-    validateInput,
-    IStep,
     updateFormError,
-} from '../../../shared/lib/index';
-import { clsx } from '../../../clsx';
+} from '../../../shared/lib/common/index';
+import { IStep, validateInput } from '../../../shared/lib/input';
+import { clsx } from '../../../shared/lib/clsx';
 
 interface TEmailStep extends IStep {
     setEmail: (event: any) => void;

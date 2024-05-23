@@ -15,26 +15,28 @@ const ChatMessages = ({ socket, setSocket }) => {
     const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const [userID, setUserID] = useState(store.getState().id);
     const [currentChat, setCurrentChat] = useState(
-        store.getState().currentChat,
+        store.getState().currentChat ? store.getState().currentChat.id : 0,
     );
     const [currentChatName, setCurrentChatName] = useState(
-        store.getState().currentChatName,
+
+        store.getState().currentChat ? store.getState().currentChat.name : '',
     );
     const [currentChatPhoto, setCurrentChatPhoto] = useState(
-        store.getState().currentChatPhoto == ''
-            ? defaultPhoto
-            : store.getState().currentChatPhoto,
+       store.getState().currentChat && store.getState().currentChat.photo != ''
+            ? store.getState().currentChat.photo
+            : defaultPhoto,
     );
 
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            setCurrentChat(state.currentChat);
-            setCurrentChatName(state.currentChatName);
+
+            setCurrentChat(state.currentChat.id);
+            setCurrentChatName(state.currentChat.name);
             setCurrentChatPhoto(
-                state.currentChatPhoto == ''
+                state.currentChat.photo == ''
                     ? defaultPhoto
-                    : store.getState().currentChatPhoto,
+                    : store.getState().currentChat.photo,
             );
         });
     }, []);
@@ -62,11 +64,10 @@ const ChatMessages = ({ socket, setSocket }) => {
         if (socket) {
             socket.onmessage = (e) => {
                 const newMessage = JSON.parse(e.data);
-
                 if (
                     (newMessage.sender === userID &&
-                        newMessage.receiver === store.getState().currentChat) ||
-                    (newMessage.sender === store.getState().currentChat &&
+                        newMessage.receiver === store.getState().currentChat.id) ||
+                    (newMessage.sender === store.getState().currentChat.id &&
                         newMessage.receiver === userID &&
                         newMessage.data != '')
                 ) {
@@ -175,6 +176,11 @@ const ChatMessages = ({ socket, setSocket }) => {
                         className="chatMessages__input__field"
                         onInput={handleChange}
                         onSubmit={handleSubmit}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handleSubmit();
+                            }
+                        }}
                     />
                 </div>
                 <button

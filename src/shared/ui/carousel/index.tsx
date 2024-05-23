@@ -1,4 +1,4 @@
-import { useState } from '../../../reactor';
+import { useState } from '../../../reactor/index';
 import { Person } from '../../../entities/person/model/index';
 
 /**

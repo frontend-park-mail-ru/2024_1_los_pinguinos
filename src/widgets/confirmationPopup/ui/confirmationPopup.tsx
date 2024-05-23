@@ -1,5 +1,5 @@
 import { Modal, Button } from '../../../shared/ui/index';
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../../shared/lib/clsx/index';
 
 export interface IConfirmationPopup {
     active: boolean;

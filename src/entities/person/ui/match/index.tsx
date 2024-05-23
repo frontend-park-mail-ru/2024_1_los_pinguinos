@@ -1,4 +1,4 @@
-import { getAge } from '../../../../shared/lib/index';
+import { getAge } from '../../../../shared/lib/date/index';
 
 const Match = ({ person, setActive, setData }: any) => {
     return (

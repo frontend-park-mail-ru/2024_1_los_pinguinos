@@ -1,5 +1,5 @@
 import { Modal, Button, InputCheckbox } from '../../../shared/ui';
-import { clsx } from '../../../clsx';
+import { clsx } from '../../../shared/lib/clsx';
 import { useState } from '../../../reactor';
 import { getComplaintTypes } from '../../../features/complain/api';
 type Complaint = {

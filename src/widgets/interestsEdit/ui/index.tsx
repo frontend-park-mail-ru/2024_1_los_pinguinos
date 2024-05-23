@@ -3,7 +3,7 @@ import { useState, useEffect } from '../../../reactor';
 import InterestsInput from '../../interestsInput/ui';
 import { store } from '../../../app/app';
 import { updateInterests } from '../../../entities/session/api/index';
-import { clsx } from '../../../clsx';
+import { clsx } from '../../../shared/lib/clsx';
 
 /**
  * A InterestsEdit component that renders a form for editing the user's interests.

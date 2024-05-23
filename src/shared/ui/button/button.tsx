@@ -1,4 +1,4 @@
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../lib/clsx/index';
 import { TSize, getClassBySize, getClassByColor, TColor } from '../types';
 
 export type TButton = {
