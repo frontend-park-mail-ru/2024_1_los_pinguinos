@@ -71,7 +71,6 @@ const ChatList = ({ socket }) => {
     }, []);
 
     useEffect(() => {
-        console.log(socket);
         if (socket) {
             socket.addEventListener('message', handleMessage);
         }
@@ -89,7 +88,6 @@ const ChatList = ({ socket }) => {
      */
     const handleMessage = (event) => {
         const newMessage = JSON.parse(event.data);
-        console.log("new message in ChatList", newMessage);
         // newMessageInChats(newMessage);
         setChats((prev) => {
             const newChats = prev.map((chat) => {

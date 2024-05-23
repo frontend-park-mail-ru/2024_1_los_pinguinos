@@ -45,7 +45,6 @@ const Navbar = ({ closeSocket }) => {
 
     useEffect(() => {
         return () => {
-            console.log("close socket")
             closeSocket();
         };
     }, [closeSocket]);

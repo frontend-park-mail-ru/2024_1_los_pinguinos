@@ -27,13 +27,11 @@ const ChatNavbar = () => {
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            console.log(state);
             setCurrentChat(state.currentChat);
         });
     }, []);
 
     useEffect(() => {
-        console.log('currentChat', currentChat);
         if (!currentChat) {
             return;
         }

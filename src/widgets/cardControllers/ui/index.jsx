@@ -19,10 +19,6 @@ const CardControllers = () => {
         setCounter(state.currentCard);
     }, [store.getState().currentCard]);
 
-    useEffect(() => {
-        console.log('ACTIVE SET');
-    }, [disabled]);
-
     /**
      * Получить текущую карточку
      * @returns {number} Идентификатор текущей карточки
@@ -121,7 +117,6 @@ const CardControllers = () => {
 
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const currentcard = document.getElementById(`card-${currentCard}`);
-        // console.log(currentcard);
 
         const flyX = (Math.abs(-1) / -1) * innerWidth * 1.3;
         const flyY = 0;
