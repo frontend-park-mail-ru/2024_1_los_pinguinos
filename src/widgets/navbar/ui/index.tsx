@@ -63,7 +63,9 @@ const Navbar = ({ closeSocket }) => {
                 </div>
             </div>
             <div className="navbar__menu">
-                <ChatList />
+                {
+                    ChatList({})
+                }
             </div>
         </div>
     );
