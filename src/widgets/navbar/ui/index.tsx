@@ -2,6 +2,7 @@ import { useEffect, useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import withWebSocket from '../../../app/socket';
 import ChatList from '../../../features/chat/ui/chatlist';
+import './index.css';
 
 /**
  * Компонент навбара для десктопной версии

@@ -6,6 +6,7 @@ import { Input, Button, ButtonLink } from '../../../shared/ui/index';
 import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
 import { clsx } from '../../../shared/lib/clsx/index';
+import './index.css';
 
 /**
  * A LoginForm component that renders a login form.

@@ -1,4 +1,5 @@
 import { ButtonLink } from '../../shared/ui/index';
+import './index.css';
 
 /**
  * A PageNotFound component that renders a message indicating the page was not found.

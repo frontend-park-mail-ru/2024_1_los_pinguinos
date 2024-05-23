@@ -2,6 +2,7 @@ import { InputPhoto } from '../../../shared/ui/input/inputPhoto';
 import { useState } from '../../../reactor/index';
 import { uploadImage, deleteImage } from '../../../features/image/api';
 import { store } from '../../../app/app';
+import './index.css';
 
 /**
  * A ProfilePhotoWidget component that renders a widget for uploading and managing profile photos.

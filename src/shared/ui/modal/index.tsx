@@ -1,3 +1,5 @@
+import './index.css';
+
 const Modal = ({ active, setActive, forced, children }: any) => {
     return (
         <div

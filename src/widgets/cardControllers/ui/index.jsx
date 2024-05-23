@@ -4,6 +4,7 @@ import { Button } from '../../../shared/ui';
 import { store } from '../../../app/app';
 import { useState, useEffect } from '../../../reactor/index';
 import ComplaintPopup from '../../complaintPopup/ui/complaintPopup';
+import './index.css';
 
 /**
  * Виджет управления карточками

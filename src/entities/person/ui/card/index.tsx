@@ -5,7 +5,7 @@ import { useState } from '../../../../reactor';
 import { like, dislike } from '../../../../features/like/api';
 import { store } from '../../../../app/app';
 import { Carousel } from '../../../../shared/ui';
-
+import './index.css';
 type StartPoint = {
     x: number;
     y: number;

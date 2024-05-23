@@ -3,6 +3,7 @@ import { clsx } from '../../lib/clsx/index';
 import { useState, useEffect } from '../../../reactor/index';
 import { genId } from '../../lib/common/index';
 import { validateInput } from '../../lib/input/index';
+import './index.css';
 
 export type TInput = {
     autofocus?: boolean;

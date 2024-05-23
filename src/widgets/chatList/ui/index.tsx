@@ -1,6 +1,8 @@
 import { useEffect, useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import Chatlist from '../../../features/chat/ui/chatlist';
+import './index.css';
+
 /**
  * Компонент навигации по чатам
  * @returns { JSX.Element } - Возвращает JSX-разметку навигации по чатам

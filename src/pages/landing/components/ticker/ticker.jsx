@@ -1,3 +1,5 @@
+import './index.css';
+
 /**
  * A Ticker component that renders a scrolling text ticker.
  *

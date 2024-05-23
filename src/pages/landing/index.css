@@ -1,4 +1,4 @@
-@import url(./components/ticker/ticker.css);
+@import url(./components/ticker/index.css);
 .landing-wrapper {
     display: flex;
     flex-direction: column;

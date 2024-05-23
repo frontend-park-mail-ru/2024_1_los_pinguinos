@@ -1,6 +1,8 @@
 import { Ticker } from './components/ticker/ticker.jsx';
 import { logo, reviews, points } from './const';
 import { ButtonLink } from '../../shared/ui/index';
+import './index.css';
+
 
 /**
  * A Landing component that renders the landing page.

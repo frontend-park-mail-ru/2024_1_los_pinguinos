@@ -2,6 +2,7 @@ import { useState, useEffect } from '../../../reactor/index';
 import { Link } from '../../../shared/ui/link';
 import { clsx } from '../../../shared/lib/clsx/index';
 import { store } from '../../../app/app';
+import './index.css';
 
 const Footer = () => {
     const [activePath, setActivePath] = useState(window.location.pathname);

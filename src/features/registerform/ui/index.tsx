@@ -7,6 +7,7 @@ import { register } from '../../../entities/session/api/index';
 import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
 import { clsx } from '../../../shared/lib/clsx';
+import './index.css';
 
 /**
  * A RegisterForm component that renders a registration form.

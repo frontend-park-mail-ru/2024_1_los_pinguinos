@@ -2,6 +2,7 @@ import { useEffect, useState } from '../../../reactor';
 import withWebSocket from '../../../app/socket';
 import { getMessages } from '../../../features/chat/api';
 import { store } from '../../../app/app';
+import './index.css'
 
 /**
  * Компонент сообщений чата

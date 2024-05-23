@@ -1,5 +1,6 @@
 import { useEffect, useState } from '../../../reactor/index';
 import { ButtonLink } from '../../../shared/ui/index';
+import './index.css';
 
 /**
  * Компонент хедера

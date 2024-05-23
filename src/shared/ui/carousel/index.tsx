@@ -1,5 +1,6 @@
 import { useState } from '../../../reactor/index';
 import { Person } from '../../../entities/person/model/index';
+import './index.css';
 
 /**
  * Компонент карусели для фотографий
