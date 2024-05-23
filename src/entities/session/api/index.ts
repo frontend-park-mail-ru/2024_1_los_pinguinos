@@ -1,7 +1,6 @@
 import { sendRequest } from '../../../shared/api/index';
 import { SessionResponse } from './types';
 import { Interest } from '../../person/model/index';
-import { Person } from '../../person/model/index';
 import { AUTH_URL, API_URL } from '../../../shared/config/index';
 
 /**

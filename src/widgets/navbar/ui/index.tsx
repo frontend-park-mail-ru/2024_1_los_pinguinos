@@ -2,6 +2,7 @@ import { useEffect, useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import withWebSocket from '../../../app/socket';
 import ChatList from '../../../features/chat/ui/chatlist';
+import './index.css';
 
 /**
  * Компонент навбара для десктопной версии
@@ -45,7 +46,6 @@ const Navbar = ({ closeSocket }) => {
 
     useEffect(() => {
         return () => {
-            console.log("close socket")
             closeSocket();
         };
     }, [closeSocket]);
@@ -63,7 +63,9 @@ const Navbar = ({ closeSocket }) => {
                 </div>
             </div>
             <div className="navbar__menu">
-                <ChatList />
+                {
+                    ChatList({})
+                }
             </div>
         </div>
     );

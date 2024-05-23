@@ -1,5 +1,7 @@
-import ChatMessages from '../../widgets/chatMessages';
-import ChatNavbar from '../../widgets/chatList'
+import ChatMessages from '../../widgets/chatMessages/index';
+import ChatNavbar from '../../widgets/chatList/index';
+import './index.css';
+
 
 /**
  * Компонент страницы чатов

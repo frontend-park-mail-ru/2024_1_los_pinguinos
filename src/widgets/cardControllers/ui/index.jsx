@@ -4,6 +4,7 @@ import { Button } from '../../../shared/ui';
 import { store } from '../../../app/app';
 import { useState, useEffect } from '../../../reactor/index';
 import ComplaintPopup from '../../complaintPopup/ui/complaintPopup';
+import './index.css';
 
 /**
  * Виджет управления карточками
@@ -18,10 +19,6 @@ const CardControllers = () => {
         const state = store.getState();
         setCounter(state.currentCard);
     }, [store.getState().currentCard]);
-
-    useEffect(() => {
-        console.log('ACTIVE SET');
-    }, [disabled]);
 
     /**
      * Получить текущую карточку
@@ -121,7 +118,6 @@ const CardControllers = () => {
 
         store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
         const currentcard = document.getElementById(`card-${currentCard}`);
-        // console.log(currentcard);
 
         const flyX = (Math.abs(-1) / -1) * innerWidth * 1.3;
         const flyY = 0;

@@ -1,6 +1,6 @@
 import { TSize, getClassBySize } from '../types';
-import { clsx } from '../../../clsx/index';
-import { genId } from '../../lib/index';
+import { clsx } from '../../lib/clsx/index';
+import { genId } from '../../lib/common/index';
 
 export type TTextArea = {
     autofocus?: boolean;

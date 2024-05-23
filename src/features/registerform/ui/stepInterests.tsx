@@ -1,6 +1,6 @@
 import InterestsInput from '../../../widgets/interestsInput/ui';
 import { Button } from '../../../shared/ui';
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../../shared/lib/clsx/index';
 import { useEffect, useState } from '../../../reactor';
 import { IStep } from '../../../shared/lib';
 interface TInterestsStep extends IStep {

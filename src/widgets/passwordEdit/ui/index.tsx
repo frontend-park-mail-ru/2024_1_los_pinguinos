@@ -1,8 +1,9 @@
 import { Modal, Button, Input } from '../../../shared/ui/index';
 import { useState, useEffect } from '../../../reactor/index';
-import { updateFormError, validateInput } from '../../../shared/lib/index';
+import { updateFormError } from '../../../shared/lib/common/index';
+import { validateInput } from '../../../shared/lib/input/index';
 import { updatePassword } from '../../../entities/session/api/index';
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../../shared/lib/clsx/index';
 
 /**
  * A PasswordEdit component that renders a form for editing the user's password.

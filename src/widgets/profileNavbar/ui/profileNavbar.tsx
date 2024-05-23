@@ -4,7 +4,7 @@ import { ConfirmationPopup } from '../../index';
 import { store } from '../../../app/app';
 import { redirectTo } from '../../../app/router';
 import { logout } from '../../../entities/session/api/index';
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../../shared/lib/clsx/index';
 
 /**
  * A ProfileNavbar component that renders the navigation bar for the profile page.

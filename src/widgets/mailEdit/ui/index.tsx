@@ -1,9 +1,10 @@
 import { Modal, Button, Input } from '../../../shared/ui';
 import { useState, useEffect } from '../../../reactor';
-import { updateFormError, validateInput } from '../../../shared/lib';
+import { updateFormError } from '../../../shared/lib/common';
+import { validateInput } from '../../../shared/lib/input';
 import { updateEmail } from '../../../entities/session/api';
 import { store } from '../../../app/app';
-import { clsx } from '../../../clsx';
+import { clsx } from '../../../shared/lib/clsx';
 
 /**
  * A MailEdit component that renders a form for editing the user's email.

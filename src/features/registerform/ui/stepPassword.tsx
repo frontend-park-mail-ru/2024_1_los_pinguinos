@@ -1,7 +1,9 @@
 import { Button, Input } from '../../../shared/ui';
-import { IStep, validateInput, updateFormError } from '../../../shared/lib';
-import { clsx } from '../../../clsx';
+import { updateFormError } from '../../../shared/lib/common';
+import { clsx } from '../../../shared/lib/clsx';
 import { useState, useEffect } from '../../../reactor';
+import { IStep, validateInput } from '../../../shared/lib/input';
+
 interface TPasswordStep extends IStep {
     setPassword: (event: any) => void;
     password: string;

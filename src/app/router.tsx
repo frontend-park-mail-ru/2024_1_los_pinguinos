@@ -1,7 +1,7 @@
 import { useEffect, useState } from '../reactor/index';
 import Layout from '../pages/layout/layout';
 import { store } from './app';
-import { updateBackground } from '../shared/lib/index';
+import { updateBackground } from '../shared/lib/common/index';
 
 export interface IRoute {
     path: string;

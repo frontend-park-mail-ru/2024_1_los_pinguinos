@@ -1,4 +1,5 @@
-import { getAge } from '../../../../shared/lib/index';
+import { getAge } from '../../../../shared/lib/date/index';
+import './index.css';
 
 const Match = ({ person, setActive, setData }: any) => {
     return (

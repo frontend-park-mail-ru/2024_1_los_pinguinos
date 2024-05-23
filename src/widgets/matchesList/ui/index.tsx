@@ -2,8 +2,8 @@ import Match from '../../../entities/person/ui/match/index';
 import { useState, useEffect } from '../../../reactor/index';
 import { getMatches } from '../../../entities/person/api/index';
 import { Input, Modal, Button } from '../../../shared/ui/index';
-import { clsx } from '../../../clsx/index';
-import { getAge } from '../../../shared/lib/index';
+import { clsx } from '../../../shared/lib/clsx/index';
+import { getAge } from '../../../shared/lib/date/index';
 import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/router';
 

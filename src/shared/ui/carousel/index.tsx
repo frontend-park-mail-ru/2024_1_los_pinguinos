@@ -1,5 +1,6 @@
-import { useState } from '../../../reactor';
+import { useState } from '../../../reactor/index';
 import { Person } from '../../../entities/person/model/index';
+import './index.css';
 
 /**
  * Компонент карусели для фотографий
@@ -24,7 +25,6 @@ const Carousel = ({ person }: { person: Person }) => {
      */
     const nextImage = (e: any) => {
         e.stopPropagation();
-        console.log('nextImage');
         let newIndex = current === images.length - 1 ? 0 : current + 1;
         imageSlides[current].className = 'slide-image leftOut';
         imageSlides[newIndex].className = 'slide-image leftIn';
@@ -38,7 +38,6 @@ const Carousel = ({ person }: { person: Person }) => {
      */
     const prevImage = (e: any) => {
         e.stopPropagation();
-        console.log('prevImage');
         let newIndex = current === 0 ? images.length - 1 : current - 1;
         imageSlides[current].className = 'slide-image rightOut';
         imageSlides[newIndex].className = 'slide-image rightIn';

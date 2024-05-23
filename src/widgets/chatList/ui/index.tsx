@@ -1,6 +1,8 @@
 import { useEffect, useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import Chatlist from '../../../features/chat/ui/chatlist';
+import './index.css';
+
 /**
  * Компонент навигации по чатам
  * @returns { JSX.Element } - Возвращает JSX-разметку навигации по чатам
@@ -21,19 +23,19 @@ const ChatNavbar = () => {
     }, []);
 
     const [currentChat, setCurrentChat] = useState(
-        store.getState().currentChat,
+        store.getState().currentChat ? store.getState().currentChat.id : 0,
     );
 
     useEffect(() => {
         store.subscribe(() => {
             const state = store.getState();
-            console.log(state);
-            setCurrentChat(state.currentChat);
+            setCurrentChat(
+                state.currentChat ? state.currentChat.id : 0,
+            );
         });
     }, []);
 
     useEffect(() => {
-        console.log('currentChat', currentChat);
         if (!currentChat) {
             return;
         }

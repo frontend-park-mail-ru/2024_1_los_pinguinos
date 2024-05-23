@@ -1,11 +1,10 @@
 import { useState, useEffect } from '../../../reactor/index';
 import { Button, Input, InputCheckbox } from '../../../shared/ui';
 import {
-    validateInput,
-    IStep,
     updateFormError,
-} from '../../../shared/lib/index';
-import { clsx } from '../../../clsx';
+} from '../../../shared/lib/common/index';
+import { IStep, validateInput } from '../../../shared/lib/input';
+import { clsx } from '../../../shared/lib/clsx/index';
 interface TDataStep extends IStep {
     setName: (event: any) => void;
     setDate: (event: any) => void;

@@ -1,11 +1,12 @@
 import { useEffect, useState } from '../../../reactor/index';
 import { login } from '../../../entities/session/api/index';
-import { Link } from '../../../shared/routing/link';
-import { validateInput, updateInputError } from '../../../shared/lib/index';
+import { Link } from '../../../shared/ui/link/index';
+import { validateInput, updateInputError } from '../../../shared/lib/input/index';
 import { Input, Button, ButtonLink } from '../../../shared/ui/index';
 import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../../shared/lib/clsx/index';
+import './index.css';
 
 /**
  * A LoginForm component that renders a login form.

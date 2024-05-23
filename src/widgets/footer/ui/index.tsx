@@ -1,7 +1,8 @@
 import { useState, useEffect } from '../../../reactor/index';
-import { Link } from '../../../shared/routing/link';
-import { clsx } from '../../../clsx/index';
+import { Link } from '../../../shared/ui/link';
+import { clsx } from '../../../shared/lib/clsx/index';
 import { store } from '../../../app/app';
+import './index.css';
 
 const Footer = () => {
     const [activePath, setActivePath] = useState(window.location.pathname);
@@ -58,7 +59,11 @@ const Footer = () => {
                     onClick={() => {
                         store.dispatch({
                             type: 'UPDATE_CURRENT_CHAT',
-                            payload: null,
+                            payload: {
+                                id: 0,
+                                name: "",
+                                photo: "",
+                            }
                         });
                     }}
                     style="font-size: x-large"

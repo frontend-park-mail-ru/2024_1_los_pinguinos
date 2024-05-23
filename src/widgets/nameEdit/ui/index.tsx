@@ -1,9 +1,10 @@
 import { Modal, Button, Input } from '../../../shared/ui/index';
 import { useState, useEffect } from '../../../reactor/index';
-import { updateFormError, validateInput } from '../../../shared/lib/index';
+import { updateFormError} from '../../../shared/lib/common/index';
+import { validateInput } from '../../../shared/lib/input/index';
 import { updateName } from '../../../entities/session/api/index';
 import { store } from '../../../app/app';
-import { clsx } from '../../../clsx/index';
+import { clsx } from '../../../shared/lib/clsx/index';
 
 /**
  * A NameEdit component that renders a form for editing the user's name.
