@@ -8,3 +8,4 @@ export { default as NameEdit } from './nameEdit/index';
 export { default as ProfileNavbar } from './profileNavbar/index';
 export { default as ConfirmationPopup } from './confirmationPopup/index';
 export { default as ProfileDelete } from './profileDelete/index';
+export { default as ProfileSubscribtion } from './profileSubscribtion/index';

@@ -11,6 +11,7 @@ export interface IConfirmationPopup {
     cancelLabel?: string;
     acceptLabel?: string;
     forced?: boolean;
+    alternate?: true;
 }
 
 /**
@@ -30,9 +31,15 @@ const ConfirmationPopup = ({
     cancelLabel = 'Отмена',
     acceptLabel = 'Продолжить',
     forced,
+    alternate,
 }: IConfirmationPopup) => {
     return (
-        <Modal active={active} setActive={setActive} forced={forced}>
+        <Modal
+            active={active}
+            setActive={setActive}
+            forced={forced}
+            alternate={alternate}
+        >
             <form
                 className="dialog"
                 onSubmit={(event: any) => {
@@ -47,7 +54,7 @@ const ConfirmationPopup = ({
                             label={cancelLabel}
                             size="m"
                             fontSize="m"
-                            severity="success"
+                            severity={alternate ? 'cancel' : 'success'}
                             onClick={() => {
                                 setActive(false);
                             }}
@@ -57,7 +64,7 @@ const ConfirmationPopup = ({
                         label={acceptLabel}
                         size={forced ? 'max-width' : 'm'}
                         fontSize="m"
-                        severity={forced ? 'success' : 'danger'}
+                        severity={alternate ? 'success' : 'danger'}
                         onClick={callback}
                     />
                 </div>

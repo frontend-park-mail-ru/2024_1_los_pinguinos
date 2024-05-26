@@ -24,9 +24,9 @@ const ProfileDelete = () => {
         try {
             setPopupError('');
             const response = await deleteProfile();
-            setActive(false);
             store.dispatch({ type: 'LOGOUT', payload: {} });
             store.dispatch({ type: 'UPDATE_AUTH', payload: false });
+            setActive(false);
             redirectTo('/');
         } catch {
             setPopupError('Что-то пошло не так');
