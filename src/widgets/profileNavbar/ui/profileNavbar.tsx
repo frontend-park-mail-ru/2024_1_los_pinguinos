@@ -78,7 +78,7 @@ const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
                 >
                     <span
                         style="font-size: x-large"
-                        className="icon-cash"
+                        className="icon-stars"
                     ></span>
                     <span className="nav__text nav__text--side">Подписка</span>
                 </div>

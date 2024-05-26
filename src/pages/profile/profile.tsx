@@ -9,6 +9,7 @@ import {
     ProfileNavbar,
     ProfileDelete,
     ProfileSubscribtion,
+    ProfilePaymentHistory,
 } from '../../widgets/index';
 import { clsx } from '../../shared/lib/clsx/index';
 import './index.css';
@@ -79,6 +80,7 @@ export const Profile = () => {
                             {ProfileSubscribtion()}
                         </div>
                     </div>
+                    {ProfilePaymentHistory()}
                 </div>
             </div>
             {ProfileNavbar({
