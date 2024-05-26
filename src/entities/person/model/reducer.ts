@@ -13,7 +13,8 @@ const initialState = {
         name: '',
         photo: '',
     },
-
+    premium: false,
+    premiumExpires: 0,
 };
 
 /**
@@ -32,7 +33,7 @@ export const userReducer = (state = initialState, action: Action) => {
     switch (action.type) {
         case 'UPDATE_USER':
             return {
-                // ...state,
+                ...state,
                 ...action.payload,
             };
         case 'UPDATE_SOMETHING':
