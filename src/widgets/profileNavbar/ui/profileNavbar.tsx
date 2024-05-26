@@ -26,9 +26,9 @@ const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
         try {
             setPopupError('');
             const response = await logout();
-            setActive(false);
             store.dispatch({ type: 'LOGOUT', payload: {} });
             store.dispatch({ type: 'UPDATE_AUTH', payload: false });
+            setActive(false);
             redirectTo('/');
         } catch {
             setPopupError('Что-то пошло не так');
@@ -68,6 +68,19 @@ const ProfileNavbar = ({ state, setState, title, setTitle }: any) => {
                     <span className="nav__text nav__text--side">
                         Безопасность
                     </span>
+                </div>
+                <div
+                    className={clsx('nav__item', state === 2 && 'is-active')}
+                    onClick={() => {
+                        setState(2);
+                        setTitle('Подписка');
+                    }}
+                >
+                    <span
+                        style="font-size: x-large"
+                        className="icon-cash"
+                    ></span>
+                    <span className="nav__text nav__text--side">Подписка</span>
                 </div>
                 <div
                     className={clsx(

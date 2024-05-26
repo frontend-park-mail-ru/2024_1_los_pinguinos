@@ -8,10 +8,10 @@ import {
     MailEdit,
     ProfileNavbar,
     ProfileDelete,
+    ProfileSubscribtion,
 } from '../../widgets/index';
 import { clsx } from '../../shared/lib/clsx/index';
 import './index.css';
-
 
 /**
  * A Profile page component that renders the profile and settings sections.
@@ -20,7 +20,10 @@ import './index.css';
  * @returns {JSX.Element} The rendered Profile component.
  */
 export const Profile = () => {
-    const [profileState, setState] = useState(0);
+    const currentLocation = window.location.search;
+    const [profileState, setState] = useState(
+        currentLocation.includes('sub') ? 2 : 0,
+    );
     const [title, setTitle] = useState('Профиль');
     return (
         <div className="profile__wrapper">
@@ -48,7 +51,7 @@ export const Profile = () => {
                         Настройки
                     </h1>
                     <div className="profile__content-block">
-                        <span class="profile__label-text">
+                        <span className="profile__label-text">
                             Информация об аккаунте
                         </span>
                         <div className="security__content-field">
@@ -58,6 +61,24 @@ export const Profile = () => {
                         </div>
                     </div>
                     {ProfileDelete()}
+                </div>
+                <div
+                    className={clsx(
+                        'profile__block-group',
+                        profileState !== 2 && 'any--none',
+                    )}
+                >
+                    <h1 className="profile__text profile__text--title profile__title">
+                        Подписка
+                    </h1>
+                    <div className="profile__content-block">
+                        <span className="profile__label-text">
+                            Статус премиум-подписки
+                        </span>
+                        <div className="security__content-field">
+                            {ProfileSubscribtion()}
+                        </div>
+                    </div>
                 </div>
             </div>
             {ProfileNavbar({

@@ -30,6 +30,12 @@
     transition: all 0.2s ease-in-out;
 }
 
+.profile__content-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .content--success {
     background-color: var(--color__success--secondary);
 }

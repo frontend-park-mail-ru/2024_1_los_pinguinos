@@ -14,7 +14,9 @@ import { ConfirmationPopup } from '../widgets/index';
 import { createStore } from './store';
 import { userReducer } from '../entities/person/model/reducer';
 import { useState } from '../reactor/index';
+import { checkAuth } from '../entities/session/api/index';
 export const store = createStore(userReducer);
+export const popupContext = { setActive: null, active: false } as any;
 
 /**
  * Main application component that handles service worker registration,
@@ -24,6 +26,17 @@ export const store = createStore(userReducer);
  * @returns {JSX.Element} The main application component.
  */
 const App = () => {
+    const setAuth = async () => {
+        try {
+            const response = await checkAuth();
+            store.dispatch({ type: 'UPDATE_SOMETHING', payload: response });
+        } catch {
+            store.dispatch({ type: 'LOGOUT', payload: {} });
+            store.dispatch({ type: 'UPDATE_AUTH', payload: false });
+            redirectTo('/login');
+        }
+    };
+    setAuth();
     const [active, setActive] = useState(false);
     const [reloadCallback, setCallback] = useState(() => {});
 
@@ -118,6 +131,7 @@ const App = () => {
             }
         });
     }
+
     window.addEventListener('error', (event) => {
         if (
             'serviceWorker' in navigator &&
@@ -131,6 +145,18 @@ const App = () => {
             });
         }
     });
+
+    const [subActive, setSubActive] = useState(false);
+    const [noSubError, setSubError] = useState('sub error');
+    const noSubCallback = () => {
+        setSubActive(false);
+        setTimeout(() => {
+            navigateTo('/profile?sub=pending');
+        }, 200);
+    };
+    popupContext.active = subActive;
+    popupContext.setActive = setSubActive;
+
     return (
         <div className="page-wrap">
             <Router>
@@ -151,7 +177,18 @@ const App = () => {
                 popupDescription="Пожалуйста, обновите страницу"
                 callback={reloadCallback}
                 acceptLabel="Обновить"
-                forced={true}
+                forced
+                alternate
+            />
+            <ConfirmationPopup
+                active={popupContext.active}
+                setActive={popupContext.setActive}
+                popupTitle="Нужна подписка"
+                popupDescription={noSubError}
+                callback={noSubCallback}
+                acceptLabel="Оформить подписку"
+                cancelLabel="Отмена"
+                alternate
             />
         </div>
     );
