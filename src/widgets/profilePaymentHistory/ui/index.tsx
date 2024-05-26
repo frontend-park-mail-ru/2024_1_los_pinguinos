@@ -2,6 +2,7 @@ import { getPaymentHistory } from '../../../features/payments/api/index';
 import { useState } from '../../../reactor/index';
 import { clsx } from '../../../shared/lib/clsx/index';
 import { formatUnixTimestamp } from '../../../shared/lib/date/index';
+import { store } from '../../../app/app';
 
 const ProfilePaymentHistory = () => {
     const [history, setHistory] = useState([] as any);
@@ -13,6 +14,13 @@ const ProfilePaymentHistory = () => {
             return;
         }
     };
+
+    const unsubscribeStatus = store.subscribe(
+        (premium: boolean) => {
+            getHistory();
+        },
+        ['premium'],
+    );
 
     if (history.length === 0) getHistory();
 

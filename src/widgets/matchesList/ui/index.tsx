@@ -91,17 +91,29 @@ const MatchesList = () => {
             <Modal active={active} setActive={setActive}>
                 <div className="dialog dialog--card">
                     <div className="dialog__header">
-                        <img
-                            src={
-                                matchData.photos &&
-                                matchData.photos[0] &&
-                                matchData.photos[0].url != ''
-                                    ? matchData.photos[0].url
-                                    : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
-                            }
-                            alt={matchData.name}
-                            className="dialog__profile-picture"
-                        />
+                        <div
+                            className={clsx(
+                                matchData.premium && 'profile-picture--premium',
+                            )}
+                        >
+                            <img
+                                src={
+                                    matchData.photos &&
+                                    matchData.photos[0] &&
+                                    matchData.photos[0].url != ''
+                                        ? matchData.photos[0].url
+                                        : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                                }
+                                alt={matchData.name}
+                                className="dialog__profile-picture"
+                            />
+                            <span
+                                className={clsx(
+                                    'premium-icon icon-stars',
+                                    !matchData.premium && 'any--none',
+                                )}
+                            ></span>
+                        </div>
                         <span className="dialog__title data__text">
                             {`${matchData.name},  ${getAge(
                                 matchData.birthday,

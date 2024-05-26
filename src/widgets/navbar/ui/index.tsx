@@ -74,7 +74,11 @@ const Navbar = ({ closeSocket, onMessage }) => {
             <div className="navbar__header">
                 <div className="navbar__header__person">
                     <p className="navbar__header__person__name">{userName}</p>
-                    <div className="navbar__header__person__image">
+                    <div
+                        className={clsx(
+                            userPremium && 'navbar__header--premium',
+                        )}
+                    >
                         <img
                             src={userPhoto}
                             alt="Profile Picture"

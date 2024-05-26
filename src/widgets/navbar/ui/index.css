@@ -178,3 +178,13 @@
     bottom: 0px;
     border-radius: 50%;
 }
+
+.navbar__header--premium {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color__success--primary);
+    border-radius: 50%;
+    position: relative;
+    padding: 2px;
+}
