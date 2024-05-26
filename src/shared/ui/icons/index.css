@@ -20,6 +20,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-stars:before {
+  content: "\e93a";
+}
 .icon-key:before {
   content: "\e937";
 }

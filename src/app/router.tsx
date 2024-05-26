@@ -31,15 +31,22 @@ export const Route = ({ path, component }: IRoute) => {
  */
 export const Router = ({ children: routes }: any) => {
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
-    let authStatus = store.getState().authStatus;
+    const authStatus = store.getState().authStatus;
     const defaultSecurePath = '/profile';
     const defaultInsecurePath = '/login';
 
     useEffect(() => {
         const handlePopState = () => {
-            authStatus = store.getState().authStatus;
             setCurrentPath(window.location.pathname);
         };
+        if (!isSecure && authStatus && path !== '*' && path !== '/offline') {
+            setCurrentPath(defaultSecurePath);
+            history.replaceState(null, '', defaultSecurePath);
+        }
+        if (isSecure && !authStatus && path !== '*' && path !== '/offline') {
+            setCurrentPath(defaultInsecurePath);
+            history.replaceState(null, '', defaultInsecurePath);
+        }
         window.addEventListener('popstate', handlePopState);
         return () => {
             window.removeEventListener('popstate', handlePopState);
@@ -55,15 +62,6 @@ export const Router = ({ children: routes }: any) => {
     });
 
     let { component: Component, isSecure, path } = currentRoute.props;
-
-    if (!isSecure && authStatus && path !== '*' && path !== '/offline') {
-        setCurrentPath(defaultSecurePath);
-        history.replaceState(null, '', defaultSecurePath);
-    }
-    if (isSecure && !authStatus && path !== '*' && path !== '/offline') {
-        setCurrentPath(defaultInsecurePath);
-        history.replaceState(null, '', defaultInsecurePath);
-    }
 
     const renderData = <Component />;
 

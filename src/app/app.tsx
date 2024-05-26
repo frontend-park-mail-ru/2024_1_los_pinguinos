@@ -32,23 +32,22 @@ const App = () => {
             const response = await checkAuth();
             store.dispatch({ type: 'UPDATE_SOMETHING', payload: response });
         } catch {
-            // store.dispatch({ type: 'LOGOUT', payload: {} });
-            // store.dispatch({ type: 'UPDATE_AUTH', payload: false });
-            // redirectTo('/login');
+            store.dispatch({ type: 'LOGOUT', payload: {} });
+            store.dispatch({ type: 'UPDATE_AUTH', payload: false });
         }
     };
     setAuth();
 
-    // const setStorage = async () => {
-    //     try {
-    //         const response = await getProfile();
-    //         store.dispatch({ type: 'UPDATE_USER', payload: response });
-    //         console.log(response);
-    //     } catch {
-    //         return;
-    //     }
-    // };
-    // setStorage();
+    const setStorage = async () => {
+        try {
+            const response = await getProfile();
+            store.dispatch({ type: 'UPDATE_USER', payload: response });
+            console.log(response);
+        } catch {
+            return;
+        }
+    };
+    setStorage();
 
     const [active, setActive] = useState(false);
     const [reloadCallback, setCallback] = useState(() => {});

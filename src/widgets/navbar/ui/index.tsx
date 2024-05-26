@@ -3,6 +3,7 @@ import { store } from '../../../app/app';
 import withWebSocket from '../../../app/socket';
 import ChatList from '../../../features/chat/ui/chatlist';
 import './index.css';
+import { clsx } from '../../../shared/lib/clsx';
 
 /**
  * Компонент навбара для десктопной версии
@@ -19,6 +20,8 @@ const Navbar = ({ closeSocket }) => {
     );
 
     const [userName, setUserName] = useState(user.name);
+
+    const [userPremium, setUserPremium] = useState(user.premium);
 
     useEffect(() => {
         const unsubscribePhoto = store.subscribe(
@@ -37,10 +40,17 @@ const Navbar = ({ closeSocket }) => {
             },
             ['name'],
         );
+        const unsubscribePremium = store.subscribe(
+            (premium: boolean) => {
+                setUserPremium(premium);
+            },
+            ['premium'],
+        );
 
         return () => {
             unsubscribePhoto();
             unsubscribeName();
+            unsubscribePremium();
         };
     }, []);
 
@@ -55,18 +65,22 @@ const Navbar = ({ closeSocket }) => {
             <div className="navbar__header">
                 <div className="navbar__header__person">
                     <p className="navbar__header__person__name">{userName}</p>
-                    <img
-                        src={userPhoto}
-                        alt="Profile Picture"
-                        className="navbar__header__person__image"
-                    />
+                    <div className="navbar__header__person__image">
+                        <img
+                            src={userPhoto}
+                            alt="Profile Picture"
+                            className="navbar__header__person__image"
+                        />
+                        <span
+                            className={clsx(
+                                'premium-icon icon-stars',
+                                !userPremium && 'any--none',
+                            )}
+                        ></span>
+                    </div>
                 </div>
             </div>
-            <div className="navbar__menu">
-                {
-                    ChatList({})
-                }
-            </div>
+            <div className="navbar__menu">{ChatList({})}</div>
         </div>
     );
 };
