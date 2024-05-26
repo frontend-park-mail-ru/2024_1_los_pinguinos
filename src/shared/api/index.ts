@@ -30,7 +30,7 @@ export async function sendRequest<T>(
     }
 
     if (!response.ok) {
-        throw new Error(`Failed to fetch ${url}`);
+        throw new Error(`Failed to fetch ${url}; ${await response.json()}`);
     }
 
     return response.json();

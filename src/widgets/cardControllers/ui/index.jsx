@@ -48,28 +48,30 @@ const CardControllers = () => {
      * @returns {void}
      */
     const handleLike = async () => {
-        if (popupContext.setActive) popupContext.setActive(true);
-        // const currentCard = getCurrent();
-        // if (!currentCard) return;
+        const currentCard = getCurrent();
+        if (!currentCard) return;
 
-        // try {
-        //     await like(currentCard);
-        // } catch {
-        //     return;
-        // }
+        try {
+            await like(currentCard);
+        } catch (err) {
+            if (popupContext.setActive && err.message.includes('no likes'))
+                popupContext.setActive(true);
 
-        // store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
-        // const currentcard = document.getElementById(`card-${currentCard}`);
+            return;
+        }
 
-        // const flyX = (Math.abs(-1) / 1) * innerWidth * 1.3;
-        // const flyY = 0;
-        // currentcard.style.transform = `translate(${flyX}px, ${flyY}px) rotate(${
-        //     (flyX / innerWidth) * 50
-        // }deg)`;
-        // currentcard.style.transition = `transform ${innerWidth}ms ease-in-out`;
-        // setTimeout(() => {
-        //     currentcard.remove();
-        // }, 500);
+        store.dispatch({ type: 'UPDATE_CURRENT_CARD', payload: currentCard });
+        const currentcard = document.getElementById(`card-${currentCard}`);
+
+        const flyX = (Math.abs(-1) / 1) * innerWidth * 1.3;
+        const flyY = 0;
+        currentcard.style.transform = `translate(${flyX}px, ${flyY}px) rotate(${
+            (flyX / innerWidth) * 50
+        }deg)`;
+        currentcard.style.transition = `transform ${innerWidth}ms ease-in-out`;
+        setTimeout(() => {
+            currentcard.remove();
+        }, 500);
     };
 
     const [complete, setComplete] = useState(true);

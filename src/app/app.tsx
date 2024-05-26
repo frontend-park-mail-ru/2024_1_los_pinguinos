@@ -15,6 +15,7 @@ import { createStore } from './store';
 import { userReducer } from '../entities/person/model/reducer';
 import { useState } from '../reactor/index';
 import { checkAuth } from '../entities/session/api/index';
+import { getProfile } from '../entities/person/api/index';
 export const store = createStore(userReducer);
 export const popupContext = { setActive: null, active: false } as any;
 
@@ -31,12 +32,24 @@ const App = () => {
             const response = await checkAuth();
             store.dispatch({ type: 'UPDATE_SOMETHING', payload: response });
         } catch {
-            store.dispatch({ type: 'LOGOUT', payload: {} });
-            store.dispatch({ type: 'UPDATE_AUTH', payload: false });
-            redirectTo('/login');
+            // store.dispatch({ type: 'LOGOUT', payload: {} });
+            // store.dispatch({ type: 'UPDATE_AUTH', payload: false });
+            // redirectTo('/login');
         }
     };
     setAuth();
+
+    // const setStorage = async () => {
+    //     try {
+    //         const response = await getProfile();
+    //         store.dispatch({ type: 'UPDATE_USER', payload: response });
+    //         console.log(response);
+    //     } catch {
+    //         return;
+    //     }
+    // };
+    // setStorage();
+
     const [active, setActive] = useState(false);
     const [reloadCallback, setCallback] = useState(() => {});
 
@@ -147,7 +160,9 @@ const App = () => {
     });
 
     const [subActive, setSubActive] = useState(false);
-    const [noSubError, setSubError] = useState('sub error');
+    const [noSubError, setSubError] = useState(
+        'Вы достигли лимита по лайкам на сегодня',
+    );
     const noSubCallback = () => {
         setSubActive(false);
         setTimeout(() => {

@@ -21,6 +21,8 @@ export type InitialState = {
     authStatus: boolean;
     csrft: string;
     newMatches: string[];
+    premium: boolean;
+    premiumExpires: number;
 };
 
 export type Store = {
@@ -44,6 +46,8 @@ const initState: InitialState = {
     },
     authStatus: false,
     csrft: '',
+    premium: false,
+    premiumExpires: 0,
     newMatches: [],
 };
 

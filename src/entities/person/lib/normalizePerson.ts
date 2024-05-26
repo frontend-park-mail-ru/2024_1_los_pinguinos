@@ -17,4 +17,6 @@ export const normalizePerson = (person: PersonDTO): Person => ({
         cell: photo.cell,
         url: photo.url,
     })),
+    premium: person.premium,
+    premiumExpires: person.premiumExpires,
 });

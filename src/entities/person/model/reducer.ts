@@ -13,7 +13,8 @@ const initialState = {
         name: '',
         photo: '',
     },
-    newMatches: [],
+    newMatches: [],    premium: false,
+    premiumExpires: 0,
 };
 
 /**
@@ -31,16 +32,10 @@ export const userReducer = (state = initialState, action: Action) => {
     }
     switch (action.type) {
         case 'UPDATE_USER':
-            console.log(state);
-            const updatedState = { ...state };
-            for (const key in action.payload) {
-                if (Object.prototype.hasOwnProperty.call(action.payload, key)) {
-                    updatedState[key] = action.payload[key];
-                }
-            }
-            console.log('action payload:', action.payload); // Логируем payload
-            console.log('updatedState:', updatedState); // Логируем новое состояние
-            return updatedState;
+            return {
+                ...state,
+                ...action.payload,
+            };
         case 'UPDATE_SOMETHING':
             return {
                 ...state,

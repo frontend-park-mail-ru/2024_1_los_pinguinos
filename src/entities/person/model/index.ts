@@ -6,6 +6,8 @@ export type Person = {
     description: string;
     photos: Photo[];
     interests: Interest[];
+    premium: boolean;
+    premiumExpires: number;
 };
 
 export type Interest = {
