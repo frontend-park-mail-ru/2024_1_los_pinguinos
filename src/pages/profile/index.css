@@ -203,6 +203,34 @@
     width: 100%;
 }
 
+.premium--feature {
+    width: 80%;
+    padding: 20px;
+    display: flex;
+    flex-flow: column;
+    background-color: var(--color__dark--secondary);
+    border-radius: 20px;
+    box-shadow: inset 0px 0px 5px 1px black;
+}
+
+.premium--default {
+    width: 80%;
+    padding: 10px 20px;
+    display: flex;
+    flex-flow: column;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+.premium--success {
+    width: 80%;
+    padding: 10px 20px;
+    display: flex;
+    flex-flow: column;
+    background-color: #40ff009a;
+    border-radius: 20px;
+}
+
 ::-webkit-scrollbar {
     width:8px
 }

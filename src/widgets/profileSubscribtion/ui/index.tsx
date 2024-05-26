@@ -21,9 +21,9 @@ const ProfileSubscribtion = () => {
 
     const activatePremiumCallback = async () => {
         try {
-            const response = activatePremium();
+            const response = await activatePremium();
             setSubStatus(true);
-            setSubExpires(100);
+            setSubExpires(response);
             store.dispatch({
                 type: 'UPDATE_USER',
                 payload: { premium: true, premiumExpires: response },
@@ -33,7 +33,7 @@ const ProfileSubscribtion = () => {
         }
     };
     const currentLocation = window.location.search;
-    if (currentLocation.includes('sub=success') && !subStatus) {
+    if (currentLocation.includes('sub') && !subStatus) {
         activatePremiumCallback();
     }
 
@@ -50,18 +50,32 @@ const ProfileSubscribtion = () => {
 
     return (
         <div className="profile__content-column">
-            <p className="profile__text">
-                Преимущества подписки:{'\n'} - Бесконечные лайки
-            </p>
-            <p className={clsx('profile__text', subStatus && 'any--none')}>
+            <div className="profile__text premium--feature">
+                Преимущества подписки:
+                <div className="profile__label--row">
+                    <span className="profile__text icon-check"></span>
+                    <span className="profile__text">Бесконечные лайки</span>
+                </div>
+            </div>
+            <p
+                className={clsx(
+                    'profile__text premium--default',
+                    subStatus && 'any--none',
+                )}
+            >
                 В данный момент у вас нет подписки
             </p>
-            <p className={clsx('profile__text', !subStatus && 'any--none')}>
+            <p
+                className={clsx(
+                    'profile__text premium--success',
+                    !subStatus && 'any--none',
+                )}
+            >
                 Ваша подписка активна до {formatUnixTimestamp(subExpires)}.
             </p>
             <div className={clsx(subStatus && 'any--none')}>
                 <Button
-                    label="Оформить подписку - 2₽"
+                    label="Оформить подписку"
                     size="m"
                     fontSize="m"
                     severity="success"
@@ -86,8 +100,7 @@ const ProfileSubscribtion = () => {
             {ConfirmationPopup({
                 active: active,
                 setActive: setActive,
-                popupDescription:
-                    'Для проведения оплаты вы будете перенаправлены на сайт YooMoney',
+                popupDescription: `Для проведения оплаты вы будете перенаправлены на YooMoney. \nСтоимость подписки - 2₽.`,
                 popupTitle: 'Оплата',
                 callback: paymentCallback,
                 alternate: true,

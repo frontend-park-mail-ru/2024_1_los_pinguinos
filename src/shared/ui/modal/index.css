@@ -84,6 +84,7 @@
     text-align: start;
     font-size: medium;
     word-break: auto-phrase;
+    white-space: pre-wrap;
 }
 
 .dialog__error {
@@ -102,7 +103,16 @@
     object-fit: cover;
     object-position: top;
     border-radius: 50%;
-    border: 3px solid var(--color__success--primary);
+}
+
+.profile-picture--premium {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color__success--primary);
+    border-radius: 50%;
+    position: relative;
+    padding: 2px;
 }
 
 .dialog__header {
