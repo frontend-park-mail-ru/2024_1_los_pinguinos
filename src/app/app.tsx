@@ -42,7 +42,6 @@ const App = () => {
         try {
             const response = await getProfile();
             store.dispatch({ type: 'UPDATE_USER', payload: response });
-            console.log(response);
         } catch {
             return;
         }
