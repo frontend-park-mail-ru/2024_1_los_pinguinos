@@ -1,7 +1,7 @@
-const CACHE = 'jimder-cache-v33';
+const CACHE = 'jimder-cache-v41';
 const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
 
-const NETWORK_ONLY = ['isAuth', 'cards', 'getAllChats', 'activatePremium', 'payHistory'];
+const NETWORK_ONLY = ['isAuth', 'cards', 'getAllChats', 'activatePremium', 'payHistory', 'v1/profile'];
 
 const checkNetOnly = (path) => {
     for (const p of NETWORK_ONLY) {
@@ -51,7 +51,7 @@ self.addEventListener('fetch', async (event) => {
 
                 return fetch(event.request)
                     .then((response) => {
-                        if (event.request.method === 'GET' && response.ok) {
+                        if (event.request.method === 'GET' && response.ok && !checkNetOnly(event.request.url)) {
                             cache.put(event.request, response.clone());
                         }
 

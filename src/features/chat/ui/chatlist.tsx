@@ -131,12 +131,11 @@ const ChatList = ({ socket, onMessage }) => {
     return (
         // <div className="navbar__menu">
         <div
-            style={{
-                display: chats.length == 0 ? 'none' : 'flex',
-            }}
+
             className="navbar__menu__items"
         >
-            {chats
+            {chats.length != 0 &&
+            chats
                 .sort((a, b) => {
                     if (
                         a.lastMessage.Properties.time >
@@ -165,6 +164,7 @@ const ChatList = ({ socket, onMessage }) => {
                     fontSize: '25px',
                     fontWeight: '800',
                     color: 'white',
+                    textAlign: 'center',
                 }}
             >
                 Нет чатов

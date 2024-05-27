@@ -5,3 +5,5 @@ docker-compose.yaml
 Dockerfile
 .vscode/
 .prettierrc
+nginx.conf
+.dockerignore
