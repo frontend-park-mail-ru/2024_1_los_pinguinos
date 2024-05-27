@@ -3,13 +3,14 @@ import { ChatItem } from './chatitem';
 import { getChats } from '../api';
 import { store } from '../../../app/app';
 import withWebSocket from '../../../app/socket';
+import { Message } from '../../../app/socket';
 
 /**
  * Компонент списка чатов
  * @param { WebSocket } socket - Сокет
  * @returns { JSX.Element } - Возвращает JSX-разметку списка чатов
  */
-const ChatList = ({ socket }) => {
+const ChatList = ({ socket, onMessage }) => {
     const [chats, setChats] = useState([]);
     const user = store.getState();
 
@@ -55,7 +56,12 @@ const ChatList = ({ socket }) => {
                         ...chat,
                         lastMessage: {
                             ...chat.lastMessage,
-                            time: new Date(chat.lastMessage.time).getTime(),
+                            Properties: {
+                                ...chat.lastMessage.Properties,
+                                time: new Date(
+                                    chat.lastMessage.Properties.time,
+                                ).getTime(),
+                            },
                         },
                         isNewMessage: false,
                     };
@@ -68,38 +74,48 @@ const ChatList = ({ socket }) => {
             });
     }, []);
 
+    // useEffect(() => {
+    //     if (socket) {
+    //         socket.addEventListener('message', handleMessage);
+    //         console.log('socket in chatList', socket);
+    //     }
+
+    //     return () => {
+    //         if (socket) {
+    //             socket.removeEventListener('message', handleMessage);
+    //         }
+    //     };
+    // }, [socket]);
     useEffect(() => {
-        if (socket) {
-            socket.addEventListener('message', handleMessage);
+        if (onMessage) {
+            onMessage((message: Message) => {
+                handleMessage(message);
+            });
         }
-        return () => {
-            if (socket) {
-                socket.removeEventListener('message', handleMessage);
-            }
-        };
-    }, [socket]);
+    }, [onMessage]);
 
     /**
      * Обработчик нового сообщения
      * @param { Event } event - Событие
      * @returns { void }
      */
-    const handleMessage = (event) => {
-        const newMessage = JSON.parse(event.data);
+    const handleMessage = (newMessage: Message) => {
         // newMessageInChats(newMessage);
         setChats((prev) => {
             const newChats = prev.map((chat) => {
                 if (
-                    (newMessage.sender === user.id &&
-                        newMessage.receiver === chat.personID) ||
-                    (newMessage.sender === chat.personID &&
-                        newMessage.receiver === user.id)
+                    (`${newMessage.Properties.sender}` === `${user.id}` &&
+                    newMessage.Properties.receiver === chat.personID) ||
+                    (newMessage.Properties.sender === chat.personID &&
+                    newMessage.Properties.receiver === `${user.id}`)
                 ) {
                     return {
                         ...chat,
                         lastMessage: newMessage,
                         isNewMessage:
-                            newMessage.receiver === user.id ? true : false,
+                            newMessage.Properties.receiver === `${user.id}`
+                                ? true
+                                : false,
                     };
                 }
                 return chat;
@@ -122,10 +138,16 @@ const ChatList = ({ socket }) => {
         >
             {chats
                 .sort((a, b) => {
-                    if (a.lastMessage.time > b.lastMessage.time) {
+                    if (
+                        a.lastMessage.Properties.time >
+                        b.lastMessage.Properties.time
+                    ) {
                         return -1;
                     }
-                    if (a.lastMessage.time < b.lastMessage.time) {
+                    if (
+                        a.lastMessage.Properties.time <
+                        b.lastMessage.Properties.time
+                    ) {
                         return 1;
                     }
                     return 0;

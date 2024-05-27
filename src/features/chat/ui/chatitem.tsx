@@ -53,13 +53,13 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                     <div className="navbar__item__info">
                         <p className="navbar__item__info__name">{chat.name}</p>
                         <p className="navbar__item__info__message">
-                            {chat.lastMessage.data}
+                            {chat.lastMessage.Properties.data}
                         </p>
                     </div>
                 </div>
                 <div className="navbar__item__status">
                     <div className="navbar__item__time">
-                        <p>{timeAgo(chat.lastMessage.time)}</p>
+                        <p>{timeAgo(chat.lastMessage.Properties.time)}</p>
                     </div>
                     <div
                         style={{

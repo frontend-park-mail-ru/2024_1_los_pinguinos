@@ -76,3 +76,104 @@
         display: none;
     }
 }
+
+[icon-after-text],
+[icon-before-text] {
+	--badge-offset-x: calc(0px - var(--badge-size) / 3);
+	--badge-offset-y: calc(0px - var(--badge-size) / 3);
+	--badge-size: 1rem;
+	--circle-size: 2rem;
+	--dot-offset: 0.5rem;
+	--dot-size: 0.5rem;
+		
+	--b: initial;
+	--bgc: #7DE85A;
+	--bdrs: 0;
+	--c: hsl(195, 100%, 99%);
+	--d: inline-flex;
+	--fz: 0.625rem;
+	--fw: 700;
+	--h: auto;
+	--l: initial;
+	--m: 0.4rem;
+	--p: 0;
+	--pos: static;
+	--r: initial;
+	--t: initial;
+	--tt: uppercase;
+	--w: initial;
+	
+	position: relative;
+}
+
+[icon-after-text]:not([icon-after-text=""])::after {
+	content: attr(icon-after-text);
+}
+[icon-before-text]:not([icon-before-text=""])::before {
+	content: attr(icon-before-text);
+}
+
+[icon-after-text]:not([icon-after-text=""])::after,
+[icon-before-text]:not([icon-before-text=""])::before {
+	align-items: center;
+	background: var(--bgc);
+	border-radius: var(--bdrs);
+	bottom: var(--b);
+	box-shadow: var(--bxsh);
+	box-sizing: border-box;
+	color: var(--c);
+	display: var(--d);
+	font-size: var(--fz);
+	font-weight: var(--fw);
+	height: var(--h);
+	justify-content: center;
+	left: var(--l);
+	padding: var(--p);
+	position: var(--pos);
+	right: var(--r);
+	text-decoration: none;
+	text-transform: var(--tt);
+	top: var(--t);
+	width: var(--w);
+}
+
+/* MODIFIERS */
+[icon-after-type*="badge"]::after,
+[icon-before-type*="badge"]::before {
+	--bdrs: var(--badge-size);
+	--bxsh: 0 0 0 2px rgba(255, 255, 255, 0.5);
+	--h: var(--badge-size);
+	--p: 0;
+	--pos: absolute;
+	--w: var(--badge-size);
+}
+[icon-after-type*="circle"],
+[icon-before-type*="circle"]{
+	align-items: center;
+	display: flex;
+}
+[icon-after-type*="right"]::after,
+[icon-before-type*="right"]::before {
+	--l: auto;
+	--pos: absolute;
+	--r: var(--dot-offset);
+}
+[icon-after-type*="bottom"]::after,
+[icon-before-type*="bottom"]::before {
+	--b: var(--dot-offset);
+	--pos: absolute;
+	--t: auto;
+}
+
+[icon-after-type*="badge"][icon-after-type*="right"]::after,
+[icon-before-type*="badge"][icon-before-type*="right"]::before {
+	--m: 0;
+	--r: var(--badge-offset-x);
+}
+[icon-after-type*="badge"][icon-after-type*="bottom"]::after,
+[icon-before-type*="badge"][icon-before-type*="bottom"]::before {
+	--b: var(--badge-offset-y);
+	--m: 0;
+}
+
+

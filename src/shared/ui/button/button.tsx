@@ -14,6 +14,8 @@ export type TButton = {
     disabled?: boolean;
     round?: boolean;
     fontColor?: TColor;
+    dataAfterText?: string;
+    dataAfterType?: string;
 };
 export type TButtonType = 'button' | 'submit' | 'reset';
 export type TSeverity =
@@ -47,6 +49,8 @@ export const Button = ({
     disabled,
     round,
     fontColor,
+    dataAfterText,
+    dataAfterType,
 }: TButton) => {
     const getClassBySeverity = (sev: TSeverity) => {
         switch (sev) {
@@ -77,6 +81,8 @@ export const Button = ({
     return (
         <button
             type={type}
+            data-after-text={dataAfterText}
+            data-after-type={dataAfterType}
             onClick={disabled ? null : onClick}
             className={clsx(
                 'button',

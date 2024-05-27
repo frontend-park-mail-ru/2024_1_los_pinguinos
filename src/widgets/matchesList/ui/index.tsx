@@ -12,6 +12,21 @@ const MatchesList = () => {
     const [searchName, setSearchName] = useState('');
     const [active, setActive] = useState(false);
     const [matchData, setMatchData] = useState({} as any);
+    const [newMatches, setNewMatches] = useState(store.getState().newMatches);
+
+    useEffect(() => {
+        const unsubscribe = store.subscribe(
+            (newMatches: string[]) => {
+                setNewMatches(newMatches);
+            },
+            ['newMatches'],
+        );
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
     async function getMatch(name: string) {
         try {
             const response = await getMatches(name);
@@ -20,6 +35,7 @@ const MatchesList = () => {
             return;
         }
     }
+
     useEffect(() => {
         const id = setTimeout(() => {
             getMatch(searchName);
@@ -28,9 +44,16 @@ const MatchesList = () => {
             clearTimeout(id);
         };
     }, [searchName]);
+
+    /**
+     * Обработчик изменения значения в поле поиска
+     * @param {any} event - объект события
+     * @return {void}
+     */
     function remapMatches(event: any) {
         setSearchName(event.target.value);
     }
+
     return (
         <div className="match__wrapper">
             <h1 className="match__header">Ваши мэтчи</h1>
@@ -53,6 +76,7 @@ const MatchesList = () => {
                         person: match,
                         setActive: setActive,
                         setData: setMatchData,
+                        isNew: newMatches && newMatches.includes(match.id),
                     }),
                 )}
             </div>
@@ -100,7 +124,14 @@ const MatchesList = () => {
                                 navigateTo('/chats');
                                 store.dispatch({
                                     type: 'UPDATE_CURRENT_CHAT',
-                                    payload: matchData.id,
+                                    payload: {
+                                        id: matchData.id,
+                                        name: matchData.name,
+                                        photo:
+                                            matchData.photos[0].url == ''
+                                                ? 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                                                : matchData.photos[0].url,
+                                    },
                                 });
                             }}
                             icon="icon-chat-text"

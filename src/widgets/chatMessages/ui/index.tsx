@@ -2,7 +2,7 @@ import { useEffect, useState } from '../../../reactor';
 import withWebSocket from '../../../app/socket';
 import { getMessages } from '../../../features/chat/api';
 import { store } from '../../../app/app';
-import './index.css'
+import './index.css';
 
 /**
  * Компонент сообщений чата
@@ -19,11 +19,10 @@ const ChatMessages = ({ socket, setSocket }) => {
         store.getState().currentChat ? store.getState().currentChat.id : 0,
     );
     const [currentChatName, setCurrentChatName] = useState(
-
         store.getState().currentChat ? store.getState().currentChat.name : '',
     );
     const [currentChatPhoto, setCurrentChatPhoto] = useState(
-       store.getState().currentChat && store.getState().currentChat.photo != ''
+        store.getState().currentChat && store.getState().currentChat.photo != ''
             ? store.getState().currentChat.photo
             : defaultPhoto,
     );
@@ -63,26 +62,34 @@ const ChatMessages = ({ socket, setSocket }) => {
 
     useEffect(() => {
         if (socket) {
+            console.log('socket in', socket);
             socket.onmessage = (e) => {
                 const newMessage = JSON.parse(e.data);
-                if (
-                    (newMessage.sender === userID &&
-                        newMessage.receiver === store.getState().currentChat.id) ||
-                    (newMessage.sender === store.getState().currentChat.id &&
-                        newMessage.receiver === userID &&
-                        newMessage.data != '')
-                ) {
-                    setMessages((prev) => {
-                        return [newMessage, ...prev];
-                    });
-                }
-
-                setTimeout(() => {
-                    const chat = document.querySelector('.chatMessages__list');
-                    if (chat) {
-                        chat.scrollTop = chat.scrollHeight;
+                console.log('newMessage in chat', newMessage);
+                if (newMessage.Type === 'message') {
+                    if (
+                        (newMessage.Properties.sender === userID &&
+                            newMessage.Properties.receiver ===
+                                store.getState().currentChat.id) ||
+                        (newMessage.Properties.sender ===
+                            store.getState().currentChat.id &&
+                            newMessage.Properties.receiver === userID &&
+                            newMessage.Properties.data != '')
+                    ) {
+                        setMessages((prev) => {
+                            return [newMessage, ...prev];
+                        });
                     }
-                }, 100);
+
+                    setTimeout(() => {
+                        const chat = document.querySelector(
+                            '.chatMessages__list',
+                        );
+                        if (chat) {
+                            chat.scrollTop = chat.scrollHeight;
+                        }
+                    }, 100);
+                }
             };
 
             socket.onclose = () => {
@@ -101,7 +108,6 @@ const ChatMessages = ({ socket, setSocket }) => {
         };
     }, [socket, setSocket]);
 
-
     const handleChange = (e) => {
         setMessage(e.target.value);
     };
@@ -110,10 +116,13 @@ const ChatMessages = ({ socket, setSocket }) => {
         if (socket && message != '') {
             socket.send(
                 JSON.stringify({
-                    data: message,
-                    sender: store.getState().id,
-                    receiver: currentChat,
-                    time: new Date().getTime(),
+                    Type: 'message',
+                    Properties: {
+                        data: message,
+                        sender: store.getState().id,
+                        receiver: currentChat,
+                        time: new Date().getTime(),
+                    },
                 }),
             );
             setMessage('');
@@ -143,25 +152,24 @@ const ChatMessages = ({ socket, setSocket }) => {
             </div>
             <div className="chatMessages__list">
                 {messages.map((message) => {
-
                     return (
                         <div
                             className={`chatMessages__list__item ${
-                                message.sender === userID
+                                message.Properties.sender === userID
                                     ? 'chatMessages__list__item--me'
                                     : 'chatMessages__list__item--other'
                             }`}
-                            key={message.time}
+                            key={message.Properties.time}
                         >
                             <div
                                 className={
-                                    message.sender === userID
+                                    message.Properties.sender === userID
                                         ? 'chatMessages__list__item__message chatMessages__list__item__message--me'
                                         : 'chatMessages__list__item__message'
                                 }
                             >
                                 <p className="chatMessages__list__item__message__text">
-                                    {message.data}
+                                    {message.Properties.data}
                                 </p>
                             </div>
                         </div>

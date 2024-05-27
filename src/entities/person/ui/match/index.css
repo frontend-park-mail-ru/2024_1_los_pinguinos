@@ -98,3 +98,63 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+[match-after-text],
+[match-before-text] {
+	--badge-offset-x: calc(0px - var(--badge-size) / 3);
+	--badge-offset-y: calc(0px - var(--badge-size) / 3);
+	--badge-size: 1.6rem;
+	--circle-size: 2rem;
+	--dot-offset: 0.5rem;
+	--dot-size: 0.5rem;
+		
+	--b: initial;
+	--bgc: #57cb30;
+	--bdrs: 0;
+	--c: hsl(195, 100%, 99%);
+	--d: inline-flex;
+	--fz: 1rem;
+	--fw: 800;
+	--h: auto;
+	--l: initial;
+	--m: 0.4rem;
+	--p: 0;
+	--pos: static;
+	--r: initial;
+	--t: initial;
+	--tt: uppercase;
+	--w: initial;
+	
+	position: relative;
+}
+
+[match-after-text]:not([match-after-text=""])::after {
+	content: attr(match-after-text);
+}
+[match-before-text]:not([match-before-text=""])::before {
+	content: attr(match-before-text);
+}
+
+[match-after-text]:not([match-after-text=""])::after,
+[match-before-text]:not([match-before-text=""])::before {
+	align-items: center;
+	background: var(--bgc);
+	border-radius: 0.25rem;
+	bottom: var(--b);
+	box-shadow: var(--bxsh);
+	box-sizing: border-box;
+	color: var(--c);
+	display: var(--d);
+	font-size: var(--fz);
+	font-weight: var(--fw);
+	height: var(--h);
+	justify-content: center;
+	left: 0.1rem;
+	padding: 0.05rem 0.4rem;
+	position: absolute;
+	right: var(--r);
+	text-decoration: none;
+	text-transform: var(--tt);
+	top: 1rem;
+	width: var(--w);
+}

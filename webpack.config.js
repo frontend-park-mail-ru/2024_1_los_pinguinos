@@ -9,6 +9,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
     },
+    devtool: 'source-map',
     module: {
         rules: [
             { test: /\.svg$/, use: 'svg-inline-loader' },

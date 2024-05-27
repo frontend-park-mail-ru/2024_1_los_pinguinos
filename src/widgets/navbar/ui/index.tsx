@@ -9,7 +9,7 @@ import './index.css';
  * @param { Function } closeSocket - Функция закрытия сокета
  * @returns { JSX.Element } - Возвращает JSX-разметку навбара
  */
-const Navbar = ({ closeSocket }) => {
+const Navbar = ({ closeSocket, onMessage }) => {
     const defaultPhoto = 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp';
     const user = store.getState();
     const [userPhoto, setUserPhoto] = useState(
@@ -50,6 +50,15 @@ const Navbar = ({ closeSocket }) => {
         };
     }, [closeSocket]);
 
+    useEffect(() => {
+        if (onMessage) {
+            onMessage((message) => {
+                console.log('New message in Navbar:', message);
+                // обработка сообщений для Navbar
+            });
+        }
+    }, [onMessage]);
+
     return (
         <div className="navbar">
             <div className="navbar__header">
@@ -62,11 +71,7 @@ const Navbar = ({ closeSocket }) => {
                     />
                 </div>
             </div>
-            <div className="navbar__menu">
-                {
-                    ChatList({})
-                }
-            </div>
+            <div className="navbar__menu">{ChatList()}</div>
         </div>
     );
 };

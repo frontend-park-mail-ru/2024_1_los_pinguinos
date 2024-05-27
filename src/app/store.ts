@@ -20,6 +20,7 @@ export type InitialState = {
     };
     authStatus: boolean;
     csrft: string;
+    newMatches: string[];
 };
 
 export type Store = {
@@ -43,6 +44,7 @@ const initState: InitialState = {
     },
     authStatus: false,
     csrft: '',
+    newMatches: [],
 };
 
 /**

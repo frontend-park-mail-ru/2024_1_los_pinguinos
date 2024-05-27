@@ -24,6 +24,8 @@ export const ButtonLink = ({
     to,
     persistent,
     back,
+    dataAfterText,
+    dataAfterType,
 }: TButtonLink) => {
     /**
      * Handles the click event and navigates accordingly.
@@ -62,5 +64,7 @@ export const ButtonLink = ({
         size,
         fontSize,
         disabled,
+        dataAfterText,
+        dataAfterType,
     });
 };
