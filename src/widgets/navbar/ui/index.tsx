@@ -91,9 +91,26 @@ const Navbar = ({ closeSocket, onMessage }) => {
                             )}
                         ></span>
                     </div>
+                    <div
+                        className={clsx(
+                            userPremium && 'navbar__header--premium',
+                        )}
+                    >
+                        <img
+                            src={userPhoto}
+                            alt="Profile Picture"
+                            className="navbar__header__person__image"
+                        />
+                        <span
+                            className={clsx(
+                                'premium-icon icon-stars',
+                                !userPremium && 'any--none',
+                            )}
+                        ></span>
+                    </div>
                 </div>
             </div>
-            <div className="navbar__menu">{ChatList()}</div>
+            <div className="navbar__menu">{ChatList({})}</div>
         </div>
     );
 };
