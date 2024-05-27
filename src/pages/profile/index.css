@@ -227,7 +227,7 @@
     padding: 10px 20px;
     display: flex;
     flex-flow: column;
-    background-color: #40ff009a;
+    background-color: rgb(48 191 1 / 60%);
     border-radius: 20px;
 }
 

@@ -21,6 +21,7 @@ export async function sendRequest<T>(
         method,
         headers: {
             'X-Csrf-Token': store.getState().csrft,
+            'cache control': 'no-cache, no-store',
         },
         body: file ? body : JSON.stringify(body),
     });
