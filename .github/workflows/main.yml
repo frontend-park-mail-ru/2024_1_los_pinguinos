@@ -46,4 +46,4 @@ jobs:
                 host: ${{ secrets.DEPLOY_SERVER_HOST }}
                 username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
                 privateKey: ${{ secrets.DEPLOY_SERVER_KEY}}
-                command: cd /home/ubuntu/project/client && git checkout ${{ steps.extract_branch.outputs.branch }} && git pull && cd .. && docker compose up -d --build && docker system prune -a
+                command: cd /home/ubuntu/project/client && git checkout ${{ steps.extract_branch.outputs.branch }} && git pull && cd .. && docker compose up -d --build && docker image prune -a -f
