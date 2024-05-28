@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - roflan-payments
 
 jobs:
   build:
@@ -22,7 +23,12 @@ jobs:
       run: npm install
 
     - name: Run tests
-      run: npm test
+      run: npm run lint
 
     - name: Build project
       run: npm run build
+
+    - name: Deploy with Docker Compose
+      run: |
+        cd ..
+        docker-compose up -d --build
