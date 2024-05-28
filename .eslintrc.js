@@ -18,9 +18,14 @@ module.exports = {
         window: true,
         Promise: true,
     },
+    settings: {
+        react: {
+            version: '17.0', // явно указываем версию React
+        },
+    },
     rules: {
         camelcase: 'error',
-        semi: ['error', 'always'], //точки с запятой
+        semi: ['error', 'always'], // точки с запятой
         'eol-last': ['error', 'always'], // Пустая строка в конце файла
         quotes: ['error', 'single'], // Одинарные кавычки
         'no-console': ['error', { allow: ['error', 'info'] }], // Запрет использования console.log
