@@ -33,5 +33,21 @@ export async function sendRequest<T>(
         throw new Error(`Failed to fetch ${url}; ${await response.json()}`);
     }
 
-    return response.json();
+    try {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const json = await response.clone().json();
+                resolve(json);
+            } catch (jsonError) {
+                try {
+                    const text = (await response.text()) as any;
+                    resolve(text);
+                } catch (textError) {
+                    reject(textError);
+                }
+            }
+        });
+    } catch (error) {
+        return Promise.reject(error);
+    }
 }
