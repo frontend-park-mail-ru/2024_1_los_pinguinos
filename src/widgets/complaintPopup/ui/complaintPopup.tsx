@@ -35,7 +35,9 @@ const ComplaintPopup = ({
     const getTypes = async () => {
         try {
             const response: any = await getComplaintTypes();
-            setComplaintTypes(response);
+            console.log(response);
+            const claims = response.claims;
+            setComplaintTypes(claims);
         } catch {
             setComplaintTypes([]);
         }

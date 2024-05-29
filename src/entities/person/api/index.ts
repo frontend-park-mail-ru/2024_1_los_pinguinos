@@ -10,8 +10,10 @@ import { AUTH_URL, API_URL } from '../../../shared/config/index';
  * @throws { Error } - Возвращает ошибку, если запрос не удался
  */
 export const getCards = async (): Promise<Person[]> => {
-    const cards = await sendRequest<PersonDTO[]>(API_URL, '/cards', 'GET');
-    return cards.map(normalizePerson);
+    const cards = await sendRequest<{
+        cards: PersonDTO[];
+    }>(API_URL, '/cards', 'GET');
+    return cards.cards.map(normalizePerson);
 };
 
 /**
@@ -20,13 +22,10 @@ export const getCards = async (): Promise<Person[]> => {
  * @returns { Promise<Person[]> } - Возвращает массив пользователей
  */
 export const getMatches = async (name: string): Promise<Person[]> => {
-    const matches = await sendRequest<PersonDTO[]>(
-        AUTH_URL,
-        `/matches`,
-        'POST',
-        { name: name },
-    );
-    return matches.map(normalizePerson);
+    const matches = await sendRequest<{
+        matches: PersonDTO[];
+    }>(AUTH_URL, `/matches`, 'POST', { name: name });
+    return matches.matches.map(normalizePerson);
 };
 
 /**

@@ -40,7 +40,8 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
     async function getAppInterests() {
         try {
             let appInterests = (await getInterests()) as any;
-            appInterests = Array.from(appInterests, (interest: any) => {
+            console.log(appInterests.interests);
+            appInterests = Array.from(appInterests.interests, (interest: any) => {
                 return interest.name;
             });
             setGotInterests(appInterests);

@@ -51,6 +51,7 @@ const ChatList = ({ socket, onMessage }) => {
     useEffect(() => {
         getChats()
             .then((data) => {
+                console.log('data', data);
                 const chats = data.chats.map((chat) => {
                     return {
                         ...chat,
@@ -66,7 +67,7 @@ const ChatList = ({ socket, onMessage }) => {
                         isNewMessage: false,
                     };
                 });
-
+                console.log('chats', chats);
                 setChats(chats);
             })
             .catch((error) => {

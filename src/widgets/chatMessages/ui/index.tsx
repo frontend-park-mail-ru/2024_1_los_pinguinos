@@ -47,7 +47,9 @@ const ChatMessages = ({ socket, setSocket }) => {
         }
         getMessages(currentChat)
             .then((data) => {
-                setMessages(data);
+                const messages = data.messages;
+                console.log('data', data);
+                setMessages(messages);
                 setTimeout(() => {
                     const chat = document.querySelector('.chatMessages__list');
                     if (chat) {

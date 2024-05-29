@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - roflan-payments
 
 env:
     DEPLOY_PATH: /var/www/app

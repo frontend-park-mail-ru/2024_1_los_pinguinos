@@ -30,6 +30,7 @@ const MatchesList = () => {
     async function getMatch(name: string) {
         try {
             const response = await getMatches(name);
+            console.log('matches', response);
             setMatches(response);
         } catch (err) {
             return;
