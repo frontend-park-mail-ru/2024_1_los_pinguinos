@@ -1,4 +1,8 @@
-import { validateInput } from  '../input/index';
+import { validateInput } from '../input/index';
+import background404 from '../../../assets/background/background404.svg';
+import backgroundMain from '../../../assets/background/backgroundMain.svg';
+import backgroundLanding from '../../../assets/background/backgroundLanding.svg';
+import backgroundAuth from '../../../assets/background/backgroundAuth.svg';
 /**
  * Обновляет ошибку валидации формы
  * @param {any} - объект с параметрами валидации
@@ -30,29 +34,30 @@ export const updateFormError = ({
 const getBackground = (path: string) => {
     switch (path) {
         case '/':
-            return 'var(--background--landing)';
+            return backgroundLanding;
         case '/login':
-            return 'var(--background--login)';
+            return backgroundAuth;
         case '/register':
-            return 'var(--background--register)';
+            return backgroundAuth;
         case '/profile':
-            return 'var(--background--profile)';
+            return backgroundMain;
         case '/main':
-            return 'var(--background--main)';
+            return backgroundMain;
         case '/matches':
-            return 'var(--background--matches)';
+            return backgroundMain;
         case '/chats':
-            return 'var(--background--chats)';
-        case '/rhack':
-            return 'var(--background--profile)';
+            return backgroundMain;
         default:
-            return 'var(--background--404)';
+            return background404;
     }
 };
 
 export const updateBackground = (path: string) => {
     const body = document.body;
-    body.style.backgroundImage = getBackground(path);
+    const background = `data:image/svg+xml,${encodeURIComponent(
+        getBackground(path),
+    )}`;
+    body.style.backgroundImage = `url("${background}")`;
 };
 
 let id = 0;

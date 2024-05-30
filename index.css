@@ -1,15 +1,6 @@
 @import url(/src/assets/fonts/MailSans/stylesheet.css);
 
 :root {
-  --background--landing: url(./src/assets/background/background-landing.webp);
-  --background--main: url(./src/assets/background/background-main.webp);
-  --background--login: url(./src/assets/background/background-auth.webp);
-  --background--register: url(./src/assets/background/background-auth.webp);
-  --background--profile: url(./src/assets/background/background-main.webp);
-  --background--404: url(./src/assets/background/background-404.webp);
-  --background--offline: url(./src/assets/background/background-404.webp);
-  --background--matches: url(./src/assets/background/background-main.webp);
-  --background--chats: url(./src/assets/background/background-main.webp);
   --color__light--primary: #FFFFFF;
   --color__light--secondary: #BBBBBB;
   --color__dark--primary: #000000;
@@ -50,8 +41,9 @@ body {
   height: 100dvh;
   overflow: clip;
   display: flow-root;
-  background-image: var(--background--landing);
+  /* background-image: var(--background--landing); */
   background-size: cover;
+  object-fit: cover;
   background-attachment: local;
   transition: background-image 0.2s ease-in-out;
 }

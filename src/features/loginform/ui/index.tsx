@@ -1,7 +1,10 @@
 import { useEffect, useState } from '../../../reactor/index';
 import { login } from '../../../entities/session/api/index';
 import { Link } from '../../../shared/ui/link/index';
-import { validateInput, updateInputError } from '../../../shared/lib/input/index';
+import {
+    validateInput,
+    updateInputError,
+} from '../../../shared/lib/input/index';
 import { Input, Button, ButtonLink } from '../../../shared/ui/index';
 import { redirectTo } from '../../../app/router';
 import { store } from '../../../app/app';
@@ -50,7 +53,7 @@ export const LoginForm = () => {
             store.dispatch({ type: 'UPDATE_USER', payload: response });
             store.dispatch({ type: 'UPDATE_AUTH', payload: true });
             store.dispatch({ type: 'SET_CSRFT', payload: response.csrft });
-            redirectTo('/profile');
+            redirectTo('/main');
         } catch (error) {
             setFormError(formErrorText);
         }
