@@ -1,9 +1,7 @@
-const CACHE = 'jimder-cache-v46';
+const CACHE = 'jimder-cache-v47';
 const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
 
-const NETWORK_ONLY = [
-    'api/v1',
-];
+const NETWORK_ONLY = ['api/v1'];
 
 const checkNetOnly = (path) => {
     for (const p of NETWORK_ONLY) {

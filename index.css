@@ -41,11 +41,9 @@ body {
   height: 100dvh;
   overflow: clip;
   display: flow-root;
-  /* background-image: var(--background--landing); */
   background-size: cover;
   object-fit: cover;
   background-attachment: local;
-  transition: background-image 0.2s ease-in-out;
 }
 
 .page-wrap {
