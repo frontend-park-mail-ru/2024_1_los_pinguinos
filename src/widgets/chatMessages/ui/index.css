@@ -11,6 +11,9 @@
 .chatMessages__header {
     display: flex;
     padding: 5px;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
 }
 
 .chatMessages__header__person {

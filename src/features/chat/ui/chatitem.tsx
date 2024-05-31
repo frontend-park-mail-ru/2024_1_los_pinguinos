@@ -1,6 +1,6 @@
 import { useState } from '../../../reactor';
 import { store } from '../../../app/app';
-import { navigateTo } from '../../../app/router';
+import { redirectTo } from '../../../app/router';
 import { timeAgo } from '../../../shared/lib/date';
 import { UserPhotoWidget } from '../../../widgets';
 
@@ -15,9 +15,7 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
     const [error, setError] = useState(false);
 
     return (
-        <div
-            className="navbar__menu__item__wrapper"
-        >
+        <div className="navbar__menu__item__wrapper">
             <div
                 className={`navbar__menu__item ${
                     activeChat
@@ -39,7 +37,7 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                             photo: chat.photo,
                         },
                     });
-                    navigateTo('/chats');
+                    redirectTo('/chats');
                 }}
             >
                 <div className="navbar__item__person">

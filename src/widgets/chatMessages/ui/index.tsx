@@ -2,7 +2,9 @@ import { useEffect, useState } from '../../../reactor';
 import withWebSocket from '../../../app/socket';
 import { getMessages } from '../../../features/chat/api';
 import { store } from '../../../app/app';
+import { Button, ButtonLink } from '../../../shared/ui';
 import './index.css';
+import { clsx } from '../../../shared/lib/clsx';
 
 /**
  * Компонент сообщений чата
@@ -155,6 +157,35 @@ const ChatMessages = ({ socket, setSocket }) => {
                         {currentChatName}
                     </p>
                 </div>
+                <div
+                    className={clsx(
+                        document.documentElement.clientWidth <= 896 &&
+                            'any--none',
+                    )}
+                >
+                    <ButtonLink label="Назад" severity="outline" back />
+                </div>
+                <div
+                    className={clsx(
+                        document.documentElement.clientWidth > 896 &&
+                            'any--none',
+                    )}
+                >
+                    <Button
+                        label="Назад"
+                        severity="outline"
+                        onClick={() => {
+                            store.dispatch({
+                                type: 'UPDATE_CURRENT_CHAT',
+                                payload: {
+                                    id: 0,
+                                    name: '',
+                                    photo: '',
+                                },
+                            });
+                        }}
+                    />
+                </div>
             </div>
             <div className="chatMessages__list">
                 {messages.map((message) => {
@@ -181,6 +212,14 @@ const ChatMessages = ({ socket, setSocket }) => {
                         </div>
                     );
                 })}
+                <div
+                    className={clsx(
+                        'match__placeholder',
+                        messages.length !== 0 && 'any--none',
+                    )}
+                >
+                    <div className="premium--feature">Пока нет сообщений.</div>
+                </div>
             </div>
 
             <div className="chatMessages__controllers">
