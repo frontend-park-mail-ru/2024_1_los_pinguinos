@@ -80,7 +80,7 @@ export const Profile = () => {
                             {ProfileSubscribtion()}
                         </div>
                     </div>
-                    {ProfilePaymentHistory()}
+                    <ProfilePaymentHistory />
                 </div>
             </div>
             {ProfileNavbar({

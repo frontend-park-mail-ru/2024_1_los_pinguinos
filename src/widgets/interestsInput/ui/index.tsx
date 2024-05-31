@@ -1,6 +1,7 @@
 import { InputCheckbox } from '../../../shared/ui/index';
 import { useState, useEffect } from '../../../reactor/index';
 import { getInterests } from '../../../entities/session/api';
+import { store } from '../../../app/app';
 
 /**
  * A InterestsInput component that renders checkboxes for selecting interests.
@@ -40,10 +41,17 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
     async function getAppInterests() {
         try {
             let appInterests = (await getInterests()) as any;
-            console.log(appInterests.interests);
-            appInterests = Array.from(appInterests.interests, (interest: any) => {
-                return interest.name;
+            store.dispatch({
+                type: 'UPDATE_SOMETHING',
+                payload: { applicationInterests: appInterests },
             });
+            // console.log(appInterests.interests);
+            appInterests = Array.from(
+                store.getState().applicationInterests,
+                (interest: any) => {
+                    return interest.name;
+                },
+            );
             setGotInterests(appInterests);
             return appInterests;
         } catch {
@@ -51,8 +59,7 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
         }
     }
     useEffect(() => {
-        if (gotInterests.length === 0) getAppInterests();
-        return () => {};
+        if (!store.getState().applicationInterests) getAppInterests();
     }, [gotInterests]);
 
     return interests.map((interest, index) => (

@@ -23,6 +23,8 @@ export type InitialState = {
     newMatches: string[];
     premium: boolean;
     premiumExpires: number;
+    paymentHistory: any;
+    applicationInterests: any;
 };
 
 export type Store = {
@@ -49,6 +51,8 @@ const initState: InitialState = {
     premium: false,
     premiumExpires: 0,
     newMatches: [],
+    paymentHistory: [],
+    applicationInterests: [],
 };
 
 /**

@@ -36,14 +36,6 @@
     max-width: 50%;
 }
 
-.navbar__header__person__image {
-    width: 70px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    object-fit: cover;
-    position: relative;
-}
-
 .navbar__menu {
     max-height: 87%;
     padding: 5px 22px;
@@ -167,24 +159,4 @@
     .navbar {
         display: none;
     }
-}
-
-.premium-icon {
-    position: absolute;
-    padding: 5px;
-    background-color: var(--color__success--primary);
-    color: var(--color__dark--primary);
-    right: -5px;
-    bottom: 0px;
-    border-radius: 50%;
-}
-
-.navbar__header--premium {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color__success--primary);
-    border-radius: 50%;
-    position: relative;
-    padding: 2px;
 }

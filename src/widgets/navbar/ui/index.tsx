@@ -4,6 +4,7 @@ import withWebSocket from '../../../app/socket';
 import ChatList from '../../../features/chat/ui/chatlist';
 import './index.css';
 import { clsx } from '../../../shared/lib/clsx';
+import { UserPhotoWidget } from '../../index';
 
 /**
  * Компонент навбара для десктопной версии
@@ -74,7 +75,7 @@ const Navbar = ({ closeSocket, onMessage }) => {
             <div className="navbar__header">
                 <div className="navbar__header__person">
                     <p className="navbar__header__person__name">{userName}</p>
-                    <div
+                    {/* <div
                         className={clsx(
                             userPremium && 'navbar__header--premium',
                         )}
@@ -90,7 +91,12 @@ const Navbar = ({ closeSocket, onMessage }) => {
                                 !userPremium && 'any--none',
                             )}
                         ></span>
-                    </div>
+                    </div> */}
+                    <UserPhotoWidget
+                        url={userPhoto}
+                        premium={userPremium}
+                        size="m"
+                    />
                 </div>
             </div>
             <div className="navbar__menu">{ChatList({})}</div>

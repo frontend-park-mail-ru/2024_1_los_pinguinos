@@ -42,7 +42,6 @@ body {
   overflow: clip;
   display: flow-root;
   background-size: cover;
-  object-fit: cover;
   background-attachment: local;
 }
 

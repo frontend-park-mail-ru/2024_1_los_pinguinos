@@ -1,0 +1,39 @@
+.premium-icon {
+    position: absolute;
+    padding: 5px;
+    background-color: var(--color__success--primary);
+    color: var(--color__dark--primary);
+    right: -5px;
+    bottom: 0px;
+    border-radius: 50%;
+}
+
+.photo-container--premium {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color__success--primary);
+    border-radius: 50%;
+    position: relative;
+    padding: 2px;
+}
+
+.user-photo {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    object-position: top;
+}
+
+.user-photo--s {
+    width: 50px;
+}
+
+.user-photo--m {
+    width: 70px;
+}
+
+.user-photo--l {
+    width: 90px;
+}

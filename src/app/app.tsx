@@ -39,10 +39,19 @@ const App = () => {
     setAuth();
 
     const setStorage = async () => {
+        store.dispatch({
+            type: 'UPDATE_SOMETHING',
+            payload: { applicationInterests: null },
+        });
         try {
             const response = (await getProfile()) as any;
             delete response.csrft;
             store.dispatch({ type: 'UPDATE_USER', payload: response });
+            if (store.getState().paymentHistory)
+                store.dispatch({
+                    type: 'UPDATE_SOMETHING',
+                    payload: { paymentHistory: undefined },
+                });
         } catch {
             return;
         }

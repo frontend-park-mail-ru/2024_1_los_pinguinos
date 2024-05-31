@@ -97,24 +97,6 @@
     width: 100%;
 }
 
-.dialog__profile-picture {
-    width: 70px;
-    aspect-ratio: 1;
-    object-fit: cover;
-    object-position: top;
-    border-radius: 50%;
-}
-
-.profile-picture--premium {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color__success--primary);
-    border-radius: 50%;
-    position: relative;
-    padding: 2px;
-}
-
 .dialog__header {
     display: flex;
     align-items: center;

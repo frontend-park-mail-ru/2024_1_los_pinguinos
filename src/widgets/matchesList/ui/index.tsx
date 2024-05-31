@@ -6,6 +6,7 @@ import { clsx } from '../../../shared/lib/clsx/index';
 import { getAge } from '../../../shared/lib/date/index';
 import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/router';
+import { UserPhotoWidget } from '../../index';
 
 const MatchesList = () => {
     const [matches, setMatches] = useState([]);
@@ -92,7 +93,7 @@ const MatchesList = () => {
             <Modal active={active} setActive={setActive}>
                 <div className="dialog dialog--card">
                     <div className="dialog__header">
-                        <div
+                        {/* <div
                             className={clsx(
                                 matchData.premium && 'profile-picture--premium',
                             )}
@@ -114,7 +115,18 @@ const MatchesList = () => {
                                     !matchData.premium && 'any--none',
                                 )}
                             ></span>
-                        </div>
+                        </div> */}
+                        <UserPhotoWidget
+                            url={
+                                matchData.photos &&
+                                matchData.photos[0] &&
+                                matchData.photos[0].url != ''
+                                    ? matchData.photos[0].url
+                                    : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
+                            }
+                            premium={matchData.premium}
+                            size="m"
+                        />
                         <span className="dialog__title data__text">
                             {`${matchData.name},  ${getAge(
                                 matchData.birthday,
