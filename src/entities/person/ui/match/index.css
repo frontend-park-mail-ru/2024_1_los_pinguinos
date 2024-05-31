@@ -80,7 +80,7 @@
 .match__data {
     position: absolute;
     bottom: 0;
-    padding: 15px 10%;
+    padding: 15px 30px;
     width: 100%;
     border-radius: 0 0 20% 20%;
     background-color: rgba(0, 0, 0);

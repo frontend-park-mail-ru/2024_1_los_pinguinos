@@ -53,7 +53,7 @@ export const LoginForm = () => {
             store.dispatch({ type: 'UPDATE_USER', payload: response });
             store.dispatch({ type: 'UPDATE_AUTH', payload: true });
             store.dispatch({ type: 'SET_CSRFT', payload: response.csrft });
-            redirectTo('/main');
+            redirectTo('/profile');
         } catch (error) {
             setFormError(formErrorText);
         }
