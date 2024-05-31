@@ -10,7 +10,7 @@ import { Message } from '../../../app/socket';
  * @param { WebSocket } socket - Сокет
  * @returns { JSX.Element } - Возвращает JSX-разметку списка чатов
  */
-const ChatList = ({ socket, onMessage }) => {
+const ChatList = ({ socket, onMessage, setSocket }) => {
     const [chats, setChats] = useState([]);
     const user = store.getState();
 
@@ -29,6 +29,19 @@ const ChatList = ({ socket, onMessage }) => {
             const state = store.getState();
             setCurrentChat(state.currentChat ? state.currentChat.id : 0);
         });
+    }, []);
+
+    useEffect(() => {
+        const unsubscribe = store.subscribe(
+            (newMessage: Message) => {
+                handleMessage(newMessage);
+            },
+            ['lastMessage'],
+        );
+
+        return () => {
+            unsubscribe();
+        };
     }, []);
 
     useEffect(() => {
@@ -87,9 +100,35 @@ const ChatList = ({ socket, onMessage }) => {
     //         }
     //     };
     // }, [socket]);
+
+    useEffect(() => {
+        if (socket) {
+            console.log('socket in chatList', socket);
+            socket.onmessage = (e) => {
+                const newMessage = JSON.parse(e.data);
+                console.log('newMessage in chatList', newMessage);
+                if (newMessage.Type === 'message') {
+                    handleMessage(newMessage);
+                }
+            };
+            socket.onclose = () => {
+                const newSocket = new WebSocket(
+                    'wss://api.jimder.ru/api/v1/openConnection',
+                );
+                setSocket(newSocket);
+            };
+        }
+
+        return () => {
+            if (socket) {
+                socket.close();
+            }
+        };
+    }, [socket]);
     useEffect(() => {
         if (onMessage) {
             onMessage((message: Message) => {
+                console.log('New message in ChatList:', message);
                 handleMessage(message);
             });
         }
@@ -102,13 +141,14 @@ const ChatList = ({ socket, onMessage }) => {
      */
     const handleMessage = (newMessage: Message) => {
         // newMessageInChats(newMessage);
+        console.log('newMessage in handler', newMessage);
         setChats((prev) => {
             const newChats = prev.map((chat) => {
                 if (
                     (`${newMessage.Properties.sender}` === `${user.id}` &&
-                    newMessage.Properties.receiver === chat.personID) ||
+                        newMessage.Properties.receiver === chat.personID) ||
                     (newMessage.Properties.sender === chat.personID &&
-                    newMessage.Properties.receiver === `${user.id}`)
+                        newMessage.Properties.receiver === `${user.id}`)
                 ) {
                     return {
                         ...chat,
@@ -131,34 +171,31 @@ const ChatList = ({ socket, onMessage }) => {
 
     return (
         // <div className="navbar__menu">
-        <div
-
-            className="navbar__menu__items"
-        >
+        <div className="navbar__menu__items">
             {chats.length != 0 &&
-            chats
-                .sort((a, b) => {
-                    if (
-                        a.lastMessage.Properties.time >
-                        b.lastMessage.Properties.time
-                    ) {
-                        return -1;
-                    }
-                    if (
-                        a.lastMessage.Properties.time <
-                        b.lastMessage.Properties.time
-                    ) {
-                        return 1;
-                    }
-                    return 0;
-                })
-                .map((chat) => (
-                    <ChatItem
-                        chat={chat}
-                        activeChat={activeChat}
-                        setActiveChat={setActiveChat}
-                    />
-                ))}
+                chats
+                    .sort((a, b) => {
+                        if (
+                            a.lastMessage.Properties.time >
+                            b.lastMessage.Properties.time
+                        ) {
+                            return -1;
+                        }
+                        if (
+                            a.lastMessage.Properties.time <
+                            b.lastMessage.Properties.time
+                        ) {
+                            return 1;
+                        }
+                        return 0;
+                    })
+                    .map((chat) => (
+                        <ChatItem
+                            chat={chat}
+                            activeChat={activeChat}
+                            setActiveChat={setActiveChat}
+                        />
+                    ))}
             <p
                 style={{
                     display: chats.length == 0 ? 'block' : 'none',

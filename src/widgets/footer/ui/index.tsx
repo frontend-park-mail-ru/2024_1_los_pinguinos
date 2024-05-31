@@ -42,9 +42,13 @@ const Footer = ({ socket, setSocket }) => {
                     (message.Properties.receiver === store.getState().id ||
                         message.Properties.sender === store.getState().id)
                 ) {
+
                     store.dispatch({
                         type: 'UPDATE_NEW_MATCH',
-                        payload: message.Properties.receiver === store.getState().id ? message.Properties.sender : message.Properties.receiver,
+                        payload:
+                            message.Properties.receiver === store.getState().id
+                                ? message.Properties.sender
+                                : message.Properties.receiver,
                     });
                 }
             };

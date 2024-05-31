@@ -78,6 +78,10 @@ const ChatMessages = ({ socket, setSocket }) => {
                             newMessage.Properties.receiver === userID &&
                             newMessage.Properties.data != '')
                     ) {
+                        store.dispatch({
+                            type: 'UPDATE_LAST_MESSAGE',
+                            payload: newMessage,
+                        });
                         setMessages((prev) => {
                             return [newMessage, ...prev];
                         });

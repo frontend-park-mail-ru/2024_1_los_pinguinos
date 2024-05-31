@@ -2,6 +2,7 @@ import { useState } from '../../../reactor';
 import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/router';
 import { timeAgo } from '../../../shared/lib/date';
+import { UserPhotoWidget } from '../../../widgets';
 
 /**
  * Компонент элемента чата
@@ -14,7 +15,9 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
     const [error, setError] = useState(false);
 
     return (
-        <div>
+        <div
+            className="navbar__menu__item__wrapper"
+        >
             <div
                 className={`navbar__menu__item ${
                     activeChat
@@ -40,15 +43,14 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                 }}
             >
                 <div className="navbar__item__person">
-                    <img
-                        onError={() => setError(true)}
-                        src={
-                            chat.photo && chat.photo != ''
+                    <UserPhotoWidget
+                        url={
+                            chat.photo
                                 ? chat.photo
                                 : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
                         }
-                        className="navbar__item__icon"
-                        alt="Profile Picture"
+                        size="m"
+                        premium={chat.premium}
                     />
                     <div className="navbar__item__info">
                         <p className="navbar__item__info__name">{chat.name}</p>

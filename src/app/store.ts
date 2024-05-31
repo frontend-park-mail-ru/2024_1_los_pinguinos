@@ -1,4 +1,5 @@
 import { Interest, Photo } from '../entities/person/model/index';
+import { Message } from './socket';
 
 export type Action = {
     type: string;
@@ -24,6 +25,7 @@ export type InitialState = {
     premium: boolean;
     premiumExpires: number;
     paymentHistory: any;
+    lastMessage: Message;
     applicationInterests: any;
 };
 
@@ -53,6 +55,15 @@ const initState: InitialState = {
     newMatches: [],
     paymentHistory: [],
     applicationInterests: [],
+    lastMessage: {
+        Type: '',
+        Properties: {
+            data: '',
+            sender: '',
+            receiver: '',
+            time: 0,
+        },
+    },
 };
 
 /**

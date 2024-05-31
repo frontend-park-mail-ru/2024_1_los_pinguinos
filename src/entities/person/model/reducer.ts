@@ -1,4 +1,5 @@
 import { Action } from '../../../app/store';
+import { Message } from '../../../app/socket';
 const initialState = {
     id: '1',
     name: '',
@@ -13,7 +14,16 @@ const initialState = {
         name: '',
         photo: '',
     },
-    newMatches: [],    premium: false,
+    newMatches: [],
+    newMessage: {
+        Type: '',
+        Properties: {
+            data: '',
+            sender: '',
+            receiver: '',
+        },
+    },
+    premium: false,
     premiumExpires: 0,
 };
 
@@ -55,14 +65,23 @@ export const userReducer = (state = initialState, action: Action) => {
             console.log('new match:', action.payload);
             return {
                 ...state,
-                newMatches: state.newMatches ? [...state.newMatches, action.payload] : [action.payload],
+                newMatches: state.newMatches
+                    ? [...state.newMatches, action.payload]
+                    : [action.payload],
             };
         case 'REMOVE_NEW_MATCH':
             return {
                 ...state,
-                newMatches: state.newMatches.filter(
-                    (match) => match !== action.payload,
-                ),
+                newMatches: state.newMatches
+                    ? state.newMatches.filter(
+                          (match) => match !== action.payload,
+                      )
+                    : [],
+            };
+        case 'UPDATE_LAST_MESSAGE':
+            return {
+                ...state,
+                lastMessage: action.payload,
             };
         case 'LOGOUT':
             return {};
