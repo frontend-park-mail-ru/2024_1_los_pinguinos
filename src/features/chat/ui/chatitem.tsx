@@ -49,7 +49,7 @@ export const ChatItem = ({ chat, activeChat, setActiveChat }) => {
                                 ? chat.photo
                                 : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
                         }
-                        size="m"
+                        size="s"
                         premium={chat.premium}
                     />
                     <div className="navbar__item__info">
