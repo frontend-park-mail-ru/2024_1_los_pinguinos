@@ -1,12 +1,12 @@
 import Match from '../../../entities/person/ui/match/index';
 import { useState, useEffect } from '../../../reactor/index';
 import { getMatches } from '../../../entities/person/api/index';
-import { Input, Modal, Button } from '../../../shared/ui/index';
+import { Input, Modal, Button, ButtonLink } from '../../../shared/ui/index';
 import { clsx } from '../../../shared/lib/clsx/index';
 import { getAge } from '../../../shared/lib/date/index';
 import { store } from '../../../app/app';
 import { navigateTo } from '../../../app/router';
-import { UserPhotoWidget } from '../../index';
+import { EyeLoader, UserPhotoWidget } from '../../index';
 
 const MatchesList = () => {
     const [matches, setMatches] = useState([]);
@@ -33,17 +33,22 @@ const MatchesList = () => {
             const response = await getMatches(name);
             console.log('matches', response);
             setMatches(response);
+            setTimeout(() => {
+                setLoader(false);
+            }, 100);
         } catch (err) {
             return;
         }
     }
 
+    const [loader, setLoader] = useState(true);
     useEffect(() => {
         const id = setTimeout(() => {
             getMatch(searchName);
         }, 500);
         return () => {
             clearTimeout(id);
+            setLoader(true);
         };
     }, [searchName]);
 
@@ -73,23 +78,33 @@ const MatchesList = () => {
                     matches.length === 0 ? 'any--none' : '',
                 )}
             >
-                {matches.map((match, index) =>
-                    Match({
-                        person: match,
-                        setActive: setActive,
-                        setData: setMatchData,
-                        isNew: newMatches && newMatches.includes(match.id),
-                    }),
-                )}
+                {!loader &&
+                    matches.map((match, index) =>
+                        Match({
+                            person: match,
+                            setActive: setActive,
+                            setData: setMatchData,
+                            isNew: newMatches && newMatches.includes(match.id),
+                        }),
+                    )}
             </div>
             <div
                 className={clsx(
-                    'match__header',
-                    matches.length !== 0 ? 'any--none' : '',
+                    'match__placeholder',
+                    matches.length !== 0 || loader ? 'any--none' : '',
                 )}
             >
-                К сожалению, здесь пусто...
+                К сожалению, ничего не найдено...
+                <ButtonLink
+                    to="/main"
+                    label="К карточкам"
+                    severity="success"
+                    size="xl"
+                    fontSize="l"
+                />
             </div>
+            <EyeLoader active={loader} placeholder={'Ищем ваши мэтчи...'} />
+
             <Modal active={active} setActive={setActive}>
                 <div className="dialog dialog--card">
                     <div className="dialog__header">

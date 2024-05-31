@@ -4,6 +4,8 @@ import { getChats } from '../api';
 import { store } from '../../../app/app';
 import withWebSocket from '../../../app/socket';
 import { Message } from '../../../app/socket';
+import { EyeLoader } from '../../../widgets';
+import { clsx } from '../../../shared/lib/clsx';
 
 /**
  * Компонент списка чатов
@@ -82,6 +84,7 @@ const ChatList = ({ socket, onMessage, setSocket }) => {
                 });
                 console.log('chats', chats);
                 setChats(chats);
+                setLoader(false);
             })
             .catch((error) => {
                 console.log('error', error);
@@ -169,6 +172,8 @@ const ChatList = ({ socket, onMessage, setSocket }) => {
         store.getState().currentChat ? store.getState().currentChat.id : 0,
     );
 
+    const [loader, setLoader] = useState(true);
+
     return (
         // <div className="navbar__menu">
         <div className="navbar__menu__items">
@@ -197,16 +202,14 @@ const ChatList = ({ socket, onMessage, setSocket }) => {
                         />
                     ))}
             <p
-                style={{
-                    display: chats.length == 0 ? 'block' : 'none',
-                    fontSize: '25px',
-                    fontWeight: '800',
-                    color: 'white',
-                    textAlign: 'center',
-                }}
+                className={clsx(
+                    'match__placeholder',
+                    (chats.length !== 0 || loader) && 'any--none',
+                )}
             >
                 Нет чатов
             </p>
+            <EyeLoader active={loader} placeholder="Грузим чаты..." />
         </div>
         // </div>
     );

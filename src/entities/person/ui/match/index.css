@@ -40,6 +40,10 @@
     overflow-anchor: none;
 }
 
+.match__container > :last-child {
+    margin-bottom: 0;
+}
+
 .match__wrapper {
     height: 100%;
     width: 100%;
@@ -47,6 +51,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 20px;
+    position: relative;
 }
 
 .match__header {
@@ -57,10 +62,23 @@
     font-weight: 500;
 }
 
+.match__placeholder {
+    color: var(--color__light--primary);
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: 500;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
 .match__data {
     position: absolute;
     bottom: 0;
-    padding: 10px 20px;
+    padding: 15px 10%;
     width: 100%;
     border-radius: 0 0 20% 20%;
     background-color: rgba(0, 0, 0);

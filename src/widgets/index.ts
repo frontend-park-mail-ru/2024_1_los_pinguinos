@@ -11,3 +11,4 @@ export { default as ProfileDelete } from './profileDelete/index';
 export { default as ProfileSubscribtion } from './profileSubscribtion/index';
 export { default as ProfilePaymentHistory } from './profilePaymentHistory/index';
 export { default as UserPhotoWidget } from './userPhoto/index';
+export { default as EyeLoader } from './eyeLoader/index';
