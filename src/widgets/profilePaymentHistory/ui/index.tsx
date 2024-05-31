@@ -19,13 +19,6 @@ const ProfilePaymentHistory = () => {
         }
     };
 
-    // const unsubscribeStatus = store.subscribe(
-    //     (premium: boolean) => {
-    //         getHistory();
-    //     },
-    //     ['premium'],
-    // );
-
     const unsubscribeHistory = store.subscribe(
         (paymentHistory: any) => {
             history = paymentHistory;
@@ -34,10 +27,10 @@ const ProfilePaymentHistory = () => {
     );
 
     if (
-        store.getState().paymentHistory === undefined &&
-        store.getState().authStatus
+        (store.getState().paymentHistory === undefined &&
+            store.getState().authStatus) ||
+        window.location.search.includes('sub=success')
     ) {
-        console.log('BUT I AM RETARDED', history);
         getHistory();
     }
 
