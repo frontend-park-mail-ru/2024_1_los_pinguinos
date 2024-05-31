@@ -209,7 +209,7 @@ const ChatList = ({ socket, onMessage, setSocket }) => {
             >
                 Нет чатов
             </p>
-            <EyeLoader active={loader} placeholder="Грузим чаты" />
+            <EyeLoader active={loader} placeholder="Грузим чаты..." />
         </div>
         // </div>
     );
