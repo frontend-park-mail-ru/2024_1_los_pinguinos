@@ -93,29 +93,6 @@ const MatchesList = () => {
             <Modal active={active} setActive={setActive}>
                 <div className="dialog dialog--card">
                     <div className="dialog__header">
-                        {/* <div
-                            className={clsx(
-                                matchData.premium && 'profile-picture--premium',
-                            )}
-                        >
-                            <img
-                                src={
-                                    matchData.photos &&
-                                    matchData.photos[0] &&
-                                    matchData.photos[0].url != ''
-                                        ? matchData.photos[0].url
-                                        : 'https://los_ping.hb.ru-msk.vkcs.cloud/i.webp'
-                                }
-                                alt={matchData.name}
-                                className="dialog__profile-picture"
-                            />
-                            <span
-                                className={clsx(
-                                    'premium-icon icon-stars',
-                                    !matchData.premium && 'any--none',
-                                )}
-                            ></span>
-                        </div> */}
                         <UserPhotoWidget
                             url={
                                 matchData.photos &&
@@ -133,7 +110,11 @@ const MatchesList = () => {
                             )}`}
                         </span>
                     </div>
-                    <p className="data__text">{matchData.description}</p>
+                    <p className="data__text">
+                        {matchData.description
+                            ? matchData.description
+                            : 'Пользователь пока не рассказал о себе.'}
+                    </p>
                     <div className="dialog__button-wrap">
                         <Button
                             onClick={() => {

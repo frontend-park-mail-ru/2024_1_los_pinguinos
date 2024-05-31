@@ -29,8 +29,16 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
             }
         });
     };
-    const [gotInterests, setGotInterests] = useState([]);
-    const interests = gotInterests;
+    const [gotInterests, setGotInterests] = useState(
+        store.getState().applicationInterests
+            ? Array.from(
+                  store.getState().applicationInterests.interests,
+                  (interest: any) => {
+                      return interest.name;
+                  },
+              )
+            : [],
+    );
 
     /**
      * Fetches the available interests and updates the state.
@@ -39,15 +47,15 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
      * @returns {Promise<string[]>} The fetched interests.
      */
     async function getAppInterests() {
+        console.log('GETTING INTERESTS');
         try {
             let appInterests = (await getInterests()) as any;
             store.dispatch({
                 type: 'UPDATE_SOMETHING',
                 payload: { applicationInterests: appInterests },
             });
-            // console.log(appInterests.interests);
             appInterests = Array.from(
-                store.getState().applicationInterests,
+                store.getState().applicationInterests.interests,
                 (interest: any) => {
                     return interest.name;
                 },
@@ -60,9 +68,8 @@ const InterestsInput = ({ selectedInterests, setSelectedInterests }) => {
     }
     useEffect(() => {
         if (!store.getState().applicationInterests) getAppInterests();
-    }, [gotInterests]);
-
-    return interests.map((interest, index) => (
+    }, []);
+    return gotInterests.map((interest, index) => (
         <InputCheckbox
             key={index}
             label={interest}

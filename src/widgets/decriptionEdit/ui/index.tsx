@@ -3,6 +3,7 @@ import { useEffect, useState } from '../../../reactor';
 import { updateDescription } from '../../../entities/session/api';
 import { store } from '../../../app/app';
 import { clsx } from '../../../shared/lib/clsx';
+import { validateInput } from '../../../shared/lib/input';
 
 /**
  * A DescriptionEdit component that renders a form for editing the user's description.
@@ -21,13 +22,20 @@ const DescriptionEdit = () => {
         setCurrentDescription(currentDescription);
     }, [currentDescription]);
 
+    const [textAreaError, setTextAreaError] = useState('');
+
     /**
      * Handles the save action for updating the description.
      *
      * @function handleSave
      */
     async function handleSave() {
+        if (!validateInput('textArea', currentDescription)) {
+            setTextAreaError('Поле некорректно');
+            return;
+        }
         try {
+            setTextAreaError('');
             const response = await updateDescription(currentDescription);
             setDescription(currentDescription);
             store.dispatch({
@@ -49,7 +57,10 @@ const DescriptionEdit = () => {
                     icon="icon-pencil-square"
                     fontSize="l1"
                     severity="edit"
-                    onClick={() => setActive(true)}
+                    onClick={() => {
+                        setActive(true);
+                        setTextAreaError('');
+                    }}
                 />
             </div>
             <p className="profile__text">{description}</p>
@@ -71,6 +82,7 @@ const DescriptionEdit = () => {
                         onInput={(event) => {
                             setCurrentDescription(event.target.value);
                         }}
+                        error={textAreaError}
                     />
                     <div className="dialog__button-wrap">
                         <Button

@@ -1,4 +1,4 @@
-import { TInputType } from '../../ui'
+import { TInputType } from '../../ui';
 /**
  * Валидирует ввод пользователя
  * @param {string} type - тип валидации
@@ -11,16 +11,19 @@ export const validateInput = (type: string, input: string): boolean => {
         email: /^(?=.{1,320}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
         text: /^[\p{L}]+(?:[-'\s][\p{L}]+)*$/u,
         emoji: /^[\x20-\x7E]+$/,
+        textArea: /^[\p{L}\p{N}\p{P}\p{S}\p{Z}]+$/u,
     } as any;
     const regexExpression = expressions[type];
     const regexEmoji = expressions['emoji'];
-    if (type === 'text') {
+    if (type === 'text' || type === 'textArea') {
         return regexExpression.test(input);
     }
     if (type === 'date') {
-        const timeStamp = Date.parse(input) / 1000;
-
-        return 0 <= timeStamp && timeStamp < 1230757200;
+        const minYear = 1930;
+        const maxYear = new Date().getFullYear() - 16;
+        const inputYear = new Date(input).getFullYear();
+        console.log(inputYear >= minYear && inputYear <= maxYear);
+        return inputYear >= minYear && inputYear <= maxYear;
     }
 
     return regexExpression.test(input) && regexEmoji.test(input);

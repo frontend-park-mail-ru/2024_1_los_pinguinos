@@ -75,23 +75,6 @@ const Navbar = ({ closeSocket, onMessage }) => {
             <div className="navbar__header">
                 <div className="navbar__header__person">
                     <p className="navbar__header__person__name">{userName}</p>
-                    {/* <div
-                        className={clsx(
-                            userPremium && 'navbar__header--premium',
-                        )}
-                    >
-                        <img
-                            src={userPhoto}
-                            alt="Profile Picture"
-                            className="navbar__header__person__image"
-                        />
-                        <span
-                            className={clsx(
-                                'premium-icon icon-stars',
-                                !userPremium && 'any--none',
-                            )}
-                        ></span>
-                    </div> */}
                     <UserPhotoWidget
                         url={userPhoto}
                         premium={userPremium}

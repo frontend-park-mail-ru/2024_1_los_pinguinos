@@ -128,7 +128,6 @@
         border-radius: 0;
         overflow: auto;
         padding: 40px 50px;
-        justify-content: center;
     }
     .form__error {
         background-color: transparent;
@@ -139,9 +138,6 @@
     }
     .form__header {
         padding: 0 10px;
-    }
-    .form__step {
-        justify-content: center;
     }
 }
 

@@ -1,8 +1,6 @@
 import { useState, useEffect } from '../../../reactor/index';
 import { Button, Input, InputCheckbox } from '../../../shared/ui';
-import {
-    updateFormError,
-} from '../../../shared/lib/common/index';
+import { updateFormError } from '../../../shared/lib/common/index';
 import { IStep, validateInput } from '../../../shared/lib/input';
 import { clsx } from '../../../shared/lib/clsx/index';
 interface TDataStep extends IStep {
@@ -55,7 +53,9 @@ const StepData = ({
             value: currentDate,
             error: dateError,
             setError: setStepError,
-            errorMessage: 'Введите дату рождения (с 1970 по 2009)',
+            errorMessage: `Введите дату рождения (с 1930 по ${
+                new Date().getFullYear() - 16
+            }).`,
         });
         return () => {};
     }, [dateError]);
