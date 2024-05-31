@@ -76,6 +76,7 @@
     height: 100%;
     scrollbar-width: none;
     overflow: scroll;
+    position: relative;
 }
 
 .navbar__menu__item {

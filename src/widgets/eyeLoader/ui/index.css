@@ -1,0 +1,40 @@
+.eye-loader {
+    display: inline-flex;
+    gap: 10px;
+  }
+
+.eye-loader:before,
+.eye-loader:after {
+    content: "";
+    height: 20px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+      radial-gradient(farthest-side,#000 95%,#0000) 35% 35%/6px 6px no-repeat
+      #fff;
+    animation: l5 3s infinite;
+}
+
+.loader__text {
+    color: var(--color__light--primary);
+    font-size: x-large;
+}
+
+@keyframes l5 {
+    0%,11%   {background-position:35% 35%}
+    14%,36%  {background-position:65% 35%}
+    38%,61%  {background-position:65% 65%}
+    64%,86%  {background-position:35% 65%}
+    88%,100% {background-position:35% 35%}
+}
+
+.loader-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}

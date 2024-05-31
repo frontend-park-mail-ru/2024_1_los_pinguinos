@@ -51,6 +51,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 20px;
+    position: relative;
 }
 
 .match__header {
@@ -59,6 +60,19 @@
     justify-content: center;
     font-size: x-large;
     font-weight: 500;
+}
+
+.match__placeholder {
+    color: var(--color__light--primary);
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: 500;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .match__data {
