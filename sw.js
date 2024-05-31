@@ -1,4 +1,4 @@
-const CACHE = 'jimder-cache-v47';
+const CACHE = 'jimder-cache-v48';
 const PRECACHE_URLS = ['/offline', '/176c4714b229b0ae6633.webp'];
 
 const NETWORK_ONLY = ['api/v1'];
