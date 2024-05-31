@@ -130,7 +130,7 @@ const App = () => {
             );
 
             navigator.serviceWorker
-                .register('/sw.js')
+                .register('./sw.js')
                 .then((registration) => {
                     if (!navigator.serviceWorker.controller) {
                         return;
