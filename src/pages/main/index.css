@@ -28,6 +28,7 @@
     perspective-origin: center 50%;
     transform-style: preserve-3d;
     /* padding: 20px; */
+    position: relative;
   }
 
   .container {
@@ -38,7 +39,7 @@
     display: flex;
   }
   
-  #swiper > :not(:last-child) {
+  #swiper > :not(:last-child):not(.loader-container) {
     display: none;
   }
 
