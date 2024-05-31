@@ -73,6 +73,7 @@
     align-items: center;
     flex-direction: column;
     gap: 15px;
+    text-align: center;
 }
 
 .match__data {

@@ -3,6 +3,8 @@ import { useState, useEffect } from '../../../reactor';
 import { getCards } from '../../../entities/person/api';
 import { store } from '../../../app/app';
 import { Person } from '../../../entities/person/model';
+import { EyeLoader } from '../../index';
+import { clsx } from '../../../shared/lib/clsx';
 
 const CardsList = () => {
     const [cards, setCards] = useState<Person[]>([]);
@@ -12,6 +14,7 @@ const CardsList = () => {
         getCards()
             .then((response) => {
                 setCards(response);
+                setLoader(false);
                 if (response.length > 0) {
                     store.dispatch({
                         type: 'UPDATE_CURRENT_CARD',
@@ -24,6 +27,7 @@ const CardsList = () => {
             })
             .catch(() => {
                 setCards([]);
+                setLoader(false);
             });
     }, []);
 
@@ -46,18 +50,13 @@ const CardsList = () => {
         }
     }, [counter]);
 
+    const [loader, setLoader] = useState(true);
+
     return (
         <div id="swiper">
-            <p
-                style={{
-                    fontSize: 'large',
-                    fontWeight: '800',
-                    color: 'white',
-                    justifyContent: 'center',
-                    marginTop: '50px',
-                }}
-            >
-                Карточки закончились. Приходите позже
+            <EyeLoader active={loader} placeholder="Ищем новые карточки..." />
+            <p className={clsx('match__placeholder', loader && 'any--none')}>
+                Карточки закончились. Приходите позже...
             </p>
             {visibleCards.map((card, index) => {
                 return card ? Card({ person: card }) : null;
